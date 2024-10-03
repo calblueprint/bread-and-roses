@@ -1,7 +1,5 @@
 # Bread and Roses Presents
 
----
-
 This project is being built by a team at [Blueprint](https://calblueprint.org), a student organization at the University of California, Berkeley building software pro bono for nonprofits.
 
 ## Getting Started
