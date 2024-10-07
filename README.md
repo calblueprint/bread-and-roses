@@ -1,12 +1,5 @@
 # Bread and Roses Presents
 
-This template also has variants with pre-configured setup for styling libraries:
-- [Tailwind CSS](https://github.com/calblueprint/web-app-template/tree/tailwind)
-- [Styled Components](https://github.com/calblueprint/web-app-template/tree/styled-components)
-- [Vanilla Extract](https://github.com/calblueprint/web-app-template/tree/vanilla-extract)
-
----
-
 This project is being built by a team at [Blueprint](https://calblueprint.org), a student organization at the University of California, Berkeley building software pro bono for nonprofits.
 
 ## Getting Started
