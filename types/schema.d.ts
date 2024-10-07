@@ -17,8 +17,8 @@ export type TypeOfAct =
 
 // used for volunteers_preference and facilities table
 export type TypeOfFacility =
-  | 'Assisted Living '
-  | 'Children s Day Care'
+  | 'Assisted Living'
+  | "Children's Day Care"
   | 'Detention Center'
   | 'Developmentally Disabled'
   | 'Food Bank'
@@ -37,6 +37,7 @@ export type Instruments = 'Guitar' | 'Violin' | 'Flute' | 'Trumpet' | 'Bass';
 
 // used for volunteers_preferences table
 export type Audience = 'Youth' | 'Adults' | 'Senior ';
+
 // used for events and volunteer_preference tables
 export type Genre =
   | 'A Cappella'
@@ -71,7 +72,7 @@ export type Day =
 export interface Availabilities {
   availability_id: UUID;
   facility_id: UUID;
-  date: string; // date
+  date: Date; // date
   day_of_week: Day;
   start_time: string; // timestamptz
   end_time: string; // timestamptz
@@ -127,7 +128,7 @@ export interface Volunteers {
 export interface VolunteersPreferences {
   volunteer_id: UUID;
   city?: string;
-  genre: Genre;
+  genre?: Genre;
   instruments?: Instruments;
   type_of_act?: TypeOfAct;
   audience?: Audience;
