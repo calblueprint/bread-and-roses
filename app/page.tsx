@@ -8,7 +8,7 @@ export default function Home() {
     <Container>
       <Image src={BPLogo} alt="Blueprint Logo" />
       <p>Open up app/page.tsx to get started!</p>
-      <Link href="/auth">
+      <Link href="/auth/login">
         <Button>Login Page</Button>
       </Link>
     </Container>
