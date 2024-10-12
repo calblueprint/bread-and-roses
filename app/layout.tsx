@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import StyledComponentsRegistry from '@/lib/registry';
+import '../styles/global.css';
 
 // font definitions
 const sans = Inter({

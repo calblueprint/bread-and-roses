@@ -2,24 +2,30 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
-import COLORS from '../styles/colors';
+import COLORS from '../../styles/colors';
 
 export const Background = styled.main`
   flex-direction: column;
-  min-width: 100vw;
-  min-height: 100vh;
+  min-width: 100%;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${COLORS.gray2};
-  box-sizing: border-box;
   overflow: hidden;
 `;
 
 export const InlineContainer = styled.main`
-  width: 55vh;
-  height: 85vh;
+  width: 30%;
+  height: 85%;
   flex-direction: column;
+
+  @media (max-width: 1200px) {
+    width: 45%;
+  }
+  @media (max-width: 768px) {
+    width: 85%;
+  }
 `;
 
 export const Image = styled(NextImage)`
@@ -41,7 +47,7 @@ export const Rectangle = styled.main<{
 `;
 
 export const Container = styled.main`
-  width: 100$;
+  width: 100%;
   height: 53%;
   display: flex;
   flex-direction: column;
@@ -60,7 +66,7 @@ export const Input = styled.input`
   border-color: ${COLORS.gray4};
   border-style: solid;
   border-radius: 4px;
-  margin-bottom: 18px;
+  margin-bottom: 6%;
 `;
 
 export const Title = styled.h1`
@@ -68,6 +74,7 @@ export const Title = styled.h1`
   text-align: start;
   color: ${COLORS.gray11};
   margin-top: 0;
+  margin-bottom: 5%;
 `;
 
 export const UpdateContainer = styled.main`
@@ -83,8 +90,8 @@ export const Checkbox = styled.input`
 `;
 
 export const UpdateText = styled.text`
-  text-align: justify;
-  margin-left: 10px;
+  text-align: left;
+  margin-left: 15px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -95,17 +102,20 @@ export const ButtonContainer = styled.div`
 
 export const ContinueButton = styled.button`
   width: 20%;
-  height: 7%;
+  height: 40%;
   background-color: ${COLORS.gray11};
   border-color: ${COLORS.gray11};
   border-style: solid;
   border-radius: 10px;
+  @media (max-width: 700px) {
+    width: 25%;
+  }
 `;
 
 export const ContinueText = styled.p`
   color: white;
   font-size: 13px;
-  margin-top: 9.5%;
+  padding: 10px;
 `;
 
 export const RedAsterisk = styled.span`
