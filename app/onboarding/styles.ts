@@ -57,7 +57,6 @@ export const Container = styled.main`
   background-color: white;
   border-radius: 8px;
   padding: 13%;
-  box-shadow: 5px 5px 5px ${COLORS.gray8};
 `;
 
 export const Input = styled.input`
@@ -101,20 +100,22 @@ export const ButtonContainer = styled.div`
 `;
 
 export const ContinueButton = styled.button`
-  width: 20%;
-  height: 40%;
+  width: 5.5rem;
+  height: 2.25rem;
   background-color: ${COLORS.gray11};
   border-color: ${COLORS.gray11};
   border-style: solid;
-  border-radius: 10px;
-  @media (max-width: 700px) {
-    width: 25%;
-  }
+  border-radius: 8px;
+  display: inline-flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const ContinueText = styled.p`
   color: white;
-  font-size: 13px;
+  font-size: 14px;
   padding: 10px;
 `;
 

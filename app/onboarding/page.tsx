@@ -48,13 +48,13 @@ export default function Onboarding() {
             <Checkbox type="checkbox" />
             <UpdateText>
               I want to get updated when there's an event that matches my
-              interest
+              interest!
             </UpdateText>
           </UpdateContainer>
         </Container>
         <ButtonContainer>
           <ContinueButton>
-            <ContinueText>Continue </ContinueText>
+            <ContinueText>Continue</ContinueText>
           </ContinueButton>
         </ButtonContainer>
       </InlineContainer>
