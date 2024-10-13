@@ -68,6 +68,8 @@ export type Day =
   | 'Saturday'
   | 'Sunday';
 
+export type TypeOfPerformer = 'Solo' | 'Duo' | 'Band';
+
 export interface Availabilities {
   availability_id: UUID;
   facility_id: UUID;
@@ -86,6 +88,7 @@ export interface Event {
   type_of_act: TypeOfAct;
   genre: Genre;
   needs_host: boolean;
+  performer_type: TypeOfPerformer;
   event_status: EventStatus;
 }
 

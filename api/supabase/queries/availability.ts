@@ -1,6 +1,7 @@
+import type { UUID } from 'crypto';
 import supabase from '../createClient';
 
-export async function fetchAvailabilitiesByFacilityId(facility_id: string) {
+export async function fetchAvailabilitiesByFacilityId(facility_id: UUID) {
   try {
     const { data, error } = await supabase
       .from('availabilities')
