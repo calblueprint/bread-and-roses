@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import Link from 'next/link';
 import Back from '@/assets/images/back.svg';
 import {
   Background,
@@ -52,11 +53,14 @@ export default function Onboarding() {
             </UpdateText>
           </UpdateContainer>
         </Container>
-        <ButtonContainer>
-          <ContinueButton>
-            <ContinueText>Continue</ContinueText>
-          </ContinueButton>
-        </ButtonContainer>
+
+        <Link href="/preferences" passHref>
+          <ButtonContainer>
+            <ContinueButton>
+              <ContinueText>Continue</ContinueText>
+            </ContinueButton>
+          </ButtonContainer>
+        </Link>
       </InlineContainer>
     </Background>
   );

@@ -10,7 +10,7 @@ export const Background = styled.main`
   min-height: 100svh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   background-color: ${COLORS.gray2};
   overflow: hidden;
 `;
@@ -19,6 +19,8 @@ export const InlineContainer = styled.main`
   width: 30%;
   height: 85%;
   flex-direction: column;
+  margin-top: 2%;
+  margin-bottom: 2%;
 
   @media (max-width: 1200px) {
     width: 45%;
@@ -59,13 +61,16 @@ export const Container = styled.main`
   padding: 13%;
 `;
 
+export const InputText = styled.text`
+  margin-top: 6%;
+`;
+
 export const Input = styled.input`
   width: 100%;
   height: 22px;
   border-color: ${COLORS.gray4};
   border-style: solid;
   border-radius: 4px;
-  margin-bottom: 6%;
 `;
 
 export const Title = styled.h1`
@@ -73,24 +78,6 @@ export const Title = styled.h1`
   text-align: start;
   color: ${COLORS.gray11};
   margin-top: 0;
-  margin-bottom: 5%;
-`;
-
-export const UpdateContainer = styled.main`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-`;
-
-export const Checkbox = styled.input`
-  width: 25px;
-  height: 25px;
-  border-style: solid;
-`;
-
-export const UpdateText = styled.text`
-  text-align: left;
-  margin-left: 15px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -118,8 +105,4 @@ export const ContinueText = styled.p`
   color: white;
   font-size: 14px;
   padding: 10px;
-`;
-
-export const RedAsterisk = styled.span`
-  color: #b22222;
 `;
