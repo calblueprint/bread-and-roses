@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const EventListing = styled.div`
-  height: 100px;
-  width: 1500px;
+  height: 9.625rem;
+  width: 12.375rem;
   display: inline-block;
-  border: solid;
+  background-color: #d9d9d9;
+  border-radius: 1rem;
 `;

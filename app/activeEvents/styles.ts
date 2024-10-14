@@ -4,4 +4,6 @@ export const EventListingDiv = styled.div`
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  gap: 0.625rem;
+  display: flex;
 `;
