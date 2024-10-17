@@ -1,8 +1,15 @@
 'use client';
 
+import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '../../styles/colors';
 import { BespokeSans } from '../../styles/fonts';
+
+export const Image = styled(NextImage)`
+  layout: responsive;
+  width: 20%;
+  height: 90%;
+`;
 
 export const Page = styled.main`
   background: ${COLORS.gray1};
@@ -87,9 +94,4 @@ export const LocationText = styled.main`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-`;
-
-export const EventLogoWrapper = styled.main`
-  width: 20%;
-  height: 90%;
 `;

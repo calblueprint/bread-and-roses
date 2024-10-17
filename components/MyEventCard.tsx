@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/Image';
 import BPLogo from '@/assets/images/bp-logo.png';
 import * as styles from '../app/events/page.style';
 import { Event } from '../types/schema';
@@ -49,9 +48,7 @@ export default function MyEventCard(eventData: Event) {
           <styles.EventDescriptionText>placeholder</styles.EventDescriptionText>
           <styles.LocationText>placeholder</styles.LocationText>
         </div>
-        <styles.EventLogoWrapper>
-          <Image src={BPLogo} layout="responsive" alt="Blueprint Logo" />
-        </styles.EventLogoWrapper>
+        <styles.Image src={BPLogo} alt="Blueprint Logo" />
       </styles.EventCardContainer>
     </styles.EventContainer>
   );
