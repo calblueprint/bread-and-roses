@@ -2,9 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { fetchAllEvents } from '../../api/supabase/queries/events';
+import MyEventCard from '../../components/MyEventCard';
 import { Event } from '../../types/schema';
+import * as styles from './page.style';
 
-export default function Page() {
+export default function EventPage() {
   const [data, setData] = useState<Event[]>([]);
 
   useEffect(() => {
@@ -14,37 +16,11 @@ export default function Page() {
   }, []);
 
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>event_id</th>
-            <th>facility_id</th>
-            <th>start_date_time</th>
-            <th>end_date_time</th>
-            <th>type_of_act</th>
-            <th>genre</th>
-            <th>needs_host</th>
-            <th>performer_type</th>
-            <th>event_status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(d => (
-            <tr key={d.event_id}>
-              <td>{d.event_id}</td>
-              <td>{d.facility_id}</td>
-              <td>{d.start_date_time}</td>
-              <td>{d.end_date_time}</td>
-              <td>{d.type_of_act}</td>
-              <td>{d.genre}</td>
-              <td>{d.needs_host}</td>
-              <td>{d.performer_type}</td>
-              <td>{d.event_status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <styles.Page>
+      <styles.Title>Upcoming Events</styles.Title>
+      {data.map(d => (
+        <MyEventCard key={d.event_id} {...d} />
+      ))}
+    </styles.Page>
   );
 }
