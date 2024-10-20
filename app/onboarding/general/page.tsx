@@ -1,10 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import Link from 'next/link';
 import Back from '@/assets/images/back.svg';
 import {
   Background,
   ButtonContainer,
-  Checkbox,
   Container,
   ContinueButton,
   ContinueText,
@@ -12,18 +10,16 @@ import {
   InlineContainer,
   Input,
   Rectangle,
-  RedAsterisk,
+  StyledLink,
   Title,
-  UpdateContainer,
-  UpdateText,
-} from './styles';
+} from '../styles';
+import { Checkbox, RedAsterisk, UpdateContainer, UpdateText } from './styles';
 
 export default function Onboarding() {
   return (
     <Background>
       <InlineContainer>
         <Image src={Back} alt="Back icon" />
-
         <div>
           <Rectangle variant="light" widthPercentage="25%" />
           <Rectangle variant="dark" widthPercentage="75%" />
@@ -54,13 +50,15 @@ export default function Onboarding() {
           </UpdateContainer>
         </Container>
 
-        <Link href="/preferences" passHref>
+        <StyledLink href="../onboarding/preferences">
           <ButtonContainer>
             <ContinueButton>
-              <ContinueText>Continue</ContinueText>
+              <ContinueText style={{ fontFamily: 'boo' }}>
+                Continue
+              </ContinueText>
             </ContinueButton>
           </ButtonContainer>
-        </Link>
+        </StyledLink>
       </InlineContainer>
     </Background>
   );

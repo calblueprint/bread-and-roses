@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import Link from 'next/link';
 import Back from '@/assets/images/back.svg';
 import {
@@ -10,16 +9,15 @@ import {
   Image,
   InlineContainer,
   Input,
-  InputText,
   Rectangle,
   Title,
-} from './styles';
+} from '../styles';
 
 export default function Onboarding() {
   return (
     <Background>
       <InlineContainer>
-        <Link href="/onboarding" passHref>
+        <Link href="/onboarding/general" passHref>
           <Image src={Back} alt="Back icon" />
         </Link>
 
@@ -29,17 +27,17 @@ export default function Onboarding() {
         </div>
         <Container>
           <Title>Help us tailor shows to you!</Title>
-          <InputText> Facility Type</InputText>
+          <text>Facility Type</text>
           <Input />
-          <InputText> Preferred Location</InputText>
+          <text>Preferred Location</text>
           <Input />
-          <InputText> Audience</InputText>
+          <text>Audience</text>
           <Input />
-          <InputText> Preferred Equipment</InputText>
+          <text>Preferred Equipment</text>
           <Input />
-          <InputText> Type of Act</InputText>
+          <text>Type of Act</text>
           <Input />
-          <InputText> Genre</InputText>
+          <text>Genre</text>
           <Input />
         </Container>
         <ButtonContainer>
