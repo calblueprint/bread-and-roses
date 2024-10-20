@@ -1,13 +1,6 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import StyledComponentsRegistry from '@/lib/registry';
-import '../styles/global.css';
-
-// font definitions
-const sans = Inter({
-  variable: '--font-sans',
-  subsets: ['latin'],
-});
+import { BespokeSans } from '../styles/fonts';
 
 // site metadata - what shows up on embeds
 export const metadata: Metadata = {
@@ -22,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sans.className}>
+      <body className={BespokeSans.className}>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
