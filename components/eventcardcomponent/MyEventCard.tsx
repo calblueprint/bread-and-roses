@@ -1,7 +1,7 @@
 import React from 'react';
 import BPLogo from '@/assets/images/bp-logo.png';
-import * as styles from '../app/events/page.style';
-import { Event } from '../types/schema';
+import { Event } from '../../types/schema';
+import * as styles from './eventcard.style';
 
 export default function MyEventCard(eventData: Event) {
   const eventStart = new Date(eventData.start_date_time);

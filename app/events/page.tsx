@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { fetchAllEvents } from '../../api/supabase/queries/events';
-import MyEventCard from '../../components/MyEventCard';
+import MyEventCard from '../../components/eventcardcomponent/MyEventCard';
 import { Event } from '../../types/schema';
 import * as styles from './page.style';
 
