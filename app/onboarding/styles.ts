@@ -2,6 +2,7 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
+import { BespokeSans } from '@/styles/fonts';
 import COLORS from '../../styles/colors';
 
 export const Background = styled.main`
@@ -17,7 +18,6 @@ export const Background = styled.main`
 
 export const InlineContainer = styled.main`
   width: 30%;
-  height: 85%;
   flex-direction: column;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -101,11 +101,11 @@ export const ContinueButton = styled.button`
 `;
 
 export const ContinueText = styled.text`
+  ${BespokeSans.style}
   color: white;
   font-size: 14px;
   padding: 10px;
   text-decoration: none;
-  font-family: 'BespokeSans-Regular' !important;
 `;
 
 export const StyledLink = styled.a`

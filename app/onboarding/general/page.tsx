@@ -53,9 +53,7 @@ export default function Onboarding() {
         <StyledLink href="../onboarding/preferences">
           <ButtonContainer>
             <ContinueButton>
-              <ContinueText style={{ fontFamily: 'boo' }}>
-                Continue
-              </ContinueText>
+              <ContinueText>Continue</ContinueText>
             </ContinueButton>
           </ButtonContainer>
         </StyledLink>
