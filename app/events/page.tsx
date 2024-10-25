@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { fetchAllEvents } from '../../api/supabase/queries/events';
-import { Event } from '../../types/schema';
+import { fetchAllEvents } from '@/api/supabase/queries/events';
+import { Event } from '@/types/schema';
 
 export default function Page() {
   const [data, setData] = useState<Event[]>([]);
