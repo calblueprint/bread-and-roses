@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Back from '@/assets/images/back.svg';
+import Back from '@/public/images/back.svg';
 import {
   Background,
   ButtonContainer,
@@ -17,7 +17,7 @@ export default function Onboarding() {
   return (
     <Background>
       <InlineContainer>
-        <Link href="/onboarding/general" passHref>
+        <Link href="/onboarding/general">
           <Image src={Back} alt="Back icon" />
         </Link>
 

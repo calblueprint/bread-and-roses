@@ -1,6 +1,7 @@
 'use client';
 
 import NextImage from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { BespokeSans } from '@/styles/fonts';
 import COLORS from '../../styles/colors';
@@ -108,6 +109,6 @@ export const ContinueText = styled.text`
   text-decoration: none;
 `;
 
-export const StyledLink = styled.a`
+export const StyledLink = styled(Link)`
   text-decoration: none;
 `;
