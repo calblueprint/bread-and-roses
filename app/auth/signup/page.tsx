@@ -58,7 +58,7 @@ export default function SignUp() {
       <SmallBuffer />
       <Card>
         <Form>
-          <H5>Login</H5>
+          <H5>Sign Up</H5>
           <SmallBuffer />
           <Label>
             Email <span style={{ color: 'red' }}>*</span>
