@@ -2,10 +2,10 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
+import { P, SMALLER } from '@/styles/text';
 import COLORS from '../../styles/colors';
-import { BespokeSans } from '../../styles/fonts';
 
-export const Image = styled(NextImage)`
+export const BPImage = styled(NextImage)`
   layout: responsive;
   width: 20%;
   height: 90%;
@@ -14,70 +14,33 @@ export const Image = styled(NextImage)`
 export const EventContainer = styled.main`
   margin: auto;
   width: 100%;
-  display: flex;
-  padding: 16px;
-  justify-content: flex-start;
-  align-items: flex-start;
+  padding-top: 24px;
 `;
-
-export const DateContainer = styled.main`
-  width: 10%;
-`;
-
 export const EventCardContainer = styled.main`
-  width: 65%;
+  width: 100%;
   padding: 16px;
   background: ${COLORS.bread1};
   border-radius: 8px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  gap: 1.5rem;
 `;
 
-export const MonthText = styled.main`
-  color: #000;
-  text-align: center;
-  font-family: ${BespokeSans.style.fontFamily};
-  font-size: 12px;
+export const TimeText = styled(SMALLER)`
   font-style: normal;
-  font-weight: 500;
   line-height: normal;
 `;
 
-export const DateText = styled.main`
-  color: #000;
-  text-align: center;
-  font-family: ${BespokeSans.style.fontFamily};
-  font-size: 16px;
+export const EventDescriptionText = styled(P)`
   font-style: normal;
-  font-weight: 500;
   line-height: normal;
 `;
 
-export const TimeText = styled.main`
-  color: #000;
-  font-family: ${BespokeSans.style.fontFamily};
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
-
-export const EventDescriptionText = styled.main`
-  color: #000;
-  font-family: ${BespokeSans.style.fontFamily};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-`;
-
-export const LocationText = styled.main`
+export const LocationText = styled(SMALLER)`
   color: ${COLORS.gray10};
-  font-family: ${BespokeSans.style.fontFamily};
-  font-size: 12px;
   font-style: normal;
-  font-weight: 400;
   line-height: normal;
 `;
 

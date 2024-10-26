@@ -37,21 +37,40 @@ export default function EventPage() {
 
   const eventsByMonth = groupEventsByMonth(data);
 
+  // Sort the events by month
+  const sortedEntries = Object.entries(eventsByMonth).sort((a, b) => {
+    const dateA = new Date(a[0]); // Month Year string from a
+    const dateB = new Date(b[0]); // Month Year string from b
+    return dateA.getTime() - dateB.getTime(); // Compare timestamps
+  });
+
+  // Sort events within each month by their start date
+  sortedEntries.forEach(([, events]) => {
+    events.sort((a, b) => {
+      return (
+        new Date(a.start_date_time).getTime() -
+        new Date(b.start_date_time).getTime()
+      );
+    });
+  });
+
   return (
     <styles.Page>
-      <styles.Title $fontWeight="500" $color="#000" $align="left">
-        Upcoming Events
-      </styles.Title>
-      {Object.entries(eventsByMonth).map(([month, events]) => (
-        <div key={month}>
-          <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
-            {month}
-          </styles.MonthYear>
-          {events.map(event => (
-            <MyEventCard key={event.event_id} {...event} />
-          ))}
-        </div>
-      ))}
+      <styles.AllEventsHolder>
+        <styles.Title $fontWeight="500" $color="#000" $align="left">
+          Upcoming Events
+        </styles.Title>
+        {sortedEntries.map(([month, events]) => (
+          <div key={month}>
+            <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
+              {month}
+            </styles.MonthYear>
+            {events.map(event => (
+              <MyEventCard key={event.event_id} {...event} />
+            ))}
+          </div>
+        ))}
+      </styles.AllEventsHolder>
     </styles.Page>
   );
 }
