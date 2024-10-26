@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/registry';
-import { BespokeSans } from '../styles/fonts';
+import { Sans } from '../styles/fonts';
 import '../styles/global.css';
 
 // site metadata - what shows up on embeds
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={BespokeSans.className}>
+      <body className={Sans.className}>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
