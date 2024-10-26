@@ -72,7 +72,7 @@ export default function SignIn() {
             onChange={e => setPassword(e.target.value)}
             value={password}
           />
-          <Button onClick={handleSignIn}>Sign in</Button>
+          <Button onClick={handleSignIn}>Sign In</Button>
           <Separator>
             <span>or</span>
           </Separator>
