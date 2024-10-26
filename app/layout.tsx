@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/registry';
-import { BespokeSans } from '../styles/fonts';
+import { Sans } from '../styles/fonts';
 import '../styles/global.css';
 import { OnboardingProvider } from '../utils/onboardingContext';
 
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={BespokeSans.className}>
+      <body className={Sans.className}>
         <StyledComponentsRegistry>
           <OnboardingProvider>{children}</OnboardingProvider>
         </StyledComponentsRegistry>
