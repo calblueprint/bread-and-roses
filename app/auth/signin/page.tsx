@@ -29,7 +29,7 @@ export default function SignIn() {
   const handleSignIn = async () => {
     setMessage('');
     setIsError(false);
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
