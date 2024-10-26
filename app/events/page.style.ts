@@ -2,8 +2,8 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
-import COLORS from '../../styles/colors';
-import { BespokeSans } from '../../styles/fonts';
+import COLORS from '@/styles/colors';
+import { H3, H6 } from '@/styles/text';
 
 export const Image = styled(NextImage)`
   layout: responsive;
@@ -15,13 +15,12 @@ export const Page = styled.main`
   background: ${COLORS.gray1};
 `;
 
-export const Title = styled.main`
-  color: #000;
-  font-family: ${BespokeSans.style.fontFamily};
-  font-size: 32px;
+export const Title = styled(H3)`
   font-style: normal;
-  font-weight: 500;
   line-height: normal;
-  text-align: left;
-  height: 50px;
+`;
+
+export const MonthYear = styled(H6)`
+  font-style: normal;
+  line-height: normal;
 `;

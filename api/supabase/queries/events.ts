@@ -39,3 +39,16 @@ export async function fetchAcceptedEventsByVolunteer(volunteer_id: UUID) {
 
   return events;
 }
+
+// fetches all events that have event_status = 'ACTIVE'
+export async function fetchAllActiveEvents() {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('event_status', 'ACTIVE');
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}

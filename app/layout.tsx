@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/registry';
 import { BespokeSans } from '../styles/fonts';
+import '../styles/global.css';
 
 // site metadata - what shows up on embeds
 export const metadata: Metadata = {

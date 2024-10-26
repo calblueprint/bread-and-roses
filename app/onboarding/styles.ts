@@ -1,7 +1,9 @@
 'use client';
 
 import NextImage from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
+import { BespokeSans } from '@/styles/fonts';
 import COLORS from '../../styles/colors';
 
 export const Background = styled.main`
@@ -17,8 +19,9 @@ export const Background = styled.main`
 
 export const InlineContainer = styled.main`
   width: 30%;
-  height: 85%;
   flex-direction: column;
+  margin-top: 2%;
+  margin-bottom: 2%;
 
   @media (max-width: 1200px) {
     width: 45%;
@@ -47,8 +50,6 @@ export const Rectangle = styled.main<{
 `;
 
 export const Container = styled.main`
-  width: 100%;
-  height: 53%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -61,11 +62,13 @@ export const Container = styled.main`
 
 export const Input = styled.input`
   width: 100%;
-  height: 22px;
+  height: 25px;
   border-color: ${COLORS.gray4};
   border-style: solid;
   border-radius: 4px;
-  margin-bottom: 6%;
+  margin-bottom: 1.3rem;
+  margin-top: 0.25rem;
+  padding-left: 0.4rem;
 `;
 
 export const Title = styled.h1`
@@ -73,24 +76,7 @@ export const Title = styled.h1`
   text-align: start;
   color: ${COLORS.gray11};
   margin-top: 0;
-  margin-bottom: 5%;
-`;
-
-export const UpdateContainer = styled.main`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-`;
-
-export const Checkbox = styled.input`
-  width: 25px;
-  height: 25px;
-  border-style: solid;
-`;
-
-export const UpdateText = styled.text`
-  text-align: left;
-  margin-left: 15px;
+  margin-bottom: 2rem;
 `;
 
 export const ButtonContainer = styled.div`
@@ -111,14 +97,18 @@ export const ContinueButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
 `;
 
-export const ContinueText = styled.p`
+export const ContinueText = styled.text`
+  ${BespokeSans.style}
   color: white;
   font-size: 14px;
   padding: 10px;
+  text-decoration: none;
 `;
 
-export const RedAsterisk = styled.span`
-  color: #b22222;
+export const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
