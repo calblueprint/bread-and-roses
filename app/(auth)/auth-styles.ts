@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { BespokeSans } from '@/styles/fonts';
+import { Sans } from '@/styles/fonts';
 import { H3, P } from '@/styles/text';
 
 export const Container = styled.div`
-  font-family: ${BespokeSans.style.fontFamily}, sans-serif;
+  font-family: ${Sans.style.fontFamily}, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,13 +41,13 @@ export const Form = styled.div`
 `;
 
 export const Label = styled(P)`
-  font-family: ${BespokeSans.style.fontFamily};
+  font-family: ${Sans.style.fontFamily};
   font-weight: 500;
   margin-bottom: -0.2rem;
 `;
 
 export const Input = styled.input`
-  font-family: ${BespokeSans.style.fontFamily};
+  font-family: ${Sans.style.fontFamily};
   padding: 0.7rem;
   border: 1px solid ${COLORS.gray4};
   border-radius: 8px;
@@ -57,7 +57,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  font-family: ${BespokeSans.style.fontFamily};
+  font-family: ${Sans.style.fontFamily};
   background-color: ${COLORS.gray12};
   color: white;
   font-size: 1rem;
@@ -98,7 +98,7 @@ export const Separator = styled.div`
 `;
 
 export const Link = styled.a`
-  font-family: ${BespokeSans.style.fontFamily};
+  font-family: ${Sans.style.fontFamily};
   // TODO: CHANGE COLOR TO BLUE ONCE COLORS.TS IS UPDATED
   color: #3978ff;
   text-decoration: none;
@@ -114,14 +114,14 @@ export const SmallBuffer = styled.div`
 
 // TODO: Temporarily added to verify that supabase login functionality actually works
 export const LoginMessage = styled(P)<{ isError: boolean }>`
-  font-family: ${BespokeSans.style.fontFamily};
+  font-family: ${Sans.style.fontFamily};
   color: ${({ isError }) => (isError ? 'red' : 'green')};
   text-align: center;
   margin-top: 0.5rem;
 `;
 
 export const Footer = styled.div`
-  font-family: ${BespokeSans.style.fontFamily};
+  font-family: ${Sans.style.fontFamily};
   text-align: center;
   margin-top: 1rem;
   width: 100%;

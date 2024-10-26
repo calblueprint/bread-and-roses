@@ -1,6 +1,6 @@
 import localFont from 'next/font/local';
 
-const BespokeSans = localFont({
+const Sans = localFont({
   src: [
     {
       path: '../public/fonts/BespokeSans_Complete/Fonts/OTF/BespokeSans-Light.otf',
@@ -30,7 +30,7 @@ const BespokeSans = localFont({
   ],
 });
 
-const BespokeSerif = localFont({
+const Serif = localFont({
   src: [
     {
       path: '../public/fonts/BespokeSerif_Complete/Fonts/OTF/BespokeSerif-Light.otf',
@@ -85,4 +85,4 @@ const ClashGrotesk = localFont({
   ],
 });
 
-export { BespokeSans, BespokeSerif, ClashGrotesk };
+export { Sans, Serif, ClashGrotesk };
