@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import Availability from '@/public/images/availabilities.svg';
-import Events from '@/public/images/upcoming-events.svg';
 import Settings from '@/public/images/settings.svg';
-import { MenuContainer, ToggleButton, MenuItem, MenuLabel, MenuIconWrapper, Icon } from './styles';
+import Events from '@/public/images/upcoming-events.svg';
+import {
+  Icon,
+  MenuContainer,
+  MenuIconWrapper,
+  MenuItem,
+  MenuLabel,
+  ToggleButton,
+} from './styles';
 
 const ExpandingMenu: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
@@ -26,45 +33,39 @@ const ExpandingMenu: React.FC = () => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" fill="currentColor" />
+            <path
+              d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z"
+              fill="currentColor"
+            />
           </svg>
         </MenuIconWrapper>
       </ToggleButton>
       {expanded && (
         <>
-          <MenuItem 
-            $expanded={expanded} 
+          <MenuItem
+            $expanded={expanded}
             onClick={() => handleClick('availabilities')}
           >
             <Icon src={Availability} alt="Availabilities icon" />
-            <MenuLabel 
+            <MenuLabel
               $expanded={expanded}
               $active={activeItem === 'availabilities'}
             >
               Availabilities
-              </MenuLabel>
+            </MenuLabel>
           </MenuItem>
-          <MenuItem 
-            $expanded={expanded} 
-            onClick={() => handleClick('events')}
-          >
+          <MenuItem $expanded={expanded} onClick={() => handleClick('events')}>
             <Icon src={Events} alt="Events icon" />
-            <MenuLabel 
-              $expanded={expanded}
-              $active={activeItem === 'events'}
-            >
+            <MenuLabel $expanded={expanded} $active={activeItem === 'events'}>
               Upcoming Events
             </MenuLabel>
           </MenuItem>
-          <MenuItem 
-            $expanded={expanded} 
+          <MenuItem
+            $expanded={expanded}
             onClick={() => handleClick('settings')}
           >
             <Icon src={Settings} alt="Settings icon" />
-            <MenuLabel 
-              $expanded={expanded}
-              $active={activeItem === 'settings'}
-            >
+            <MenuLabel $expanded={expanded} $active={activeItem === 'settings'}>
               Profile & Settings
             </MenuLabel>
           </MenuItem>

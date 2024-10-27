@@ -1,22 +1,25 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import Image from 'next/image';
 import { Sans } from '@/styles/fonts';
 import { P } from '@/styles/text';
 
 export const MenuContainer = styled.div<{ $expanded: boolean }>`
   height: 100vh;
-  background-color: ${({ $expanded }) => ($expanded ? COLORS.pomegranate : 'transparent')};
+  background-color: ${({ $expanded }) =>
+    $expanded ? COLORS.pomegranate : 'transparent'};
   display: flex;
   flex-direction: column;
   padding-left: 1.25rem;
   gap: 1.5rem;
-  transition: width 0.3s ease, background-color 0.3s ease;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
   position: fixed;
 
   width: ${({ $expanded }) => ($expanded ? '20%' : '0')};
 
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     width: ${({ $expanded }) => ($expanded ? '75%' : '0')};
   }
 `;
