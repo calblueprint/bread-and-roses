@@ -1,5 +1,9 @@
+'use client';
+
+import { useContext } from 'react';
 import Link from 'next/link';
 import Back from '@/public/images/back.svg';
+import { OnboardingContext } from '@/utils/onboardingContext';
 import { Background, InlineContainer, Rectangle, StyledLink } from '../styles';
 import {
   ConfirmButton,
@@ -12,6 +16,12 @@ import {
 } from './styles';
 
 export default function Review() {
+  const onboardingContext = useContext(OnboardingContext);
+
+  if (!onboardingContext) return null;
+
+  const { preferences, generalInfo, submitOnboardingData } = onboardingContext;
+
   return (
     <Background>
       <InlineContainer>
@@ -26,29 +36,29 @@ export default function Review() {
         <ReviewContainer>
           <Title>Did we get everything?</Title>
           <text>First Name</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{generalInfo.firstName}</SmallText>
           <text>Last Name</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{generalInfo.lastName}</SmallText>
           <text>Phone Number</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{generalInfo.phoneNumber}</SmallText>
 
           <Line />
 
           <text>Facility Type</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{preferences.facilityType}</SmallText>
           <text>Preferred Location</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{preferences.location}</SmallText>
           <text>Audience</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{preferences.audience}</SmallText>
           <text>Preferred Equipment</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{preferences.preferredEquipment}</SmallText>
           <text>Type of Act</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{preferences.typeOfAct}</SmallText>
           <text>Genre</text>
-          <SmallText>Lorem Ipsum</SmallText>
+          <SmallText>{preferences.genre}</SmallText>
 
           <StyledLink href="/onboarding/yay">
-            <ConfirmButton>
+            <ConfirmButton onClick={submitOnboardingData}>
               <ConfirmText>Confirm</ConfirmText>
             </ConfirmButton>
           </StyledLink>

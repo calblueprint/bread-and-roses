@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import router from 'next/dist/client/router';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -14,7 +15,6 @@ import {
   InlineContainer,
   Input,
   Rectangle,
-  StyledLink,
   Title,
 } from '../styles';
 import { Checkbox, RedAsterisk, UpdateContainer, UpdateText } from './styles';
@@ -23,7 +23,6 @@ export default function Onboarding() {
   const onboardingContext = useContext(OnboardingContext);
 
   if (!onboardingContext) return null;
-
   const { generalInfo, setGeneralInfo } = onboardingContext;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +31,17 @@ export default function Onboarding() {
       ...generalInfo,
       [name]: type === 'checkbox' ? checked : value,
     });
+  };
+
+  const handleSubmit = () => {
+    if (
+      !generalInfo.firstName ||
+      !generalInfo.lastName ||
+      !generalInfo.phoneNumber
+    ) {
+      return;
+    }
+    router.push('/onboarding/preferences');
   };
 
   return (
@@ -85,13 +95,11 @@ export default function Onboarding() {
           </UpdateContainer>
         </Container>
 
-        <StyledLink href="/onboarding/preferences">
-          <ButtonContainer>
-            <ContinueButton>
-              <ContinueText>Continue</ContinueText>
-            </ContinueButton>
-          </ButtonContainer>
-        </StyledLink>
+        <ButtonContainer>
+          <ContinueButton onClick={handleSubmit}>
+            <ContinueText>Continue</ContinueText>
+          </ContinueButton>
+        </ButtonContainer>
       </InlineContainer>
     </Background>
   );
