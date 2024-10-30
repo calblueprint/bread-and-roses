@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { BespokeSans } from '@/styles/fonts';
+import { Sans } from '@/styles/fonts';
 import COLORS from '../../styles/colors';
 
 export const Background = styled.main`
@@ -102,7 +102,7 @@ export const ContinueButton = styled.button`
 `;
 
 export const ContinueText = styled.text`
-  ${BespokeSans.style}
+  ${Sans.style}
   color: white;
   font-size: 14px;
   padding: 10px;
