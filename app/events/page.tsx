@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
+import Menu from '@/public/images/ic_baseline-menu.svg';
 import { Event } from '@/types/schema';
 import { fetchAllEvents } from '../../api/supabase/queries/events';
 import * as styles from './page.style';
@@ -56,6 +57,7 @@ export default function EventPage() {
 
   return (
     <styles.Page>
+      <styles.Image src={Menu} alt="Back icon" />
       <styles.AllEventsHolder>
         <styles.Title $fontWeight="500" $color="#000" $align="left">
           Upcoming Events

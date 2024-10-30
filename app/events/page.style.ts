@@ -6,9 +6,9 @@ import COLORS from '@/styles/colors';
 import { H3, H6 } from '@/styles/text';
 
 export const Image = styled(NextImage)`
-  layout: responsive;
-  width: 20%;
-  height: 90%;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 1rem;
 `;
 
 export const Page = styled.main`
@@ -20,22 +20,22 @@ export const Page = styled.main`
 `;
 
 export const AllEventsHolder = styled.main`
-  padding: 24px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
 `;
 
 export const Title = styled(H3)`
   font-style: normal;
   line-height: normal;
-  height: 50px;
 `;
 
 export const MonthYear = styled(H6)`
   font-style: normal;
   line-height: normal;
-  gap: 24px;
+  gap: 1.5rem;
   display: flex;
-  margin-top: 24px;
+  margin-top: 1.25rem;
 `;

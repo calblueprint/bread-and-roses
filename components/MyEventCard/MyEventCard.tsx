@@ -8,12 +8,12 @@ export default function MyEventCard(eventData: Event) {
   const eventStart = new Date(eventData.start_date_time);
   const eventEnd = new Date(eventData.end_date_time);
 
+  // function to remove 00 from time if time is on the hour, ex: 4:00 PM -> 4 PM
   const formatTime = (date: Date) => {
-    const hour = date.toLocaleTimeString([], { hour: 'numeric', hour12: true });
     const minutes = date.getMinutes();
 
     return minutes === 0
-      ? hour
+      ? date.toLocaleTimeString([], { hour: 'numeric', hour12: true })
       : date.toLocaleTimeString([], {
           hour: 'numeric',
           minute: '2-digit',
@@ -56,7 +56,7 @@ export default function MyEventCard(eventData: Event) {
             placeholder
           </styles.EventDescriptionText>
           <styles.LocationText
-            $fontWeight="500"
+            $fontWeight="400"
             $color={COLORS.gray10}
             $align="left"
           >

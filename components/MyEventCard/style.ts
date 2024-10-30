@@ -14,11 +14,11 @@ export const BPImage = styled(NextImage)`
 export const EventContainer = styled.main`
   margin: auto;
   width: 100%;
-  padding-top: 24px;
+  padding-top: 1.5rem;
 `;
 export const EventCardContainer = styled.main`
   width: 100%;
-  padding: 16px;
+  padding: 1rem;
   background: ${COLORS.bread1};
   border-radius: 8px;
   display: flex;
@@ -42,11 +42,4 @@ export const LocationText = styled(SMALLER)`
   color: ${COLORS.gray10};
   font-style: normal;
   line-height: normal;
-`;
-
-export const EventModalBox = styled.main`
-  display: flex;
-  width: 80%;
-  padding: 24px;
-  gap: 24px;
 `;
