@@ -15,7 +15,7 @@ export async function fetchAcceptedEventsByVolunteer(volunteer_id: UUID) {
   const { data, error } = await supabase
     .from('event_signups')
     .select('*')
-    .eq('volunteer_id', volunteer_id)
+    .eq('user_id', volunteer_id)
     .eq('is_accepted', true);
 
   if (error) {
@@ -40,12 +40,12 @@ export async function fetchAcceptedEventsByVolunteer(volunteer_id: UUID) {
   return events;
 }
 
-// fetches all events that have event_status = 'ACTIVE'
+// fetches all events that have event_status = 'Active'
 export async function fetchAllActiveEvents() {
   const { data, error } = await supabase
     .from('events')
     .select('*')
-    .eq('event_status', 'ACTIVE');
+    .eq('event_status', 'Active');
   if (error) {
     throw new Error(error.message);
   }
