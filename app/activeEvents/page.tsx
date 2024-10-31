@@ -53,7 +53,10 @@ export default function Page() {
       </TitleBar>
       <EventListingDiv>
         {events.map(event => (
-          <EventListingCard key={event.event_id} performance_type={event.performance_type} />
+          <EventListingCard
+            key={event.event_id}
+            performance_type={event.performance_type}
+          />
         ))}
       </EventListingDiv>
     </Container>

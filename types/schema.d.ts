@@ -63,7 +63,7 @@ export type PerformerType = 'Solo' | 'Duo' | 'Band';
 export interface Availabilities {
   availability_id: UUID;
   facility_id: UUID;
-  name: string; 
+  name: string;
   additional_info: string;
 }
 
