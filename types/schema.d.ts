@@ -58,7 +58,12 @@ export type EventStatus = 'Active' | 'Inactive';
 // used for event_signups table
 export type Role = 'Host' | 'Performer';
 
-export type PerformerType = 'Solo' | 'Duo' | 'Band';
+export type PerformerType =
+  | 'Solo'
+  | 'Duo'
+  | 'Trio'
+  | 'Quartet'
+  | 'Five or More';
 
 export interface Availabilities {
   availability_id: UUID;

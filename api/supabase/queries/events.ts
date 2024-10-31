@@ -11,12 +11,12 @@ export async function fetchAllEvents() {
   return data;
 }
 
-// fetches all events that have event_status = 'ACTIVE'
+// fetches all events that have event_status = 'Active'
 export async function fetchAllActiveEvents() {
   const { data, error } = await supabase
     .from('events')
     .select('*')
-    .eq('event_status', 'ACTIVE');
+    .eq('event_status', 'Active');
   if (error) {
     throw new Error(error.message);
   }
