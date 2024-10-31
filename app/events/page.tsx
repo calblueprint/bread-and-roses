@@ -22,7 +22,7 @@ export default function Page() {
             <th>facility_id</th>
             <th>start_date_time</th>
             <th>end_date_time</th>
-            <th>type_of_act</th>
+            <th>performance_type</th>
             <th>genre</th>
             <th>needs_host</th>
             <th>performer_type</th>
@@ -36,7 +36,7 @@ export default function Page() {
               <td>{d.facility_id}</td>
               <td>{d.start_date_time}</td>
               <td>{d.end_date_time}</td>
-              <td>{d.type_of_act}</td>
+              <td>{d.performance_type}</td>
               <td>{d.genre}</td>
               <td>{d.needs_host}</td>
               <td>{d.performer_type}</td>

@@ -2,7 +2,7 @@
 import type { UUID } from 'crypto';
 
 // used for events and volunteer_preference tables
-export type TypeOfAct =
+export type PerformanceType =
   | 'Music'
   | 'Dance'
   | 'Poetry'
@@ -15,7 +15,7 @@ export type TypeOfAct =
   | 'Puppetry';
 
 // used for volunteers_preference and facilities table
-export type TypeOfFacility =
+export type FacilityType =
   | 'Assisted Living'
   | "Children's Day Care"
   | 'Detention Center'
@@ -53,31 +53,31 @@ export type Genre =
   | 'Standards';
 
 // used for events table
-export type EventStatus = 'ACTIVE' | 'INACTIVE';
+export type EventStatus = 'Active' | 'Inactive';
 
 // used for event_signups table
 export type Role = 'Host' | 'Performer';
 
-// used for availabilities table
-export type Day =
-  | 'Monday'
-  | 'Tuesday'
-  | 'Wednesday'
-  | 'Thursday'
-  | 'Friday'
-  | 'Saturday'
-  | 'Sunday';
-
-export type TypeOfPerformer = 'Solo' | 'Duo' | 'Band';
+export type PerformerType = 'Solo' | 'Duo' | 'Band';
 
 export interface Availabilities {
   availability_id: UUID;
   facility_id: UUID;
-  date: Date; // date
-  day_of_week: Day;
-  start_time: string; // timestamptz
-  end_time: string; // timestamptz
-  is_recurring: boolean;
+  name: string; 
+  additional_info: string;
+}
+
+export interface AvailableDates {
+  date_id: UUID;
+  availability_id: UUID;
+  available_date: string; //date
+}
+
+export interface Timeslots {
+  timeslot_id: UUID;
+  date_id: UUID;
+  start_time: string; //timestamptz
+  end_time: string; //timestamptz
 }
 
 export interface Event {
@@ -85,11 +85,12 @@ export interface Event {
   facility_id: UUID;
   start_date_time: string; //timestamptz
   end_date_time: string; //timestamptz
-  type_of_act: TypeOfAct;
-  genre: Genre;
+  performance_type: PerformanceType;
+  genre?: Genre;
   needs_host: boolean;
-  performer_type: TypeOfPerformer;
   event_status: EventStatus;
+  performer_type: PerformerType;
+  notes?: string;
 }
 
 export interface EventSignups {
@@ -99,27 +100,30 @@ export interface EventSignups {
   is_accepted: boolean;
 }
 
+export interface FacilityContacts {
+  user_id: UUID;
+  facility_id: UUID;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+}
+
 export interface Facilities {
   facility_id: UUID;
   name: string;
-  email: string;
-  phone_number: string;
-  state: string;
+  county: string;
   city: string;
   street_address_1: string;
   street_address_2?: string;
-  postal_code: string;
   audience: Audience;
-  type: TypeOfFacility;
+  type: FacilityType;
   host_name?: string;
   host_contact?: string;
-  poc_name: string;
-  poc_contact: string;
-  notifications_opt_in: boolean;
 }
 
 export interface Volunteers {
-  volunteer_id: UUID;
+  user_id: UUID;
   first_name: string;
   last_name: string;
   email: string;
@@ -128,11 +132,12 @@ export interface Volunteers {
 }
 
 export interface VolunteersPreferences {
-  volunteer_id: UUID;
-  city?: string;
-  genre?: Genre;
-  instruments?: Instruments;
-  type_of_act?: TypeOfAct;
-  audience?: Audience;
-  facility_type?: TypeOfFacility;
+  user_id: UUID;
+  role?: Role[];
+  performance_type?: PerformanceType[];
+  facility_type?: FacilityType[];
+  locations?: string[];
+  audience?: Audience[];
+  genre?: Genre[];
+  additional_info?: string;
 }
