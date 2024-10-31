@@ -1,5 +1,6 @@
 import React from 'react';
 import BPLogo from '@/assets/images/bp-logo.png';
+import LocPin from '@/public/images/gg_pin.svg';
 import COLORS from '@/styles/colors';
 import { Event } from '@/types/schema';
 import * as styles from './style';
@@ -60,6 +61,7 @@ export default function MyEventCard(eventData: Event) {
             $color={COLORS.gray10}
             $align="left"
           >
+            <styles.LPImage src={LocPin} alt="LocPin" />
             placeholder
           </styles.LocationText>
         </div>

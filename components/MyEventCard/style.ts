@@ -42,4 +42,13 @@ export const LocationText = styled(SMALLER)`
   color: ${COLORS.gray10};
   font-style: normal;
   line-height: normal;
+  display: flex;
+  align-items: center;
+`;
+
+export const LPImage = styled(NextImage)`
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
 `;

@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { fetchAllEvents } from '@/api/supabase/queries/events';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
 import Menu from '@/public/images/ic_baseline-menu.svg';
 import { Event } from '@/types/schema';
-import { fetchAllEvents } from '../../api/supabase/queries/events';
 import * as styles from './page.style';
 
 type GroupedEvents = {
@@ -22,7 +22,7 @@ export default function EventPage() {
 
   const groupEventsByMonth = (events: Event[]) => {
     return events.reduce((acc: GroupedEvents, event) => {
-      const eventDate = new Date(event.start_date_time); // Assumes `date` field is in the event object
+      const eventDate = new Date(event.start_date_time);
       const monthYear = eventDate.toLocaleString('default', {
         month: 'long',
         year: 'numeric',
@@ -57,7 +57,7 @@ export default function EventPage() {
 
   return (
     <styles.Page>
-      <styles.Image src={Menu} alt="Back icon" />
+      <styles.Image src={Menu} alt="Menu icon" />
       <styles.AllEventsHolder>
         <styles.Title $fontWeight="500" $color="#000" $align="left">
           Upcoming Events
