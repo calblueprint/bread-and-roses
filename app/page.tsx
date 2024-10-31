@@ -1,16 +1,14 @@
-import Link from 'next/link';
-import BPLogo from '@/public/images/bp-logo.png';
-import { Container, Image } from './page.style';
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <Container>
-      <Image src={BPLogo} alt="Blueprint Logo" />
-      <p>Open up app/page.tsx to get started!</p>
+  const router = useRouter();
 
-      <Link href="/onboarding/general">
-        <button>Onboarding</button>
-      </Link>
-    </Container>
-  );
+  useEffect(() => {
+    router.push('/signin');
+  }, [router]);
+
+  return null;
 }

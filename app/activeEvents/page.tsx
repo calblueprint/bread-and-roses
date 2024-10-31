@@ -38,7 +38,7 @@ export default function Page() {
       setEvents(fetchedActiveEvents);
     };
     getActiveEvents();
-  }, [events]);
+  }, []);
 
   return (
     <Container>
@@ -53,7 +53,10 @@ export default function Page() {
       </TitleBar>
       <EventListingDiv>
         {events.map(event => (
-          <EventListingCard key={event.event_id} genre={event.genre} />
+          <EventListingCard
+            key={event.event_id}
+            performance_type={event.performance_type}
+          />
         ))}
       </EventListingDiv>
     </Container>

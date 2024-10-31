@@ -1,7 +1,7 @@
 'use client';
 
 import styled, { css } from 'styled-components';
-import { BespokeSans } from './fonts';
+import { Sans } from './fonts';
 
 interface TextProps {
   $color?: string;
@@ -10,7 +10,7 @@ interface TextProps {
 }
 
 const TextStyles = css<TextProps>`
-  ${BespokeSans.style}
+  ${Sans.style}
   font-weight: ${({ $fontWeight }) => $fontWeight || '700'};
   color: ${({ $color }) => $color || 'black'};
   text-align: ${({ $align }) => $align};
