@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
-import router from 'next/dist/client/router';
+import { useContext } from 'react';
+import { useRouter } from 'next/navigation';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -20,9 +20,10 @@ import {
 import { Checkbox, RedAsterisk, UpdateContainer, UpdateText } from './styles';
 
 export default function Onboarding() {
+  const router = useRouter();
   const onboardingContext = useContext(OnboardingContext);
-
   if (!onboardingContext) return null;
+
   const { generalInfo, setGeneralInfo } = onboardingContext;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +34,7 @@ export default function Onboarding() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (
       !generalInfo.firstName ||
       !generalInfo.lastName ||
@@ -54,33 +55,30 @@ export default function Onboarding() {
         </div>
         <Container>
           <Title>Tell us a bit about yourself!</Title>
-          <text>
-            {' '}
-            First Name <RedAsterisk>*</RedAsterisk>{' '}
-          </text>
-          <Input
-            name="firstName"
-            value={generalInfo.firstName}
-            onChange={handleChange}
-          />
-          <text>
-            {' '}
-            Last Name <RedAsterisk>*</RedAsterisk>{' '}
-          </text>
-          <Input
-            name="lastName"
-            value={generalInfo.lastName}
-            onChange={handleChange}
-          />
-          <text>
-            {' '}
-            Phone Number <RedAsterisk>*</RedAsterisk>{' '}
-          </text>
-          <Input
-            name="phoneNumber"
-            value={generalInfo.phoneNumber}
-            onChange={handleChange}
-          />
+          <label>
+            First Name <RedAsterisk>*</RedAsterisk>
+            <Input
+              name="firstName"
+              value={generalInfo.firstName}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Last Name <RedAsterisk>*</RedAsterisk>
+            <Input
+              name="lastName"
+              value={generalInfo.lastName}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Phone Number <RedAsterisk>*</RedAsterisk>
+            <Input
+              name="phoneNumber"
+              value={generalInfo.phoneNumber}
+              onChange={handleChange}
+            />
+          </label>
           <UpdateContainer>
             <Checkbox
               type="checkbox"
@@ -89,7 +87,7 @@ export default function Onboarding() {
               onChange={handleChange}
             />
             <UpdateText>
-              I want to get updated when there's an event that matches my
+              I want to get updated when there&apos;s an event that matches my
               interest!
             </UpdateText>
           </UpdateContainer>
