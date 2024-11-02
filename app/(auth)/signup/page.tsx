@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import supabase from '@/api/supabase/createClient';
+import { useRouter } from 'next/navigation';
+// import supabase from '@/api/supabase/createClient';
 import { H5 } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
 import {
   Button,
   Card,
@@ -20,6 +22,8 @@ import {
 } from '../auth-styles';
 
 export default function SignUp() {
+  const router = useRouter();
+  const { signUp } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -36,18 +40,32 @@ export default function SignUp() {
       return;
     }
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    // Ik this wasn't part of the sprint but I added so I could verify that supabase functionality is working
-    if (error) {
-      setMessage(`Sign-up failed: ${error.message}`);
+    try {
+      const { data, error } = await signUp(email, password);
+      if (error) {
+        setMessage(`Sign-up failed: ${error.message}`);
+        setIsError(true);
+      } else {
+        if (data.user?.email_confirmed_at === null) {
+          setMessage(
+            'Sign-up successful! Please confirm your email to complete registration.',
+          );
+          setIsError(false);
+        } else {
+          setMessage('Sign-up successful!');
+          setIsError(false);
+          setTimeout(() => {
+            router.push('/signin');
+          }, 1500);
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setMessage(`Sign-up failed: ${error.message}`);
+      } else {
+        setMessage('Sign-up failed: An unknown error occurred');
+      }
       setIsError(true);
-    } else {
-      setMessage('Sign-up successful!');
-      setIsError(false);
     }
   };
 
@@ -94,7 +112,7 @@ export default function SignUp() {
             <span>or</span>
           </Separator>
           <GoogleButton>Continue with Google</GoogleButton>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
+          {message && <LoginMessage $isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <SmallBuffer />

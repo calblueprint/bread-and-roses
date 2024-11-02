@@ -113,9 +113,9 @@ export const SmallBuffer = styled.div`
 `;
 
 // TODO: Temporarily added to verify that supabase login functionality actually works
-export const LoginMessage = styled(P)<{ isError: boolean }>`
+export const LoginMessage = styled(P)<{ $isError: boolean }>`
   font-family: ${Sans.style.fontFamily};
-  color: ${({ isError }) => (isError ? 'red' : 'green')};
+  color: ${({ $isError }) => ($isError ? 'red' : 'green')};
   text-align: center;
   margin-top: 0.5rem;
 `;

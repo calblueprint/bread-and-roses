@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import supabase from '@/api/supabase/createClient';
 import { H5 } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
 import {
   Button,
   Card,
@@ -20,6 +22,8 @@ import {
 } from '../auth-styles';
 
 export default function SignIn() {
+  const router = useRouter();
+  const sessionHandler = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -29,18 +33,35 @@ export default function SignIn() {
   const handleSignIn = async () => {
     setMessage('');
     setIsError(false);
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-
-    // Ik this wasn't part of the sprint but I added so I could verify that supabase functionality is working
     if (error) {
       setMessage(`Login failed: ${error.message}`);
       setIsError(true);
     } else {
-      setMessage('Login successful!');
-      setIsError(false);
+      try {
+        const { error } = await sessionHandler.signInWithEmail(email, password);
+        if (error) {
+          setMessage(`Login failed: ${error.message}`);
+          setIsError(true);
+        } else {
+          setMessage('Login successful!');
+          setIsError(false);
+          setTimeout(() => {
+            router.push('/sessionDemo');
+          }, 1000);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          setMessage(`Login failed: ${error.message}`);
+        } else {
+          setMessage('Login failed: An unknown error occurred');
+        }
+        setIsError(true);
+      }
     }
   };
 
@@ -77,7 +98,7 @@ export default function SignIn() {
             <span>or</span>
           </Separator>
           <GoogleButton>Continue with Google</GoogleButton>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
+          {message && <LoginMessage $isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <SmallBuffer />
