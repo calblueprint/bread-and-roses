@@ -55,6 +55,7 @@ export default function ActiveEventsPage() {
         {events.map(event => (
           <EventListingCard
             key={event.event_id}
+            id={event.event_id}
             performance_type={event.performance_type}
           />
         ))}

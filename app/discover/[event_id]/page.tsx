@@ -5,9 +5,7 @@ import { useRouter } from 'next/navigation';
 import { fetchEventById } from '@/api/supabase/queries/events';
 import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import Back from '@/public/images/back.svg';
-import Help from '@/public/images/help.svg';
 import LocationPin from '@/public/images/location_pin.svg';
-import Star from '@/public/images/star.svg';
 import { SMALL } from '@/styles/text';
 import { Event, Facilities } from '@/types/schema';
 import {
@@ -33,17 +31,17 @@ import {
   Title,
 } from './styles';
 
-function Tags(tags: string[]) {
+function Tags(tags: (string | undefined)[]) {
   return (
     <TagDiv>
       {tags.map((tag, index) => {
-        return <IndividualTag key={index}>{tag}</IndividualTag>;
+        return tag && <IndividualTag key={index}>{tag}</IndividualTag>;
       })}
     </TagDiv>
   );
 }
 
-function InterestBlockGen(title: string, about: string) {
+function InterestBlockGen(title: string, about: string, icon: string) {
   return (
     <InterestBlock>
       {' '}
@@ -53,7 +51,7 @@ function InterestBlockGen(title: string, about: string) {
           <InterestTitle $fontWeight="500"> {title}</InterestTitle>
           <SMALL $color="#515151"> {about} </SMALL>
         </div>
-        <Image src={Help} alt="Test"></Image>
+        <Image src={icon} alt="Icon" width={0} height={0}></Image>
       </TextWithIcon>
     </InterestBlock>
   );
@@ -95,8 +93,8 @@ export default function EventPage({
         </Location>
         {event
           ? event.needs_host
-            ? Tags(['Host Needed', event.type_of_act, event.genre])
-            : Tags([event.type_of_act, event.genre])
+            ? Tags(['Host Needed', event.performance_type, event.genre])
+            : Tags([event.performance_type, event.genre])
           : ''}
         <About> About </About>
         <AboutText>
@@ -117,8 +115,16 @@ export default function EventPage({
           ''
         )}
         <ShowInterest> Show Interest </ShowInterest>
-        {InterestBlockGen('To Perform', 'Be the star of the show!')}
-        {InterestBlockGen('To Host', 'Help setup the show!')}
+        {InterestBlockGen(
+          'To Perform',
+          'Be the star of the show!',
+          '/images/help.svg',
+        )}
+        {InterestBlockGen(
+          'To Host',
+          'Help setup the show!',
+          '/images/star.svg',
+        )}
         <SignUp> Sign up</SignUp>
       </Body>
     </Container>
