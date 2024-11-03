@@ -1,5 +1,5 @@
 import React from 'react';
-import BPLogo from '@/assets/images/bp-logo.png';
+import BPLogo from '@/public/images/bp-logo.png';
 import LocPin from '@/public/images/gg_pin.svg';
 import COLORS from '@/styles/colors';
 import { Event } from '@/types/schema';

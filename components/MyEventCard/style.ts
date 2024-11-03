@@ -24,7 +24,6 @@ export const EventCardContainer = styled.main`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
   gap: 1.5rem;
 `;
 

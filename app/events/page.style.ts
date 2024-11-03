@@ -20,8 +20,8 @@ export const Page = styled.main`
 `;
 
 export const AllEventsHolder = styled.main`
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

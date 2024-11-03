@@ -11,11 +11,11 @@ export async function fetchAllEvents() {
   return data;
 }
 
-export async function fetchAcceptedEventsByVolunteer(volunteer_id: UUID) {
+export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
   const { data, error } = await supabase
     .from('event_signups')
     .select('*')
-    .eq('user_id', volunteer_id)
+    .eq('user_id', user_id)
     .eq('is_accepted', true);
 
   if (error) {
