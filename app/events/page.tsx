@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { fetchAllEvents } from '@/api/supabase/queries/events';
+import { fetchAcceptedEventsByVolunteer } from '@/api/supabase/queries/events';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
 import Menu from '@/public/images/ic_baseline-menu.svg';
 import { Event } from '@/types/schema';
@@ -15,9 +15,11 @@ export default function EventPage() {
   const [data, setData] = useState<Event[]>([]);
 
   useEffect(() => {
-    fetchAllEvents().then(eventsData => {
-      setData(eventsData ?? []);
-    });
+    fetchAcceptedEventsByVolunteer('11d219d9-bf05-4a06-a23e-89fd566c7a04').then(
+      eventsData => {
+        setData(eventsData ?? []);
+      },
+    );
   }, []);
 
   const groupEventsByMonth = (events: Event[]) => {

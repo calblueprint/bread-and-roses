@@ -31,6 +31,7 @@ export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
   const { data: events, error: eventsError } = await supabase
     .from('events')
     .select('*')
+    .eq('event_status', 'Active')
     .in('event_id', eventIDs);
 
   if (eventsError) {
