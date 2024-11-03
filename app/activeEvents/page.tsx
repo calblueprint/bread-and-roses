@@ -29,7 +29,7 @@ function MenuBar() {
     </svg>
   );
 }
-export default function Page() {
+export default function ActiveEventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
