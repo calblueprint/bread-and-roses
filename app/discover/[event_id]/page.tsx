@@ -6,6 +6,7 @@ import { fetchEventById } from '@/api/supabase/queries/events';
 import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import Back from '@/public/images/back.svg';
 import LocationPin from '@/public/images/location_pin.svg';
+import COLORS from '@/styles/colors';
 import { SMALL } from '@/styles/text';
 import { Event, Facilities } from '@/types/schema';
 import {
@@ -30,16 +31,6 @@ import {
   Time,
   Title,
 } from './styles';
-
-function Tags(tags: (string | undefined)[]) {
-  return (
-    <TagDiv>
-      {tags.map((tag, index) => {
-        return tag && <IndividualTag key={index}>{tag}</IndividualTag>;
-      })}
-    </TagDiv>
-  );
-}
 
 function InterestBlockGen(title: string, about: string, icon: string) {
   return (
@@ -91,18 +82,25 @@ export default function EventPage({
           <Image src={LocationPin} alt="Location"></Image> 1411 E 31st St,
           Oakland, CA{' '}
         </Location>
-        {event
-          ? event.needs_host
-            ? Tags(['Host Needed', event.performance_type, event.genre])
-            : Tags([event.performance_type, event.genre])
-          : ''}
+        {event && (
+          <TagDiv>
+            {event?.needs_host && (
+              <IndividualTag $bgColor={COLORS.rose6}>Host Needed</IndividualTag>
+            )}
+            <IndividualTag $bgColor={COLORS.bread6}>
+              {event?.performance_type}
+            </IndividualTag>
+            <IndividualTag $bgColor={COLORS.lilac}>
+              {event?.genre}
+            </IndividualTag>
+          </TagDiv>
+        )}
         <About> About </About>
         <AboutText>
-          {' '}
           Lorem ipsum dolor sit amet consectetur. Arcu neque neque diam tortor
           amet. Eget quam sit eu nisl fermentum ac ipsum morbi. Gravida
           convallis molestie purus eros magna tempus fermentum. Habitant
-          sollicitudin fames mi parturient faucibus odio non habitant diam.{' '}
+          sollicitudin fames mi parturient faucibus odio non habitant diam.
         </AboutText>
         <FacilityName> {facility?.name} </FacilityName>
         <Bullet>Prefer Orchestra</Bullet>
@@ -118,12 +116,12 @@ export default function EventPage({
         {InterestBlockGen(
           'To Perform',
           'Be the star of the show!',
-          '/images/help.svg',
+          '/images/star.svg',
         )}
         {InterestBlockGen(
           'To Host',
           'Help setup the show!',
-          '/images/star.svg',
+          '/images/help.svg',
         )}
         <SignUp> Sign up</SignUp>
       </Body>

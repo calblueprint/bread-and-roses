@@ -2,7 +2,12 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
+import COLORS from '@/styles/colors';
 import { H3, H5, P, SMALL } from '@/styles/text';
+
+interface TagProps {
+  $bgColor?: string;
+}
 
 export const Container = styled.div`
   margin-left: 1rem;
@@ -38,12 +43,12 @@ export const Time = styled(P)`
 `;
 
 export const Location = styled(SMALL)`
-  color: #6d6d6d;
+  color: ${COLORS.gray10};
   margin-top: 0.375rem;
 `;
 
-export const IndividualTag = styled.span`
-  background-color: #6d6d6d;
+export const IndividualTag = styled.span<TagProps>`
+  background-color: ${({ $bgColor }) => $bgColor || 'gray'};
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
@@ -91,9 +96,8 @@ export const ShowInterest = styled(H5)`
 
 export const InterestBlock = styled.div`
   padding: 0.75rem 1rem;
-  width: 20rem;
   height: 4.5rem;
-  border: 1px solid var(--gray-6, #c3c3c3);
+  border: 1px solid ${COLORS.gray6};
   border-radius: 0.5rem;
   display: flex;
   flex-direction: row;
@@ -104,7 +108,7 @@ export const InterestBlock = styled.div`
 
 export const Select = styled.div`
   border-radius: 4px;
-  border: 2px solid var(--rose-10, #91000f);
+  border: 2px solid ${COLORS.rose10};
   width: 0.875rem;
   height: 0.875rem;
   line-height: 4.5rem;
