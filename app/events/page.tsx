@@ -1,10 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { fetchAllEvents } from '@/api/supabase/queries/events';
+import MyEventCard from '@/components/MyEventCard/MyEventCard';
+import Menu from '@/public/images/ic_baseline-menu.svg';
 import { Event } from '@/types/schema';
+import { fetchAllEvents } from '../../api/supabase/queries/events';
+import * as styles from './page.style';
 
-export default function Page() {
+type GroupedEvents = {
+  [monthYear: string]: Event[]; // Each key is a "Month Year" string, and the value is an array of Events
+};
+
+export default function EventPage() {
   const [data, setData] = useState<Event[]>([]);
 
   useEffect(() => {
@@ -13,38 +20,59 @@ export default function Page() {
     });
   }, []);
 
+  const groupEventsByMonth = (events: Event[]) => {
+    return events.reduce((acc: GroupedEvents, event) => {
+      const eventDate = new Date(event.start_date_time); // Assumes `date` field is in the event object
+      const monthYear = eventDate.toLocaleString('default', {
+        month: 'long',
+        year: 'numeric',
+      });
+
+      if (!acc[monthYear]) {
+        acc[monthYear] = [];
+      }
+      acc[monthYear].push(event);
+      return acc;
+    }, {} as GroupedEvents);
+  };
+
+  const eventsByMonth = groupEventsByMonth(data);
+
+  // Sort the events by month
+  const sortedEntries = Object.entries(eventsByMonth).sort((a, b) => {
+    const dateA = new Date(a[0]); // Month Year string from a
+    const dateB = new Date(b[0]); // Month Year string from b
+    return dateA.getTime() - dateB.getTime(); // Compare timestamps
+  });
+
+  // Sort events within each month by their start date
+  sortedEntries.forEach(([, events]) => {
+    events.sort((a, b) => {
+      return (
+        new Date(a.start_date_time).getTime() -
+        new Date(b.start_date_time).getTime()
+      );
+    });
+  });
+
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>event_id</th>
-            <th>facility_id</th>
-            <th>start_date_time</th>
-            <th>end_date_time</th>
-            <th>type_of_act</th>
-            <th>genre</th>
-            <th>needs_host</th>
-            <th>performer_type</th>
-            <th>event_status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(d => (
-            <tr key={d.event_id}>
-              <td>{d.event_id}</td>
-              <td>{d.facility_id}</td>
-              <td>{d.start_date_time}</td>
-              <td>{d.end_date_time}</td>
-              <td>{d.type_of_act}</td>
-              <td>{d.genre}</td>
-              <td>{d.needs_host}</td>
-              <td>{d.performer_type}</td>
-              <td>{d.event_status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <styles.Page>
+      <styles.Image src={Menu} alt="Back icon" />
+      <styles.AllEventsHolder>
+        <styles.Title $fontWeight="500" $color="#000" $align="left">
+          Upcoming Events
+        </styles.Title>
+        {sortedEntries.map(([month, events]) => (
+          <div key={month}>
+            <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
+              {month}
+            </styles.MonthYear>
+            {events.map(event => (
+              <MyEventCard key={event.event_id} {...event} />
+            ))}
+          </div>
+        ))}
+      </styles.AllEventsHolder>
+    </styles.Page>
   );
 }

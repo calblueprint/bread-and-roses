@@ -51,11 +51,17 @@ export const H6 = styled.h6<TextProps>`
 export const P = styled.p<TextProps>`
   ${TextStyles}
   font-size: 1rem;
-  font-weight: 400;
+  // font-weight: 400;
 `;
 
 export const SMALL = styled.p<TextProps>`
   ${TextStyles}
   font-size: .875rem;
-  font-weight: 400;
+  // font-weight: 400;
+`;
+
+export const SMALLER = styled.p<TextProps>`
+  ${TextStyles}
+  font-size: .75rem;
+  // font-weight: 400;
 `;
