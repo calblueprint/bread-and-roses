@@ -53,3 +53,43 @@ export async function fetchAllActiveEvents() {
 
   return data;
 }
+
+export async function fetchEventByID(event_id: UUID) {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('event_id', event_id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function fetchEventHost(event_id: UUID) {
+  const { data, error } = await supabase
+    .from('event_signups')
+    .select('*')
+    .eq('event_id', event_id)
+    .eq('role', 'HOST')
+    .eq('is_accepted', true)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const { data: host, error: hosterror } = await supabase
+    .from('volunteers')
+    .select('*')
+    .eq('user_id', data.user_id)
+    .single();
+
+  if (hosterror) {
+    throw new Error(hosterror.message);
+  }
+
+  return host;
+}

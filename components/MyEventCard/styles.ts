@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { P, SMALLER } from '@/styles/text';
 import COLORS from '../../styles/colors';
 
-export const BPImage = styled(NextImage)`
-  layout: responsive;
+export const EventImage = styled(NextImage)`
   width: 20%;
   height: 90%;
 `;
