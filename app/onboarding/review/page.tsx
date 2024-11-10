@@ -2,6 +2,7 @@
 
 import { useContext } from 'react';
 import Link from 'next/link';
+import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
 import Back from '@/public/images/back.svg';
 import { SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
@@ -20,7 +21,12 @@ export default function Review() {
 
   if (!onboardingContext) return null;
 
-  const { preferences, generalInfo, submitOnboardingData } = onboardingContext;
+  const { preferences, generalInfo } = onboardingContext;
+
+  const submitData = async () => {
+    if (!generalInfo || !preferences) return;
+    await submitOnboardingData(generalInfo, preferences);
+  };
 
   return (
     <Background>
@@ -58,7 +64,7 @@ export default function Review() {
           <SmallText>{preferences.genre}</SmallText>
 
           <StyledLink href="/onboarding/yay">
-            <ConfirmButton onClick={submitOnboardingData}>
+            <ConfirmButton onClick={submitData}>
               <SMALL $fontWeight="400" $color="white">
                 Confirm
               </SMALL>
