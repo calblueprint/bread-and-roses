@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
+import Rose from '@/public/images/rose.svg';
+import { SMALL } from '@/styles/text';
 import { Background } from '../styles';
 import {
-  Circle,
   ContinueButton,
-  ContinueText,
+  Image,
   InlineContainer,
   ReviewContainer,
   Title,
@@ -12,16 +13,18 @@ import {
 export default function Onboarding() {
   return (
     <Background>
-      <Circle />
+      <Image src={Rose} alt="Rose" />
       <InlineContainer>
         <ReviewContainer>
           <Title>You're all set!</Title>
           <text>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore.
+            We recommend checking out some upcoming events in the Discover page.
+            If you’re interested in participating, please sign up!
           </text>
           <ContinueButton>
-            <ContinueText>Continue</ContinueText>
+            <SMALL $fontWeight="400" $color="white">
+              Continue
+            </SMALL>
           </ContinueButton>
         </ReviewContainer>
       </InlineContainer>

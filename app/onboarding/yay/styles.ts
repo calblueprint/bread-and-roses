@@ -1,8 +1,9 @@
 'use client';
 
+import NextImage from 'next/image';
 import styled from 'styled-components';
+import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
-import COLORS from '../../../styles/colors';
 
 export const Title = styled.h1`
   font-size: 24px;
@@ -20,23 +21,21 @@ export const InlineContainer = styled.main`
     width: 30%;
   }
   @media (max-width: 768px) {
-    width: 55%;
+    width: 80%;
   }
 `;
 
-export const Circle = styled.main`
+export const Image = styled(NextImage)`
   width: 85px;
   height: 85px;
   flex-shrink: 0;
-  background-color: #f7c1bd;
-  border-radius: 100%;
   position: relative;
   top: 60px;
   z-index: 1;
 `;
 
 export const ReviewContainer = styled.main`
-  position: relative; /* This makes the Circle position relative to this container */
+  position: relative;
   display: flex;
   padding: 60px 32px 32px 32px;
   flex-direction: column;
@@ -44,7 +43,7 @@ export const ReviewContainer = styled.main`
   align-items: start;
   gap: 20px;
   border-radius: 16px;
-  background: var(--bread-1, #fefdfc);
+  background: ${COLORS.bread1};
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
 `;
 
@@ -55,7 +54,7 @@ export const ContinueButton = styled.button`
   align-items: center;
   align-self: stretch;
   border-radius: 99999px;
-  background: var(--gray-12, #202020);
+  background: ${COLORS.gray12};
   border-style: solid;
   border-color: ${COLORS.gray12};
   cursor: pointer;

@@ -3,11 +3,11 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 import Back from '@/public/images/back.svg';
+import { SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import { Background, InlineContainer, Rectangle, StyledLink } from '../styles';
 import {
   ConfirmButton,
-  ConfirmText,
   Image,
   Line,
   ReviewContainer,
@@ -59,7 +59,9 @@ export default function Review() {
 
           <StyledLink href="/onboarding/yay">
             <ConfirmButton onClick={submitOnboardingData}>
-              <ConfirmText>Confirm</ConfirmText>
+              <SMALL $fontWeight="400" $color="white">
+                Confirm
+              </SMALL>
             </ConfirmButton>
           </StyledLink>
         </ReviewContainer>

@@ -2,8 +2,8 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
+import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
-import COLORS from '../../../styles/colors';
 
 export const Image = styled(NextImage)`
   width: 20px;
@@ -28,13 +28,13 @@ export const ReviewContainer = styled.main`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background: #fefdfc;
+  background: ${COLORS.bread1};
   border-radius: 16px;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
 `;
 
 export const SmallText = styled.text`
-  color: #515151;
+  color: ${COLORS.gray11};
   font-size: 14px;
   line-height: normal;
   margin-bottom: 28px;
