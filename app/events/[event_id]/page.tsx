@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { UUID } from 'crypto';
-import { fetchEventByID, fetchEventHost } from '@/api/supabase/queries/events';
+import { fetchEventById, fetchEventHost } from '@/api/supabase/queries/events';
 import {
   fetchFacilityByID,
   fetchFacilityContactByID,
@@ -41,7 +41,7 @@ export default function EventDisplay({
 
   useEffect(() => {
     const getEvent = async () => {
-      const fetchedEvent: Event = await fetchEventByID(params.event_id);
+      const fetchedEvent: Event = await fetchEventById(params.event_id);
       setEvent(fetchedEvent);
       const fetchedFacility: Facilities = await fetchFacilityByID(
         fetchedEvent.facility_id,
@@ -204,7 +204,7 @@ export default function EventDisplay({
                 $color={COLORS.gray10}
                 $align="left"
               >
-                Volunteer Host
+                Event Host
               </styles.ContactTypeText>
               {/* Should this be fixed, or should it changed based on needs_host? */}
               <styles.PhoneNumberText
