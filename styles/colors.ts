@@ -40,6 +40,7 @@ const COLORS = {
 
   pomegranate: '#342A2F',
   lilac: '#D0D4EE',
+  lilac2: '#E6E7EE',
 };
 
 export default COLORS;
