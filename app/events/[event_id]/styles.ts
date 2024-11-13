@@ -42,7 +42,6 @@ export const GradientOverlay = styled.div`
 `;
 
 export const Page = styled.div`
-  background-color: ${COLORS.gray1};
   flex-direction: column;
   min-width: 100%;
   min-height: 100svh;
@@ -51,10 +50,21 @@ export const Page = styled.div`
 `;
 
 export const Container = styled.div`
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
   display: flex;
   flex-direction: column;
+`;
+
+export const Curve = styled.div`
+  z-index: 10;
+  margin: -1.5rem 0;
+  position: relative;
+  padding: 0.75rem 2rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px 20px 0 0;
+  background: ${COLORS.gray1};
 `;
 
 export const EventText = styled(H4)`
@@ -91,6 +101,8 @@ export const LocationDetails = styled.div`
 
 export const SubHeadingText = styled(H5)`
   padding-top: 2.5rem;
+  border-bottom: 1px solid ${COLORS.gray6};
+  padding-bottom: 0.25rem;
 `;
 
 export const AllNotesAndContactsContainer = styled.div`

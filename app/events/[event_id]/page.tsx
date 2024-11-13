@@ -3,11 +3,14 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { UUID } from 'crypto';
-import { fetchEventById, fetchEventHost } from '@/api/supabase/queries/events';
 import {
-  fetchFacilityByID,
+  fetchEventById,
+  fetchEventHostByID,
+} from '@/api/supabase/queries/events';
+import {
+  fetchFacilityById,
   fetchFacilityContactByID,
-} from '@/api/supabase/queries/facility';
+} from '@/api/supabase/queries/facilities';
 import { fetchPerformer } from '@/api/supabase/queries/volunteers';
 import LocPin from '@/public/images/black_loc_pin.svg';
 import BPLogo from '@/public/images/bp-logo.png';
@@ -43,7 +46,7 @@ export default function EventDisplay({
     const getEvent = async () => {
       const fetchedEvent: Event = await fetchEventById(params.event_id);
       setEvent(fetchedEvent);
-      const fetchedFacility: Facilities = await fetchFacilityByID(
+      const fetchedFacility: Facilities = await fetchFacilityById(
         fetchedEvent.facility_id,
       );
       setFacility(fetchedFacility);
@@ -52,7 +55,7 @@ export default function EventDisplay({
       setFacilityContact(fetchedFacilityContact);
 
       if (fetchedEvent.needs_host) {
-        const host: Volunteers = await fetchEventHost(params.event_id);
+        const host: Volunteers = await fetchEventHostByID(params.event_id);
         setHostName(`${host.first_name} ${host.last_name}`);
         setHostPhoneNumber(host.phone_number);
       } else {
@@ -89,6 +92,7 @@ export default function EventDisplay({
       <Link href={`/events`} style={{ textDecoration: 'none' }}>
         <styles.BackImage src={WhiteBack} alt="Back icon" />
       </Link>
+      <styles.Curve />
       <styles.Container>
         <styles.EventText $fontWeight="500" $color="#000" $align="left">
           Event Title Here

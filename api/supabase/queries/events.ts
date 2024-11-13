@@ -67,7 +67,7 @@ export async function fetchEventById(event_id: string) {
   return data;
 }
 
-export async function fetchEventHost(event_id: UUID) {
+export async function fetchEventHostByID(event_id: UUID) {
   const { data, error } = await supabase
     .from('event_signups')
     .select('*')
