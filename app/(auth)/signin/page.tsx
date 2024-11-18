@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
 import supabase from '@/api/supabase/createClient';
 import { H5 } from '@/styles/text';
 import {
@@ -24,8 +25,8 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
+  const router = useRouter(); // Initialize useRouter
 
-  // handle sign in w/ supabase, borrowed from Immigration Justice PR
   const handleSignIn = async () => {
     setMessage('');
     setIsError(false);
@@ -34,17 +35,16 @@ export default function SignIn() {
       password,
     });
 
-    // Ik this wasn't part of the sprint but I added so I could verify that supabase functionality is working
     if (error) {
       setMessage(`Login failed: ${error.message}`);
       setIsError(true);
     } else {
       setMessage('Login successful!');
       setIsError(false);
+      router.push('/onboarding/general'); // Redirect on success
     }
   };
 
-  // Front-end interface
   return (
     <Container>
       <Header>Welcome Back!</Header>
