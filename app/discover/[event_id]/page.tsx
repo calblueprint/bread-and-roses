@@ -90,7 +90,7 @@ export default function EventPage({
             <IndividualTag $bgColor={COLORS.bread6}>
               {event?.performance_type}
             </IndividualTag>
-            <IndividualTag $bgColor={COLORS.lilac}>
+            <IndividualTag $bgColor={COLORS.lilac3}>
               {event?.genre}
             </IndividualTag>
           </TagDiv>

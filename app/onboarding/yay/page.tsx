@@ -24,7 +24,7 @@ export default function Onboarding() {
       <Image src={Rose} alt="Rose" />
       <InlineContainer>
         <ReviewContainer>
-          <Title>You're all set!</Title>
+          <Title>You&apos;re all set!</Title>
           <text>
             We recommend checking out some upcoming events in the Discover page.
             If you’re interested in participating, please sign up!

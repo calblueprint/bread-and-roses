@@ -1,7 +1,12 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
 import { H3, P } from '@/styles/text';
+
+interface TitleUnderlineProps {
+  width?: string;
+}
 
 export const Container = styled.div`
   font-family: ${Sans.style.fontFamily}, sans-serif;
@@ -10,8 +15,19 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: ${COLORS.gray2};
-  padding: 1rem;
+  padding: 2rem;
+`;
+
+export const TitleUnderline = styled.div<TitleUnderlineProps>`
+  margin-top: -0.25rem;
+  margin-bottom: 0.25rem;
+  width: ${props => props.width || '68px'};
+  height: 4px;
+  background-color: ${COLORS.rose8};
+`;
+
+export const Logo = styled(Image)`
+  margin-bottom: 4rem;
 `;
 
 export const Header = styled(H3)`
@@ -43,6 +59,7 @@ export const Form = styled.div`
 export const Label = styled(P)`
   font-family: ${Sans.style.fontFamily};
   font-weight: 500;
+  margin-top: 1.25rem;
   margin-bottom: -0.2rem;
 `;
 
@@ -52,20 +69,19 @@ export const Input = styled.input`
   border: 1px solid ${COLORS.gray4};
   border-radius: 8px;
   width: 100%;
-  margin-bottom: 0.6rem;
   box-sizing: border-box;
 `;
 
 export const Button = styled.button`
   font-family: ${Sans.style.fontFamily};
-  background-color: ${COLORS.gray12};
+  background-color: ${COLORS.pomegranate};
   color: white;
   font-size: 1rem;
   padding: 0.75rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 0.8rem;
+  margin-top: 1.5rem;
   width: 100%;
 `;
 
@@ -98,10 +114,18 @@ export const Separator = styled.div`
 `;
 
 export const Link = styled.a`
-  font-family: ${Sans.style.fontFamily};
-  // TODO: CHANGE COLOR TO BLUE ONCE COLORS.TS IS UPDATED
-  color: #3978ff;
+  color: ${COLORS.lilac9};
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const ForgotPassword = styled.a`
+  color: ${COLORS.lilac9};
+  text-decoration: none;
+  text-align: right;
 
   &:hover {
     text-decoration: underline;
