@@ -32,16 +32,6 @@ export function AuthContextProvider({
 }) {
   const [session, setSession] = useState<Session | null>(null);
 
-  /* useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session: newSession } }) => {
-      setSession(newSession);
-    });
-
-    supabase.auth.onAuthStateChange((_event, newSession) => {
-      setSession(newSession);
-    });
-  }, []); */
-
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
       console.log('Initial session:', newSession);
