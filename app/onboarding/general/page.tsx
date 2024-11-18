@@ -55,19 +55,25 @@ export default function Onboarding() {
         </div>
         <Container>
           <Title>Tell us a bit about yourself!</Title>
-          <text>First Name <RedAsterisk>*</RedAsterisk></text>
+          <text>
+            First Name <RedAsterisk>*</RedAsterisk>
+          </text>
           <Input
             name="firstName"
             value={generalInfo.firstName}
             onChange={handleChange}
           />
-          <text>Last Name <RedAsterisk>*</RedAsterisk></text>
+          <text>
+            Last Name <RedAsterisk>*</RedAsterisk>
+          </text>
           <Input
             name="lastName"
             value={generalInfo.lastName}
             onChange={handleChange}
           />
-          <text>Phone Number <RedAsterisk>*</RedAsterisk></text>
+          <text>
+            Phone Number <RedAsterisk>*</RedAsterisk>
+          </text>
           <Input
             name="phoneNumber"
             value={generalInfo.phoneNumber}
