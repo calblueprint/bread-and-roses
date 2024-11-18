@@ -14,7 +14,7 @@ export const EventListingDiv = styled.div`
 `;
 
 export const SearchBar = styled.div`
-  width: 90%;
+  width: 100%;
   height: 2.25rem;
   line-height: 2.25rem;
   padding-left: 1rem;
@@ -31,7 +31,9 @@ export const TitleBar = styled.div`
 `;
 
 export const Container = styled.div`
-  padding: 2rem;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 3rem;
 `;
 
 export const Discover = styled(H3)`

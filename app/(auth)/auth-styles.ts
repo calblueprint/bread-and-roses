@@ -85,34 +85,6 @@ export const Button = styled.button`
   width: 100%;
 `;
 
-export const GoogleButton = styled(Button)`
-  background-color: ${COLORS.bread1};
-  color: ${COLORS.gray12};
-  font-size: 1rem;
-  // TODO: Update to COLORS.black if that gets added
-  border: 1px solid #000000;
-  margin-top: 0rem;
-`;
-
-export const Separator = styled.div`
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 0.2rem;
-
-  &::before,
-  &::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid ${COLORS.gray5};
-  }
-
-  span {
-    margin: 0 0.5rem;
-    color: ${COLORS.gray7};
-  }
-`;
-
 export const Link = styled.a`
   color: ${COLORS.lilac9};
   text-decoration: none;
@@ -120,20 +92,6 @@ export const Link = styled.a`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-export const ForgotPassword = styled.a`
-  color: ${COLORS.lilac9};
-  text-decoration: none;
-  text-align: right;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-export const SmallBuffer = styled.div`
-  height: 0.5rem;
 `;
 
 // TODO: Temporarily added to verify that supabase login functionality actually works
@@ -150,4 +108,8 @@ export const Footer = styled.div`
   margin-top: 1rem;
   width: 100%;
   padding: 0.5rem;
+`;
+
+export const Instructions = styled(P)`
+  padding-top: 1rem;
 `;

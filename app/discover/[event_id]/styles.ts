@@ -31,6 +31,7 @@ export const BackButton = styled.button`
   border: none;
   outline: none;
   padding: 0;
+  cursor: pointer;
 `;
 
 export const Title = styled(H3)`

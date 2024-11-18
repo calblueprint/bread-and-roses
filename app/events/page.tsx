@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { fetchAcceptedEventsByVolunteer } from '@/api/supabase/queries/events';
+import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
-import Menu from '@/public/images/ic_baseline-menu.svg';
 import { Event } from '@/types/schema';
 import * as styles from './styles';
 
@@ -60,29 +60,31 @@ export default function EventPage() {
   });
 
   return (
-    <styles.Page>
-      <styles.MenuImage src={Menu} alt="Menu icon" />
-      <styles.AllEventsHolder>
-        <styles.Title $fontWeight="500" $color="#000" $align="left">
-          Upcoming Events
-        </styles.Title>
-        {sortedEntries.map(([month, events]) => (
-          <div key={month}>
-            <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
-              {month}
-            </styles.MonthYear>
-            {events.map(event => (
-              <Link
-                key={event.event_id}
-                href={`/events/${event.event_id}`}
-                style={{ textDecoration: 'none' }}
-              >
-                <MyEventCard key={event.event_id} {...event} />
-              </Link>
-            ))}
-          </div>
-        ))}
-      </styles.AllEventsHolder>
-    </styles.Page>
+    <div>
+      <MenuBar />
+      <styles.Page>
+        <styles.AllEventsHolder>
+          <styles.Title $fontWeight="500" $color="#000" $align="left">
+            Upcoming Events
+          </styles.Title>
+          {sortedEntries.map(([month, events]) => (
+            <div key={month}>
+              <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
+                {month}
+              </styles.MonthYear>
+              {events.map(event => (
+                <Link
+                  key={event.event_id}
+                  href={`/events/${event.event_id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <MyEventCard key={event.event_id} {...event} />
+                </Link>
+              ))}
+            </div>
+          ))}
+        </styles.AllEventsHolder>
+      </styles.Page>
+    </div>
   );
 }

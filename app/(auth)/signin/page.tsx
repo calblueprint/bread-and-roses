@@ -75,7 +75,7 @@ export default function SignIn() {
           />
           {/* need to change this to a link */}
           <SMALL $fontWeight="400" $color={COLORS.lilac9} $align="right">
-            Forgot Password?
+            <Link href="/forgotpassword">Forgot Password?</Link>
           </SMALL>
           <Button onClick={handleSignIn}>Login</Button>
         </Form>

@@ -2,7 +2,6 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
-import COLORS from '@/styles/colors';
 import { H3, H6 } from '@/styles/text';
 
 export const MenuImage = styled(NextImage)`
@@ -12,11 +11,11 @@ export const MenuImage = styled(NextImage)`
 `;
 
 export const Page = styled.main`
-  background-color: ${COLORS.gray1};
   flex-direction: column;
   min-width: 100%;
   min-height: 100svh;
   overflow: hidden;
+  padding: 2rem;
 `;
 
 export const AllEventsHolder = styled.main`
@@ -28,6 +27,7 @@ export const AllEventsHolder = styled.main`
 `;
 
 export const Title = styled(H3)`
+  margin-top: 2rem;
   font-style: normal;
   line-height: normal;
 `;
