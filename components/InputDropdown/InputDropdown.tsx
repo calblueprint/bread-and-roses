@@ -9,7 +9,7 @@ import Select, {
 } from 'react-select';
 import COLORS from '@/styles/colors';
 import { P, SMALL } from '@/styles/text';
-import { DropdownOption } from '@/types/dropdown';
+import { DropdownOption } from '@/types/schema';
 import {
   AnimatedWrapper,
   DropdownStyles,

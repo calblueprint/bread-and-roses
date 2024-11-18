@@ -2,7 +2,7 @@ import { StylesConfig } from 'react-select';
 import styled, { keyframes } from 'styled-components';
 import COLORS from '@/styles/colors';
 import { H6 } from '@/styles/text';
-import { DropdownOption } from '@/types/dropdown';
+import { DropdownOption } from '@/types/schema';
 
 export const DropdownWrapper = styled.div`
   display: flex;
