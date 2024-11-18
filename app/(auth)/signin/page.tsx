@@ -51,7 +51,7 @@ export default function SignIn() {
           setMessage('Login successful!');
           setIsError(false);
           setTimeout(() => {
-            router.push('/sessionDemo');
+            router.push('/onboarding/general');
           }, 1000);
         }
       } catch (error) {
