@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { handleSignUp as signUpUser } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import { H5 } from '@/styles/text';
-import { useSession } from '@/utils/AuthProvider';
+import { handleSignUp as signUpUser } from '@/api/supabase/queries/auth';
 import {
   Button,
   Card,
@@ -23,7 +23,6 @@ import {
 
 export default function SignUp() {
   const router = useRouter();
-  const { signUp } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');

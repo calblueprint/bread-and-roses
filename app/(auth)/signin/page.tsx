@@ -23,7 +23,6 @@ import {
 
 export default function SignIn() {
   const router = useRouter();
-  const sessionHandler = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
