@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/api/supabase/createClient';
+// import supabase from '@/api/supabase/createClient';
 import { H5 } from '@/styles/text';
-import { useSession } from '@/utils/AuthProvider';
+import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';
 import {
   Button,
   Card,
@@ -23,7 +23,6 @@ import {
 
 export default function SignIn() {
   const router = useRouter();
-  const sessionHandler = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -34,34 +33,15 @@ export default function SignIn() {
     setMessage('');
     setIsError(false);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) {
-      setMessage(`Login failed: ${error.message}`);
-      setIsError(true);
-    } else {
-      try {
-        const { error } = await sessionHandler.signInWithEmail(email, password);
-        if (error) {
-          setMessage(`Login failed: ${error.message}`);
-          setIsError(true);
-        } else {
-          setMessage('Login successful!');
-          setIsError(false);
-          setTimeout(() => {
-            router.push('/onboarding/general');
-          }, 1000);
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          setMessage(`Login failed: ${error.message}`);
-        } else {
-          setMessage('Login failed: An unknown error occurred');
-        }
-        setIsError(true);
-      }
+    const { success, message } = await signInUser(email, password);
+
+    setMessage(message);
+    setIsError(!success);
+
+    if (success) {
+      setTimeout(() => {
+        router.push('/activeEvents');
+      }, 1000);
     }
   };
 

@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import supabase from '@/api/supabase/createClient';
 import { H5 } from '@/styles/text';
-import { useSession } from '@/utils/AuthProvider';
+import { handleSignUp as signUpUser } from '@/api/supabase/queries/auth';
 import {
   Button,
   Card,
@@ -23,7 +22,6 @@ import {
 
 export default function SignUp() {
   const router = useRouter();
-  const { signUp } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -40,32 +38,15 @@ export default function SignUp() {
       return;
     }
 
-    try {
-      const { data, error } = await signUp(email, password);
-      if (error) {
-        setMessage(`Sign-up failed: ${error.message}`);
-        setIsError(true);
-      } else {
-        if (data.user?.email_confirmed_at === null) {
-          setMessage(
-            'Sign-up successful! Please confirm your email to complete registration.',
-          );
-          setIsError(false);
-        } else {
-          setMessage('Sign-up successful!');
-          setIsError(false);
-          setTimeout(() => {
-            router.push('/signin');
-          }, 1500);
-        }
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        setMessage(`Sign-up failed: ${error.message}`);
-      } else {
-        setMessage('Sign-up failed: An unknown error occurred');
-      }
-      setIsError(true);
+    const { success, message } = await signUpUser(email, password);
+
+    setMessage(message);
+    setIsError(!success);
+
+    if (success) {
+      setTimeout(() => {
+        router.push('/signin');
+      }, 1500);
     }
   };
 
