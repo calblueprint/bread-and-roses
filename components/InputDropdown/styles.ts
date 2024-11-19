@@ -1,4 +1,11 @@
-import { StylesConfig } from 'react-select';
+import {
+  ClearIndicatorProps,
+  ControlProps,
+  CSSObjectWithLabel,
+  DropdownIndicatorProps,
+  OptionProps,
+  StylesConfig,
+} from 'react-select';
 import styled, { keyframes } from 'styled-components';
 import COLORS from '@/styles/colors';
 import { H6 } from '@/styles/text';
@@ -48,7 +55,10 @@ export const DropdownStyles = (
     ...baseStyles,
     padding: '0.3125rem 0',
   }),
-  dropdownIndicator: (baseStyles, state) => ({
+  dropdownIndicator: (
+    baseStyles: CSSObjectWithLabel,
+    state: DropdownIndicatorProps<DropdownOption>,
+  ) => ({
     ...baseStyles,
     transition: '200ms ease-in-out',
     color: COLORS.gray12,
@@ -67,7 +77,10 @@ export const DropdownStyles = (
       transition: '200ms ease-in-out',
     },
   }),
-  clearIndicator: (baseStyles, state) => ({
+  clearIndicator: (
+    baseStyles: CSSObjectWithLabel,
+    state: ClearIndicatorProps<DropdownOption, boolean>,
+  ) => ({
     ...baseStyles,
     cursor: 'default',
     display: multi || state.selectProps.required ? 'none' : 'flex',
@@ -78,12 +91,12 @@ export const DropdownStyles = (
       color: COLORS.gray10,
     },
   }),
-  multiValueLabel: baseStyles => ({
+  multiValueLabel: (baseStyles: CSSObjectWithLabel) => ({
     ...baseStyles,
     fontSize: '0.875rem',
     padding: '0.125rem, 0',
   }),
-  multiValue: baseStyles => ({
+  multiValue: (baseStyles: CSSObjectWithLabel) => ({
     ...baseStyles,
     background: COLORS.lilac2,
     cursor: 'default',
@@ -91,7 +104,7 @@ export const DropdownStyles = (
     borderRadius: '8px',
     margin: '0.25rem 0.5rem 0.25rem 0',
   }),
-  multiValueRemove: baseStyles => ({
+  multiValueRemove: (baseStyles: CSSObjectWithLabel) => ({
     ...baseStyles,
     padding: '0 0.25rem',
     marginLeft: '0.25rem',
@@ -100,11 +113,14 @@ export const DropdownStyles = (
       background: 'rgba(0, 0, 0, 0.1)',
     },
   }),
-  placeholder: baseStyles => ({
+  placeholder: (baseStyles: CSSObjectWithLabel) => ({
     ...baseStyles,
     color: COLORS.gray6,
   }),
-  control: (baseStyles, state) => ({
+  control: (
+    baseStyles: CSSObjectWithLabel,
+    state: ControlProps<DropdownOption>,
+  ) => ({
     ...baseStyles,
     cursor: 'text',
     color: COLORS.gray12,
@@ -116,7 +132,7 @@ export const DropdownStyles = (
     borderColor: getControlBorderColor(state.hasValue, state.isFocused, error),
     background: state.selectProps.isDisabled ? COLORS.gray3 : 'white',
   }),
-  menu: baseStyles => ({
+  menu: (baseStyles: CSSObjectWithLabel) => ({
     ...baseStyles,
     background: COLORS.bread1,
     boxShadow: '0 2px 0.25rem 0.1rem rgba(0, 0, 0, 0.25)',
@@ -146,7 +162,10 @@ export const DropdownStyles = (
       backgroundColor: COLORS.bread1,
     },
   }),
-  option: (baseStyles, state) => ({
+  option: (
+    baseStyles: CSSObjectWithLabel,
+    state: OptionProps<DropdownOption>,
+  ) => ({
     ...baseStyles,
     position: 'relative',
     color: COLORS.gray12,
