@@ -33,7 +33,7 @@ export default function SignIn() {
       <Logo src={BRLogo} alt="An example image" />
       <Card>
         <Form>
-          <Link href="/onboarding/general">
+          <Link href="/signin">
             <Image src={Back} alt="Back icon" />
           </Link>
           <H5>Forgot Password?</H5>

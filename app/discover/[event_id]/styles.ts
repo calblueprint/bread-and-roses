@@ -107,12 +107,19 @@ export const InterestBlock = styled.div`
   margin-bottom: 0.75rem;
 `;
 
-export const Select = styled.div`
-  border-radius: 4px;
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  width: 20px;
+  height: 20px;
   border: 2px solid ${COLORS.rose10};
-  width: 0.875rem;
-  height: 0.875rem;
-  line-height: 4.5rem;
+  border-radius: 4px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+
+  &:checked {
+    background-color: ${COLORS.rose10}; /* Optional: Red background when checked */
+    border-color: ${COLORS.rose10}; /* Border stays red when checked */
+  }
 `;
 
 export const InterestTitle = styled(P)`

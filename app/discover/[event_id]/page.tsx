@@ -15,6 +15,7 @@ import {
   BackButton,
   Body,
   Bullet,
+  Checkbox,
   Container,
   FacilityName,
   HostWarningTitle,
@@ -23,7 +24,6 @@ import {
   InterestBlock,
   InterestTitle,
   Location,
-  Select,
   ShowInterest,
   SignUp,
   TagDiv,
@@ -36,7 +36,7 @@ function InterestBlockGen(title: string, about: string, icon: string) {
   return (
     <InterestBlock>
       {' '}
-      <Select />
+      <Checkbox type="checkbox" />
       <TextWithIcon>
         <div>
           <InterestTitle $fontWeight="500"> {title}</InterestTitle>

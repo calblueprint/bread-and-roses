@@ -86,7 +86,6 @@ export default function Onboarding() {
           />
           <UpdateContainer>
             <Checkbox
-              type="checkbox"
               name="notifications"
               checked={generalInfo.notifications}
               onChange={handleChange}
