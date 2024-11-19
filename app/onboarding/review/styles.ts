@@ -11,15 +11,6 @@ export const Image = styled(NextImage)`
   margin-top: 1rem;
 `;
 
-export const Title = styled.h1`
-  font-size: 24px;
-  text-align: start;
-  color: ${COLORS.gray11};
-  margin-top: 0;
-  font-weight: 500;
-  margin-bottom: 28px;
-`;
-
 export const ReviewContainer = styled.main`
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -37,11 +28,11 @@ export const SmallText = styled.text`
   color: ${COLORS.gray11};
   font-size: 14px;
   line-height: normal;
-  margin-bottom: 28px;
+  margin-bottom: 0.1rem;
 `;
 
 export const Line = styled.main`
-  width: 362px;
+  width: 100%;
   height: 2px;
   color: black;
   background: linear-gradient(
@@ -50,20 +41,7 @@ export const Line = styled.main`
     #b8b8b8 50%,
     rgba(184, 184, 184, 0) 100%
   );
-  margin-bottom: 28px;
-`;
-
-export const ConfirmButton = styled.button`
-  display: flex;
-  width: 100%;
-  padding: 12px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  background: ${COLORS.gray12};
-  border-style: solid;
-  border-color: ${COLORS.gray12};
-  cursor: pointer;
+  margin-top: 1.5rem;
 `;
 
 export const ConfirmText = styled.text`

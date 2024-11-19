@@ -4,6 +4,7 @@ import NextImage from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Sans } from '@/styles/fonts';
+import { H5, P } from '@/styles/text';
 import COLORS from '../../styles/colors';
 
 export const Background = styled.main`
@@ -13,7 +14,6 @@ export const Background = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${COLORS.gray2};
   overflow: hidden;
 `;
 
@@ -37,16 +37,19 @@ export const Image = styled(NextImage)`
   margin-bottom: -2px;
 `;
 
-export const Rectangle = styled.main<{
+export const ProgressBarContainer = styled.div`
+  width: 100%;
+`;
+
+export const Rectangle = styled.div<{
   variant: 'light' | 'dark';
-  widthPercentage: string;
+  width: string;
 }>`
-  width: ${({ widthPercentage }) => widthPercentage};
-  height: 7px;
+  width: ${({ width }) => width};
+  height: 2px;
   display: inline-block;
   background: ${({ variant }) =>
-    variant === 'light' ? COLORS.gray8 : COLORS.gray10};
-  border-radius: 2px;
+    variant === 'light' ? COLORS.gray4 : COLORS.gray12};
 `;
 
 export const Container = styled.main`
@@ -61,22 +64,24 @@ export const Container = styled.main`
 `;
 
 export const Input = styled.input`
+  font-family: ${Sans.style.fontFamily};
+  padding: 0.5rem;
+  margin-top: 0.1875rem;
+  border: 1px solid ${COLORS.gray6};
+  border-radius: 8px;
   width: 100%;
-  height: 25px;
-  border-color: ${COLORS.gray4};
-  border-style: solid;
-  border-radius: 4px;
-  margin-bottom: 1.3rem;
-  margin-top: 0.25rem;
-  padding-left: 0.4rem;
+  box-sizing: border-box;
 `;
 
-export const Title = styled.h1`
-  font-size: 28px;
-  text-align: start;
-  color: ${COLORS.gray11};
+export const Title = styled(H5)`
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
+`;
+
+export const Label = styled(P)`
+  margin-top: 1.75rem;
+  color: ${COLORS.gray11};
+  font-weight: 400;
 `;
 
 export const ButtonContainer = styled.div`
@@ -85,18 +90,17 @@ export const ButtonContainer = styled.div`
   height: 80%;
 `;
 
-export const ContinueButton = styled.button`
-  width: 5.5rem;
-  height: 2.25rem;
-  background-color: ${COLORS.gray11};
-  border-color: ${COLORS.gray11};
+export const Button = styled.button`
+  width: 100%;
+  height: 2.5rem;
+  background-color: ${COLORS.pomegranate};
+  border-color: ${COLORS.pomegranate};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
   padding: 8px 16px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   cursor: pointer;
   text-decoration: none;
 `;

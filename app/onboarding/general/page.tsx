@@ -7,13 +7,15 @@ import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
+  Button,
   ButtonContainer,
   Container,
-  ContinueButton,
   ContinueText,
   Image,
   InlineContainer,
   Input,
+  Label,
+  ProgressBarContainer,
   Rectangle,
   Title,
 } from '../styles';
@@ -49,33 +51,36 @@ export default function Onboarding() {
     <Background>
       <InlineContainer>
         <Image src={Back} alt="Back icon" />
-        <div>
-          <Rectangle variant="light" widthPercentage="25%" />
-          <Rectangle variant="dark" widthPercentage="75%" />
-        </div>
         <Container>
-          <Title>Tell us a bit about yourself!</Title>
-          <text>
+          <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
+          <ProgressBarContainer>
+            <Rectangle variant="dark" width="25%" />
+            <Rectangle variant="light" width="75%" />
+          </ProgressBarContainer>
+          <Label>
             First Name <RedAsterisk>*</RedAsterisk>
-          </text>
+          </Label>
           <Input
             name="firstName"
+            placeholder="Jane"
             value={generalInfo.firstName}
             onChange={handleChange}
           />
-          <text>
+          <Label>
             Last Name <RedAsterisk>*</RedAsterisk>
-          </text>
+          </Label>
           <Input
             name="lastName"
+            placeholder="Doe"
             value={generalInfo.lastName}
             onChange={handleChange}
           />
-          <text>
+          <Label>
             Phone Number <RedAsterisk>*</RedAsterisk>
-          </text>
+          </Label>
           <Input
             name="phoneNumber"
+            placeholder="(987) 654-3210"
             value={generalInfo.phoneNumber}
             onChange={handleChange}
           />
@@ -86,17 +91,14 @@ export default function Onboarding() {
               checked={generalInfo.notifications}
               onChange={handleChange}
             />
-            <UpdateText>
-              I want to get updated when there&apos;s an event that matches my
-              interest!
-            </UpdateText>
+            <UpdateText>Notify me when an event matches my interest</UpdateText>
           </UpdateContainer>
         </Container>
 
         <ButtonContainer>
-          <ContinueButton onClick={handleSubmit}>
+          <Button onClick={handleSubmit}>
             <ContinueText>Continue</ContinueText>
-          </ContinueButton>
+          </Button>
         </ButtonContainer>
       </InlineContainer>
     </Background>

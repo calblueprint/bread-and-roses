@@ -6,15 +6,17 @@ import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
 import Back from '@/public/images/back.svg';
 import { SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
-import { Background, InlineContainer, Rectangle, StyledLink } from '../styles';
 import {
-  ConfirmButton,
-  Image,
-  Line,
-  ReviewContainer,
-  SmallText,
+  Background,
+  Button,
+  InlineContainer,
+  Label,
+  ProgressBarContainer,
+  Rectangle,
+  StyledLink,
   Title,
-} from './styles';
+} from '../styles';
+import { Image, Line, ReviewContainer, SmallText } from './styles';
 
 export default function Review() {
   const onboardingContext = useContext(OnboardingContext);
@@ -31,44 +33,43 @@ export default function Review() {
   return (
     <Background>
       <InlineContainer>
-        <div>
-          <Rectangle variant="dark" widthPercentage="100%" />
-        </div>
-
         <Link href="/onboarding/preferences">
           <Image src={Back} alt="Back icon" />
         </Link>
 
         <ReviewContainer>
-          <Title>Did we get everything?</Title>
-          <text>First Name</text>
+          <Title $fontWeight={500}>Did we get everything?</Title>
+          <ProgressBarContainer>
+            <Rectangle variant="dark" width="100%" />
+          </ProgressBarContainer>
+          <Label>First Name</Label>
           <SmallText>{generalInfo.firstName}</SmallText>
-          <text>Last Name</text>
+          <Label>Last Name</Label>
           <SmallText>{generalInfo.lastName}</SmallText>
-          <text>Phone Number</text>
+          <Label>Phone Number</Label>
           <SmallText>{generalInfo.phoneNumber}</SmallText>
 
           <Line />
 
-          <text>Facility Type</text>
+          <Label>Facility Type</Label>
           <SmallText>{preferences.facilityType}</SmallText>
-          <text>Preferred Location</text>
+          <Label>Preferred Location</Label>
           <SmallText>{preferences.location}</SmallText>
-          <text>Audience</text>
+          <Label>Audience</Label>
           <SmallText>{preferences.audience}</SmallText>
-          <text>Preferred Equipment</text>
+          <Label>Preferred Equipment</Label>
           <SmallText>{preferences.preferredEquipment}</SmallText>
-          <text>Type of Act</text>
+          <Label>Type of Act</Label>
           <SmallText>{preferences.typeOfAct}</SmallText>
-          <text>Genre</text>
+          <Label>Genre</Label>
           <SmallText>{preferences.genre}</SmallText>
 
           <StyledLink href="/onboarding/yay">
-            <ConfirmButton onClick={submitData}>
+            <Button onClick={submitData}>
               <SMALL $fontWeight="400" $color="white">
-                Confirm
+                Everything looks good!
               </SMALL>
-            </ConfirmButton>
+            </Button>
           </StyledLink>
         </ReviewContainer>
       </InlineContainer>

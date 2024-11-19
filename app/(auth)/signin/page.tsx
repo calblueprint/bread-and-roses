@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Import useRouter
-
 import supabase from '@/api/supabase/createClient';
 import BRLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';

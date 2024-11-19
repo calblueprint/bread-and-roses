@@ -27,7 +27,7 @@ export default function Onboarding() {
           <Title>You&apos;re all set!</Title>
           <text>
             We recommend checking out some upcoming events in the Discover page.
-            If you’re interested in participating, please sign up!
+            If you&apos;re interested in participating, please sign up!
           </text>
           <ContinueButton onClick={handleContinue}>
             <SMALL $fontWeight="400" $color="white">
