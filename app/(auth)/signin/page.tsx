@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter
-import supabase from '@/api/supabase/createClient';
+import { useRouter } from 'next/navigation';
+import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';
+// import supabase from '@/api/supabase/createClient';
 import BRLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
 import { H5, SMALL } from '@/styles/text';
@@ -15,6 +16,7 @@ import {
   Input,
   Label,
   Link,
+  LoginMessage,
   Logo,
   TitleUnderline,
 } from '../auth-styles';
@@ -31,18 +33,14 @@ export default function SignIn() {
   const handleSignIn = async () => {
     setMessage('');
     setIsError(false);
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
 
-    if (error) {
-      setMessage(`Login failed: ${error.message}`);
-      setIsError(true);
-    } else {
-      setMessage('Login successful!');
-      setIsError(false);
-      router.push('/onboarding/general'); // Redirect on success
+    const { success, message } = await signInUser(email, password);
+    setMessage(message);
+    setIsError(!success);
+    if (success) {
+      setTimeout(() => {
+        router.push('/activeEvents');
+      }, 1000);
     }
   };
 
@@ -77,6 +75,7 @@ export default function SignIn() {
             <Link href="/forgotpassword">Forgot Password?</Link>
           </SMALL>
           <Button onClick={handleSignIn}>Login</Button>
+          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <Footer>

@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import supabase from '@/api/supabase/createClient';
+// import supabase from '@/api/supabase/createClient';
+import { useRouter } from 'next/navigation';
+import { handleSignUp as signUpUser } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import { H5 } from '@/styles/text';
 import {
@@ -13,6 +15,7 @@ import {
   Input,
   Label,
   Link,
+  LoginMessage,
   Logo,
   TitleUnderline,
 } from '../auth-styles';
@@ -25,6 +28,7 @@ export default function SignUp() {
   const [message, setMessage] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
+  const router = useRouter();
 
   const handleSignUp = async () => {
     setMessage('');
@@ -36,18 +40,13 @@ export default function SignUp() {
       return;
     }
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    // Ik this wasn't part of the sprint but I added so I could verify that supabase functionality is working
-    if (error) {
-      setMessage(`Sign-up failed: ${error.message}`);
-      setIsError(true);
-    } else {
-      setMessage('Sign-up successful!');
-      setIsError(false);
+    const { success, message } = await signUpUser(email, password);
+    setMessage(message);
+    setIsError(!success);
+    if (success) {
+      setTimeout(() => {
+        router.push('/signin');
+      }, 1500);
     }
   };
 
@@ -89,6 +88,7 @@ export default function SignUp() {
             value={confirmedPassword}
           />
           <Button onClick={handleSignUp}>Sign Up</Button>
+          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <Footer>
