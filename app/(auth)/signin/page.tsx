@@ -22,13 +22,13 @@ import {
 } from '../auth-styles';
 
 export default function SignIn() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [message, setMessage] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
-  const router = useRouter(); // Initialize useRouter
 
   const handleSignIn = async () => {
     setMessage('');
@@ -75,7 +75,7 @@ export default function SignIn() {
             <Link href="/forgotpassword">Forgot Password?</Link>
           </SMALL>
           <Button onClick={handleSignIn}>Login</Button>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
+          {message && <LoginMessage $isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <Footer>

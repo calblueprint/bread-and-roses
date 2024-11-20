@@ -21,6 +21,7 @@ import {
 } from '../auth-styles';
 
 export default function SignUp() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -28,7 +29,6 @@ export default function SignUp() {
   const [message, setMessage] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
-  const router = useRouter();
 
   const handleSignUp = async () => {
     setMessage('');
@@ -88,7 +88,7 @@ export default function SignUp() {
             value={confirmedPassword}
           />
           <Button onClick={handleSignUp}>Sign Up</Button>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
+          {message && <LoginMessage $isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <Footer>
