@@ -125,7 +125,7 @@ export const DropdownStyles = (
     cursor: 'text',
     color: COLORS.gray12,
     minHeight: '2.9375rem',
-    padding: '8px',
+    padding: '4px 8px',
     borderRadius: '0.313rem',
     borderWidth: '1px',
     borderStyle: 'solid',
