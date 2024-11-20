@@ -51,7 +51,7 @@ export const DropdownStyles = (
   multi?: boolean,
   error?: boolean,
 ): StylesConfig<DropdownOption> => ({
-  noOptionsMessage: baseStyles => ({
+  noOptionsMessage: (baseStyles: CSSObjectWithLabel) => ({
     ...baseStyles,
     padding: '0.3125rem 0',
   }),
@@ -142,7 +142,7 @@ export const DropdownStyles = (
     borderWidth: '1.5px',
     borderStyle: 'solid',
   }),
-  menuList: baseStyles => ({
+  menuList: (baseStyles: CSSObjectWithLabel) => ({
     ...baseStyles,
     padding: '0.2rem 0.3rem',
     margin: '2px',
