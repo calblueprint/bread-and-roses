@@ -1,31 +1,33 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
 import supabase from '@/api/supabase/createClient';
-import { H5 } from '@/styles/text';
+import BRLogo from '@/public/images/b&r-logo.png';
+import COLORS from '@/styles/colors';
+import { H5, SMALL } from '@/styles/text';
 import {
   Button,
   Card,
   Container,
   Footer,
   Form,
-  GoogleButton,
-  Header,
   Input,
   Label,
   Link,
-  LoginMessage,
-  Separator,
-  SmallBuffer,
+  Logo,
+  TitleUnderline,
 } from '../auth-styles';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [message, setMessage] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
+  const router = useRouter(); // Initialize useRouter
 
-  // handle sign in w/ supabase, borrowed from Immigration Justice PR
   const handleSignIn = async () => {
     setMessage('');
     setIsError(false);
@@ -34,25 +36,23 @@ export default function SignIn() {
       password,
     });
 
-    // Ik this wasn't part of the sprint but I added so I could verify that supabase functionality is working
     if (error) {
       setMessage(`Login failed: ${error.message}`);
       setIsError(true);
     } else {
       setMessage('Login successful!');
       setIsError(false);
+      router.push('/onboarding/general'); // Redirect on success
     }
   };
 
-  // Front-end interface
   return (
     <Container>
-      <Header>Welcome Back!</Header>
-      <SmallBuffer />
+      <Logo src={BRLogo} alt="An example image" />
       <Card>
         <Form>
           <H5>Login</H5>
-          <SmallBuffer />
+          <TitleUnderline />
           <Label>
             Email <span style={{ color: 'red' }}>*</span>
           </Label>
@@ -72,15 +72,13 @@ export default function SignIn() {
             onChange={e => setPassword(e.target.value)}
             value={password}
           />
-          <Button onClick={handleSignIn}>Sign In</Button>
-          <Separator>
-            <span>or</span>
-          </Separator>
-          <GoogleButton>Continue with Google</GoogleButton>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
+          {/* need to change this to a link */}
+          <SMALL $fontWeight="400" $color={COLORS.lilac9} $align="right">
+            <Link href="/forgotpassword">Forgot Password?</Link>
+          </SMALL>
+          <Button onClick={handleSignIn}>Login</Button>
         </Form>
       </Card>
-      <SmallBuffer />
       <Footer>
         Don’t have an account? <Link href="/signup">Sign up!</Link>
       </Footer>

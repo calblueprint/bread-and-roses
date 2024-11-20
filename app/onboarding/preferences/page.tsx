@@ -6,14 +6,17 @@ import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
+  Button,
   ButtonContainer,
   Container,
-  ContinueButton,
   ContinueText,
   Image,
   InlineContainer,
   Input,
+  Label,
+  ProgressBarContainer,
   Rectangle,
+  StyledLink,
   Title,
 } from '../styles';
 
@@ -34,55 +37,56 @@ export default function Onboarding() {
         <Link href="/onboarding/general">
           <Image src={Back} alt="Back icon" />
         </Link>
-
-        <div>
-          <Rectangle variant="light" widthPercentage="50%" />
-          <Rectangle variant="dark" widthPercentage="50%" />
-        </div>
         <Container>
-          <Title>Help us tailor shows to you!</Title>
-          <text>Facility Type</text>
+          <Title $fontWeight={500}>Help us tailor shows to you!</Title>
+          <ProgressBarContainer>
+            <Rectangle variant="dark" width="50%" />
+            <Rectangle variant="light" width="50%" />
+          </ProgressBarContainer>
+          <Label>Facility Type</Label>
           <Input
             name="facilityType"
             value={preferences.facilityType}
             onChange={handleChange}
           />
-          <text>Preferred Location</text>
+          <Label>Location Preferences</Label>
           <Input
             name="location"
             value={preferences.location}
             onChange={handleChange}
           />
-          <text>Audience</text>
+          <Label>Preferred Audience</Label>
           <Input
             name="audience"
             value={preferences.audience}
             onChange={handleChange}
           />
-          <text>Preferred Equipment</text>
-          <Input
-            name="preferredEquipment"
-            value={preferences.preferredEquipment}
-            onChange={handleChange}
-          />
-          <text>Type of Act</text>
+          <Label>Type of Performance</Label>
           <Input
             name="typeOfAct"
             value={preferences.typeOfAct}
             onChange={handleChange}
           />
-          <text>Genre</text>
+          <Label>Performance Genre</Label>
           <Input
             name="genre"
             value={preferences.genre}
             onChange={handleChange}
           />
+          <Label>Performance Grouping</Label>
+          <Input
+            name="performance grouping"
+            value={preferences.preferredEquipment}
+            onChange={handleChange}
+          />
         </Container>
-        <ButtonContainer>
-          <ContinueButton>
-            <ContinueText>Continue</ContinueText>
-          </ContinueButton>
-        </ButtonContainer>
+        <StyledLink href="/onboarding/review">
+          <ButtonContainer>
+            <Button>
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </StyledLink>
       </InlineContainer>
     </Background>
   );

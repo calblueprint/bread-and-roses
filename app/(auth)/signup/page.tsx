@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import supabase from '@/api/supabase/createClient';
+import BRLogo from '@/public/images/b&r-logo.png';
 import { H5 } from '@/styles/text';
 import {
   Button,
@@ -9,21 +10,20 @@ import {
   Container,
   Footer,
   Form,
-  GoogleButton,
-  Header,
   Input,
   Label,
   Link,
-  LoginMessage,
-  Separator,
-  SmallBuffer,
+  Logo,
+  TitleUnderline,
 } from '../auth-styles';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [message, setMessage] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
 
   const handleSignUp = async () => {
@@ -54,12 +54,11 @@ export default function SignUp() {
   // Front-end interface
   return (
     <Container>
-      <Header>Welcome!</Header>
-      <SmallBuffer />
+      <Logo src={BRLogo} alt="An example image" />
       <Card>
         <Form>
           <H5>Sign Up</H5>
-          <SmallBuffer />
+          <TitleUnderline width="90px" />
           <Label>
             Email <span style={{ color: 'red' }}>*</span>
           </Label>
@@ -90,14 +89,8 @@ export default function SignUp() {
             value={confirmedPassword}
           />
           <Button onClick={handleSignUp}>Sign Up</Button>
-          <Separator>
-            <span>or</span>
-          </Separator>
-          <GoogleButton>Continue with Google</GoogleButton>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
-      <SmallBuffer />
       <Footer>
         Already have an account? <Link href="/signin">Sign in!</Link>
       </Footer>

@@ -25,7 +25,7 @@ const COLORS = {
   rose11: '#C6343B',
   rose12: '#621D1E',
 
-  gray1: '#ECECEC',
+  gray1: '#F0F0F0',
   gray2: '#E7E7E7',
   gray3: '#DDDDDD',
   gray4: '#D4D4D4',
@@ -38,8 +38,20 @@ const COLORS = {
   gray11: '#515151',
   gray12: '#202020',
 
+  lilac1: '#ECEDEF',
+  lilac2: '#E6E7EE',
+  lilac3: '#DDDFEC',
+  lilac4: '#D0D4EE',
+  lilac5: '#C2C8EE',
+  lilac6: '#B2B9EA',
+  lilac7: '#9DA5E2',
+  lilac8: '#8189D9',
+  lilac9: '#5B5BD6',
+  lilac10: '#4F4CC6',
+  lilac11: '#423EAF',
+  lilac12: '#383975',
+
   pomegranate: '#342A2F',
-  lilac: '#D0D4EE',
   lilac2: '#E6E7EE',
 };
 
