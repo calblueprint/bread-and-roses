@@ -1,7 +1,7 @@
 const COLORS = {
   bread1: '#FEFDFC',
   bread2: '#F5F5F3',
-  bread3: '#F6F3E9',
+  bread3: '#EBE8DE',
   bread4: '#EDE6D5',
   bread5: '#E6DCC4',
   bread6: '#DED1AF',
