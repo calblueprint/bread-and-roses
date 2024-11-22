@@ -88,7 +88,7 @@ export default function SignUp() {
             value={confirmedPassword}
           />
           <Button onClick={handleSignUp}>Sign Up</Button>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
+          {message && <LoginMessage $isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <Footer>

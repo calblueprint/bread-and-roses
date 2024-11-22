@@ -75,7 +75,7 @@ export default function SignIn() {
             <Link href="/forgotpassword">Forgot Password?</Link>
           </SMALL>
           <Button onClick={handleSignIn}>Login</Button>
-          {message && <LoginMessage isError={isError}>{message}</LoginMessage>}
+          {message && <LoginMessage $isError={isError}>{message}</LoginMessage>}
         </Form>
       </Card>
       <Footer>
