@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
-import { H3, P } from '@/styles/text';
+import { H3, P, SMALL } from '@/styles/text';
 
 interface TitleUnderlineProps {
   width?: string;
@@ -19,8 +19,7 @@ export const Container = styled.div`
 `;
 
 export const TitleUnderline = styled.div<TitleUnderlineProps>`
-  margin-top: -0.25rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 1.5rem;
   width: ${props => props.width || '68px'};
   height: 4px;
   background-color: ${COLORS.rose8};
@@ -28,6 +27,8 @@ export const TitleUnderline = styled.div<TitleUnderlineProps>`
 
 export const Logo = styled(Image)`
   margin-bottom: 4rem;
+  width: 200px;
+  height: auto;
 `;
 
 export const Header = styled(H3)`
@@ -53,14 +54,18 @@ export const Form = styled.div`
   flex-direction: column;
   align-items: stretch;
   width: 100%;
-  gap: 0.5rem;
+`;
+
+export const Fields = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 `;
 
 export const Label = styled(P)`
   font-family: ${Sans.style.fontFamily};
   font-weight: 500;
-  margin-top: 1.25rem;
-  margin-bottom: -0.2rem;
+  margin-bottom: 0.2rem;
 `;
 
 export const Input = styled.input`
@@ -81,8 +86,14 @@ export const Button = styled.button`
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   width: 100%;
+`;
+
+export const ForgotPassword = styled(SMALL)`
+  margin-top: 0.25rem;
+  font-weight: 400;
+  text-align: right;
 `;
 
 export const Link = styled.a`
@@ -95,11 +106,11 @@ export const Link = styled.a`
 `;
 
 // TODO: Temporarily added to verify that supabase login functionality actually works
-export const LoginMessage = styled(P)<{ isError: boolean }>`
-  font-family: ${Sans.style.fontFamily};
-  color: ${({ isError }) => (isError ? 'red' : 'green')};
-  text-align: center;
-  margin-top: 0.5rem;
+export const LoginMessage = styled(SMALL)<{ $isError: boolean }>`
+  color: ${({ $isError }) => ($isError ? 'red' : 'green')};
+  font-weight: 400;
+  text-align: left;
+  margin-bottom: 1.5rem;
 `;
 
 export const Footer = styled.div`
@@ -111,5 +122,5 @@ export const Footer = styled.div`
 `;
 
 export const Instructions = styled(P)`
-  padding-top: 1rem;
+  padding-bottom: 1.5rem;
 `;
