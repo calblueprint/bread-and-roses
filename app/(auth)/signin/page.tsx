@@ -29,7 +29,6 @@ export default function SignIn() {
   const [message, setMessage] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
-  const router = useRouter(); // Initialize useRouter
 
   const handleSignIn = async () => {
     setMessage('');

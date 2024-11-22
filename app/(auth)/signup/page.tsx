@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { handleSignUp as signUpUser } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import { H5 } from '@/styles/text';
-import { handleSignUp as signUpUser } from '@/api/supabase/queries/auth';
 import {
   Button,
   Card,
@@ -30,7 +29,6 @@ export default function SignUp() {
   const [message, setMessage] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
-  const router = useRouter();
 
   const handleSignUp = async () => {
     setMessage('');
