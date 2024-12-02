@@ -2,26 +2,28 @@
 'use client';
 
 import { useContext } from 'react';
+import { useRouter } from 'next/navigation';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
+  Button,
   ButtonContainer,
   Container,
-  ContinueButton,
   ContinueText,
   Image,
   InlineContainer,
   Input,
+  Label,
+  ProgressBarContainer,
   Rectangle,
-  StyledLink,
   Title,
 } from '../styles';
 import { Checkbox, RedAsterisk, UpdateContainer, UpdateText } from './styles';
 
 export default function Onboarding() {
+  const router = useRouter();
   const onboardingContext = useContext(OnboardingContext);
-
   if (!onboardingContext) return null;
 
   const { generalInfo, setGeneralInfo } = onboardingContext;
@@ -34,64 +36,69 @@ export default function Onboarding() {
     });
   };
 
+  const handleSubmit = async () => {
+    if (
+      !generalInfo.firstName ||
+      !generalInfo.lastName ||
+      !generalInfo.phoneNumber
+    ) {
+      return;
+    }
+    router.push('/onboarding/preferences');
+  };
+
   return (
     <Background>
       <InlineContainer>
         <Image src={Back} alt="Back icon" />
-        <div>
-          <Rectangle variant="light" widthPercentage="25%" />
-          <Rectangle variant="dark" widthPercentage="75%" />
-        </div>
         <Container>
-          <Title>Tell us a bit about yourself!</Title>
-          <text>
-            {' '}
-            First Name <RedAsterisk>*</RedAsterisk>{' '}
-          </text>
+          <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
+          <ProgressBarContainer>
+            <Rectangle variant="dark" width="25%" />
+            <Rectangle variant="light" width="75%" />
+          </ProgressBarContainer>
+          <Label>
+            First Name <RedAsterisk>*</RedAsterisk>
+          </Label>
           <Input
             name="firstName"
+            placeholder="Jane"
             value={generalInfo.firstName}
             onChange={handleChange}
           />
-          <text>
-            {' '}
-            Last Name <RedAsterisk>*</RedAsterisk>{' '}
-          </text>
+          <Label>
+            Last Name <RedAsterisk>*</RedAsterisk>
+          </Label>
           <Input
             name="lastName"
+            placeholder="Doe"
             value={generalInfo.lastName}
             onChange={handleChange}
           />
-          <text>
-            {' '}
-            Phone Number <RedAsterisk>*</RedAsterisk>{' '}
-          </text>
+          <Label>
+            Phone Number <RedAsterisk>*</RedAsterisk>
+          </Label>
           <Input
             name="phoneNumber"
+            placeholder="(987) 654-3210"
             value={generalInfo.phoneNumber}
             onChange={handleChange}
           />
           <UpdateContainer>
             <Checkbox
-              type="checkbox"
               name="notifications"
               checked={generalInfo.notifications}
               onChange={handleChange}
             />
-            <UpdateText>
-              I want to get updated when there's an event that matches my
-              interest!
-            </UpdateText>
+            <UpdateText>Notify me when an event matches my interest</UpdateText>
           </UpdateContainer>
         </Container>
 
-        <StyledLink href="/onboarding/preferences">
-          <ButtonContainer>
-            <ContinueButton>
-              <ContinueText>Continue</ContinueText>
-            </ContinueButton>
-          </ButtonContainer>
-        </StyledLink>
+        <ButtonContainer>
+          <Button onClick={handleSubmit}>
+            <ContinueText>Continue</ContinueText>
+          </Button>
+        </ButtonContainer>
       </InlineContainer>
     </Background>
   );

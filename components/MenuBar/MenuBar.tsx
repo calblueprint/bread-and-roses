@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Availability from '@/public/images/availabilities.svg';
 import Settings from '@/public/images/settings.svg';
 import Events from '@/public/images/upcoming-events.svg';
@@ -14,12 +15,14 @@ import {
 const MenuBar: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
+  const router = useRouter();
 
   const toggleMenu = () => setExpanded(!expanded);
 
   // TODO: add navigation by passing in path prop
-  const handleClick = (item: string) => {
+  const handleClick = (item: string, path: string) => {
     setActiveItem(item);
+    router.push(path);
   };
 
   return (
@@ -44,7 +47,7 @@ const MenuBar: React.FC = () => {
         <>
           <MenuItem
             $expanded={expanded}
-            onClick={() => handleClick('availabilities')}
+            onClick={() => handleClick('availabilities', 'discover')}
           >
             <Icon src={Availability} alt="Availabilities icon" />
             <MenuLabel
@@ -54,7 +57,10 @@ const MenuBar: React.FC = () => {
               Availabilities
             </MenuLabel>
           </MenuItem>
-          <MenuItem $expanded={expanded} onClick={() => handleClick('events')}>
+          <MenuItem
+            $expanded={expanded}
+            onClick={() => handleClick('events', '/events')}
+          >
             <Icon src={Events} alt="Events icon" />
             <MenuLabel $expanded={expanded} $active={activeItem === 'events'}>
               Upcoming Events
@@ -62,7 +68,7 @@ const MenuBar: React.FC = () => {
           </MenuItem>
           <MenuItem
             $expanded={expanded}
-            onClick={() => handleClick('settings')}
+            onClick={() => handleClick('settings', '/discover')}
           >
             <Icon src={Settings} alt="Settings icon" />
             <MenuLabel $expanded={expanded} $active={activeItem === 'settings'}>

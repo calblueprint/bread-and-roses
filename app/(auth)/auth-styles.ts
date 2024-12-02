@@ -1,7 +1,12 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
-import { H3, P } from '@/styles/text';
+import { H3, P, SMALL } from '@/styles/text';
+
+interface TitleUnderlineProps {
+  width?: string;
+}
 
 export const Container = styled.div`
   font-family: ${Sans.style.fontFamily}, sans-serif;
@@ -10,8 +15,20 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: ${COLORS.gray2};
-  padding: 1rem;
+  padding: 2rem;
+`;
+
+export const TitleUnderline = styled.div<TitleUnderlineProps>`
+  margin-bottom: 1.5rem;
+  width: ${props => props.width || '68px'};
+  height: 4px;
+  background-color: ${COLORS.rose8};
+`;
+
+export const Logo = styled(Image)`
+  margin-bottom: 4rem;
+  width: 200px;
+  height: auto;
 `;
 
 export const Header = styled(H3)`
@@ -37,13 +54,18 @@ export const Form = styled.div`
   flex-direction: column;
   align-items: stretch;
   width: 100%;
-  gap: 0.5rem;
+`;
+
+export const Fields = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 `;
 
 export const Label = styled(P)`
   font-family: ${Sans.style.fontFamily};
   font-weight: 500;
-  margin-bottom: -0.2rem;
+  margin-bottom: 0.2rem;
 `;
 
 export const Input = styled.input`
@@ -52,55 +74,30 @@ export const Input = styled.input`
   border: 1px solid ${COLORS.gray4};
   border-radius: 8px;
   width: 100%;
-  margin-bottom: 0.6rem;
   box-sizing: border-box;
 `;
 
 export const Button = styled.button`
   font-family: ${Sans.style.fontFamily};
-  background-color: ${COLORS.gray12};
+  background-color: ${COLORS.pomegranate};
   color: white;
   font-size: 1rem;
   padding: 0.75rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 0.8rem;
+  margin-top: 2rem;
   width: 100%;
 `;
 
-export const GoogleButton = styled(Button)`
-  background-color: ${COLORS.bread1};
-  color: ${COLORS.gray12};
-  font-size: 1rem;
-  // TODO: Update to COLORS.black if that gets added
-  border: 1px solid #000000;
-  margin-top: 0rem;
-`;
-
-export const Separator = styled.div`
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 0.2rem;
-
-  &::before,
-  &::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid ${COLORS.gray5};
-  }
-
-  span {
-    margin: 0 0.5rem;
-    color: ${COLORS.gray7};
-  }
+export const ForgotPassword = styled(SMALL)`
+  margin-top: 0.25rem;
+  font-weight: 400;
+  text-align: right;
 `;
 
 export const Link = styled.a`
-  font-family: ${Sans.style.fontFamily};
-  // TODO: CHANGE COLOR TO BLUE ONCE COLORS.TS IS UPDATED
-  color: #3978ff;
+  color: ${COLORS.lilac9};
   text-decoration: none;
 
   &:hover {
@@ -108,16 +105,12 @@ export const Link = styled.a`
   }
 `;
 
-export const SmallBuffer = styled.div`
-  height: 0.5rem;
-`;
-
 // TODO: Temporarily added to verify that supabase login functionality actually works
-export const LoginMessage = styled(P)<{ isError: boolean }>`
-  font-family: ${Sans.style.fontFamily};
-  color: ${({ isError }) => (isError ? 'red' : 'green')};
-  text-align: center;
-  margin-top: 0.5rem;
+export const LoginMessage = styled(SMALL)<{ $isError: boolean }>`
+  color: ${({ $isError }) => ($isError ? 'red' : 'green')};
+  font-weight: 400;
+  text-align: left;
+  margin-bottom: 1.5rem;
 `;
 
 export const Footer = styled.div`
@@ -126,4 +119,8 @@ export const Footer = styled.div`
   margin-top: 1rem;
   width: 100%;
   padding: 0.5rem;
+`;
+
+export const Instructions = styled(P)`
+  padding-bottom: 1.5rem;
 `;

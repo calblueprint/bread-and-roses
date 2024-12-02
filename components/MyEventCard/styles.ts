@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { P, SMALLER } from '@/styles/text';
 import COLORS from '../../styles/colors';
 
-export const BPImage = styled(NextImage)`
-  layout: responsive;
+export const EventImage = styled(NextImage)`
   width: 20%;
   height: 90%;
 `;
@@ -24,7 +23,6 @@ export const EventCardContainer = styled.main`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
   gap: 1.5rem;
 `;
 
@@ -42,4 +40,13 @@ export const LocationText = styled(SMALLER)`
   color: ${COLORS.gray10};
   font-style: normal;
   line-height: normal;
+  display: flex;
+  align-items: center;
+`;
+
+export const LPImage = styled(NextImage)`
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
 `;

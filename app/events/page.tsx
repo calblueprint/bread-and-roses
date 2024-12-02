@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { fetchAcceptedEventsByVolunteer } from '@/api/supabase/queries/events';
+import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
-import Menu from '@/public/images/ic_baseline-menu.svg';
 import { Event } from '@/types/schema';
-import { fetchAllEvents } from '../../api/supabase/queries/events';
-import * as styles from './page.style';
+import * as styles from './styles';
 
 type GroupedEvents = {
   [monthYear: string]: Event[]; // Each key is a "Month Year" string, and the value is an array of Events
@@ -15,14 +16,17 @@ export default function EventPage() {
   const [data, setData] = useState<Event[]>([]);
 
   useEffect(() => {
-    fetchAllEvents().then(eventsData => {
-      setData(eventsData ?? []);
-    });
+    fetchAcceptedEventsByVolunteer('11d219d9-bf05-4a06-a23e-89fd566c7a04').then(
+      //placeholder user id
+      eventsData => {
+        setData(eventsData ?? []);
+      },
+    );
   }, []);
 
   const groupEventsByMonth = (events: Event[]) => {
     return events.reduce((acc: GroupedEvents, event) => {
-      const eventDate = new Date(event.start_date_time); // Assumes `date` field is in the event object
+      const eventDate = new Date(event.start_date_time);
       const monthYear = eventDate.toLocaleString('default', {
         month: 'long',
         year: 'numeric',
@@ -56,23 +60,31 @@ export default function EventPage() {
   });
 
   return (
-    <styles.Page>
-      <styles.Image src={Menu} alt="Back icon" />
-      <styles.AllEventsHolder>
-        <styles.Title $fontWeight="500" $color="#000" $align="left">
-          Upcoming Events
-        </styles.Title>
-        {sortedEntries.map(([month, events]) => (
-          <div key={month}>
-            <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
-              {month}
-            </styles.MonthYear>
-            {events.map(event => (
-              <MyEventCard key={event.event_id} {...event} />
-            ))}
-          </div>
-        ))}
-      </styles.AllEventsHolder>
-    </styles.Page>
+    <div>
+      <MenuBar />
+      <styles.Page>
+        <styles.AllEventsHolder>
+          <styles.Title $fontWeight="500" $color="#000" $align="left">
+            Upcoming Events
+          </styles.Title>
+          {sortedEntries.map(([month, events]) => (
+            <div key={month}>
+              <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
+                {month}
+              </styles.MonthYear>
+              {events.map(event => (
+                <Link
+                  key={event.event_id}
+                  href={`/events/${event.event_id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <MyEventCard key={event.event_id} {...event} />
+                </Link>
+              ))}
+            </div>
+          ))}
+        </styles.AllEventsHolder>
+      </styles.Page>
+    </div>
   );
 }

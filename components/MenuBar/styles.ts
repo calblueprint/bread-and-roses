@@ -6,6 +6,7 @@ import { P } from '@/styles/text';
 
 export const MenuContainer = styled.div<{ $expanded: boolean }>`
   height: 100vh;
+  z-index: 9999;
   background-color: ${({ $expanded }) =>
     $expanded ? COLORS.pomegranate : 'transparent'};
   display: flex;

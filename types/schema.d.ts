@@ -146,3 +146,8 @@ export interface VolunteersPreferences {
   genre?: Genre[];
   additional_info?: string;
 }
+
+export interface DropdownOption {
+  label: string;
+  value: string;
+}
