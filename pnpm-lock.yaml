@@ -339,12 +339,12 @@ packages:
         integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==,
       }
     engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
-    
+
   '@floating-ui/core@1.6.8':
-  resolution:
-    {
-      integrity: sha512-7XJ9cPU+yI2QeLS+FCSlqNFZJq8arvswefkZrYI1yQBbftw6FyrZOxYSh+9S7z7TpeWlRt9zJ5IhM1WIL334jA==,
-    }
+    resolution:
+      {
+        integrity: sha512-7XJ9cPU+yI2QeLS+FCSlqNFZJq8arvswefkZrYI1yQBbftw6FyrZOxYSh+9S7z7TpeWlRt9zJ5IhM1WIL334jA==,
+      }
 
   '@floating-ui/dom@1.6.12':
     resolution:
@@ -3517,7 +3517,7 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
-  
+
   '@floating-ui/core@1.6.8':
     dependencies:
       '@floating-ui/utils': 0.2.8
@@ -3528,7 +3528,7 @@ snapshots:
       '@floating-ui/utils': 0.2.8
 
   '@floating-ui/utils@0.2.8': {}
-  
+
   '@fullcalendar/core@6.1.15':
     dependencies:
       preact: 10.12.1
