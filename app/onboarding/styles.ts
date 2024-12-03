@@ -14,6 +14,7 @@ export const Background = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: ${COLORS.bread2};
   overflow: hidden;
 `;
 
@@ -88,6 +89,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   height: 80%;
+  width: 100%;
 `;
 
 export const Button = styled.button`
@@ -103,6 +105,7 @@ export const Button = styled.button`
   align-items: center;
   cursor: pointer;
   text-decoration: none;
+  width: 100%;
 `;
 
 export const ContinueText = styled.text`

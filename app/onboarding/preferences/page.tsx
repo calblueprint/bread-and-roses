@@ -76,7 +76,7 @@ export default function Onboarding() {
           <Label>Performance Grouping</Label>
           <Input
             name="performance grouping"
-            value={preferences.preferredEquipment}
+            value={preferences.grouping}
             onChange={handleChange}
           />
         </Container>

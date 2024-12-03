@@ -2,6 +2,7 @@
 'use client';
 
 import { useContext } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
@@ -50,7 +51,13 @@ export default function Onboarding() {
   return (
     <Background>
       <InlineContainer>
-        <Image src={Back} alt="Back icon" />
+        <Link href="/onboarding/role">
+          <Image src={Back} alt="Back icon" />
+        </Link>
+        <div>
+          <Rectangle variant="light" width="25%" />
+          <Rectangle variant="dark" width="75%" />
+        </div>
         <Container>
           <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
           <ProgressBarContainer>

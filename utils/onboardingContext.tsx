@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, ReactNode, useState } from 'react';
+import supabase from '@/api/supabase/createClient';
 
 export interface GeneralInfo {
   firstName: string;
@@ -14,8 +15,14 @@ export interface Preferences {
   location: string;
   audience: string;
   preferredEquipment: string;
-  typeOfAct: string;
-  genre: string;
+  typeOfAct: string[];
+  genre: string[];
+  grouping: string[];
+}
+
+interface Role {
+  isHost: boolean;
+  isPerformer: boolean;
 }
 
 interface OnboardingContextType {
@@ -23,7 +30,9 @@ interface OnboardingContextType {
   setGeneralInfo: (info: GeneralInfo) => void;
   preferences: Preferences;
   setPreferences: (preferences: Preferences) => void;
-  // submitOnboardingData: () => Promise<void>;
+  role: Role;
+  setRole: (role: Role) => void;
+  submitOnboardingData: () => Promise<void>;
 }
 
 export const OnboardingContext = createContext<
@@ -43,9 +52,55 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     location: '',
     audience: '',
     preferredEquipment: '',
-    typeOfAct: '',
-    genre: '',
+    typeOfAct: [],
+    genre: [],
+    grouping: [],
   });
+
+  const [role, setRole] = useState<Role>({
+    isHost: false,
+    isPerformer: false,
+  });
+
+  const submitOnboardingData = async () => {
+    try {
+      const { data: volunteerData, error: volunteerError } = await supabase
+        .from('volunteers')
+        .insert([
+          {
+            first_name: generalInfo.firstName,
+            last_name: generalInfo.lastName,
+            phone_number: generalInfo.phoneNumber,
+            notifications_opt_in: generalInfo.notifications,
+          },
+        ]);
+
+      if (volunteerError) throw volunteerError;
+
+      const { data: preferencesData, error: preferencesError } = await supabase
+        .from('volunteer_preferences')
+        .insert([
+          {
+            facility_type: preferences.facilityType,
+            location: preferences.location,
+            audience_type: preferences.audience,
+            instruments: preferences.preferredEquipment,
+            type_of_act: preferences.typeOfAct,
+            genre: preferences.genre,
+            grouping: preferences.grouping,
+          },
+        ]);
+
+      if (preferencesError) throw preferencesError;
+
+      console.log('Onboarding data submitted successfully:', {
+        volunteerData,
+        preferencesData,
+      });
+    } catch (error) {
+      console.error('Error submitting onboarding data:', error);
+    }
+  };
 
   return (
     <OnboardingContext.Provider
@@ -54,6 +109,9 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
         setGeneralInfo,
         preferences,
         setPreferences,
+        role,
+        setRole,
+        submitOnboardingData,
       }}
     >
       {children}
