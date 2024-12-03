@@ -44,7 +44,7 @@ export default function SignUp() {
     setIsError(!success);
 
     if (success) {
-      router.push('/onboarding/general');
+      router.push('/onboarding/role');
     }
   };
 

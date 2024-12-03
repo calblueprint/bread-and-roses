@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
+import { P } from '@/styles/text';
 
 export const Checkbox = styled.input`
   width: 25px;
@@ -10,7 +11,7 @@ export const Checkbox = styled.input`
   margin-right: 1rem;
 `;
 
-export const BoxContainer = styled.div`
+export const BoxContainer = styled.div<{ isSelected: boolean }>`
   display: flex;
   align-items: flex-start;
   padding: 12px 16px;
@@ -18,8 +19,10 @@ export const BoxContainer = styled.div`
   gap: 16px;
   align-self: stretch;
   border-radius: 8px;
-  border: 1px solid ${COLORS.gray6};
-  background: ${COLORS.bread2};
+  border: 1px solid
+    ${({ isSelected }) => (isSelected ? COLORS.gray12 : COLORS.gray6)};
+  background: ${({ isSelected }) => (isSelected ? 'white' : COLORS.bread2)};
+  transition: all 0.3s ease;
 `;
 
 export const TextContainer = styled.div`
@@ -31,37 +34,15 @@ export const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin: 25px 0px;
+  margin: 42px 0px;
   justify-content: space-between;
   border-radius: 8px;
-  padding: 13%;
   gap: 16px;
   height: 100%;
-  border: 1px solid ${COLORS.gray6};
 `;
 
-export const InlineContainer = styled.main`
-  width: 30%;
-  flex-direction: column;
-  height: 100%;
-  margin-top: 2%;
-  margin-bottom: 2%;
-
-  @media (max-width: 1200px) {
-    width: 45%;
-  }
-  @media (max-width: 768px) {
-    width: 85%;
-  }
-`;
-
-export const Rectangle = styled.div`
-  display: flex;
-  width: 400px;
-  height: 2px;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  width: 100%;
-  background-color: ${COLORS.gray5};
+export const ChooseBothText = styled(P)`
+  font-weight: 200;
+  color: ${COLORS.gray11};
+  margin-top: 30px;
 `;

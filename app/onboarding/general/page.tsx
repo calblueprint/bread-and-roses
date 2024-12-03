@@ -10,17 +10,18 @@ import {
   Background,
   Button,
   ButtonContainer,
+  Checkbox,
   Container,
   ContinueText,
   Image,
   InlineContainer,
   Input,
   Label,
+  ProgressBarContainer,
   Rectangle,
   Title,
 } from '../styles';
 import {
-  Checkbox,
   InputContainer,
   RedAsterisk,
   UpdateContainer,
@@ -60,10 +61,10 @@ export default function Onboarding() {
           <Image src={Back} alt="Back icon" />
         </Link>
         <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-        <div>
+        <ProgressBarContainer>
           <Rectangle variant="dark" width="25%" />
           <Rectangle variant="light" width="75%" />
-        </div>
+        </ProgressBarContainer>
         <Container>
           <InputContainer>
             <Label>
@@ -111,7 +112,14 @@ export default function Onboarding() {
         </Container>
 
         <ButtonContainer>
-          <Button onClick={handleSubmit}>
+          <Button
+            onClick={handleSubmit}
+            disabled={
+              !generalInfo.firstName ||
+              !generalInfo.lastName ||
+              !generalInfo.phoneNumber
+            }
+          >
             <ContinueText>Continue</ContinueText>
           </Button>
         </ButtonContainer>

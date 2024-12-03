@@ -14,9 +14,9 @@ import {
   ContinueText,
   Image,
   InlineContainer,
+  ProgressBarContainer,
   Rectangle,
   SkipButton,
-  SkipContainer,
   SkipText,
   Title,
 } from '../styles';
@@ -98,10 +98,10 @@ export default function Onboarding() {
           <br />
           perform?
         </Title>
-        <div>
+        <ProgressBarContainer>
           <Rectangle variant="dark" width="50%" />
           <Rectangle variant="light" width="50%" />
-        </div>
+        </ProgressBarContainer>
         <Container>
           <InputDropdown
             label="Type of Performance"
@@ -126,13 +126,10 @@ export default function Onboarding() {
           />
         </Container>
 
-        <SkipContainer>
+        <ButtonContainer>
           <SkipButton onClick={handleSubmit}>
             <SkipText>skip</SkipText>
           </SkipButton>
-        </SkipContainer>
-
-        <ButtonContainer>
           <Button onClick={handleSubmit}>
             <ContinueText>Continue</ContinueText>
           </Button>

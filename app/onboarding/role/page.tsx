@@ -2,15 +2,25 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import { H4, P } from '@/styles/text';
+import Back from '@/public/images/back.svg';
+import { H6, SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
-import { Background, Button, ButtonContainer, ContinueText } from '../styles';
+import {
+  Background,
+  Button,
+  ButtonContainer,
+  Checkbox,
+  ContinueText,
+  Image,
+  InlineContainer,
+  ProgressBarContainer,
+  Rectangle,
+  Title,
+} from '../styles';
 import {
   BoxContainer,
-  Checkbox,
+  ChooseBothText,
   Container,
-  InlineContainer,
-  Rectangle,
   TextContainer,
 } from './styles';
 
@@ -40,33 +50,40 @@ export default function Onboarding() {
   return (
     <Background>
       <InlineContainer>
+        <Image src={Back} alt="Back icon" />
+        <Title $fontWeight={500}>
+          How would you describe
+          <br />
+          your role?
+        </Title>
+        <ProgressBarContainer>
+          <Rectangle variant="dark" width="0%" />
+          <Rectangle variant="light" width="100%" />
+        </ProgressBarContainer>
         <Container>
-          <H4>How would you describe your role?</H4>
-          <Rectangle />
-          <BoxContainer>
+          <BoxContainer isSelected={role.isPerformer}>
             <Checkbox
-              type="checkbox"
               name="performer"
               checked={role.isPerformer}
               onChange={handleChange}
             />
             <TextContainer>
-              <P>Performer</P>
-              <small>The star of the show</small>
+              <H6 $fontWeight={500}>Performer</H6>
+              <SMALL $fontWeight={400}>The star of the show</SMALL>
             </TextContainer>
           </BoxContainer>
-          <BoxContainer>
+          <BoxContainer isSelected={role.isHost}>
             <Checkbox
-              type="checkbox"
               name="host"
               checked={role.isHost}
               onChange={handleChange}
             />
             <TextContainer>
-              <P>Host</P>
-              <small>Making the show happen</small>
+              <H6 $fontWeight={500}>Host</H6>
+              <SMALL $fontWeight={400}>Making the show happen</SMALL>
             </TextContainer>
           </BoxContainer>
+          <ChooseBothText>* feel free to choose both!</ChooseBothText>
         </Container>
         <ButtonContainer>
           <Button

@@ -4,16 +4,16 @@ import NextImage from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Sans } from '@/styles/fonts';
-import { H5, P } from '@/styles/text';
+import { H4, P } from '@/styles/text';
 import COLORS from '../../styles/colors';
 
-export const Background = styled.main`
+export const Background = styled.main<{ isCentered?: boolean }>`
   flex-direction: column;
   min-width: 100%;
   min-height: 100svh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  ${({ isCentered }) => isCentered && 'justify-content: center;'}
   background-color: ${COLORS.bread2};
   overflow: hidden;
 `;
@@ -21,7 +21,7 @@ export const Background = styled.main`
 export const InlineContainer = styled.main`
   width: 30%;
   flex-direction: column;
-  margin-top: 2%;
+  margin-top: 5%;
   margin-bottom: 2%;
 
   @media (max-width: 1200px) {
@@ -29,6 +29,21 @@ export const InlineContainer = styled.main`
   }
   @media (max-width: 768px) {
     width: 85%;
+  }
+`;
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  width: 20px;
+  height: 20px;
+  border: 2px solid ${COLORS.rose10};
+  border-radius: 4px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+
+  &:checked {
+    background-color: ${COLORS.rose10};
+    border-color: ${COLORS.rose10};
   }
 `;
 
@@ -76,7 +91,7 @@ export const Input = styled.input`
   box-sizing: border-box;
 `;
 
-export const Title = styled(H5)`
+export const Title = styled(H4)`
   margin-top: 0;
   margin-bottom: 0.5rem;
 `;
@@ -86,16 +101,9 @@ export const Label = styled(P)`
   font-weight: 400;
 `;
 
-export const SkipContainer = styled.button`
-  margin-bottom: 16px;
-  width: 100%;
-  background: transparent;
-  border: none;
-  display: flex;
-  justify-content: flex-end;
-`;
-
 export const SkipButton = styled.button`
+  position: fixed;
+  bottom: 140px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -114,20 +122,24 @@ export const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export const Button = styled.button`
-  width: 100%;
+export const Button = styled.button<{ disabled?: boolean }>`
+  position: fixed;
+  bottom: 70px;
+  width: 30%;
   height: 2.75rem;
-  background-color: ${COLORS.pomegranate10};
-  border-color: ${COLORS.pomegranate10};
+  background-color: ${({ disabled }) =>
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate};
+  border-color: ${({ disabled }) =>
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
   padding: 8px 16px;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   text-decoration: none;
-  width: 100%;
+  transition: all 0.3s ease;
 `;
 
 export const ContinueText = styled.text`

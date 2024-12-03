@@ -7,8 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('onboarding/role');
-    // router.push('/signin');
+    router.push('/signin');
   }, [router]);
 
   return null;

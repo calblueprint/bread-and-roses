@@ -9,6 +9,7 @@ import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
   Button,
+  Image,
   InlineContainer,
   Label,
   ProgressBarContainer,
@@ -16,7 +17,7 @@ import {
   StyledLink,
   Title,
 } from '../styles';
-import { Image, Line, ReviewContainer, SmallText } from './styles';
+import { BackButton, Line, ReviewContainer, SmallText } from './styles';
 
 export default function Review() {
   const router = useRouter();
@@ -27,6 +28,13 @@ export default function Review() {
 
   const { role } = onboardingContext;
   const { preferences, generalInfo } = onboardingContext;
+
+  const displayValue = (value: string | string[] | undefined): string => {
+    if (Array.isArray(value)) {
+      return value.length > 0 ? value.join(', ') : 'N/A';
+    }
+    return value || 'N/A';
+  };
 
   const handleBack = async () => {
     if (role.isPerformer) {
@@ -44,43 +52,42 @@ export default function Review() {
   return (
     <Background>
       <InlineContainer>
-        <Button onClick={handleBack}>
+        <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
-        </Button>
-
+        </BackButton>
+        <Title $fontWeight={500}>Did we get everything?</Title>
+        <ProgressBarContainer>
+          <Rectangle variant="dark" width="100%" />
+        </ProgressBarContainer>
         <ReviewContainer>
-          <Title $fontWeight={500}>Did we get everything?</Title>
-          <ProgressBarContainer>
-            <Rectangle variant="dark" width="100%" />
-          </ProgressBarContainer>
           <Label>First Name</Label>
-          <SmallText>{generalInfo.firstName}</SmallText>
+          <SmallText>{displayValue(generalInfo.firstName)}</SmallText>
           <Label>Last Name</Label>
-          <SmallText>{generalInfo.lastName}</SmallText>
+          <SmallText>{displayValue(generalInfo.lastName)}</SmallText>
           <Label>Phone Number</Label>
-          <SmallText>{generalInfo.phoneNumber}</SmallText>
+          <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
 
           <Line />
 
           <Label>Facility Type</Label>
-          <SmallText>{preferences.facilityType}</SmallText>
+          <SmallText>{displayValue(preferences.facilityType)}</SmallText>
           <Label>Preferred Location</Label>
-          <SmallText>{preferences.location}</SmallText>
+          <SmallText>{displayValue(preferences.location)}</SmallText>
           <Label>Audience</Label>
-          <SmallText>{preferences.audience}</SmallText>
+          <SmallText>{displayValue(preferences.audience)}</SmallText>
           <Label>Type of Act</Label>
-          <SmallText>{preferences.typeOfAct}</SmallText>
+          <SmallText>{displayValue(preferences.typeOfAct)}</SmallText>
           <Label>Genre</Label>
-          <SmallText>{preferences.genre}</SmallText>
-
-          <StyledLink href="/onboarding/yay">
-            <Button onClick={submitData}>
-              <SMALL $fontWeight="400" $color="white">
-                Everything looks good!
-              </SMALL>
-            </Button>
-          </StyledLink>
+          <SmallText>{displayValue(preferences.genre)}</SmallText>
         </ReviewContainer>
+
+        <StyledLink href="/onboarding/finalize">
+          <Button onClick={submitData}>
+            <SMALL $fontWeight="400" $color="white">
+              Everything looks good!
+            </SMALL>
+          </Button>
+        </StyledLink>
       </InlineContainer>
     </Background>
   );
