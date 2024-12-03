@@ -11,10 +11,9 @@ export interface GeneralInfo {
 }
 
 export interface Preferences {
-  facilityType: string;
-  location: string;
-  audience: string;
-  preferredEquipment: string;
+  facilityType: string[];
+  location: string[];
+  audience: string[];
   typeOfAct: string[];
   genre: string[];
   grouping: string[];
@@ -48,10 +47,9 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [preferences, setPreferences] = useState<Preferences>({
-    facilityType: '',
-    location: '',
-    audience: '',
-    preferredEquipment: '',
+    facilityType: [],
+    location: [],
+    audience: [],
     typeOfAct: [],
     genre: [],
     grouping: [],
@@ -81,11 +79,14 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
         .from('volunteer_preferences')
         .insert([
           {
+            role: [
+              role.isPerformer ? 'performer' : null,
+              role.isHost ? 'host' : null,
+            ].filter(Boolean),
             facility_type: preferences.facilityType,
-            location: preferences.location,
+            locations: preferences.location,
             audience_type: preferences.audience,
-            instruments: preferences.preferredEquipment,
-            type_of_act: preferences.typeOfAct,
+            performer_type: preferences.typeOfAct,
             genre: preferences.genre,
             grouping: preferences.grouping,
           },

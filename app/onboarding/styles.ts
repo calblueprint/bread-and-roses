@@ -35,7 +35,7 @@ export const InlineContainer = styled.main`
 export const Image = styled(NextImage)`
   width: 20px;
   height: 20px;
-  margin-bottom: -2px;
+  margin-bottom: 16px;
 `;
 
 export const ProgressBarContainer = styled.div`
@@ -56,12 +56,14 @@ export const Rectangle = styled.div<{
 export const Container = styled.main`
   display: flex;
   flex-direction: column;
-  align-items: start;
-  margin: 25px 0px;
-  justify-content: space-between;
-  background-color: white;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  background-color: ${COLORS.bread1};
   border-radius: 8px;
-  padding: 13%;
+  padding: 32px;
+  gap: 28px;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  margin: 42px 0;
 `;
 
 export const Input = styled.input`
@@ -80,9 +82,29 @@ export const Title = styled(H5)`
 `;
 
 export const Label = styled(P)`
-  margin-top: 1.75rem;
   color: ${COLORS.gray11};
   font-weight: 400;
+`;
+
+export const SkipContainer = styled.button`
+  margin-bottom: 16px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const SkipButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+`;
+
+export const SkipText = styled(P)`
+  color: ${COLORS.gray11};
+  font-weight: 400;
+  text-align: right;
 `;
 
 export const ButtonContainer = styled.div`
@@ -94,9 +116,9 @@ export const ButtonContainer = styled.div`
 
 export const Button = styled.button`
   width: 100%;
-  height: 2.5rem;
-  background-color: ${COLORS.pomegranate};
-  border-color: ${COLORS.pomegranate};
+  height: 2.75rem;
+  background-color: ${COLORS.pomegranate10};
+  border-color: ${COLORS.pomegranate10};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;

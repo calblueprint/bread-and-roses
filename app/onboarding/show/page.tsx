@@ -21,44 +21,25 @@ import {
   Title,
 } from '../styles';
 
-const performanceTypeOptions = new Set([
-  'Music',
-  'Dance',
-  'Poetry',
-  'Clowning',
-  'Juggling',
-  'Comedy',
-  'Magic',
-  'Storytelling',
-  'Bubbles',
-  'Puppetry',
-  'Other',
+const facilityTypeOptions = new Set([
+  'Assisted Living',
+  "Children's Day Care",
+  'Detention Center',
+  'Developmentally Disabled',
+  'Food Bank',
+  'Homeless Services',
+  'Hospital',
+  'Mental Health Services',
+  'Recovery Center',
+  'Senior Day Program',
+  'Skilled Nursing Care',
+  'Special Needs School',
+  'Visually Impaired',
 ]);
 
-const genreOptions = new Set([
-  'A Cappella',
-  'Bluegrass',
-  'Blues',
-  "Children's songs",
-  'Classical',
-  'Country',
-  'Folk',
-  'Jazz',
-  'Pop',
-  'R&B',
-  'Rock',
-  'Standards',
-  'Other',
-]);
+const locationOptions = new Set(['No types yet']);
 
-const groupingOptions = new Set([
-  'Solo',
-  'Duo',
-  'Trio',
-  'Quartet',
-  'Five or more',
-  'Other',
-]);
+const audienceOptions = new Set(['Youth', 'Adults', 'Senior ']);
 
 export default function Onboarding() {
   const router = useRouter();
@@ -66,37 +47,42 @@ export default function Onboarding() {
 
   if (!onboardingContext) return null;
 
+  const { role } = onboardingContext;
   const { preferences, setPreferences } = onboardingContext;
 
-  const handlePerformanceTypeChange = (selectedOptions: Set<string>) => {
+  const handleFacilityChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, typeOfAct: selectedArray });
+    setPreferences({ ...preferences, facilityType: selectedArray });
   };
 
-  const handleGenreChange = (selectedOptions: Set<string>) => {
+  const handleLocationChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, genre: selectedArray });
+    setPreferences({ ...preferences, location: selectedArray });
   };
 
-  const handleGroupingChange = (selectedOptions: Set<string>) => {
+  const handleAudienceChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, grouping: selectedArray });
+    setPreferences({ ...preferences, audience: selectedArray });
   };
 
   const handleSubmit = async () => {
-    router.push('/onboarding/review');
+    if (role.isPerformer) {
+      router.push('/onboarding/performer');
+    } else {
+      router.push('/onboarding/review');
+    }
   };
 
   return (
     <Background>
       <InlineContainer>
-        <Link href="/onboarding/show">
+        <Link href="/onboarding/general">
           <Image src={Back} alt="Back icon" />
         </Link>
         <Title $fontWeight={500}>
-          What would you like to
+          Do you have any show
           <br />
-          perform?
+          preferences?
         </Title>
         <div>
           <Rectangle variant="dark" width="50%" />
@@ -104,25 +90,25 @@ export default function Onboarding() {
         </div>
         <Container>
           <InputDropdown
-            label="Type of Performance"
-            placeholder="Select performance type"
+            label="Facility Types"
+            placeholder="Type to filter"
             multi
-            onChange={handlePerformanceTypeChange}
-            options={performanceTypeOptions}
+            onChange={handleFacilityChange}
+            options={facilityTypeOptions}
           />
           <InputDropdown
-            label="Performance Genre"
-            placeholder="Select genres"
+            label="Location Preferences"
+            placeholder="Type to filter"
             multi
-            onChange={handleGenreChange}
-            options={genreOptions}
+            onChange={handleLocationChange}
+            options={locationOptions}
           />
           <InputDropdown
-            label="Performance Grouping"
-            placeholder="Select grouping type"
+            label="Preferred Audience"
+            placeholder="Type to filter"
             multi
-            onChange={handleGroupingChange}
-            options={groupingOptions}
+            onChange={handleAudienceChange}
+            options={audienceOptions}
           />
         </Container>
 

@@ -90,7 +90,9 @@ export default function InputDropdown({
   return (
     <DropdownWrapper>
       <InputLabel>
-        <P $color={COLORS.gray11}>{label}</P>
+        <P $color={COLORS.gray11} $fontWeight={400}>
+          {label}
+        </P>
         {required && <SMALL $color={COLORS.rose10}>{'*'}</SMALL>}
       </InputLabel>
       <Select

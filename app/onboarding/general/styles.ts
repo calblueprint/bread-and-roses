@@ -7,7 +7,6 @@ export const UpdateContainer = styled.main`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin-top: 1.75rem;
 `;
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
@@ -20,9 +19,16 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   cursor: pointer;
 
   &:checked {
-    background-color: ${COLORS.rose10}; /* Optional: Red background when checked */
-    border-color: ${COLORS.rose10}; /* Border stays red when checked */
+    background-color: ${COLORS.rose10};
+    border-color: ${COLORS.rose10};
   }
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
 `;
 
 export const UpdateText = styled.text`

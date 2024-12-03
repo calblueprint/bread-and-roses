@@ -34,11 +34,7 @@ export default function Onboarding() {
   };
 
   const handleContinue = () => {
-    if (role.isPerformer) {
-      router.push('/onboarding/performer');
-    } else {
-      router.push('/onboarding/general');
-    }
+    router.push('/onboarding/general');
   };
 
   return (

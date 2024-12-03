@@ -16,11 +16,16 @@ import {
   InlineContainer,
   Input,
   Label,
-  ProgressBarContainer,
   Rectangle,
   Title,
 } from '../styles';
-import { Checkbox, RedAsterisk, UpdateContainer, UpdateText } from './styles';
+import {
+  Checkbox,
+  InputContainer,
+  RedAsterisk,
+  UpdateContainer,
+  UpdateText,
+} from './styles';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -45,7 +50,7 @@ export default function Onboarding() {
     ) {
       return;
     }
-    router.push('/onboarding/preferences');
+    router.push('/onboarding/show');
   };
 
   return (
@@ -54,43 +59,47 @@ export default function Onboarding() {
         <Link href="/onboarding/role">
           <Image src={Back} alt="Back icon" />
         </Link>
+        <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
         <div>
-          <Rectangle variant="light" width="25%" />
-          <Rectangle variant="dark" width="75%" />
+          <Rectangle variant="dark" width="25%" />
+          <Rectangle variant="light" width="75%" />
         </div>
         <Container>
-          <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-          <ProgressBarContainer>
-            <Rectangle variant="dark" width="25%" />
-            <Rectangle variant="light" width="75%" />
-          </ProgressBarContainer>
-          <Label>
-            First Name <RedAsterisk>*</RedAsterisk>
-          </Label>
-          <Input
-            name="firstName"
-            placeholder="Jane"
-            value={generalInfo.firstName}
-            onChange={handleChange}
-          />
-          <Label>
-            Last Name <RedAsterisk>*</RedAsterisk>
-          </Label>
-          <Input
-            name="lastName"
-            placeholder="Doe"
-            value={generalInfo.lastName}
-            onChange={handleChange}
-          />
-          <Label>
-            Phone Number <RedAsterisk>*</RedAsterisk>
-          </Label>
-          <Input
-            name="phoneNumber"
-            placeholder="(987) 654-3210"
-            value={generalInfo.phoneNumber}
-            onChange={handleChange}
-          />
+          <InputContainer>
+            <Label>
+              First Name <RedAsterisk>*</RedAsterisk>
+            </Label>
+            <Input
+              name="firstName"
+              placeholder="Jane"
+              value={generalInfo.firstName}
+              onChange={handleChange}
+            />
+          </InputContainer>
+
+          <InputContainer>
+            <Label>
+              Last Name <RedAsterisk>*</RedAsterisk>
+            </Label>
+            <Input
+              name="lastName"
+              placeholder="Doe"
+              value={generalInfo.lastName}
+              onChange={handleChange}
+            />
+          </InputContainer>
+
+          <InputContainer>
+            <Label>
+              Phone Number <RedAsterisk>*</RedAsterisk>
+            </Label>
+            <Input
+              name="phoneNumber"
+              placeholder="(987) 654-3210"
+              value={generalInfo.phoneNumber}
+              onChange={handleChange}
+            />
+          </InputContainer>
           <UpdateContainer>
             <Checkbox
               name="notifications"
