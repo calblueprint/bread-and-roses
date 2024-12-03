@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto';
+import { P } from '@/styles/text';
 import supabase from '../createClient';
 
 export async function fetchAvailabilitiesByFacilityId(facility_id: UUID) {
@@ -21,5 +22,64 @@ export async function fetchAvailabilitiesByFacilityId(facility_id: UUID) {
   } catch (error) {
     console.error(`An unexpected error occurred:`, error);
     return null; // Return null on unexpected error
+  }
+}
+
+export async function fetchAllAvailabilites() {
+  try {
+    const { data, error } = await supabase.from('availabilites').select('*');
+    if (error) {
+      throw new Error(error.message);
+    }
+    if (data && data.length == 0) {
+      console.log('No availabilites found');
+      return [];
+    }
+    return data;
+  } catch (error) {
+    console.error('An unexpected error occured:', error);
+    return null;
+  }
+}
+
+export async function fetchDatesByAvailabilityID(availability_id: UUID) {
+  try {
+    const { data, error } = await supabase
+      .from('available_dates')
+      .select('*')
+      .eq('availability_id', availability_id);
+    if (error) {
+      throw new Error(error.message);
+    }
+    if (data && data.length == 0) {
+      console.log(
+        'No dates found for this availability id or availability_id is undefined',
+      );
+      return [];
+    }
+    return data;
+  } catch (error) {
+    console.error('An unexpected error occured:', error);
+    return null;
+  }
+}
+
+export async function fetchTimesByDateID(date_id: UUID) {
+  try {
+    const { data, error } = await supabase
+      .from('timeslots')
+      .select('*')
+      .eq('date_id', date_id);
+    if (error) {
+      throw new Error(error.message);
+    }
+    if (data && data.length == 0) {
+      console.log('No times found for this date id or date_id is undefined');
+      return [];
+    }
+    return data;
+  } catch (error) {
+    console.error('An unexpected error occured:', error);
+    return null;
   }
 }
