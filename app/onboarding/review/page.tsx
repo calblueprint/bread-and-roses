@@ -38,7 +38,7 @@ export default function Review() {
 
   const submitData = async () => {
     if (!generalInfo || !preferences) return;
-    await submitOnboardingData(generalInfo, preferences);
+    await submitOnboardingData(generalInfo, preferences, role);
   };
 
   return (

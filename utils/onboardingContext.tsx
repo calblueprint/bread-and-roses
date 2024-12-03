@@ -19,7 +19,7 @@ export interface Preferences {
   grouping: string[];
 }
 
-interface Role {
+export interface Role {
   isHost: boolean;
   isPerformer: boolean;
 }
