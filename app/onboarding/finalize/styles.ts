@@ -2,7 +2,7 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
-import COLORS from '../../../styles/colors';
+import COLORS from '@/styles/colors';
 
 export const Title = styled.h1`
   font-size: 24px;

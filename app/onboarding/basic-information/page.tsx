@@ -2,11 +2,11 @@
 'use client';
 
 import { useContext } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
+  BackButton,
   Background,
   Button,
   ButtonContainer,
@@ -16,21 +16,18 @@ import {
   Image,
   InlineContainer,
   Input,
+  InputContainer,
   Label,
   ProgressBarContainer,
   Rectangle,
   Title,
 } from '../styles';
-import {
-  InputContainer,
-  RedAsterisk,
-  UpdateContainer,
-  UpdateText,
-} from './styles';
+import { RedAsterisk, UpdateContainer, UpdateText } from './styles';
 
 export default function Onboarding() {
   const router = useRouter();
   const onboardingContext = useContext(OnboardingContext);
+
   if (!onboardingContext) return null;
 
   const { generalInfo, setGeneralInfo } = onboardingContext;
@@ -51,15 +48,19 @@ export default function Onboarding() {
     ) {
       return;
     }
-    router.push('/onboarding/show');
+    router.push('/onboarding/show-preference');
+  };
+
+  const handleBack = () => {
+    router.push('/onboarding/role-selection');
   };
 
   return (
     <Background>
       <InlineContainer>
-        <Link href="/onboarding/role">
+        <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
-        </Link>
+        </BackButton>
         <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
         <ProgressBarContainer>
           <Rectangle variant="dark" width="25%" />

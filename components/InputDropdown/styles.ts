@@ -200,5 +200,5 @@ export const DropdownStyles = (
 export const InputLabel = styled(H6)`
   display: inline-flex;
   justify-content: flex-start;
-  gap: 0.25rem;
+  margin-bottom: 0.2rem;
 `;

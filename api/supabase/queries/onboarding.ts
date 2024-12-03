@@ -14,6 +14,7 @@ export async function submitOnboardingData(
           first_name: generalInfo.firstName,
           last_name: generalInfo.lastName,
           phone_number: generalInfo.phoneNumber,
+          notifications_opt_in: generalInfo.notifications,
         },
       ]);
 
@@ -31,9 +32,9 @@ export async function submitOnboardingData(
           facility_type: preferences.facilityType,
           locations: preferences.location,
           audience_type: preferences.audience,
-          performer_type: preferences.typeOfAct,
+          performer_type: preferences.performerType,
+          performance_type: preferences.performanceType,
           genre: preferences.genre,
-          grouping: preferences.grouping,
         },
       ]);
 

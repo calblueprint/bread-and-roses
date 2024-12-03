@@ -3,9 +3,9 @@
 import NextImage from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
+import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
 import { H4, P } from '@/styles/text';
-import COLORS from '../../styles/colors';
 
 export const Background = styled.main<{ isCentered?: boolean }>`
   flex-direction: column;
@@ -16,6 +16,12 @@ export const Background = styled.main<{ isCentered?: boolean }>`
   ${({ isCentered }) => isCentered && 'justify-content: center;'}
   background-color: ${COLORS.bread2};
   overflow: hidden;
+`;
+
+export const BackButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
 `;
 
 export const InlineContainer = styled.main`
@@ -29,6 +35,7 @@ export const InlineContainer = styled.main`
   }
   @media (max-width: 768px) {
     width: 85%;
+    margin-top: 20%;
   }
 `;
 
@@ -79,6 +86,10 @@ export const Container = styled.main`
   gap: 28px;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
   margin: 42px 0;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 export const Input = styled.input`
@@ -89,6 +100,13 @@ export const Input = styled.input`
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
 `;
 
 export const Title = styled(H4)`
@@ -107,6 +125,10 @@ export const SkipButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    bottom: 100px;
+  }
 `;
 
 export const SkipText = styled(P)`
@@ -140,6 +162,11 @@ export const Button = styled.button<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   text-decoration: none;
   transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 85%;
+    bottom: 40px;
+  }
 `;
 
 export const ContinueText = styled.text`

@@ -3,6 +3,11 @@
 import React, { createContext, ReactNode, useState } from 'react';
 import supabase from '@/api/supabase/createClient';
 
+export interface Role {
+  isHost: boolean;
+  isPerformer: boolean;
+}
+
 export interface GeneralInfo {
   firstName: string;
   lastName: string;
@@ -14,14 +19,10 @@ export interface Preferences {
   facilityType: string[];
   location: string[];
   audience: string[];
-  typeOfAct: string[];
+  performanceType: string[];
+  performerType: string[];
   genre: string[];
-  grouping: string[];
-}
-
-export interface Role {
-  isHost: boolean;
-  isPerformer: boolean;
+  additionalInfo: string;
 }
 
 interface OnboardingContextType {
@@ -50,9 +51,10 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     facilityType: [],
     location: [],
     audience: [],
-    typeOfAct: [],
+    performanceType: [],
     genre: [],
-    grouping: [],
+    performerType: [],
+    additionalInfo: '',
   });
 
   const [role, setRole] = useState<Role>({
@@ -86,9 +88,10 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
             facility_type: preferences.facilityType,
             locations: preferences.location,
             audience_type: preferences.audience,
-            performer_type: preferences.typeOfAct,
+            performance_type: preferences.performanceType,
             genre: preferences.genre,
-            grouping: preferences.grouping,
+            performer_type: preferences.performerType,
+            additional_info: preferences.additionalInfo,
           },
         ]);
 

@@ -1,12 +1,12 @@
 'use client';
 
 import { useContext } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
+  BackButton,
   Background,
   Button,
   ButtonContainer,
@@ -21,25 +21,44 @@ import {
   Title,
 } from '../styles';
 
-const facilityTypeOptions = new Set([
-  'Assisted Living',
-  "Children's Day Care",
-  'Detention Center',
-  'Developmentally Disabled',
-  'Food Bank',
-  'Homeless Services',
-  'Hospital',
-  'Mental Health Services',
-  'Recovery Center',
-  'Senior Day Program',
-  'Skilled Nursing Care',
-  'Special Needs School',
-  'Visually Impaired',
+const performanceTypeOptions = new Set([
+  'Music',
+  'Dance',
+  'Poetry',
+  'Clowning',
+  'Juggling',
+  'Comedy',
+  'Magic',
+  'Storytelling',
+  'Bubbles',
+  'Puppetry',
+  'Other',
 ]);
 
-const locationOptions = new Set(['No types yet']);
+const genreOptions = new Set([
+  'A Cappella',
+  'Bluegrass',
+  'Blues',
+  "Children's songs",
+  'Classical',
+  'Country',
+  'Folk',
+  'Jazz',
+  'Pop',
+  'R&B',
+  'Rock',
+  'Standards',
+  'Other',
+]);
 
-const audienceOptions = new Set(['Youth', 'Adults', 'Senior ']);
+const performerTypeOptions = new Set([
+  'Solo',
+  'Duo',
+  'Trio',
+  'Quartet',
+  'Five or more',
+  'Other',
+]);
 
 export default function Onboarding() {
   const router = useRouter();
@@ -47,42 +66,41 @@ export default function Onboarding() {
 
   if (!onboardingContext) return null;
 
-  const { role } = onboardingContext;
   const { preferences, setPreferences } = onboardingContext;
 
-  const handleFacilityChange = (selectedOptions: Set<string>) => {
+  const handlePerformanceTypeChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, facilityType: selectedArray });
+    setPreferences({ ...preferences, performanceType: selectedArray });
   };
 
-  const handleLocationChange = (selectedOptions: Set<string>) => {
+  const handleGenreChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, location: selectedArray });
+    setPreferences({ ...preferences, genre: selectedArray });
   };
 
-  const handleAudienceChange = (selectedOptions: Set<string>) => {
+  const handlePerformerTypeChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, audience: selectedArray });
+    setPreferences({ ...preferences, performerType: selectedArray });
   };
 
   const handleSubmit = async () => {
-    if (role.isPerformer) {
-      router.push('/onboarding/performer');
-    } else {
-      router.push('/onboarding/review');
-    }
+    router.push('/onboarding/additional-info');
+  };
+
+  const handleBack = () => {
+    router.push('/onboarding/show-preference');
   };
 
   return (
     <Background>
       <InlineContainer>
-        <Link href="/onboarding/general">
+        <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
-        </Link>
+        </BackButton>
         <Title $fontWeight={500}>
-          Do you have any show
+          What would you like to
           <br />
-          preferences?
+          perform?
         </Title>
         <ProgressBarContainer>
           <Rectangle variant="dark" width="50%" />
@@ -90,25 +108,25 @@ export default function Onboarding() {
         </ProgressBarContainer>
         <Container>
           <InputDropdown
-            label="Facility Types"
-            placeholder="Type to filter"
+            label="Type of Performance"
+            placeholder="Select performance type"
             multi
-            onChange={handleFacilityChange}
-            options={facilityTypeOptions}
+            onChange={handlePerformanceTypeChange}
+            options={performanceTypeOptions}
           />
           <InputDropdown
-            label="Location Preferences"
-            placeholder="Type to filter"
+            label="Performance Genre"
+            placeholder="Select genres"
             multi
-            onChange={handleLocationChange}
-            options={locationOptions}
+            onChange={handleGenreChange}
+            options={genreOptions}
           />
           <InputDropdown
-            label="Preferred Audience"
-            placeholder="Type to filter"
+            label="Group Size"
+            placeholder="Type to filter..."
             multi
-            onChange={handleAudienceChange}
-            options={audienceOptions}
+            onChange={handlePerformerTypeChange}
+            options={performerTypeOptions}
           />
         </Container>
 

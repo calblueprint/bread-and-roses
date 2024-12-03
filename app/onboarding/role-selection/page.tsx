@@ -3,6 +3,8 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import Back from '@/public/images/back.svg';
+import Help from '@/public/images/help.svg';
+import Star from '@/public/images/star.svg';
 import { H6, SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -21,6 +23,8 @@ import {
   BoxContainer,
   ChooseBothText,
   Container,
+  Icon,
+  RoleContainer,
   TextContainer,
 } from './styles';
 
@@ -44,7 +48,7 @@ export default function Onboarding() {
   };
 
   const handleContinue = () => {
-    router.push('/onboarding/general');
+    router.push('/onboarding/basic-information');
   };
 
   return (
@@ -62,26 +66,32 @@ export default function Onboarding() {
         </ProgressBarContainer>
         <Container>
           <BoxContainer isSelected={role.isPerformer}>
-            <Checkbox
-              name="performer"
-              checked={role.isPerformer}
-              onChange={handleChange}
-            />
-            <TextContainer>
-              <H6 $fontWeight={500}>Performer</H6>
-              <SMALL $fontWeight={400}>The star of the show</SMALL>
-            </TextContainer>
+            <RoleContainer>
+              <Checkbox
+                name="performer"
+                checked={role.isPerformer}
+                onChange={handleChange}
+              />
+              <TextContainer>
+                <H6 $fontWeight={500}>Performer</H6>
+                <SMALL $fontWeight={400}>The star of the show</SMALL>
+              </TextContainer>
+            </RoleContainer>
+            <Icon src={Star} alt="performer" />
           </BoxContainer>
           <BoxContainer isSelected={role.isHost}>
-            <Checkbox
-              name="host"
-              checked={role.isHost}
-              onChange={handleChange}
-            />
-            <TextContainer>
-              <H6 $fontWeight={500}>Host</H6>
-              <SMALL $fontWeight={400}>Making the show happen</SMALL>
-            </TextContainer>
+            <RoleContainer>
+              <Checkbox
+                name="host"
+                checked={role.isHost}
+                onChange={handleChange}
+              />
+              <TextContainer>
+                <H6 $fontWeight={500}>Host</H6>
+                <SMALL $fontWeight={400}>Making the show happen</SMALL>
+              </TextContainer>
+            </RoleContainer>
+            <Icon src={Help} alt="host" />
           </BoxContainer>
           <ChooseBothText>* feel free to choose both!</ChooseBothText>
         </Container>

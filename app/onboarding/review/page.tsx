@@ -36,12 +36,8 @@ export default function Review() {
     return value || 'N/A';
   };
 
-  const handleBack = async () => {
-    if (role.isPerformer) {
-      router.push('/onboarding/performer');
-    } else {
-      router.push('/onboarding/show');
-    }
+  const handleBack = () => {
+    router.push('/onboarding/additional-info');
   };
 
   const submitData = async () => {
@@ -75,10 +71,20 @@ export default function Review() {
           <SmallText>{displayValue(preferences.location)}</SmallText>
           <Label>Audience</Label>
           <SmallText>{displayValue(preferences.audience)}</SmallText>
-          <Label>Type of Act</Label>
-          <SmallText>{displayValue(preferences.typeOfAct)}</SmallText>
+
+          <Line />
+
+          <Label>Performance Type</Label>
+          <SmallText>{displayValue(preferences.performanceType)}</SmallText>
           <Label>Genre</Label>
           <SmallText>{displayValue(preferences.genre)}</SmallText>
+          <Label>Group Size</Label>
+          <SmallText>{displayValue(preferences.performerType)}</SmallText>
+
+          <Line />
+
+          <Label>Additional Information</Label>
+          <SmallText>{displayValue(preferences.additionalInfo)}</SmallText>
         </ReviewContainer>
 
         <StyledLink href="/onboarding/finalize">
