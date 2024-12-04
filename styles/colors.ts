@@ -39,6 +39,8 @@ const COLORS = {
   gray12: '#202020',
 
   pomegranate: '#342A2F',
+
+  lilac8: '#8189D9',
 };
 
 export default COLORS;
