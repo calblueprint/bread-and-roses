@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { fetchAcceptedEventsByVolunteer } from '@/api/supabase/queries/events';
+import { cachedEvents } from '@/app/events/eventscache';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
 import { Event } from '@/types/schema';
@@ -13,13 +13,13 @@ type GroupedEvents = {
 };
 
 export default function EventPage() {
-  const [data, setData] = useState<Event[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
 
-  useEffect(() => {
-    fetchAcceptedEventsByVolunteer('11d219d9-bf05-4a06-a23e-89fd566c7a04').then(
+  useMemo(() => {
+    cachedEvents('11d219d9-bf05-4a06-a23e-89fd566c7a04').then(
       //placeholder user id
       eventsData => {
-        setData(eventsData ?? []);
+        setEvents(eventsData ?? []);
       },
     );
   }, []);
@@ -40,7 +40,7 @@ export default function EventPage() {
     }, {} as GroupedEvents);
   };
 
-  const eventsByMonth = groupEventsByMonth(data);
+  const eventsByMonth = groupEventsByMonth(events);
 
   // Sort the events by month
   const sortedEntries = Object.entries(eventsByMonth).sort((a, b) => {

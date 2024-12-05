@@ -12,6 +12,7 @@ export async function fetchAllEvents() {
 }
 
 export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
+  console.log('fetching events');
   const { data, error } = await supabase
     .from('event_signups')
     .select('*')
@@ -55,6 +56,7 @@ export async function fetchAllActiveEvents() {
 }
 
 export async function fetchEventById(event_id: string) {
+  console.log('fetching event by id');
   const { data, error } = await supabase
     .from('events')
     .select('*')
@@ -68,6 +70,7 @@ export async function fetchEventById(event_id: string) {
 }
 
 export async function fetchEventHostByID(event_id: UUID) {
+  console.log('fetching event host');
   const { data, error } = await supabase
     .from('event_signups')
     .select('*')

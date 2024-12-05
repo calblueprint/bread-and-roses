@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { fetchFacilityById } from '@/api/supabase/queries/facilities';
+import React, { useMemo, useState } from 'react';
+import { cachedFacility } from '@/app/events/eventscache';
 import BPLogo from '@/public/images/bp-logo.png';
 import LocPin from '@/public/images/gray_loc_pin.svg';
 import COLORS from '@/styles/colors';
@@ -10,8 +10,8 @@ import * as styles from './styles';
 export default function MyEventCard(eventData: Event) {
   const [facility, setFacility] = useState<Facilities>();
 
-  useEffect(() => {
-    fetchFacilityById(eventData.facility_id).then(facilityData => {
+  useMemo(() => {
+    cachedFacility(eventData.facility_id).then(facilityData => {
       setFacility(facilityData);
     });
   }, [eventData.facility_id]);

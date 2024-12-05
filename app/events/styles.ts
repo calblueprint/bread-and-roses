@@ -19,8 +19,6 @@ export const Page = styled.main`
 `;
 
 export const AllEventsHolder = styled.main`
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
