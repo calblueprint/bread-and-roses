@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import AdditionalInfo from '@/public/images/additionalinfo.svg';
 import Clock from '@/public/images/clock.svg';
 import COLORS from '@/styles/colors';
 import { P, SMALL } from '@/styles/text';
-import { Availabilities, AvailableDates, Facilities } from '@/types/schema';
+import { Availabilities, AvailableDates } from '@/types/schema';
 import * as styles from './styles';
 
 interface AvailabilityCardProps {
