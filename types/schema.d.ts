@@ -76,6 +76,8 @@ export interface AvailableDates {
   date_id: UUID;
   availability_id: UUID;
   available_date: string; //date
+  test_col: string; //timestamptz
+  test_col2: string; //timestamptz
 }
 
 export interface Timeslots {
