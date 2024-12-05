@@ -79,7 +79,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   font-family: ${Sans.style.fontFamily};
-  background-color: ${COLORS.pomegranate};
+  background-color: ${COLORS.pomegranate12};
   color: white;
   font-size: 1rem;
   padding: 0.75rem;

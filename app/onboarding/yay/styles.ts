@@ -65,7 +65,7 @@ export const ContinueButton = styled.button`
   align-items: center;
   align-self: stretch;
   border-radius: 99999px;
-  background: ${COLORS.pomegranate};
+  background: ${COLORS.pomegranate12};
   border-style: solid;
   border-color: ${COLORS.gray12};
   cursor: pointer;

@@ -22,7 +22,7 @@ export const AvailabilityTitle = styled(H5)`
   padding: 16px 24px;
   justify-content: space-between;
   align-items: end;
-  background: ${COLORS.pomegranate};
+  background: ${COLORS.pomegranate11};
   border-radius: 16px 16px 0 0;
   width: 100%;
 `;

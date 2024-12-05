@@ -8,7 +8,7 @@ export const MenuContainer = styled.div<{ $expanded: boolean }>`
   height: 100vh;
   z-index: 9999;
   background-color: ${({ $expanded }) =>
-    $expanded ? COLORS.pomegranate : 'transparent'};
+    $expanded ? COLORS.pomegranate12 : 'transparent'};
   display: flex;
   flex-direction: column;
   padding-left: 1.25rem;
@@ -47,7 +47,8 @@ export const MenuIconWrapper = styled.div<{ $expanded: boolean }>`
   width: 20px;
   height: 20px;
   & svg path {
-    fill: ${({ $expanded }) => ($expanded ? COLORS.gray3 : COLORS.pomegranate)};
+    fill: ${({ $expanded }) =>
+      $expanded ? COLORS.gray3 : COLORS.pomegranate12};
   }
 `;
 

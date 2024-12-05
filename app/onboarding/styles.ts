@@ -93,8 +93,8 @@ export const ButtonContainer = styled.div`
 export const Button = styled.button`
   width: 100%;
   height: 2.5rem;
-  background-color: ${COLORS.pomegranate};
-  border-color: ${COLORS.pomegranate};
+  background-color: ${COLORS.pomegranate12};
+  border-color: ${COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;

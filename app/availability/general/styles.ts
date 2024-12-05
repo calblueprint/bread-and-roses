@@ -13,7 +13,7 @@ export const Page = styled.main`
 `;
 export const AllAvailabilitiesHolder = styled.main`
   display: flex;
-  width: 35%;
+  width: 28.75%;
   flex-direction: column;
 `;
 

@@ -43,18 +43,6 @@ export default function AvailabilityCard({
   availability,
   availableDates,
 }: AvailabilityCardProps) {
-  const [facility, setFacility] = useState<Facilities>();
-
-  useEffect(() => {
-    fetchFacilityById(availability.facility_id).then(facilityData => {
-      setFacility(facilityData);
-    });
-  }, []);
-
-  if (!facility) {
-    return <p>There was an error encountered when fetching details</p>;
-  }
-
   return (
     <styles.AvailabilityContainer>
       <styles.AvailabilityTitle
@@ -62,7 +50,7 @@ export default function AvailabilityCard({
         $color={COLORS.bread1}
         $align="left"
       >
-        {facility.name}
+        {availability.name}
       </styles.AvailabilityTitle>
       <styles.Content>
         <div>
