@@ -5,6 +5,7 @@ export async function handleSignUp(
   password: string,
 ): Promise<{ success: boolean; message: string }> {
   try {
+    await ensureLoggedOutForNewUser(email);
     const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
@@ -37,6 +38,8 @@ export async function handleSignUp(
       };
     }
 
+    localStorage.setItem('tempEmail', email);
+
     return { success: true, message: 'Sign-up successful!' };
   } catch (err) {
     if (err instanceof Error) {
@@ -54,6 +57,7 @@ export async function handleSignIn(
   password: string,
 ): Promise<{ success: boolean; message: string }> {
   try {
+    await ensureLoggedOutForNewUser(email);
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -96,6 +100,37 @@ export async function handleSignIn(
   }
 }
 
+export const handleSignOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error('Error during logout:', error.message);
+    return;
+  }
+};
+
+export async function ensureLoggedOutForNewUser(
+  newEmail: string,
+): Promise<void> {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error) {
+    console.error('Error fetching session:', error.message);
+    throw new Error('Failed to fetch session.');
+  }
+
+  const session = data.session;
+
+  if (
+    session &&
+    session.user &&
+    session.user.email &&
+    session.user.email !== newEmail
+  ) {
+    console.log(`Logging out current user: ${session.user.email}`);
+    await handleSignOut();
+  }
+}
+
 export async function checkUserExists(
   userId: string,
   userType: 'volunteer' | 'facility',
@@ -117,4 +152,25 @@ export async function checkUserExists(
     console.error('Error checking user existence:', err);
     return false;
   }
+}
+
+export async function resendVerificationEmail(email: string): Promise<string> {
+  try {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+    });
+
+    if (error) {
+      return `Error: ${error.message}`;
+    }
+
+    return 'Verification email resent successfully!';
+  } catch (err) {
+    return 'Unexpected error while resending verification email.';
+  }
+}
+
+export function getTempEmail(): string | null {
+  return localStorage.getItem('tempEmail');
 }
