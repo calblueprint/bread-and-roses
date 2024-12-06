@@ -2,7 +2,7 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
-import { H6 } from '@/styles/text';
+import { H6, P } from '@/styles/text';
 
 export const Page = styled.main`
   display: flex;
@@ -33,4 +33,9 @@ export const YearText = styled(H6)`
 export const AddImage = styled(NextImage)`
   width: 1.5rem;
   height: 1.5rem;
+`;
+
+export const message = styled(P)`
+  text-align: center;
+  margin-top: 5.75rem;
 `;

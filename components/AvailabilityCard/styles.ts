@@ -38,10 +38,30 @@ export const SubHeader = styled.main`
   display: flex;
   align-items: center;
   justify-content: start;
+  margin-bottom: 0.25rem;
 `;
 
 export const Clock = styled(NextImage)`
   width: 16px;
   height: 16px;
   margin-right: 0.25rem;
+`;
+
+export const Ul = styled.ul`
+  list-style-type: none;
+  padding-left: 8px;
+`;
+
+export const Li = styled.li`
+  position: relative;
+  padding-left: 1rem;
+
+  /* Custom bullet point styling */
+  &::before {
+    content: '•'; /* Custom bullet character */
+    position: absolute;
+    left: 0;
+    color: ${COLORS.gray11}; /* Set bullet color */
+    font-size: 0.875rem; /* Customize bullet size */
+  }
 `;

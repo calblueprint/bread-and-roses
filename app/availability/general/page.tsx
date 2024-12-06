@@ -8,6 +8,7 @@ import {
 import AvailabilityCard from '@/components/AvailabilityCard/AvailabilityCard';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import Add from '@/public/images/add.svg';
+import COLORS from '@/styles/colors';
 import { H3 } from '@/styles/text';
 import { Availabilities, AvailableDates } from '@/types/schema';
 import * as styles from './styles';
@@ -21,6 +22,7 @@ type AvailabilitiesByYear = {
 
 export default function AvailabilityPage() {
   const [groupedByYear, setGroupedByYear] = useState<AvailabilitiesByYear>({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchAndGroupData() {
@@ -62,6 +64,7 @@ export default function AvailabilityPage() {
         }
 
         setGroupedByYear(grouped);
+        setIsLoading(false); // Stop loading after data fetch
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -81,21 +84,41 @@ export default function AvailabilityPage() {
             </H3>
             <styles.AddImage src={Add} alt="add icon" />
           </styles.TitleContainer>
-          {/* Render grouped availabilities */}
-          {Object.entries(groupedByYear).map(([year, availabilities]) => (
-            <div key={year}>
-              <styles.YearText $fontWeight="500" $color="#000" $align="left">
-                {year}
-              </styles.YearText>
-              {availabilities.map(({ availability, available_dates }) => (
-                <AvailabilityCard
-                  key={availability.availability_id}
-                  availability={availability}
-                  availableDates={available_dates}
-                />
-              ))}
-            </div>
-          ))}
+          {/* Check if there are no availabilities */}
+          {isLoading ? (
+            <styles.message
+              $fontWeight="400"
+              $color={COLORS.gray11}
+              $align="center"
+            >
+              Loading availabilities...
+            </styles.message>
+          ) : Object.keys(groupedByYear).length === 0 ? (
+            <styles.message
+              $fontWeight="400"
+              $color={COLORS.gray11}
+              $align="center"
+            >
+              No availabilities yet,
+              <br />
+              add one with the plus sign!
+            </styles.message>
+          ) : (
+            Object.entries(groupedByYear).map(([year, availabilities]) => (
+              <div key={year}>
+                <styles.YearText $fontWeight="500" $color="#000" $align="left">
+                  {year}
+                </styles.YearText>
+                {availabilities.map(({ availability, available_dates }) => (
+                  <AvailabilityCard
+                    key={availability.availability_id}
+                    availability={availability}
+                    availableDates={available_dates}
+                  />
+                ))}
+              </div>
+            ))
+          )}
         </styles.AllAvailabilitiesHolder>
       </styles.Page>
     </div>
