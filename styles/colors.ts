@@ -52,8 +52,9 @@ const COLORS = {
   lilac11: '#423EAF',
   lilac12: '#383975',
 
-  pomegranate: '#342A2F',
   pomegranate10: '#6F585E',
+  pomegranate11: '#633A4F',
+  pomegranate12: '#342A2F',
 };
 
 export default COLORS;
