@@ -8,22 +8,24 @@ import {
 } from '@/api/supabase/queries/auth';
 import Bud from '@/public/images/bud.svg';
 import EmailIcon from '@/public/images/email.svg';
-// import supabase from '@/api/supabase/createClient';
-import { useSession } from '@/utils/AuthProvider';
 import {
   Background,
-  EmailContainer,
-  EmailIconStyled,
-  EmailText,
   Footer,
   Image,
   InlineContainer,
   Link,
-  ResendMessage,
   ReviewContainer,
   RoundedCornerButton,
   Title,
-} from '../../../styles/styles';
+} from '@/styles/styles';
+import { P } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
+import {
+  EmailContainer,
+  EmailIconStyled,
+  EmailText,
+  ResendMessage,
+} from './verification-styles';
 
 export default function Verification() {
   const router = useRouter(); // Initialize useRouter
@@ -66,11 +68,11 @@ export default function Verification() {
       <InlineContainer>
         <ReviewContainer>
           <Title>Verification Needed</Title>
-          <text>Thanks for signing up!</text>
-          <text>
+          <P>Thanks for signing up!</P>
+          <P>
             A verification link has been sent to the email you specified, please
             check your inbox for next steps.
-          </text>
+          </P>
 
           <EmailContainer>
             <EmailIconStyled src={EmailIcon} alt="Email Icon" />
