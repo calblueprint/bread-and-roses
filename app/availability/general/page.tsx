@@ -23,6 +23,7 @@ type AvailabilitiesByYear = {
 export default function AvailabilityPage() {
   const [groupedByYear, setGroupedByYear] = useState<AvailabilitiesByYear>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [menuExpanded, setMenuExpanded] = useState(false); // Track the expanded state of the menu
 
   useEffect(() => {
     async function fetchAndGroupData() {
@@ -31,7 +32,6 @@ export default function AvailabilityPage() {
         const availabilities = await fetchAllAvailabilities();
 
         if (!availabilities) {
-          console.error('Failed to fetch availabilities');
           return;
         }
 
@@ -62,6 +62,17 @@ export default function AvailabilityPage() {
             available_dates: availableDates ?? [],
           });
         }
+        for (const year in grouped) {
+          grouped[year].sort((a, b) => {
+            const firstDateA = new Date(
+              a.available_dates[0]?.available_date ?? 0,
+            ).getTime();
+            const firstDateB = new Date(
+              b.available_dates[0]?.available_date ?? 0,
+            ).getTime();
+            return firstDateA - firstDateB;
+          });
+        }
 
         setGroupedByYear(grouped);
         setIsLoading(false); // Stop loading after data fetch
@@ -75,8 +86,9 @@ export default function AvailabilityPage() {
 
   return (
     <div>
-      <MenuBar />
-      <styles.Page>
+      <MenuBar setMenuExpanded={setMenuExpanded} />{' '}
+      {/* Pass function to update state */}
+      <styles.Page $menuExpanded={menuExpanded}>
         <styles.AllAvailabilitiesHolder>
           <styles.TitleContainer>
             <H3 $fontWeight="500" $color="#000" $align="left">

@@ -4,13 +4,17 @@ import NextImage from 'next/image';
 import styled from 'styled-components';
 import { H6, P } from '@/styles/text';
 
-export const Page = styled.main`
+export const Page = styled.main<{ $menuExpanded: boolean }>`
   display: flex;
   min-width: 100%;
-  min-height: 100svh;
+  min-height: 100vh;
   justify-content: center;
   overflow: hidden;
+  margin-left: ${({ $menuExpanded }) =>
+    $menuExpanded ? '10%' : '0'}; /* Fixed margin for the expanded menu */
+  transition: margin-left 0.3s ease; /* Smooth transition */
 `;
+
 export const AllAvailabilitiesHolder = styled.main`
   display: flex;
   width: 28.75%;

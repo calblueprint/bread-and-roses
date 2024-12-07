@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { H5 } from '@/styles/text';
+import { SMALL } from '@/styles/text';
 
 export const AvailabilityContainer = styled.main`
   display: flex;
@@ -14,17 +14,24 @@ export const AvailabilityContainer = styled.main`
   width: 100%;
   background: ${COLORS.bread1};
   margin-bottom: 3rem;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
 `;
 
-export const AvailabilityTitle = styled(H5)`
+export const AvailabilityHeader = styled.main`
   display: flex;
   padding: 16px 24px;
   justify-content: space-between;
-  align-items: end;
+  align-items: center;
   background: ${COLORS.pomegranate11};
   border-radius: 16px 16px 0 0;
   width: 100%;
+`;
+
+export const AvailabilityTitle = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 `;
 
 export const Content = styled.main`
@@ -36,32 +43,23 @@ export const Content = styled.main`
 
 export const SubHeader = styled.main`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 4px;
   justify-content: start;
   margin-bottom: 0.25rem;
 `;
 
-export const Clock = styled(NextImage)`
-  width: 16px;
-  height: 16px;
-  margin-right: 0.25rem;
+export const Arrow = styled(NextImage)`
+  width: 24px;
+  height: 24px;
+  transform: rotate(180deg);
 `;
 
-export const Ul = styled.ul`
-  list-style-type: none;
-  padding-left: 8px;
-`;
-
-export const Li = styled.li`
-  position: relative;
-  padding-left: 1rem;
-
-  /* Custom bullet point styling */
-  &::before {
-    content: '•'; /* Custom bullet character */
-    position: absolute;
-    left: 0;
-    color: ${COLORS.gray11}; /* Set bullet color */
-    font-size: 0.875rem; /* Customize bullet size */
-  }
+export const TruncatedText = styled(SMALL)`
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 `;
