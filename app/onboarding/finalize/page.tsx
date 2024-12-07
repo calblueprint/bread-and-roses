@@ -3,14 +3,14 @@
 import { useRouter } from 'next/navigation';
 import Rose from '@/public/images/rose.svg';
 import { SMALL } from '@/styles/text';
-import { Background } from '../styles';
 import {
   ContinueButton,
   Image,
   InlineContainer,
   ReviewContainer,
   Title,
-} from './styles';
+} from '../../../styles/styles';
+import { Background } from '../styles';
 
 export default function Onboarding() {
   const router = useRouter(); // Initialize useRouter

@@ -48,18 +48,27 @@ export function AuthContextProvider({
     setSession(newSession);
   };
 
-  const signInWithEmail = async (email: string, password: string) =>
-    supabase.auth.signInWithPassword({
+  const signInWithEmail = async (email: string, password: string) => {
+    const response = supabase.auth.signInWithPassword({
       email,
       password,
     }); // will trigger the use effect to update the session
-  const signUp = async (email: string, password: string) =>
-    supabase.auth.signUp({
+
+    return response;
+  };
+
+  const signUp = async (email: string, password: string) => {
+    const response = await supabase.auth.signUp({
       email,
       password,
     }); // will trigger the use effect to update the session
+
+    return response;
+  };
+
   const signOut = () => {
     supabase.auth.signOut();
+    localStorage.removeItem('tempEmail');
     setSession(null);
   };
 
