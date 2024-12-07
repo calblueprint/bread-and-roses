@@ -12,14 +12,19 @@ import {
   ToggleButton,
 } from './styles';
 
-const MenuBar: React.FC = () => {
+const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
+  setMenuExpanded = () => {}, // Default to a no-op function
+}) => {
   const [expanded, setExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const router = useRouter();
 
-  const toggleMenu = () => setExpanded(!expanded);
+  const toggleMenu = () => {
+    const newExpanded = !expanded;
+    setExpanded(newExpanded);
+    setMenuExpanded(newExpanded); // Update parent component about expanded state
+  };
 
-  // TODO: add navigation by passing in path prop
   const handleClick = (item: string, path: string) => {
     setActiveItem(item);
     router.push(path);
