@@ -76,7 +76,7 @@ export const ContinueButton = styled.button`
   align-items: center;
   align-self: stretch;
   border-radius: 99999px;
-  background: ${COLORS.pomegranate};
+  background: ${COLORS.pomegranate12};
   border-style: solid;
   border-color: ${COLORS.gray12};
   cursor: pointer;
@@ -90,7 +90,7 @@ interface RoundedCornerButtonProps {
 
 export const RoundedCornerButton = styled.button<RoundedCornerButtonProps>`
   font-family: ${Sans.style.fontFamily};
-  background-color: ${props => props.bgColor || COLORS.pomegranate};
+  background-color: ${props => props.bgColor || COLORS.pomegranate12};
   color: ${props => props.textColor || 'white'};
   font-size: 1rem;
   padding: 0.55rem;
