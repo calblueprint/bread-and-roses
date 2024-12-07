@@ -3,14 +3,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { P } from '@/styles/text';
-
-export const Checkbox = styled.input`
-  width: 25px;
-  height: 25px;
-  border-style: solid;
-  margin-right: 1rem;
-`;
 
 export const BoxContainer = styled.div<{ isSelected: boolean }>`
   display: flex;
@@ -21,9 +13,16 @@ export const BoxContainer = styled.div<{ isSelected: boolean }>`
   width: 100%;
   border-radius: 8px;
   border: 1px solid
-    ${({ isSelected }) => (isSelected ? COLORS.gray12 : COLORS.gray6)};
-  background: ${({ isSelected }) => (isSelected ? 'white' : COLORS.bread2)};
+    ${({ isSelected }) => (isSelected ? COLORS.rose10 : COLORS.gray6)};
+  background: ${({ isSelected }) =>
+    isSelected ? COLORS['bread1.5'] : COLORS.bread2};
   transition: all 0.3s ease;
+
+  ${({ isSelected }) =>
+    isSelected &&
+    `
+    box-shadow: 0px 0px 8px 0px rgba(227, 66, 66, 0.25); =
+  `}
 `;
 
 export const RoleContainer = styled.div`
@@ -51,15 +50,28 @@ export const Container = styled.main`
   height: 100%;
 `;
 
-export const ChooseBothText = styled(P)`
-  font-weight: 200;
-  color: ${COLORS.gray11};
-  margin-top: 30px;
-`;
-
 export const Icon = styled(Image)`
   width: 30px;
   height: 30px;
   display: block;
   object-fit: contain;
+`;
+
+interface CheckboxProps {
+  shape?: 'circle' | 'square';
+}
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
+  width: 20px;
+  height: 20px;
+  border: 2px solid ${COLORS.rose10};
+  border-radius: ${({ shape }) => (shape === 'circle' ? '50%' : '4px')};
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+
+  &:checked {
+    background-color: ${COLORS.rose10};
+    border-color: ${COLORS.rose10};
+  }
 `;

@@ -92,6 +92,17 @@ export const Container = styled.main`
   }
 `;
 
+export const RoleContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 42px 0px;
+  justify-content: space-between;
+  border-radius: 8px;
+  gap: 16px;
+  height: 100%;
+`;
+
 export const Input = styled.input`
   font-family: ${Sans.style.fontFamily};
   padding: 0.5rem;

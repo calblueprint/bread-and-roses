@@ -52,7 +52,7 @@ export default function Onboarding() {
   };
 
   const handleBack = () => {
-    router.push('/onboarding/role-selection');
+    router.push('/onboarding/volunteer-role-selection');
   };
 
   return (
