@@ -80,13 +80,6 @@ export interface AvailableDates {
   test_col2: string; //timestamptz
 }
 
-export interface Timeslots {
-  timeslot_id: UUID;
-  date_id: UUID;
-  start_time: string; //timestamptz
-  end_time: string; //timestamptz
-}
-
 export interface Event {
   event_id: UUID;
   facility_id: UUID;
@@ -142,6 +135,7 @@ export interface VolunteersPreferences {
   user_id: UUID;
   role?: Role[];
   performance_type?: PerformanceType[];
+  performer_type?: PerformerType[];
   facility_type?: FacilityType[];
   locations?: string[];
   audience?: Audience[];

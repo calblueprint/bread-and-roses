@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
 import Back from '@/public/images/back.svg';
 import { SMALL } from '@/styles/text';
@@ -9,6 +9,7 @@ import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
   Button,
+  Image,
   InlineContainer,
   Label,
   ProgressBarContainer,
@@ -16,62 +17,83 @@ import {
   StyledLink,
   Title,
 } from '../styles';
-import { Image, Line, ReviewContainer, SmallText } from './styles';
+import { BackButton, Line, ReviewContainer, SmallText } from './styles';
 
 export default function Review() {
+  const router = useRouter();
+
   const onboardingContext = useContext(OnboardingContext);
 
   if (!onboardingContext) return null;
 
+  const { role } = onboardingContext;
   const { preferences, generalInfo } = onboardingContext;
+
+  const displayValue = (value: string | string[] | undefined): string => {
+    if (Array.isArray(value)) {
+      return value.length > 0 ? value.join(', ') : 'N/A';
+    }
+    return value || 'N/A';
+  };
+
+  const handleBack = () => {
+    router.push('/onboarding/additional-info');
+  };
 
   const submitData = async () => {
     if (!generalInfo || !preferences) return;
-    await submitOnboardingData(generalInfo, preferences);
+    await submitOnboardingData(generalInfo, preferences, role);
   };
 
   return (
     <Background>
       <InlineContainer>
-        <Link href="/onboarding/preferences">
+        <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
-        </Link>
-
+        </BackButton>
+        <Title $fontWeight={500}>Did we get everything?</Title>
+        <ProgressBarContainer>
+          <Rectangle variant="dark" width="100%" />
+        </ProgressBarContainer>
         <ReviewContainer>
-          <Title $fontWeight={500}>Did we get everything?</Title>
-          <ProgressBarContainer>
-            <Rectangle variant="dark" width="100%" />
-          </ProgressBarContainer>
           <Label>First Name</Label>
-          <SmallText>{generalInfo.firstName}</SmallText>
+          <SmallText>{displayValue(generalInfo.firstName)}</SmallText>
           <Label>Last Name</Label>
-          <SmallText>{generalInfo.lastName}</SmallText>
+          <SmallText>{displayValue(generalInfo.lastName)}</SmallText>
           <Label>Phone Number</Label>
-          <SmallText>{generalInfo.phoneNumber}</SmallText>
+          <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
 
           <Line />
 
           <Label>Facility Type</Label>
-          <SmallText>{preferences.facilityType}</SmallText>
+          <SmallText>{displayValue(preferences.facilityType)}</SmallText>
           <Label>Preferred Location</Label>
-          <SmallText>{preferences.location}</SmallText>
+          <SmallText>{displayValue(preferences.location)}</SmallText>
           <Label>Audience</Label>
-          <SmallText>{preferences.audience}</SmallText>
-          <Label>Preferred Equipment</Label>
-          <SmallText>{preferences.preferredEquipment}</SmallText>
-          <Label>Type of Act</Label>
-          <SmallText>{preferences.typeOfAct}</SmallText>
-          <Label>Genre</Label>
-          <SmallText>{preferences.genre}</SmallText>
+          <SmallText>{displayValue(preferences.audience)}</SmallText>
 
-          <StyledLink href="/onboarding/yay">
-            <Button onClick={submitData}>
-              <SMALL $fontWeight="400" $color="white">
-                Everything looks good!
-              </SMALL>
-            </Button>
-          </StyledLink>
+          <Line />
+
+          <Label>Performance Type</Label>
+          <SmallText>{displayValue(preferences.performanceType)}</SmallText>
+          <Label>Genre</Label>
+          <SmallText>{displayValue(preferences.genre)}</SmallText>
+          <Label>Group Size</Label>
+          <SmallText>{displayValue(preferences.performerType)}</SmallText>
+
+          <Line />
+
+          <Label>Additional Information</Label>
+          <SmallText>{displayValue(preferences.additionalInfo)}</SmallText>
         </ReviewContainer>
+
+        <StyledLink href="/onboarding/finalize">
+          <Button onClick={submitData}>
+            <SMALL $fontWeight="400" $color="white">
+              Everything looks good!
+            </SMALL>
+          </Button>
+        </StyledLink>
       </InlineContainer>
     </Background>
   );

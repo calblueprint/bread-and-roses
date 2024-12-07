@@ -2,7 +2,7 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
-import COLORS from '../../../styles/colors';
+import COLORS from '@/styles/colors';
 
 export const Title = styled.h1`
   font-size: 24px;
@@ -64,8 +64,13 @@ export const ContinueButton = styled.button`
   justify-content: center;
   align-items: center;
   align-self: stretch;
+<<<<<<< HEAD:app/onboarding/yay/styles.ts
   border-radius: 99999px;
   background: ${COLORS.pomegranate12};
+=======
+  border-radius: 8px;
+  background: ${COLORS.pomegranate12};
+>>>>>>> c33d5a0fb4596e1d2e004014b99e33e17cee93e9:app/onboarding/finalize/styles.ts
   border-style: solid;
   border-color: ${COLORS.gray12};
   cursor: pointer;

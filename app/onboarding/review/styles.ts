@@ -1,15 +1,8 @@
 'use client';
 
-import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { Sans } from '@/styles/fonts';
-
-export const Image = styled(NextImage)`
-  width: 20px;
-  height: 20px;
-  margin-top: 1rem;
-`;
+import { P } from '@/styles/text';
 
 export const ReviewContainer = styled.main`
   margin-top: 2rem;
@@ -24,11 +17,11 @@ export const ReviewContainer = styled.main`
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
 `;
 
-export const SmallText = styled.text`
+export const SmallText = styled(P)`
   color: ${COLORS.gray11};
-  font-size: 14px;
+  font-weight: 100;
   line-height: normal;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.6rem;
 `;
 
 export const Line = styled.main`
@@ -41,11 +34,16 @@ export const Line = styled.main`
     #b8b8b8 50%,
     rgba(184, 184, 184, 0) 100%
   );
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
 `;
 
 export const ConfirmText = styled.text`
-  ${Sans.style}
   color: white;
   font-size: 14px;
+`;
+
+export const BackButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
 `;

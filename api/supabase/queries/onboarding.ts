@@ -1,9 +1,10 @@
-import { GeneralInfo, Preferences } from '@/utils/onboardingContext';
+import { GeneralInfo, Preferences, Role } from '@/utils/onboardingContext';
 import supabase from '../createClient';
 
 export async function submitOnboardingData(
   generalInfo: GeneralInfo,
   preferences: Preferences,
+  role: Role,
 ): Promise<void> {
   try {
     const { data: volunteerData, error: volunteerError } = await supabase
@@ -13,6 +14,7 @@ export async function submitOnboardingData(
           first_name: generalInfo.firstName,
           last_name: generalInfo.lastName,
           phone_number: generalInfo.phoneNumber,
+          notifications_opt_in: generalInfo.notifications,
         },
       ]);
 
@@ -23,11 +25,15 @@ export async function submitOnboardingData(
       .from('volunteer_preferences')
       .insert([
         {
+          role: [
+            role.isPerformer ? 'performer' : null,
+            role.isHost ? 'host' : null,
+          ].filter(Boolean),
           facility_type: preferences.facilityType,
-          city: preferences.location,
-          audience: preferences.audience,
-          instruments: preferences.preferredEquipment,
-          type_of_act: preferences.typeOfAct,
+          locations: preferences.location,
+          audience_type: preferences.audience,
+          performer_type: preferences.performerType,
+          performance_type: preferences.performanceType,
           genre: preferences.genre,
         },
       ]);

@@ -2,8 +2,8 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
+import COLORS from '@/styles/colors';
 import { P, SMALLER } from '@/styles/text';
-import COLORS from '../../styles/colors';
 
 export const EventImage = styled(NextImage)`
   width: 20%;
