@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import NextLink from 'next/link';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
@@ -39,8 +40,9 @@ export const Header = styled(H3)`
 export const Card = styled.div`
   background-color: ${COLORS.bread1};
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  border: 1px solid ${COLORS.gray2};
+  box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
   max-width: 400px;
   width: 100%;
   box-sizing: border-box;
@@ -49,7 +51,7 @@ export const Card = styled.div`
   align-items: center;
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -59,7 +61,7 @@ export const Form = styled.div`
 export const Fields = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
 `;
 
 export const Label = styled(P)`
@@ -75,6 +77,7 @@ export const Input = styled.input`
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 0.2rem;
 `;
 
 export const Button = styled.button`
@@ -90,13 +93,7 @@ export const Button = styled.button`
   width: 100%;
 `;
 
-export const ForgotPassword = styled(SMALL)`
-  margin-top: 0.25rem;
-  font-weight: 400;
-  text-align: right;
-`;
-
-export const Link = styled.a`
+export const Link = styled(NextLink)`
   color: ${COLORS.lilac9};
   text-decoration: none;
 
@@ -105,18 +102,16 @@ export const Link = styled.a`
   }
 `;
 
-// TODO: Temporarily added to verify that supabase login functionality actually works
-export const LoginMessage = styled(SMALL)<{ $isError: boolean }>`
-  color: ${({ $isError }) => ($isError ? 'red' : 'green')};
+export const ErrorMessage = styled(SMALL)<{ $isError: boolean }>`
+  color: ${COLORS.rose11};
   font-weight: 400;
   text-align: left;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 `;
 
 export const Footer = styled.div`
-  font-family: ${Sans.style.fontFamily};
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
   width: 100%;
   padding: 0.5rem;
 `;
