@@ -35,7 +35,7 @@ export default function AvailabilityCard({
       : null;
 
   // Format the dates
-  const formattedRange = dateRange
+  let formattedRange = dateRange
     ? `${dateRange.earliest.toLocaleString('default', {
         month: 'short',
         day: 'numeric',
@@ -44,6 +44,13 @@ export default function AvailabilityCard({
         day: 'numeric',
       })}`
     : 'No dates available';
+
+  if (dateRange && dateRange.earliest.getDate() == dateRange.latest.getDate()) {
+    formattedRange = `${dateRange.earliest.toLocaleString('default', {
+      month: 'short',
+      day: 'numeric',
+    })}`;
+  }
 
   return (
     <styles.AvailabilityContainer>
