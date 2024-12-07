@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import supabase from '@/api/supabase/createClient';
 import Rose from '@/public/images/rose-greenbg.svg';
 import {
   Background,
@@ -15,7 +17,7 @@ export default function Success() {
   const router = useRouter(); // Initialize useRouter
 
   const handleContinue = () => {
-    router.push('/onboarding/general'); // Navigate to the onboarding/general page
+    router.push('/onboarding/role-selection'); // Navigate to the onboarding/general page
   };
 
   return (

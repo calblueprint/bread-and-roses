@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/api/supabase/createClient';
 import {
   getTempEmail,
   resendVerificationEmail,
 } from '@/api/supabase/queries/auth';
 import Bud from '@/public/images/bud.svg';
 import EmailIcon from '@/public/images/email.svg';
+// import supabase from '@/api/supabase/createClient';
+import { useSession } from '@/utils/AuthProvider';
 import {
   Background,
   EmailContainer,
@@ -29,27 +30,13 @@ export default function Verification() {
   const [tempEmail, setTempEmail] = useState<string | null>(null);
   const [resendStatus, setResendStatus] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
+  const { session } = useSession();
 
   useEffect(() => {
-    // TODO: checking if user is verified every 5 seconds until user is verified or if page is reloaded/closed.
-    // Not sure if this is the most efficient approach
-
-    // TODO: this still isn't working rn because session is null until sign-in
-    const checkVerificationStatus = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      console.log(session);
-
-      if (session?.user?.user_metadata.email_verified) {
-        router.push('/success');
-      }
-    };
-
-    const interval = setInterval(checkVerificationStatus, 5000);
-
-    return () => clearInterval(interval);
-  }, [router]);
+    if (session) {
+      router.push('/success');
+    }
+  }, [session, router]);
 
   useEffect(() => {
     const email = getTempEmail();

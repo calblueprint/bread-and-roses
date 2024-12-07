@@ -6,7 +6,10 @@ export async function handleSignUp(
 ): Promise<{ success: boolean; message: string }> {
   try {
     await ensureLoggedOutForNewUser(email);
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
     if (error) {
       return { success: false, message: `Sign-up failed: ${error.message}` };
