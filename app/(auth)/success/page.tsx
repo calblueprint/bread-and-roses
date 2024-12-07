@@ -1,8 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/api/supabase/createClient';
 import Rose from '@/public/images/rose-greenbg.svg';
 import {
   Background,
