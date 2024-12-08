@@ -12,6 +12,7 @@ import {
   fetchFacilityContactByID,
 } from '@/api/supabase/queries/facilities';
 import { fetchPerformer } from '@/api/supabase/queries/volunteers';
+import Back from '@/public/images/back.svg';
 import LocPin from '@/public/images/black_loc_pin.svg';
 import BPLogo from '@/public/images/bp-logo.png';
 import Calendar from '@/public/images/calendar_icon.svg';
@@ -19,7 +20,6 @@ import FacilityContactPin from '@/public/images/facility_contact_icon.svg';
 import HostPin from '@/public/images/host_icon.svg';
 import ProducerIcon from '@/public/images/producer_icon.svg';
 import PerformerPin from '@/public/images/volunteer_performer_icon.svg';
-import WhiteBack from '@/public/images/white_back.svg';
 import COLORS from '@/styles/colors';
 import {
   Event,
@@ -38,6 +38,7 @@ export default function EventDisplay({
   const [event, setEvent] = useState<Event>();
   const [facility, setFacility] = useState<Facilities>();
   const [facility_contact, setFacilityContact] = useState<FacilityContacts>();
+  const [host_email, setHostEmail] = useState<string>();
   const [host_name, setHostName] = useState<string>();
   const [host_phone_number, setHostPhoneNumber] = useState<string>();
   const [performer, setPerformer] = useState<Volunteers>();
@@ -56,9 +57,11 @@ export default function EventDisplay({
 
       if (fetchedEvent.needs_host) {
         const host: Volunteers = await fetchEventHostByID(params.event_id);
+        setHostEmail(host.email);
         setHostName(`${host.first_name} ${host.last_name}`);
         setHostPhoneNumber(host.phone_number);
       } else {
+        setHostEmail('email column needs to be added to facility table');
         setHostName(fetchedFacility.host_name);
         setHostPhoneNumber(fetchedFacility.host_contact);
       }
@@ -81,7 +84,6 @@ export default function EventDisplay({
     new Date(event.end_date_time),
     true,
   );
-  const location = facility.street_address_1 + ', ' + facility.city;
 
   return (
     <styles.Page>
@@ -89,192 +91,227 @@ export default function EventDisplay({
         <styles.EventImage src={BPLogo} alt="EventImage" />
         <styles.GradientOverlay />
       </styles.ImageWrapper>
-      <Link href={`/events`} style={{ textDecoration: 'none' }}>
-        <styles.BackImage src={WhiteBack} alt="Back icon" />
-      </Link>
       <styles.Curve />
       <styles.Container>
-        <styles.EventText $fontWeight="500" $color="#000" $align="left">
-          Event Title Here
-        </styles.EventText>
-        <styles.DateLocation>
-          <styles.CalLocPin src={Calendar} alt="Calendar" />
-          <styles.ParaText
-            $fontWeight="400"
-            $color={COLORS.gray12}
-            $align="left"
-          >
-            {time}
-          </styles.ParaText>
-        </styles.DateLocation>
-        <styles.DateLocation>
-          <styles.CalLocPin src={LocPin} alt="Location" />
-          <styles.LocationDetails>
+        <styles.LeftWrapper>
+          <Link href={`/events`} style={{ textDecoration: 'none' }}>
+            <styles.BackImage src={Back} alt="Back icon" />
+          </Link>
+          <styles.EventText $fontWeight="500" $color="#000" $align="left">
+            Event Title Here
+          </styles.EventText>
+          <styles.DateLocation>
+            <styles.CalLocPin src={Calendar} alt="Calendar" />
             <styles.ParaText
               $fontWeight="400"
               $color={COLORS.gray12}
               $align="left"
             >
-              {facility.name}
+              {time}
             </styles.ParaText>
-            <styles.ParaText
-              $fontWeight="400"
-              $color={COLORS.gray10}
-              $align="left"
-            >
-              {location}
-            </styles.ParaText>
-          </styles.LocationDetails>
-        </styles.DateLocation>
-        <styles.AllNotesAndContactsContainer>
-          <styles.SubHeadingText $fontWeight="500" $color="000" $align="left">
-            Notes
-          </styles.SubHeadingText>
-          <div>
-            <styles.ParaText
+          </styles.DateLocation>
+          <styles.DateLocation>
+            <styles.CalLocPin src={LocPin} alt="Location" />
+            <styles.LocationDetails>
+              <styles.ParaText
+                $fontWeight="400"
+                $color={COLORS.gray12}
+                $align="left"
+              >
+                {facility.name}
+              </styles.ParaText>
+              <styles.ParaText
+                $fontWeight="400"
+                $color={COLORS.gray10}
+                $align="left"
+              >
+                {facility.street_address_1}
+                <br />
+                {facility.city}
+              </styles.ParaText>
+            </styles.LocationDetails>
+          </styles.DateLocation>
+          <styles.AllNotesAndContactsContainer>
+            <styles.SubHeadingText $fontWeight="500" $color="000" $align="left">
+              Notes
+            </styles.SubHeadingText>
+            <div>
+              <styles.ParaText
+                $fontWeight="500"
+                $color={COLORS.gray12}
+                $align="left"
+              >
+                Facility Notes
+              </styles.ParaText>
+              <styles.ParaText
+                $fontWeight="400"
+                $color={COLORS.gray11}
+                $align="left"
+              >
+                Facility notes go here
+              </styles.ParaText>
+            </div>
+            <div>
+              <styles.ParaText
+                $fontWeight="500"
+                $color={COLORS.gray12}
+                $align="left"
+              >
+                Producer Notes
+              </styles.ParaText>
+              <styles.ParaText
+                $fontWeight="400"
+                $color={COLORS.gray11}
+                $align="left"
+              >
+                {event.notes}
+              </styles.ParaText>
+            </div>
+          </styles.AllNotesAndContactsContainer>
+        </styles.LeftWrapper>
+        <styles.RightWrapper>
+          <styles.AllNotesAndContactsContainer>
+            <styles.ContactsSubHeadingText
               $fontWeight="500"
-              $color={COLORS.gray12}
+              $color="000"
               $align="left"
             >
-              Notes from the facility
-            </styles.ParaText>
-            <styles.ParaText
-              $fontWeight="400"
-              $color={COLORS.gray12}
-              $align="left"
-            >
-              Facility notes go here
-            </styles.ParaText>
-          </div>
-          <div>
-            <styles.ParaText
-              $fontWeight="500"
-              $color={COLORS.gray12}
-              $align="left"
-            >
-              Notes from the producer
-            </styles.ParaText>
-            <styles.ParaText
-              $fontWeight="400"
-              $color={COLORS.gray12}
-              $align="left"
-            >
-              {event.notes}
-            </styles.ParaText>
-          </div>
-        </styles.AllNotesAndContactsContainer>
-        <styles.AllNotesAndContactsContainer>
-          <styles.SubHeadingText $fontWeight="500" $color="000" $align="left">
-            Contacts
-          </styles.SubHeadingText>
-          <styles.ContactContainer>
-            <styles.ContactPins src={FacilityContactPin} alt="House" />
-            <styles.ContactDetails>
-              <styles.ParaText
-                $fontWeight="500"
-                $color={COLORS.gray12}
-                $align="left"
-              >
-                {facility_contact.first_name} {facility_contact.last_name}
-              </styles.ParaText>
-              <styles.ContactTypeText
-                $fontWeight="400"
-                $color={COLORS.gray10}
-                $align="left"
-              >
-                Facility Contact
-              </styles.ContactTypeText>
-              <styles.PhoneNumberText
-                $fontWeight="400"
-                $color={COLORS.rose11}
-                $align="left"
-              >
-                {facility_contact.phone_number}
-              </styles.PhoneNumberText>
-            </styles.ContactDetails>
-          </styles.ContactContainer>
-          <styles.ContactContainer>
-            <styles.ContactPins src={HostPin} alt="HandHeart" />
-            <styles.ContactDetails>
-              <styles.ParaText
-                $fontWeight="500"
-                $color={COLORS.gray12}
-                $align="left"
-              >
-                {host_name}
-              </styles.ParaText>
-              <styles.ContactTypeText
-                $fontWeight="400"
-                $color={COLORS.gray10}
-                $align="left"
-              >
-                Event Host
-              </styles.ContactTypeText>
-              {/* Should this be fixed, or should it changed based on needs_host? */}
-              <styles.PhoneNumberText
-                $fontWeight="400"
-                $color={COLORS.rose11}
-                $align="left"
-              >
-                {host_phone_number}
-              </styles.PhoneNumberText>
-            </styles.ContactDetails>
-          </styles.ContactContainer>
-          <styles.ContactContainer>
-            <styles.ContactPins src={PerformerPin} alt="Star" />
-            <styles.ContactDetails>
-              <styles.ParaText
-                $fontWeight="500"
-                $color={COLORS.gray12}
-                $align="left"
-              >
-                {performer.first_name} {performer.last_name}
-              </styles.ParaText>
-              <styles.ContactTypeText
-                $fontWeight="400"
-                $color={COLORS.gray10}
-                $align="left"
-              >
-                Volunteer Performer
-              </styles.ContactTypeText>
-              {/* Should this be fixed, or should it changed based on needs_host? */}
-              <styles.PhoneNumberText
-                $fontWeight="400"
-                $color={COLORS.rose11}
-                $align="left"
-              >
-                {performer.phone_number}
-              </styles.PhoneNumberText>
-            </styles.ContactDetails>
-          </styles.ContactContainer>
-          <styles.ContactContainer>
-            <styles.ContactPins src={ProducerIcon} alt="Board" />
-            <styles.ContactDetails>
-              <styles.ParaText
-                $fontWeight="500"
-                $color={COLORS.gray12}
-                $align="left"
-              >
-                Producer Name
-              </styles.ParaText>
-              <styles.ContactTypeText
-                $fontWeight="400"
-                $color={COLORS.gray10}
-                $align="left"
-              >
-                Show Producer
-              </styles.ContactTypeText>
-              {/* Should this be fixed, or should it changed based on needs_host? */}
-              <styles.PhoneNumberText
-                $fontWeight="400"
-                $color={COLORS.rose11}
-                $align="left"
-              >
-                Producer Number
-              </styles.PhoneNumberText>
-            </styles.ContactDetails>
-          </styles.ContactContainer>
-        </styles.AllNotesAndContactsContainer>
+              Contacts
+            </styles.ContactsSubHeadingText>
+            <styles.ContactContainer>
+              <styles.ContactPins src={FacilityContactPin} alt="House" />
+              <styles.ContactDetails>
+                <styles.ParaText
+                  $fontWeight="500"
+                  $color={COLORS.gray12}
+                  $align="left"
+                >
+                  {facility_contact.first_name} {facility_contact.last_name}
+                </styles.ParaText>
+                <styles.ContactTypeText
+                  $fontWeight="400"
+                  $color={COLORS.gray10}
+                  $align="left"
+                >
+                  Facility Contact
+                </styles.ContactTypeText>
+                <styles.EmailText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  {facility_contact.email}
+                </styles.EmailText>
+                <styles.PhoneNumberText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  {facility_contact.phone_number}
+                </styles.PhoneNumberText>
+              </styles.ContactDetails>
+            </styles.ContactContainer>
+            <styles.ContactContainer>
+              <styles.ContactPins src={HostPin} alt="HandHeart" />
+              <styles.ContactDetails>
+                <styles.ParaText
+                  $fontWeight="500"
+                  $color={COLORS.gray12}
+                  $align="left"
+                >
+                  {host_name}
+                </styles.ParaText>
+                <styles.ContactTypeText
+                  $fontWeight="400"
+                  $color={COLORS.gray10}
+                  $align="left"
+                >
+                  Event Host
+                </styles.ContactTypeText>
+                <styles.EmailText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  {host_email}
+                </styles.EmailText>
+                <styles.PhoneNumberText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  {host_phone_number}
+                </styles.PhoneNumberText>
+              </styles.ContactDetails>
+            </styles.ContactContainer>
+            <styles.ContactContainer>
+              <styles.ContactPins src={PerformerPin} alt="Star" />
+              <styles.ContactDetails>
+                <styles.ParaText
+                  $fontWeight="500"
+                  $color={COLORS.gray12}
+                  $align="left"
+                >
+                  {performer.first_name} {performer.last_name}
+                </styles.ParaText>
+                <styles.ContactTypeText
+                  $fontWeight="400"
+                  $color={COLORS.gray10}
+                  $align="left"
+                >
+                  Volunteer Performer
+                </styles.ContactTypeText>
+                <styles.EmailText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  {performer.email}
+                </styles.EmailText>
+                <styles.PhoneNumberText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  {performer.phone_number}
+                </styles.PhoneNumberText>
+              </styles.ContactDetails>
+            </styles.ContactContainer>
+            <styles.ContactContainer>
+              <styles.ContactPins src={ProducerIcon} alt="Board" />
+              <styles.ContactDetails>
+                <styles.ParaText
+                  $fontWeight="500"
+                  $color={COLORS.gray12}
+                  $align="left"
+                >
+                  Producer Name
+                </styles.ParaText>
+                <styles.ContactTypeText
+                  $fontWeight="400"
+                  $color={COLORS.gray10}
+                  $align="left"
+                >
+                  Show Producer
+                </styles.ContactTypeText>
+                <styles.EmailText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  producer@email.com
+                </styles.EmailText>
+                <styles.PhoneNumberText
+                  $fontWeight="400"
+                  $color={COLORS.rose11}
+                  $align="left"
+                >
+                  800-867-5309
+                </styles.PhoneNumberText>
+              </styles.ContactDetails>
+            </styles.ContactContainer>
+          </styles.AllNotesAndContactsContainer>
+        </styles.RightWrapper>
       </styles.Container>
     </styles.Page>
   );

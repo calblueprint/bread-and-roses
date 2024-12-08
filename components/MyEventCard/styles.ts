@@ -7,7 +7,7 @@ import { P, SMALLER } from '@/styles/text';
 
 export const EventImage = styled(NextImage)`
   width: 20%;
-  height: 90%;
+  height: auto;
 `;
 
 export const EventContainer = styled.main`
