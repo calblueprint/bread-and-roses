@@ -99,6 +99,7 @@ export default function Onboarding() {
             multi
             onChange={handleFacilityChange}
             options={facilityTypeOptions}
+            value={new Set(preferences.facilityType)}
           />
           <InputDropdown
             label="Location Preferences"
@@ -106,6 +107,7 @@ export default function Onboarding() {
             multi
             onChange={handleLocationChange}
             options={locationOptions}
+            value={new Set(preferences.location)}
           />
           <InputDropdown
             label="Preferred Audience"
@@ -113,6 +115,7 @@ export default function Onboarding() {
             multi
             onChange={handleAudienceChange}
             options={audienceOptions}
+            value={new Set(preferences.audience)}
           />
         </Container>
 
