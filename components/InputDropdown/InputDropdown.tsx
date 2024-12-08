@@ -25,6 +25,7 @@ interface CommonProps {
   error?: string;
   disabled?: boolean;
   required?: boolean;
+  value: Set<string>;
 }
 
 interface MultiSelectProps extends CommonProps {
@@ -51,8 +52,6 @@ function AnimatedMenu(props: MenuProps<DropdownOption>) {
     </AnimatedWrapper>
   );
 }
-
-// main dropdown component
 export default function InputDropdown({
   label,
   options,
@@ -62,6 +61,7 @@ export default function InputDropdown({
   required,
   onChange,
   multi,
+  value,
 }: InputDropdownProps) {
   const optionsArray = useMemo(
     () =>
@@ -73,6 +73,26 @@ export default function InputDropdown({
           })),
     [options],
   );
+
+  const transformedValue = useMemo(() => {
+    if (multi) {
+      return Array.from(value).map(v => ({
+        value: v,
+        label: options instanceof Map ? options.get(v) || v : v,
+      }));
+    } else {
+      const singleValue = Array.from(value)[0];
+      return singleValue
+        ? {
+            value: singleValue,
+            label:
+              options instanceof Map
+                ? options.get(singleValue) || singleValue
+                : singleValue,
+          }
+        : null;
+    }
+  }, [value, multi, options]);
 
   const handleChange = useCallback(
     (newValue: MultiValue<DropdownOption> | SingleValue<DropdownOption>) => {
@@ -111,6 +131,7 @@ export default function InputDropdown({
         placeholder={placeholder}
         isMulti={multi}
         onChange={handleChange}
+        value={transformedValue} // Pass the transformed value here
       />
       {error && <SMALL $color={COLORS.rose10}>{error}</SMALL>}
     </DropdownWrapper>

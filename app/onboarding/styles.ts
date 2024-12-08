@@ -149,9 +149,33 @@ export const Button = styled.button<{
   width: ${({ position }) => (position === 'fixed' ? '30%' : '100%')};
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
+    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
+    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+  border-style: solid;
+  border-radius: 8px;
+  display: inline-flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 85%;
+    bottom: 40px;
+  }
+`;
+
+export const SubmitButton = styled.button<{ disabled?: boolean }>`
+  margin-top: 42px;
+  width: 100%;
+  height: 2.75rem;
+  background-color: ${({ disabled }) =>
+    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+  border-color: ${({ disabled }) =>
+    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
