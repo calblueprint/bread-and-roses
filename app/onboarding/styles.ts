@@ -150,9 +150,9 @@ export const Button = styled.button<{ disabled?: boolean }>`
   width: 30%;
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate10 : COLORS.pomegranate};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate10 : COLORS.pomegranate};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;

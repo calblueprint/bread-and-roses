@@ -53,6 +53,7 @@ const COLORS = {
 
   pomegranate: '#342A2F',
   pomegranate10: '#6F585E',
+  pomegranate12: '#342A2F',
 };
 
 export default COLORS;
