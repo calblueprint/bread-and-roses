@@ -52,7 +52,7 @@ export default function Onboarding() {
   };
 
   const handleBack = () => {
-    router.push('/onboarding/volunteer-role-selection');
+    router.push('/onboarding/role-selection');
   };
 
   return (
@@ -114,6 +114,7 @@ export default function Onboarding() {
 
         <ButtonContainer>
           <Button
+            position="fixed"
             onClick={handleSubmit}
             disabled={
               !generalInfo.firstName ||

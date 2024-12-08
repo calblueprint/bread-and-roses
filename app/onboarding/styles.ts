@@ -155,10 +155,13 @@ export const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export const Button = styled.button<{ disabled?: boolean }>`
-  position: fixed;
+export const Button = styled.button<{
+  disabled?: boolean;
+  position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
+}>`
+  position: ${({ position = 'fixed' }) => position};
   bottom: 70px;
-  width: 30%;
+  width: ${({ position }) => (position === 'fixed' ? '30%' : '100%')};
   height: 2.75rem;
   background-color: ${({ disabled }) =>
     disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};

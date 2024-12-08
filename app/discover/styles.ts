@@ -30,10 +30,23 @@ export const TitleBar = styled.div`
   margin-bottom: 0.25rem;
 `;
 
-export const Container = styled.div`
-  flex-direction: column;
+export const Page = styled.main<{ $menuExpanded: boolean }>`
+  display: flex;
+  min-width: 90%;
+  min-height: 100vh;
+  justify-content: center;
   overflow: hidden;
-  padding: 3rem;
+  margin-left: ${({ $menuExpanded }) =>
+    $menuExpanded ? '15%' : '0px'}; /* Adjust margin based on menu expansion */
+  transition: margin-left 0.3s ease; /* Smooth transition for menu toggle */
+`;
+
+export const DiscoverHolder = styled.main`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 2rem;
+  box-sizing: border-box;
 `;
 
 export const Discover = styled(H3)`

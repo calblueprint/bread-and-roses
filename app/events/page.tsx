@@ -14,6 +14,7 @@ type GroupedEvents = {
 
 export default function EventPage() {
   const [data, setData] = useState<Event[]>([]);
+  const [menuExpanded, setMenuExpanded] = useState(false); // Track the expanded state of the menu
 
   useEffect(() => {
     fetchAcceptedEventsByVolunteer('11d219d9-bf05-4a06-a23e-89fd566c7a04').then(
@@ -61,11 +62,11 @@ export default function EventPage() {
 
   return (
     <div>
-      <MenuBar />
-      <styles.Page>
+      <MenuBar setMenuExpanded={setMenuExpanded} />
+      <styles.Page $menuExpanded={menuExpanded}>
         <styles.AllEventsHolder>
           <styles.Title $fontWeight="500" $color="#000" $align="left">
-            Upcoming Events
+            My Events
           </styles.Title>
           {sortedEntries.map(([month, events]) => (
             <div key={month}>

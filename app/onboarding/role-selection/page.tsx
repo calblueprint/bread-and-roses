@@ -60,7 +60,7 @@ export default function Onboarding() {
         <RoleContainer>
           <RoleSelector
             isSelected={role.isPerformer}
-            name="isPerformer"
+            name="performer"
             title="Performer"
             description="The star of the show"
             iconSrc={Star}
@@ -68,7 +68,7 @@ export default function Onboarding() {
           />
           <RoleSelector
             isSelected={role.isHost}
-            name="isHost"
+            name="host"
             title="Host"
             description="The organizer of the event"
             iconSrc={Help}
@@ -78,6 +78,7 @@ export default function Onboarding() {
         </RoleContainer>
         <ButtonContainer>
           <Button
+            position="fixed"
             onClick={handleContinue}
             disabled={!role.isHost && !role.isPerformer}
           >

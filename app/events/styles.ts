@@ -10,24 +10,33 @@ export const MenuImage = styled(NextImage)`
   margin: 1rem;
 `;
 
-export const Page = styled.main`
-  flex-direction: column;
+export const Page = styled.main<{ $menuExpanded: boolean }>`
+  display: flex;
   min-width: 100%;
-  min-height: 100svh;
+  min-height: 100vh;
+  justify-content: center;
   overflow: hidden;
-  padding: 2rem;
+
+  @media (min-width: 1024px) {
+    margin-left: ${({ $menuExpanded }) =>
+      $menuExpanded ? '10%' : '0'}; /* Fixed margin for the expanded menu */
+    transition: margin-left 0.3s ease; /* Smooth transition */
+  }
 `;
 
 export const AllEventsHolder = styled.main`
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
   display: flex;
+  width: 28.75%;
   flex-direction: column;
-  gap: 1.5rem;
+
+  @media (max-width: 900px) {
+    width: 80%;
+  }
 `;
 
 export const Title = styled(H3)`
-  margin-top: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
   font-style: normal;
   line-height: normal;
 `;
