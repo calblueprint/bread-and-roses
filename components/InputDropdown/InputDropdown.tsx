@@ -25,6 +25,7 @@ interface CommonProps {
   error?: string;
   disabled?: boolean;
   required?: boolean;
+  value: Set<string>;
 }
 
 interface MultiSelectProps extends CommonProps {
@@ -53,6 +54,71 @@ function AnimatedMenu(props: MenuProps<DropdownOption>) {
 }
 
 // main dropdown component
+// export default function InputDropdown({
+//   label,
+//   options,
+//   placeholder = '',
+//   error = '',
+//   disabled,
+//   required,
+//   onChange,
+//   multi,
+// }: InputDropdownProps) {
+//   const optionsArray = useMemo(
+//     () =>
+//       options instanceof Set
+//         ? Array.from(options).map(v => ({ label: v, value: v }))
+//         : Array.from(options.entries()).map(([k, v]) => ({
+//             value: k,
+//             label: v,
+//           })),
+//     [options],
+//   );
+
+//   const handleChange = useCallback(
+//     (newValue: MultiValue<DropdownOption> | SingleValue<DropdownOption>) => {
+//       if (multi && newValue instanceof Array) {
+//         onChange?.(new Set(newValue.map(v => v.value)));
+//       } else if (!multi && !(newValue instanceof Array)) {
+//         onChange?.(newValue ? newValue.value : null);
+//       } else {
+//         throw new Error('An unexpected error occurred!');
+//       }
+//     },
+//     [multi, onChange],
+//   );
+
+//   return (
+//     <DropdownWrapper>
+//       <InputLabel>
+//         <P $color={COLORS.gray11} $fontWeight={400}>
+//           {label}
+//         </P>
+//         {required && <SMALL $color={COLORS.rose10}>{'*'}</SMALL>}
+//       </InputLabel>
+//       <Select
+//         components={{ Menu: AnimatedMenu }}
+//         isClearable
+//         closeMenuOnSelect={false}
+//         tabSelectsValue={false}
+//         hideSelectedOptions={false}
+//         noOptionsMessage={NoOptionsMessage}
+//         unstyled
+//         required={required}
+//         isDisabled={disabled}
+//         styles={DropdownStyles(multi, error !== '')}
+//         instanceId={useId()}
+//         options={optionsArray}
+//         placeholder={placeholder}
+//         isMulti={multi}
+//         onChange={handleChange}
+//         value={}
+//       />
+//       {error && <SMALL $color={COLORS.rose10}>{error}</SMALL>}
+//     </DropdownWrapper>
+//   );
+// }
+
 export default function InputDropdown({
   label,
   options,
@@ -62,6 +128,7 @@ export default function InputDropdown({
   required,
   onChange,
   multi,
+  value,
 }: InputDropdownProps) {
   const optionsArray = useMemo(
     () =>
@@ -73,6 +140,27 @@ export default function InputDropdown({
           })),
     [options],
   );
+
+  // Transform value into the format expected by react-select
+  const transformedValue = useMemo(() => {
+    if (multi) {
+      return Array.from(value).map(v => ({
+        value: v,
+        label: options instanceof Map ? options.get(v) || v : v,
+      }));
+    } else {
+      const singleValue = Array.from(value)[0];
+      return singleValue
+        ? {
+            value: singleValue,
+            label:
+              options instanceof Map
+                ? options.get(singleValue) || singleValue
+                : singleValue,
+          }
+        : null;
+    }
+  }, [value, multi, options]);
 
   const handleChange = useCallback(
     (newValue: MultiValue<DropdownOption> | SingleValue<DropdownOption>) => {
@@ -111,6 +199,7 @@ export default function InputDropdown({
         placeholder={placeholder}
         isMulti={multi}
         onChange={handleChange}
+        value={transformedValue} // Pass the transformed value here
       />
       {error && <SMALL $color={COLORS.rose10}>{error}</SMALL>}
     </DropdownWrapper>
