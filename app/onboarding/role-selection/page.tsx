@@ -39,7 +39,7 @@ export default function Onboarding() {
     });
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     router.push('/onboarding/basic-information');
   };
 

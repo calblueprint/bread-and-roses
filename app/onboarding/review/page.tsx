@@ -9,11 +9,11 @@ import { SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
-  Button,
   Image,
   InlineContainer,
   Label,
   StyledLink,
+  SubmitButton,
   Title,
 } from '../styles';
 import { BackButton, Line, ReviewContainer, SmallText } from './styles';
@@ -85,11 +85,11 @@ export default function Review() {
         </ReviewContainer>
 
         <StyledLink href="/onboarding/finalize">
-          <Button onClick={submitData} position="static">
+          <SubmitButton onClick={submitData}>
             <SMALL $fontWeight="400" $color="white">
               Everything looks good!
             </SMALL>
-          </Button>
+          </SubmitButton>
         </StyledLink>
       </InlineContainer>
     </Background>

@@ -109,6 +109,7 @@ export default function Onboarding() {
             multi
             onChange={handlePerformanceTypeChange}
             options={performanceTypeOptions}
+            value={new Set(preferences.performanceType)}
           />
           <InputDropdown
             label="Performance Genre"
@@ -116,6 +117,7 @@ export default function Onboarding() {
             multi
             onChange={handleGenreChange}
             options={genreOptions}
+            value={new Set(preferences.genre)}
           />
           <InputDropdown
             label="Group Size"
@@ -123,6 +125,7 @@ export default function Onboarding() {
             multi
             onChange={handlePerformerTypeChange}
             options={performerTypeOptions}
+            value={new Set(preferences.performerType)}
           />
         </Container>
 
