@@ -1,93 +1,119 @@
+import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '../../styles/colors';
+import { Sans } from '../../styles/fonts';
+import { H4, P } from '../../styles/text';
+
+export const ProgressBarContainer = styled.div`
+  width: 100%;
+`;
+
+export const EventName = styled(P)`
+  margin-left: 10%;
+  margin-bottom: 0.75rem;
+`;
+
+export const Rectangle = styled.div<{
+  variant: 'light' | 'dark';
+  width: string;
+}>`
+  width: ${({ width }) => width};
+  height: 2px;
+  display: inline-block;
+  background: ${({ variant }) =>
+    variant === 'light' ? COLORS.gray4 : COLORS.gray12};
+`;
+
+export const SplitText = styled.div`
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+export const BackButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  float: left;
+  width: 0;
+`;
+
+export const Asterisk = styled(P)`
+  color: ${COLORS.rose11};
+`;
+
+export const QuestionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+export const Title = styled(H4)`
+  margin-bottom: 0.5rem;
+`;
 
 export const Container = styled.div`
-  width: 500px;
-  margin: 100px;
-  cursor: default;
-  .fc-prev-button,
-  .fc-next-button {
-    background: none;
-    border: none;
-    color: black;
-    box-shadow: none;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 5rem;
+`;
 
-  .fc-prev-button:hover,
-  .fc-next-button:hover {
-    background-color: lightgray;
-    cursor: pointer;
-  }
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  width: 100%;
+`;
 
-  .fc-highlight {
-    background-color: transparent;
-  }
+export const Divider = styled.hr`
+  height: 0.125rem;
+  background-color: ${COLORS.gray4};
+  border: none;
+  margin-bottom: 1rem;
+  width: 100vw;
+  margin-left: -2rem;
+`;
 
-  .selected-date {
-    position: relative;
-  }
+export const Image = styled(NextImage)`
+  width: 20px;
+  height: 20px;
+  margin-bottom: 16px;
+`;
 
-  .cur-selected::after {
-    background-color: ${COLORS.bread5} !important;
-  }
+export const Button = styled.button<{ disabled?: boolean }>`
+  bottom: 70px;
+  margin-left: 10%;
+  margin-bottom: 2rem;
+  width: 80%;
+  height: 2.75rem;
+  background-color: ${({ disabled }) =>
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate};
+  border-color: ${({ disabled }) =>
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate};
+  border-style: solid;
+  border-radius: 8px;
+  display: inline-flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  text-decoration: none;
+  transition: all 0.3s ease;
 
-  .non-cur-selected::after {
-    background-color: ${COLORS.bread3} !important;
+  @media (max-width: 768px) {
+    width: 85%;
+    bottom: 40px;
   }
+`;
 
-  .selected-date::after {   
-    content: '';
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    bottom: 5.5px;
-    transform: translateX(11px);
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    z-index: -1;
-  }
-
-  .unselectable {
-    color: ${COLORS.gray8}} !important;
-  }
-
-  .fc-day-past div {
-    opacity: 1 !important;
-  }
-
-  .fc-day-future div {
-    opacity: 1 !important;
-  }
-
-
-  .fc-day-today {
-    background-color: transparent !important;
-  }
-
-  .fc-day-today::after {
-    content: '';
-    position: absolute;
-    transform: translateX(31px);
-    bottom: 125px;
-    width: 4px; /* Diameter of the dot */
-    height: 4px; /* Diameter of the dot */
-    background-color: ${COLORS.rose11}; /* Color of the dot */
-    border-radius: 50%; /* Makes the element a circle */
-  }
-
-  .fc-daygrid-day-frame {
-    display: flex;
-    justify-content: center;
-  }
-
-  .fc-daygrid-day-top {
-    align-items: center;
-  }
-
-  .fc td,
-  .fc table,
-  .fc th {
-    border-style: none !important;
-  }
+export const ContinueText = styled.text`
+  ${Sans.style}
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  text-decoration: none;
 `;

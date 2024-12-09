@@ -33,10 +33,10 @@ export default function Onboarding() {
   const { generalInfo, setGeneralInfo } = onboardingContext;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, type, checked, value } = e.target;
+    const { name, value } = e.target;
     setGeneralInfo({
       ...generalInfo,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     });
   };
 
