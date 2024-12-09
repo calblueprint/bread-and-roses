@@ -39,8 +39,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   .Scroll {
-    overflow: scroll;
-    height: 200px;
+    overflow-y: scroll;
     background-color: white;
     border: 1px solid ${COLORS.rose7};
     border-radius: 8px;
@@ -52,9 +51,6 @@ export const Content = styled.div`
   .ScrollViewPort {
     width: 100%;
     height: 100%;
-  }
-
-  .SelectContent {
   }
 
   .SelectScrollButton {
@@ -80,7 +76,7 @@ export const Content = styled.div`
     user-select: none;
     color = ${COLORS.gray11};
   }
-    
+
   .SelectItem[data-highlighted] {
     outline: none;
     background-color: ${COLORS.rose5};

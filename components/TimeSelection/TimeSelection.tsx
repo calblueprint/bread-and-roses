@@ -5,7 +5,17 @@ import * as Select from '@radix-ui/react-select';
 import classnames from 'classnames';
 import { Container, Content } from './styles';
 
-export default function TimeSelection({ minutes }: { minutes: number }) {
+export default function TimeSelection({
+  minutes,
+  updateTimeRange,
+  selectType,
+  index,
+}: {
+  minutes: number;
+  updateTimeRange: (index: number, selectType: string, newVal: number) => void;
+  selectType: string;
+  index: number;
+}) {
   const minutesToFormatted = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -30,7 +40,10 @@ export default function TimeSelection({ minutes }: { minutes: number }) {
 
   return (
     <Container>
-      <Select.Root defaultValue={minutes.toString()}>
+      <Select.Root
+        defaultValue={minutes.toString()}
+        onValueChange={val => updateTimeRange(index, selectType, +val)}
+      >
         <Select.Trigger className="SelectTrigger" aria-label="Food">
           <Select.Value placeholder={minutesToFormatted(minutes)} />
           <Select.Icon className="SelectIcon">

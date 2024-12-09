@@ -1,9 +1,8 @@
+import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 
-export const Container = styled.div`
-  padding: 2rem;
-`;
+export const Container = styled.div``;
 
 export const Bar = styled.hr`
   height: 1px;
@@ -26,10 +25,24 @@ export const AddTime = styled.button`
   all: unset;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  cursor: pointer;
 `;
 
 export const TimeList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+`;
+
+export const Image = styled(NextImage)`
+  width: 7px;
+  height: 7px;
+`;
+
+export const DeleteButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  float: left;
+  width: 0;
 `;
