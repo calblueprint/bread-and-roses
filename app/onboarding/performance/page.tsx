@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -14,8 +15,6 @@ import {
   ContinueText,
   Image,
   InlineContainer,
-  ProgressBarContainer,
-  Rectangle,
   SkipButton,
   SkipText,
   Title,
@@ -102,10 +101,7 @@ export default function Onboarding() {
           <br />
           perform?
         </Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="50%" />
-          <Rectangle variant="light" width="50%" />
-        </ProgressBarContainer>
+        <ProgressBar progress={60} />
         <Container>
           <InputDropdown
             label="Type of Performance"

@@ -1,12 +1,10 @@
 import React from 'react';
-import * as styles from './styles';
+import { ProgressBarContainer, ProgressBarFiller } from './styles';
 
-const ProgressBar: React.FC = () => {
+export default function ProgressBar({ progress }: { progress: number }) {
   return (
-    <styles.ProgressBarContainer>
-      <styles.ProgressBarFiller progress={20}></styles.ProgressBarFiller>
-    </styles.ProgressBarContainer>
+    <ProgressBarContainer>
+      <ProgressBarFiller progress={progress}></ProgressBarFiller>
+    </ProgressBarContainer>
   );
-};
-
-export default ProgressBar;
+}

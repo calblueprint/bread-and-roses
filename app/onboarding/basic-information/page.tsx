@@ -3,6 +3,7 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -18,8 +19,6 @@ import {
   Input,
   InputContainer,
   Label,
-  ProgressBarContainer,
-  Rectangle,
   Title,
 } from '../styles';
 import { RedAsterisk, UpdateContainer, UpdateText } from './styles';
@@ -62,10 +61,7 @@ export default function Onboarding() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="25%" />
-          <Rectangle variant="light" width="75%" />
-        </ProgressBarContainer>
+        <ProgressBar progress={20} />
         <Container>
           <InputContainer>
             <Label>
