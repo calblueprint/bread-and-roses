@@ -2,21 +2,22 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import isEmail from 'validator/lib/isEmail';
 import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
-import { H5 } from '@/styles/text';
+import COLORS from '@/styles/colors';
+import { H5, SMALL } from '@/styles/text';
 import {
   Button,
   Card,
   Container,
+  ErrorMessage,
   Fields,
   Footer,
-  ForgotPassword,
   Form,
   Input,
   Label,
   Link,
-  LoginMessage,
   Logo,
   TitleUnderline,
 } from '../auth-styles';
@@ -25,36 +26,61 @@ export default function SignIn() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleSignIn = async () => {
-    setMessage('');
-    setIsError(false);
+  const validEmail = (e: string) => e !== '' && isEmail(e);
+
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setEmailError('');
+    setPasswordError('');
+    setErrorMessage('');
+
+    let hasError = false;
+    if (!email) {
+      setEmailError('Email is required');
+      hasError = true;
+    } else if (!validEmail(email)) {
+      setEmailError('Invalid email');
+      hasError = true;
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    setIsLoggingIn(true);
 
     const { success, message } = await signInUser(email, password);
 
-    setMessage(message);
-    setIsError(!success);
-
-    if (success) {
-      router.push('/discover');
+    if (!success) {
+      setErrorMessage(message);
+      setIsLoggingIn(false);
+      return;
     }
+
+    // Navigate on success
+    setErrorMessage('');
+    router.push('/discover');
+    setIsLoggingIn(false);
   };
 
   return (
     <Container>
       <Logo src={BRLogo} alt="Bread & Roses logo" />
       <Card>
-        <Form>
+        <Form onSubmit={handleSignIn}>
           <H5>Login</H5>
           <TitleUnderline />
 
-          {/* Show error or success message */}
-          {message && (
-            <LoginMessage $isError={isError} role="alert">
-              {message}
-            </LoginMessage>
+          {errorMessage && (
+            <ErrorMessage $isError={true}>{errorMessage}</ErrorMessage>
           )}
 
           <Fields>
@@ -70,6 +96,15 @@ export default function SignIn() {
                 value={email}
                 aria-label="Email"
               />
+              {emailError && (
+                <SMALL
+                  $color={COLORS.rose11}
+                  $fontWeight={100}
+                  $text-align="left"
+                >
+                  {emailError}
+                </SMALL>
+              )}
             </div>
 
             <div>
@@ -84,20 +119,28 @@ export default function SignIn() {
                 value={password}
                 aria-label="Password"
               />
+              {passwordError && (
+                <SMALL
+                  $color={COLORS.rose11}
+                  $font-weight={100}
+                  $text-align="left"
+                >
+                  {password}
+                </SMALL>
+              )}
             </div>
           </Fields>
 
-          {/* Forgot Password Link */}
-          <ForgotPassword>
+          <SMALL $fontWeight={400} $align="right">
             <Link href="/forgotpassword">Forgot Password?</Link>
-          </ForgotPassword>
+          </SMALL>
 
-          {/* Submit Button */}
-          <Button onClick={handleSignIn}>Login</Button>
+          <Button type="submit" disabled={isLoggingIn}>
+            {isLoggingIn ? 'Logging In...' : 'Login'}
+          </Button>
         </Form>
       </Card>
 
-      {/* Footer */}
       <Footer>
         Don’t have an account? <Link href="/signup">Sign up!</Link>
       </Footer>

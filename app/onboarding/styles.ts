@@ -92,6 +92,17 @@ export const Container = styled.main`
   }
 `;
 
+export const RoleContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 42px 0px;
+  justify-content: space-between;
+  border-radius: 8px;
+  gap: 16px;
+  height: 100%;
+`;
+
 export const Input = styled.input`
   font-family: ${Sans.style.fontFamily};
   padding: 0.5rem;
@@ -144,10 +155,13 @@ export const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export const Button = styled.button<{ disabled?: boolean }>`
-  position: fixed;
+export const Button = styled.button<{
+  disabled?: boolean;
+  position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
+}>`
+  position: ${({ position = 'fixed' }) => position};
   bottom: 70px;
-  width: 30%;
+  width: ${({ position }) => (position === 'fixed' ? '30%' : '100%')};
   height: 2.75rem;
   background-color: ${({ disabled }) =>
     disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};

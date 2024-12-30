@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Availability from '@/public/images/availabilities.svg';
+import Discover from '@/public/images/discover.svg';
 import Settings from '@/public/images/settings.svg';
 import Events from '@/public/images/upcoming-events.svg';
 import {
@@ -52,7 +53,18 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
         <>
           <MenuItem
             $expanded={expanded}
-            onClick={() => handleClick('availabilities', 'discover')}
+            onClick={() => handleClick('discover', '/discover')}
+          >
+            <Icon src={Discover} alt="Discover icon" />
+            <MenuLabel $expanded={expanded} $active={activeItem === 'discover'}>
+              Discover
+            </MenuLabel>
+          </MenuItem>
+          <MenuItem
+            $expanded={expanded}
+            onClick={() =>
+              handleClick('availabilities', '/availability/general')
+            }
           >
             <Icon src={Availability} alt="Availabilities icon" />
             <MenuLabel
@@ -68,7 +80,7 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
           >
             <Icon src={Events} alt="Events icon" />
             <MenuLabel $expanded={expanded} $active={activeItem === 'events'}>
-              Upcoming Events
+              My Events
             </MenuLabel>
           </MenuItem>
           <MenuItem

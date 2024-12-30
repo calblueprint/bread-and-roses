@@ -114,6 +114,7 @@ export default function Onboarding() {
 
         <ButtonContainer>
           <Button
+            position="fixed"
             onClick={handleSubmit}
             disabled={
               !generalInfo.firstName ||

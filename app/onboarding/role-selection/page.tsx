@@ -2,31 +2,24 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import RoleSelector from '@/components/RoleSelector/RoleSelector';
 import Back from '@/public/images/back.svg';
 import Help from '@/public/images/help.svg';
 import Star from '@/public/images/star.svg';
-import { H6, SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
   Button,
   ButtonContainer,
-  Checkbox,
   ContinueText,
   Image,
   InlineContainer,
   ProgressBarContainer,
   Rectangle,
+  RoleContainer,
   Title,
 } from '../styles';
-import {
-  BoxContainer,
-  ChooseBothText,
-  Container,
-  Icon,
-  RoleContainer,
-  TextContainer,
-} from './styles';
+import { ChooseBothText } from './styles';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -64,39 +57,28 @@ export default function Onboarding() {
           <Rectangle variant="dark" width="0%" />
           <Rectangle variant="light" width="100%" />
         </ProgressBarContainer>
-        <Container>
-          <BoxContainer isSelected={role.isPerformer}>
-            <RoleContainer>
-              <Checkbox
-                name="performer"
-                checked={role.isPerformer}
-                onChange={handleChange}
-              />
-              <TextContainer>
-                <H6 $fontWeight={500}>Performer</H6>
-                <SMALL $fontWeight={400}>The star of the show</SMALL>
-              </TextContainer>
-            </RoleContainer>
-            <Icon src={Star} alt="performer" />
-          </BoxContainer>
-          <BoxContainer isSelected={role.isHost}>
-            <RoleContainer>
-              <Checkbox
-                name="host"
-                checked={role.isHost}
-                onChange={handleChange}
-              />
-              <TextContainer>
-                <H6 $fontWeight={500}>Host</H6>
-                <SMALL $fontWeight={400}>Making the show happen</SMALL>
-              </TextContainer>
-            </RoleContainer>
-            <Icon src={Help} alt="host" />
-          </BoxContainer>
+        <RoleContainer>
+          <RoleSelector
+            isSelected={role.isPerformer}
+            name="performer"
+            title="Performer"
+            description="The star of the show"
+            iconSrc={Star}
+            onChange={handleChange}
+          />
+          <RoleSelector
+            isSelected={role.isHost}
+            name="host"
+            title="Host"
+            description="The organizer of the event"
+            iconSrc={Help}
+            onChange={handleChange}
+          />
           <ChooseBothText>* feel free to choose both!</ChooseBothText>
-        </Container>
+        </RoleContainer>
         <ButtonContainer>
           <Button
+            position="fixed"
             onClick={handleContinue}
             disabled={!role.isHost && !role.isPerformer}
           >

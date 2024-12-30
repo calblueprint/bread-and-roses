@@ -88,7 +88,7 @@ export default function Review() {
         </ReviewContainer>
 
         <StyledLink href="/onboarding/finalize">
-          <Button onClick={submitData}>
+          <Button onClick={submitData} position="static">
             <SMALL $fontWeight="400" $color="white">
               Everything looks good!
             </SMALL>

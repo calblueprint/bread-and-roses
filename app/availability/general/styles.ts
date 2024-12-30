@@ -10,15 +10,22 @@ export const Page = styled.main<{ $menuExpanded: boolean }>`
   min-height: 100vh;
   justify-content: center;
   overflow: hidden;
-  margin-left: ${({ $menuExpanded }) =>
-    $menuExpanded ? '10%' : '0'}; /* Fixed margin for the expanded menu */
-  transition: margin-left 0.3s ease; /* Smooth transition */
+
+  @media (min-width: 1024px) {
+    margin-left: ${({ $menuExpanded }) =>
+      $menuExpanded ? '10%' : '0'}; /* Fixed margin for the expanded menu */
+    transition: margin-left 0.3s ease; /* Smooth transition */
+  }
 `;
 
 export const AllAvailabilitiesHolder = styled.main`
   display: flex;
   width: 28.75%;
   flex-direction: column;
+  
+  @media (max-width: 900px) {
+    width: 80%;
+  }
 `;
 
 export const TitleContainer = styled.main`

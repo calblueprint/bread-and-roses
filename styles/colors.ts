@@ -1,5 +1,6 @@
 const COLORS = {
   bread1: '#FEFDFC',
+  'bread1.5': 'FCFCFC',
   bread2: '#F5F5F3',
   bread3: '#EBE8DE',
   bread4: '#EDE6D5',
