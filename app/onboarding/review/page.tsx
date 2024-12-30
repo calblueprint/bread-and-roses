@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
@@ -12,8 +13,6 @@ import {
   Image,
   InlineContainer,
   Label,
-  ProgressBarContainer,
-  Rectangle,
   StyledLink,
   Title,
 } from '../styles';
@@ -52,9 +51,7 @@ export default function Review() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Did we get everything?</Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="100%" />
-        </ProgressBarContainer>
+        <ProgressBar progress={100} />
         <ReviewContainer>
           <Label>First Name</Label>
           <SmallText>{displayValue(generalInfo.firstName)}</SmallText>

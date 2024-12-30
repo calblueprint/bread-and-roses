@@ -2,6 +2,7 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -15,8 +16,6 @@ import {
   InlineContainer,
   InputContainer,
   Label,
-  ProgressBarContainer,
-  Rectangle,
   SkipButton,
   SkipText,
   Title,
@@ -63,10 +62,7 @@ export default function Onboarding() {
           <br />
           you&apos;d like to add?
         </Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="70%" />
-          <Rectangle variant="light" width="30%" />
-        </ProgressBarContainer>
+        <ProgressBar progress={80} />
         <Container>
           <InputContainer>
             <Label>Additional Information</Label>

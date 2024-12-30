@@ -2,6 +2,7 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import RoleSelector from '@/components/RoleSelector/RoleSelector';
 import Back from '@/public/images/back.svg';
 import Help from '@/public/images/help.svg';
@@ -14,8 +15,6 @@ import {
   ContinueText,
   Image,
   InlineContainer,
-  ProgressBarContainer,
-  Rectangle,
   RoleContainer,
   Title,
 } from '../styles';
@@ -53,10 +52,7 @@ export default function Onboarding() {
           <br />
           your role?
         </Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="0%" />
-          <Rectangle variant="light" width="100%" />
-        </ProgressBarContainer>
+        <ProgressBar progress={0} />
         <RoleContainer>
           <RoleSelector
             isSelected={role.isPerformer}

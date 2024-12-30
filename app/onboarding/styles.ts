@@ -60,21 +60,6 @@ export const Image = styled(NextImage)`
   margin-bottom: 16px;
 `;
 
-export const ProgressBarContainer = styled.div`
-  width: 100%;
-`;
-
-export const Rectangle = styled.div<{
-  variant: 'light' | 'dark';
-  width: string;
-}>`
-  width: ${({ width }) => width};
-  height: 2px;
-  display: inline-block;
-  background: ${({ variant }) =>
-    variant === 'light' ? COLORS.gray4 : COLORS.gray12};
-`;
-
 export const Container = styled.main`
   display: flex;
   flex-direction: column;
