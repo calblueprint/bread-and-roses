@@ -22,7 +22,7 @@ export const AllAvailabilitiesHolder = styled.main`
   display: flex;
   width: 28.75%;
   flex-direction: column;
-  
+
   @media (max-width: 900px) {
     width: 80%;
   }
