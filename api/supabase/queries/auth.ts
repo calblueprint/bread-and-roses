@@ -6,39 +6,16 @@ export async function handleSignUp(
 ): Promise<{ success: boolean; message: string }> {
   try {
     await ensureLoggedOutForNewUser(email);
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: 'http://localhost:3000/verification',
+      },
     });
 
     if (error) {
       return { success: false, message: `Sign-up failed: ${error.message}` };
-    }
-
-    const user = data.user;
-    if (!user) {
-      return {
-        success: false,
-        message: 'Sign-up failed: User was not created.',
-      };
-    }
-
-    const { error: insertError } = await supabase.from('volunteers').insert([
-      {
-        user_id: user.id,
-        email,
-        first_name: '',
-        last_name: '',
-        phone_number: '',
-        notifications_opt_in: true, // default value
-      },
-    ]);
-
-    if (insertError) {
-      return {
-        success: false,
-        message: `Error storing user data: ${insertError.message}`,
-      };
     }
 
     localStorage.setItem('tempEmail', email);
@@ -54,6 +31,38 @@ export async function handleSignUp(
     };
   }
 }
+
+export const insertVolunteer = async (user: { id: string; email: string }) => {
+  if (!user) {
+    return {
+      success: false,
+      message: 'User data is missing. Cannot insert into volunteers table.',
+    };
+  }
+
+  const { error: insertError } = await supabase.from('volunteers').insert([
+    {
+      user_id: user.id,
+      email: user.email,
+      first_name: '',
+      last_name: '',
+      phone_number: '',
+      notifications_opt_in: true,
+    },
+  ]);
+
+  if (insertError) {
+    return {
+      success: false,
+      message: `Error storing user data: ${insertError.message}`,
+    };
+  }
+
+  return {
+    success: true,
+    message: 'User successfully added to volunteers table.',
+  };
+};
 
 export async function handleSignIn(
   email: string,

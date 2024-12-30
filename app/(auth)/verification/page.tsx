@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   getTempEmail,
+  insertVolunteer,
   resendVerificationEmail,
 } from '@/api/supabase/queries/auth';
 import Bud from '@/public/images/bud.svg';
@@ -28,22 +29,58 @@ import {
 } from './verification-styles';
 
 export default function Verification() {
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
+  const { session } = useSession();
   const [tempEmail, setTempEmail] = useState<string | null>(null);
   const [resendStatus, setResendStatus] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
-  const { session } = useSession();
-
-  useEffect(() => {
-    if (session) {
-      router.push('/success');
-    }
-  }, [session, router]);
+  const [isEmailConfirmed, setIsEmailConfirmed] = useState<boolean>(false);
 
   useEffect(() => {
     const email = getTempEmail();
     setTempEmail(email);
   }, []);
+
+  // Using session to check if the email is confirmed
+  useEffect(() => {
+    if (session?.user) {
+      const isVerified = session.user.email_confirmed_at !== null;
+      setIsEmailConfirmed(isVerified);
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (isEmailConfirmed && session?.user) {
+      const addUserToVolunteers = async () => {
+        const email = session.user.email;
+
+        if (!email) {
+          setIsError(true);
+          setResendStatus('Email is undefined. Please try again.');
+          return;
+        }
+
+        try {
+          const result = await insertVolunteer({
+            id: session.user.id,
+            email,
+          });
+          if (result.success) {
+            router.push('/success');
+          } else {
+            setIsError(true);
+            setResendStatus(result.message);
+          }
+        } catch (error) {
+          console.error('Error adding user to volunteers:', error);
+          setIsError(true);
+          setResendStatus('An error occurred while processing your request.');
+        }
+      };
+
+      addUserToVolunteers();
+    }
+  }, [isEmailConfirmed, session, router]);
 
   const handleResendLink = async () => {
     if (tempEmail) {
@@ -59,8 +96,6 @@ export default function Verification() {
     router.push('/signin');
     localStorage.removeItem('tempEmail');
   };
-
-  // TODO: Restyle error message on lines 95-100 (the message containing link back to sign-up)
 
   return (
     <Background>
