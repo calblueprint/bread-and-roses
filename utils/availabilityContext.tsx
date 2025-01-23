@@ -1,7 +1,8 @@
 'use client';
 
 import React, { createContext, ReactNode, useState } from 'react';
-import supabase from '@/api/supabase/createClient';
+
+//import supabase from '@/api/supabase/createClient';
 
 export interface GeneralInfo {
   eventName: string;
