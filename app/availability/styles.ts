@@ -54,6 +54,7 @@ export const Title = styled(H4)`
 
 export const Container = styled.div`
   display: flex;
+  overflow-x: hidden;
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
