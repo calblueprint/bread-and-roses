@@ -95,7 +95,9 @@ export default function SignUp() {
               />
             </div>
           </Fields>
-          <Button onClick={handleSignUp}>Create account</Button>
+          <Button type="button" onClick={handleSignUp}>
+            Create account
+          </Button>
         </Form>
       </Card>
       <Footer>
