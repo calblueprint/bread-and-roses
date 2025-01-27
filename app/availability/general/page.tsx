@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
   fetchAllAvailabilities,
   fetchDatesByAvailabilityID,
@@ -94,7 +95,9 @@ export default function AvailabilityPage() {
             <H3 $fontWeight="500" $color="#000" $align="left">
               Availabilities
             </H3>
-            <styles.AddImage src={Add} alt="add icon" />
+            <Link href={`/availability/details`}>
+              <styles.AddImage src={Add} alt="add icon" />
+            </Link>
           </styles.TitleContainer>
           {/* Check if there are no availabilities */}
           {isLoading ? (

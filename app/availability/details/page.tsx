@@ -51,7 +51,7 @@ export default function Page() {
   };
 
   const handleBack = () => {
-    router.push('/availability');
+    router.push('/availability/general');
   };
 
   return (
