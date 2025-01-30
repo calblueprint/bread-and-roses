@@ -43,8 +43,8 @@ export default function AvailabilityPage() {
             availability.availability_id,
           );
 
-          const year = availableDates?.[0]?.available_date
-            ? new Date(availableDates[0].available_date)
+          const year = availableDates?.[0]?.start_date_time
+            ? new Date(availableDates[0].start_date_time)
                 .getFullYear()
                 .toString()
             : null;
@@ -66,10 +66,10 @@ export default function AvailabilityPage() {
         for (const year in grouped) {
           grouped[year].sort((a, b) => {
             const firstDateA = new Date(
-              a.available_dates[0]?.available_date ?? 0,
+              a.available_dates[0]?.start_date_time ?? 0,
             ).getTime();
             const firstDateB = new Date(
-              b.available_dates[0]?.available_date ?? 0,
+              b.available_dates[0]?.start_date_time ?? 0,
             ).getTime();
             return firstDateA - firstDateB;
           });

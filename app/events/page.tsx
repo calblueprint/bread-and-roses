@@ -17,7 +17,7 @@ export default function EventPage() {
   const [menuExpanded, setMenuExpanded] = useState(false); // Track the expanded state of the menu
 
   useEffect(() => {
-    fetchAcceptedEventsByVolunteer('11d219d9-bf05-4a06-a23e-89fd566c7a04').then(
+    fetchAcceptedEventsByVolunteer('7182b798-b8a3-497d-8407-e1724c89ca6f').then(
       //placeholder user id
       eventsData => {
         setData(eventsData ?? []);

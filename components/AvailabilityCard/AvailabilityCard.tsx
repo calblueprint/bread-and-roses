@@ -19,15 +19,15 @@ export default function AvailabilityCard({
       ? {
           earliest: new Date(
             Math.min(
-              ...availableDates.map(date =>
-                new Date(date.available_date).getTime(),
+              ...availableDates.map(time =>
+                new Date(time.start_date_time).valueOf(),
               ),
             ),
           ),
           latest: new Date(
             Math.max(
-              ...availableDates.map(date =>
-                new Date(date.available_date).getTime(),
+              ...availableDates.map(time =>
+                new Date(time.start_date_time).valueOf(),
               ),
             ),
           ),
@@ -45,7 +45,12 @@ export default function AvailabilityCard({
       })}`
     : 'No dates available';
 
-  if (dateRange && dateRange.earliest.getDate() == dateRange.latest.getDate()) {
+  if (
+    dateRange &&
+    dateRange.earliest.getUTCDate() == dateRange.latest.getUTCDate() &&
+    dateRange.earliest.getUTCMonth() == dateRange.latest.getUTCMonth() &&
+    dateRange.earliest.getUTCFullYear() == dateRange.latest.getUTCFullYear()
+  ) {
     formattedRange = `${dateRange.earliest.toLocaleString('default', {
       month: 'short',
       day: 'numeric',
