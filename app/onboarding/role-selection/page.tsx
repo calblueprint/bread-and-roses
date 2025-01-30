@@ -52,7 +52,7 @@ export default function Onboarding() {
           <br />
           your role?
         </Title>
-        <ProgressBar progress={0} />
+        <ProgressBar from={0} to={0} />
         <RoleContainer>
           <RoleSelector
             isSelected={role.isPerformer}

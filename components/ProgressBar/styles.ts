@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import COLORS from '@/styles/colors';
 
 export const ProgressBarContainer = styled.div`
@@ -9,10 +9,24 @@ export const ProgressBarContainer = styled.div`
   margin-top: 1.5rem;
 `;
 
+const progressAnimation = (start: number, end: number) => keyframes`
+  from {
+    width: ${start}%;
+  }
+  to {
+    width: ${end}%;
+  }
+`;
+
 export const ProgressBarFiller = styled.div<{
-  progress: number;
+  from: number;
+  to: number;
 }>`
-  width: ${props => props.progress}%;
+  width: ${props => props.to}%;
   height: 100%;
   background-color: ${COLORS.gray12};
+  animation-name: ${({ from, to }) => progressAnimation(from, to)};
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
 `;

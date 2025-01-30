@@ -101,7 +101,7 @@ export default function Onboarding() {
           <br />
           perform?
         </Title>
-        <ProgressBar progress={60} />
+        <ProgressBar from={40} to={60} />
         <Container>
           <InputDropdown
             label="Type of Performance"

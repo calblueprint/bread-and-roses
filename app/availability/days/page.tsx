@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import {
   AvailabilityContext,
@@ -20,8 +21,6 @@ import {
   Divider,
   EventName,
   Image,
-  ProgressBarContainer,
-  Rectangle,
   Title,
 } from '../styles';
 import { CalendarContainer } from './styles';
@@ -136,10 +135,7 @@ export default function Page() {
         <Image src={Back} alt="Back icon" />
       </BackButton>
       <Title $fontWeight={500}> What day&apos;s work best? </Title>
-      <ProgressBarContainer>
-        <Rectangle variant="dark" width="50%" />
-        <Rectangle variant="light" width="50%" />
-      </ProgressBarContainer>
+      <ProgressBar from={25} to={50} />
       <CalendarContainer>
         <FullCalendar
           plugins={[interactionPlugin, dayGridPlugin]}

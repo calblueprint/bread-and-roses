@@ -51,7 +51,11 @@ export default function Review() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Did we get everything?</Title>
-        <ProgressBar progress={100} />
+        {role.isPerformer ? (
+          <ProgressBar from={80} to={100} />
+        ) : (
+          <ProgressBar from={75} to={100} />
+        )}
         <ReviewContainer>
           <Label>First Name</Label>
           <SmallText>{displayValue(generalInfo.firstName)}</SmallText>

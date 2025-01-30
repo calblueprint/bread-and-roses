@@ -2,6 +2,7 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
@@ -13,9 +14,7 @@ import {
   ContinueText,
   Divider,
   Image,
-  ProgressBarContainer,
   QuestionsContainer,
-  Rectangle,
   Title,
 } from '../styles';
 import {
@@ -61,10 +60,7 @@ export default function Page() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}> What&apos;s the Occasion? </Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="25%" />
-          <Rectangle variant="light" width="75%" />
-        </ProgressBarContainer>
+        <ProgressBar from={0} to={25} />
         <EventName>
           Event Name &nbsp; <Asterisk> * </Asterisk>
         </EventName>

@@ -97,7 +97,11 @@ export default function Onboarding() {
           <br />
           preferences?
         </Title>
-        <ProgressBar progress={40} />
+        {role.isPerformer ? (
+          <ProgressBar from={20} to={40} />
+        ) : (
+          <ProgressBar from={25} to={50} />
+        )}
         <Container>
           <InputDropdown
             label="Facility Types"

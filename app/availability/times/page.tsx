@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import DateTimeSelection from '@/components/DateTimeSelection/DateTimeSelection';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
@@ -14,8 +15,6 @@ import {
   Divider,
   EventName,
   Image,
-  ProgressBarContainer,
-  Rectangle,
   SplitText,
   Title,
 } from '../styles';
@@ -46,10 +45,7 @@ export default function Page() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}> What time&apos;s work best? </Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="75%" />
-          <Rectangle variant="light" width="25%" />
-        </ProgressBarContainer>
+        <ProgressBar from={50} to={75} />
         {days.map((day, index) => (
           <DateTimeSelection date={day} key={index} />
         ))}

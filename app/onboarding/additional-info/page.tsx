@@ -62,7 +62,11 @@ export default function Onboarding() {
           <br />
           you&apos;d like to add?
         </Title>
-        <ProgressBar progress={80} />
+        {role.isPerformer ? (
+          <ProgressBar from={60} to={80} />
+        ) : (
+          <ProgressBar from={50} to={75} />
+        )}
         <Container>
           <InputContainer>
             <Label>Additional Information</Label>

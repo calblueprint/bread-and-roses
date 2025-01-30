@@ -2,6 +2,7 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import COLORS from '@/styles/colors';
 import { P } from '@/styles/text';
@@ -13,8 +14,6 @@ import {
   Container,
   ContinueText,
   Image,
-  ProgressBarContainer,
-  Rectangle,
   SplitText,
   Title,
 } from '../styles';
@@ -86,9 +85,7 @@ export default function Page() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}> Does everything look right? </Title>
-        <ProgressBarContainer>
-          <Rectangle variant="dark" width="100%" />
-        </ProgressBarContainer>
+        <ProgressBar from={75} to={100} />
         <SplitText>
           <Title $fontWeight={500}> About </Title>
           <EditButton onClick={handleDetails}>
