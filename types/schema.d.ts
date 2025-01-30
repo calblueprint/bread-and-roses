@@ -12,7 +12,8 @@ export type PerformanceType =
   | 'Magic'
   | 'Storytelling'
   | 'Bubbles'
-  | 'Puppetry';
+  | 'Puppetry'
+  | 'Other';
 
 // used for volunteers_preference and facilities table
 export type FacilityType =
@@ -50,7 +51,8 @@ export type Genre =
   | 'Pop'
   | 'R&B'
   | 'Rock'
-  | 'Standards';
+  | 'Standards'
+  | 'Other';
 
 // used for events table
 export type EventStatus = 'Active' | 'Inactive';
@@ -76,8 +78,8 @@ export interface AvailableDates {
   date_id: UUID;
   availability_id: UUID;
   available_date: string; //date
-  test_col: string; //timestamptz
-  test_col2: string; //timestamptz
+  start_date_time: string; //timestamptz
+  end_date_time: string; //timestamptz
 }
 
 export interface Event {
@@ -91,6 +93,9 @@ export interface Event {
   event_status: EventStatus;
   performer_type: PerformerType;
   notes?: string;
+  producer_name: string;
+  producer_email: string;
+  producer_phone_number: string;
 }
 
 export interface EventSignups {
@@ -98,6 +103,7 @@ export interface EventSignups {
   volunteer_id: UUID;
   role: Role;
   is_accepted: boolean;
+  notes?: string;
 }
 
 export interface FacilityContacts {
@@ -120,6 +126,8 @@ export interface Facilities {
   type: FacilityType;
   host_name?: string;
   host_contact?: string;
+  approved: boolean;
+  notes?: string;
 }
 
 export interface Volunteers {
