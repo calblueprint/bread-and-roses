@@ -77,13 +77,12 @@ export interface Availabilities {
 export interface AvailableDates {
   date_id: UUID;
   availability_id: UUID;
-  available_date: string; //date
   start_date_time: string; //timestamptz
   end_date_time: string; //timestamptz
 }
 
 export interface Event {
-  event_id: UUID;
+  event_id: UUID; // not sure if i need?
   facility_id: UUID;
   start_date_time: string; //timestamptz
   end_date_time: string; //timestamptz
@@ -100,10 +99,11 @@ export interface Event {
 
 export interface EventSignups {
   event_id: UUID;
-  volunteer_id: UUID;
+  user_id: UUID;
   role: Role;
   is_accepted: boolean;
-  notes?: string;
+  additional_info?: string;
+  group_size: number;
 }
 
 export interface FacilityContacts {
@@ -113,6 +113,14 @@ export interface FacilityContacts {
   first_name: string;
   last_name: string;
   phone_number: string;
+}
+
+export type ParkingOptions = 'Street' | 'Parking Lot' | 'None';
+
+export interface FacilityInfo {
+  parking: ParkingOptions;
+  has_piano: boolean;
+  has_sound_equipment: boolean;
 }
 
 export interface Facilities {
@@ -126,8 +134,9 @@ export interface Facilities {
   type: FacilityType;
   host_name?: string;
   host_contact?: string;
-  approved: boolean;
+  is_approved: boolean;
   notes?: string;
+  info: FacilityInfo;
 }
 
 export interface Volunteers {
