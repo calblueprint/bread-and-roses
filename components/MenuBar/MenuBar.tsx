@@ -85,7 +85,7 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
           </MenuItem>
           <MenuItem
             $expanded={expanded}
-            onClick={() => handleClick('settings', '/discover')}
+            onClick={() => handleClick('settings', '/settings')}
           >
             <Icon src={Settings} alt="Settings icon" />
             <MenuLabel $expanded={expanded} $active={activeItem === 'settings'}>
