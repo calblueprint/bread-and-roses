@@ -38,13 +38,12 @@ const facilityTypeOptions = new Set([
 
 const locationOptions = new Set([
   'Alameda',
-  'Contra Coast',
+  'Contra Costa',
   'Marin',
   'Napa',
   'San Fransisco',
   'San Mateo',
   'Santa Clara',
-  'Solano',
   'Sonoma',
 ]);
 
