@@ -149,9 +149,9 @@ export const Button = styled.button<{
   width: ${({ position }) => (position === 'fixed' ? '30%' : '100%')};
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
@@ -173,9 +173,9 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   width: 100%;
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
