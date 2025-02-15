@@ -93,9 +93,7 @@ export default function SignIn() {
           <TitleUnderline />
 
           {errorMessage && (
-            <StyledErrorMessage $isError={true}>
-              {errorMessage}
-            </StyledErrorMessage>
+            <StyledErrorMessage $isError={true}>{errorMessage}</StyledErrorMessage>
           )}
 
           <Fields>
