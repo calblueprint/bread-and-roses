@@ -11,7 +11,6 @@ import {
   Button,
   Card,
   Container,
-  ErrorMessage,
   Fields,
   Footer,
   Form,
@@ -19,6 +18,7 @@ import {
   Label,
   Link,
   Logo,
+  StyledErrorMessage,
   TitleUnderline,
 } from '../auth-styles';
 
@@ -80,7 +80,7 @@ export default function SignIn() {
           <TitleUnderline />
 
           {errorMessage && (
-            <ErrorMessage $isError={true}>{errorMessage}</ErrorMessage>
+            <StyledErrorMessage $isError={true}>{errorMessage}</StyledErrorMessage>
           )}
 
           <Fields>

@@ -9,7 +9,6 @@ import {
   Button,
   Card,
   Container,
-  ErrorMessage,
   Fields,
   Footer,
   Form,
@@ -17,6 +16,7 @@ import {
   Label,
   Link,
   Logo,
+  StyledErrorMessage,
   TitleUnderline,
 } from '../auth-styles';
 
@@ -56,7 +56,11 @@ export default function SignUp() {
         <Form>
           <H5>Sign Up</H5>
           <TitleUnderline width="90px" />
-          {message && <ErrorMessage $isError={isError}>{message}</ErrorMessage>}
+          {message && (
+            <StyledErrorMessage $isError={isError}>
+              {message}
+            </StyledErrorMessage>
+          )}
 
           <Fields>
             <div>

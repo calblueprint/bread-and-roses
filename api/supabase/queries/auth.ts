@@ -20,6 +20,8 @@ export async function handleSignUp(
 
     localStorage.setItem('tempEmail', email);
 
+    localStorage.setItem('tempEmail', email);
+
     return { success: true, message: 'Sign-up successful!' };
   } catch (err) {
     if (err instanceof Error) {
