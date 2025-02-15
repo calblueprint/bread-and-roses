@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
+  checkUserExists,
   getTempEmail,
   insertVolunteer,
   resendVerificationEmail,
@@ -53,10 +54,16 @@ export default function Verification() {
     if (isEmailConfirmed && session?.user) {
       const addUserToVolunteers = async () => {
         const email = session.user.email;
-
         if (!email) {
           setIsError(true);
           setResendStatus('Email is undefined. Please try again.');
+          return;
+        }
+
+        // Check if the volunteer already exists to prevent duplicate inserts
+        const exists = await checkUserExists(session.user.id, 'volunteer');
+        if (exists) {
+          router.push('/success');
           return;
         }
 
@@ -119,8 +126,8 @@ export default function Verification() {
           <RoundedCornerButton
             onClick={handleUseAnotherAccount}
             width="70%"
-            bgColor="white"
-            textColor="black"
+            $bgColor="white"
+            $textColor="black"
           >
             Use another account
           </RoundedCornerButton>

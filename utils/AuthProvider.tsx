@@ -21,8 +21,7 @@ export interface AuthState {
 const AuthContext = createContext({} as AuthState);
 
 export function useSession() {
-  const value = useContext(AuthContext);
-  return value;
+  return useContext(AuthContext);
 }
 
 export function AuthContextProvider({
@@ -33,15 +32,24 @@ export function AuthContextProvider({
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
+    // Fetch the initial session
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
       console.log('Initial session:', newSession);
       setSession(newSession);
     });
 
-    supabase.auth.onAuthStateChange((_event, newSession) => {
+    // Subscribe to auth state changes and store the subscription
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, newSession) => {
       console.log('Session change event:', newSession);
       setSession(newSession);
     });
+
+    // Clean up the subscription on unmount
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = (newSession: Session | null) => {
@@ -49,11 +57,11 @@ export function AuthContextProvider({
   };
 
   const signInWithEmail = async (email: string, password: string) => {
-    const response = supabase.auth.signInWithPassword({
+    const response = await supabase.auth.signInWithPassword({
       email,
       password,
-    }); // will trigger the use effect to update the session
-
+    });
+    // The listener will update the session automatically.
     return response;
   };
 
@@ -61,8 +69,11 @@ export function AuthContextProvider({
     const response = await supabase.auth.signUp({
       email,
       password,
-    }); // will trigger the use effect to update the session
-
+      options: {
+        // Match the redirect URL used in your sign-up process.
+        emailRedirectTo: 'http://localhost:3000/verification',
+      },
+    });
     return response;
   };
 
