@@ -37,11 +37,13 @@ export function AuthContextProvider({
   );
 
   useEffect(() => {
+    // Fetch the initial session
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
       console.log('Initial session:', newSession);
       setSession(newSession);
     });
 
+    // Subscribe to auth state changes and store the subscription
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, newSession) => {
@@ -49,6 +51,7 @@ export function AuthContextProvider({
       setSession(newSession);
     });
 
+    // Clean up the subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
@@ -95,6 +98,7 @@ export function AuthContextProvider({
       email,
       password,
     });
+    // The listener will update the session automatically.
     return response;
   };
 
@@ -103,6 +107,7 @@ export function AuthContextProvider({
       email,
       password,
       options: {
+        // Match the redirect URL used in your sign-up process.
         emailRedirectTo: 'http://localhost:3000/verification',
       },
     });
