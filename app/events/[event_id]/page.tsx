@@ -10,6 +10,7 @@ import {
 import {
   fetchFacilityById,
   fetchFacilityContactByID,
+  fetchFacilityNotesByID,
 } from '@/api/supabase/queries/facilities';
 import { fetchPerformer } from '@/api/supabase/queries/volunteers';
 import Back from '@/public/images/back.svg';
@@ -38,6 +39,7 @@ export default function EventDisplay({
   const [event, setEvent] = useState<Event>();
   const [facility, setFacility] = useState<Facilities>();
   const [facility_contact, setFacilityContact] = useState<FacilityContacts>();
+  const [facility_notes, setFacilityNotes] = useState<string>();
   const [host_email, setHostEmail] = useState<string>();
   const [host_name, setHostName] = useState<string>();
   const [host_phone_number, setHostPhoneNumber] = useState<string>();
@@ -54,6 +56,11 @@ export default function EventDisplay({
       const fetchedFacilityContact: FacilityContacts =
         await fetchFacilityContactByID(fetchedEvent.facility_id);
       setFacilityContact(fetchedFacilityContact);
+
+      const fetchedFacilityNotes: string =
+        await fetchFacilityNotesByID(fetchedEvent.facility_id);
+      setFacilityNotes(fetchedFacilityNotes);
+
 
       if (fetchedEvent.needs_host) {
         const host: Volunteers = await fetchEventHostByID(params.event_id);
@@ -148,7 +155,7 @@ export default function EventDisplay({
                 $color={COLORS.gray11}
                 $align="left"
               >
-                Facility notes go here
+                {facility_notes}
               </styles.ParaText>
             </div>
             <div>
