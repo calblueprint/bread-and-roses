@@ -1,18 +1,6 @@
 import styled from 'styled-components';
 import { H3 } from '@/styles/text';
 
-export const EventListingDiv = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  scrollbar-width: none;
-  gap: 1.5rem;
-  display: flex;
-  &::-website-scrollbar {
-    display: none;
-  }
-`;
-
 export const SearchBar = styled.div`
   width: 100%;
   height: 2.25rem;
@@ -51,4 +39,22 @@ export const DiscoverHolder = styled.main`
 
 export const Discover = styled(H3)`
   padding-top: 1.5rem;
+`;
+
+export const DiscoverCardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.688rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem 0 1rem 0;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  white-space: normal;
 `;
