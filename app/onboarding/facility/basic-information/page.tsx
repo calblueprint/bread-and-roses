@@ -17,6 +17,7 @@ import {
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import { FacilityOnboardingContext } from '@/utils/facilityOnboardingContext';
+import { formatPhoneNumber } from '@/utils/formatPhoneNumber';
 import { RedAsterisk } from './styles';
 
 export default function Onboarding() {
@@ -36,14 +37,18 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
+    const formattedPhoneNumber = formatPhoneNumber(generalInfo.phoneNumber);
+
     if (
       !generalInfo.firstName ||
       !generalInfo.lastName ||
-      !generalInfo.phoneNumber
+      !formattedPhoneNumber
     ) {
       return;
     }
-    router.push('/onboarding/facility/show-preference');
+
+    setGeneralInfo({ ...generalInfo, phoneNumber: formattedPhoneNumber });
+    router.push('/onboarding/facility/location');
   };
 
   return (
@@ -96,7 +101,7 @@ export default function Onboarding() {
             disabled={
               !generalInfo.firstName ||
               !generalInfo.lastName ||
-              !generalInfo.phoneNumber
+              !/^\d{10}$/.test(generalInfo.phoneNumber.replace(/\D/g, '')) //user not allowed to continue unless a full phone number is input
             }
           >
             <ContinueText>Continue</ContinueText>
