@@ -26,7 +26,8 @@ export default function Onboarding() {
 
   if (!facilityOnboardingContext) return null;
 
-  const { generalInfo, setGeneralInfo } = facilityOnboardingContext;
+  const { facilityGeneralInfo: generalInfo, setGeneralInfo } =
+    facilityOnboardingContext;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, checked, value } = e.target;
@@ -55,7 +56,7 @@ export default function Onboarding() {
     <Background>
       <InlineContainer>
         <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-        <ProgressBar from={0} to={20} />
+        <ProgressBar from={0} to={33} />
         <Container>
           <InputContainer>
             <Label>

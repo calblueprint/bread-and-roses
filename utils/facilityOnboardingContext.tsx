@@ -2,7 +2,7 @@
 
 import React, { createContext, ReactNode, useState } from 'react';
 
-export interface GeneralInfo {
+export interface FacilityGeneralInfo {
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -16,8 +16,8 @@ export interface Location {
 }
 
 interface FacilityOnboardingContextType {
-  generalInfo: GeneralInfo;
-  setGeneralInfo: (info: GeneralInfo) => void;
+  facilityGeneralInfo: FacilityGeneralInfo;
+  setGeneralInfo: (info: FacilityGeneralInfo) => void;
   location: Location;
   setLocation: (location: Location) => void;
 }
@@ -31,7 +31,7 @@ export const FacilityOnboardingProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
+  const [generalInfo, setGeneralInfo] = useState<FacilityGeneralInfo>({
     firstName: '',
     lastName: '',
     phoneNumber: '',
@@ -47,7 +47,7 @@ export const FacilityOnboardingProvider = ({
   return (
     <FacilityOnboardingContext.Provider
       value={{
-        generalInfo,
+        facilityGeneralInfo: generalInfo,
         setGeneralInfo,
         location,
         setLocation,
