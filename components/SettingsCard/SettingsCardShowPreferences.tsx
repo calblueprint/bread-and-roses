@@ -4,7 +4,7 @@ import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
 import * as styles from './styles';
 
-export default function SettingCardShowPreferences() {
+export default function SettingCardShowPreferences(props) {
   return (
     <styles.AvailabilityContainer>
       <styles.AvailabilityHeader>
@@ -22,63 +22,60 @@ export default function SettingCardShowPreferences() {
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
                 Facility Type
               </P>
-              <ul>
-                <styles.SettingListedItems>
-                  <li>
-                    <styles.TruncatedText
-                      $fontWeight="400"
-                      $color={COLORS.gray11}
-                      $align="left"
-                    >
-                      Hospitals
-                    </styles.TruncatedText>
-                  </li>
-                  <li>
-                    <styles.TruncatedText
-                      $fontWeight="400"
-                      $color={COLORS.gray11}
-                      $align="left"
-                    >
-                      Senior Homes
-                    </styles.TruncatedText>
-                  </li>
-                </styles.SettingListedItems>
+              <ul style={{ paddingLeft: '1.25rem', listStyleType: 'disc' }}>
+                {props.facility_preferences.map(facility => {
+                  return (
+                    <li>
+                      <styles.TruncatedText
+                        $fontWeight="400"
+                        $color={COLORS.gray11}
+                        $align="left"
+                      >
+                        {facility}
+                      </styles.TruncatedText>
+                    </li>
+                  );
+                })}
               </ul>
             </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
                 Location Preferences
               </P>
-              <ul>
-                <styles.SettingListedItems>
-                  <li>
-                    <styles.TruncatedText
-                      $fontWeight="400"
-                      $color={COLORS.gray11}
-                      $align="left"
-                    >
-                      Oakland, CA
-                    </styles.TruncatedText>
-                  </li>
-                </styles.SettingListedItems>
+              <ul style={{ paddingLeft: '1.25rem', listStyleType: 'disc' }}>
+                {props.locations.map(location => {
+                  return (
+                    <li>
+                      <styles.TruncatedText
+                        $fontWeight="400"
+                        $color={COLORS.gray11}
+                        $align="left"
+                      >
+                        {location}
+                      </styles.TruncatedText>
+                    </li>
+                  );
+                })}
               </ul>
             </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
                 Preferred Audience
               </P>
-              <ul>
-                <styles.SettingListedItems>
-                  <li>
-                    <styles.TruncatedText
-                      $fontWeight="400"
-                      $color={COLORS.gray11}
-                      $align="left"
-                    >
-                      Seniors
-                    </styles.TruncatedText>
-                  </li>
-                </styles.SettingListedItems>
+              <ul style={{ paddingLeft: '1.25rem', listStyleType: 'disc' }}>
+                {props.audience_preferences.map(audience => {
+                  return (
+                    <li>
+                      <styles.TruncatedText
+                        $fontWeight="400"
+                        $color={COLORS.gray11}
+                        $align="left"
+                      >
+                        {audience}
+                      </styles.TruncatedText>
+                    </li>
+                  );
+                })}
               </ul>
             </styles.SettingDetail>
           </styles.SubHeader>

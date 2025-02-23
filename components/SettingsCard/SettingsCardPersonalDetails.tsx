@@ -4,7 +4,7 @@ import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
 import * as styles from './styles';
 
-export default function SettingCardPersonalDetails() {
+export default function SettingCardPersonalDetails(props) {
   return (
     <styles.AvailabilityContainer>
       <styles.AvailabilityHeader>
@@ -27,7 +27,7 @@ export default function SettingCardPersonalDetails() {
                 $color={COLORS.gray11}
                 $align="left"
               >
-                Jane
+                {props.first_name}
               </styles.TruncatedText>
             </styles.SettingDetail>
             <styles.SettingDetail>
@@ -39,7 +39,7 @@ export default function SettingCardPersonalDetails() {
                 $color={COLORS.gray11}
                 $align="left"
               >
-                Doe
+                {props.last_name}
               </styles.TruncatedText>
             </styles.SettingDetail>
             <styles.SettingDetail>
@@ -51,7 +51,7 @@ export default function SettingCardPersonalDetails() {
                 $color={COLORS.gray11}
                 $align="left"
               >
-                123-456-7890
+                {props.phone}
               </styles.TruncatedText>
             </styles.SettingDetail>
           </styles.SubHeader>
