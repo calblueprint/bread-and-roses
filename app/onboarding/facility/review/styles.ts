@@ -52,6 +52,11 @@ export const InfoSectionLine = styled.main`
   background: ${COLORS.gray7};
 `;
 
+export const InfoSectionTitle = styled.main`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const SubSection = styled.main`
   display: flex;
   flex-direction: column;

@@ -61,8 +61,8 @@ export default function Onboarding() {
         <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
         </BackButton>
-        <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-        <ProgressBar from={0} to={20} />
+        <Title $fontWeight={500}>Where is the facility located?</Title>
+        <ProgressBar from={33} to={66} />
         <Container>
           <InputContainer>
             <Label>

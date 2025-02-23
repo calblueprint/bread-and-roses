@@ -1,3 +1,7 @@
+import {
+  FacilityGeneralInfo,
+  Location,
+} from '@/utils/facilityOnboardingContext';
 import { GeneralInfo, Preferences, Role } from '@/utils/onboardingContext';
 import supabase from '../createClient';
 
@@ -69,3 +73,8 @@ export async function submitOnboardingData(
     throw error;
   }
 }
+
+export async function submitFacilityOnboardingData(
+  FacilityGeneralInfo: FacilityGeneralInfo,
+  location: Location,
+): Promise<void> {}
