@@ -8,17 +8,22 @@ export async function fetchPerformer(event_id: UUID) {
     .eq('event_id', event_id)
     .eq('role', 'PERFORMER')
     .eq('is_accepted', true)
-    .single();
+    .maybeSingle();
 
   if (error) {
     throw new Error(error.message);
+  }
+
+  // if performer not found
+  if (!data) {
+    return null;
   }
 
   const { data: performer, error: performererror } = await supabase
     .from('volunteers')
     .select('*')
     .eq('user_id', data.user_id)
-    .single();
+    .maybeSingle();
 
   if (performererror) {
     throw new Error(performererror.message);
