@@ -131,6 +131,7 @@ export interface Facilities {
   city: string;
   street_address_1: string;
   street_address_2?: string;
+  zip: string;
   audience: Audience;
   type: FacilityType;
   host_name?: string;

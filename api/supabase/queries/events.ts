@@ -74,17 +74,22 @@ export async function fetchEventHostByID(event_id: UUID) {
     .eq('event_id', event_id)
     .eq('role', 'HOST')
     .eq('is_accepted', true)
-    .single();
+    .maybeSingle();
 
   if (error) {
     throw new Error(error.message);
+  }
+
+  // if host not found
+  if (!data) {
+    return null;
   }
 
   const { data: host, error: hosterror } = await supabase
     .from('volunteers')
     .select('*')
     .eq('user_id', data.user_id)
-    .single();
+    .maybeSingle();
 
   if (hosterror) {
     throw new Error(hosterror.message);
