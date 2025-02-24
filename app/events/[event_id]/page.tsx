@@ -57,10 +57,10 @@ export default function EventDisplay({
         await fetchFacilityContactByID(fetchedEvent.facility_id);
       setFacilityContact(fetchedFacilityContact);
 
-      const fetchedFacilityNotes: string =
-        await fetchFacilityNotesByID(fetchedEvent.facility_id);
+      const fetchedFacilityNotes: string = await fetchFacilityNotesByID(
+        fetchedEvent.facility_id,
+      );
       setFacilityNotes(fetchedFacilityNotes);
-
 
       if (fetchedEvent.needs_host) {
         const host: Volunteers = await fetchEventHostByID(params.event_id);
