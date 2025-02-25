@@ -31,3 +31,41 @@ export async function fetchPerformer(event_id: UUID) {
 
   return performer;
 }
+
+export async function eventSignUp(user: {
+  id: UUID;
+  event_id: UUID;
+  role: string;
+  group_size: number;
+  additional_info: string;
+}) {
+  if (!user.id) {
+    return {
+      success: false,
+      message: 'User data is missing. Cannot insert into volunteers table.',
+    };
+  }
+
+  const { error: insertError } = await supabase.from('event_signups').insert([
+    {
+      event_id: user.event_id,
+      user_id: user.id,
+      role: user.role,
+      is_accepted: false,
+      group_size: user.group_size,
+      additional_info: user.additional_info,
+    },
+  ]);
+
+  if (insertError) {
+    return {
+      success: false,
+      message: `Error signing user up for event: ${insertError.message}`,
+    };
+  }
+
+  return {
+    success: true,
+    message: 'User successfully signed up for event.',
+  };
+}

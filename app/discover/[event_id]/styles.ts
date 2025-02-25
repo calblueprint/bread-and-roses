@@ -134,7 +134,7 @@ export const TextWithIcon = styled.div`
   align-items: center;
 `;
 
-export const SignUp = styled.div`
+export const SignUp = styled.button`
   background-color: black;
   color: white;
   padding: 0.5rem 1rem;
@@ -143,4 +143,5 @@ export const SignUp = styled.div`
   width: 5.5rem;
   height: 2.25rem;
   margin-bottom: 10rem;
+  cursor: pointer;
 `;

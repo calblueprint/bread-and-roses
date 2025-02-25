@@ -2,13 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { UUID } from 'crypto';
 import { fetchEventById } from '@/api/supabase/queries/events';
 import { fetchFacilityById } from '@/api/supabase/queries/facilities';
+import { eventSignUp } from '@/api/supabase/queries/volunteers';
 import Back from '@/public/images/back.svg';
 import LocationPin from '@/public/images/location_pin.svg';
 import COLORS from '@/styles/colors';
 import { SMALL } from '@/styles/text';
 import { Event, Facilities } from '@/types/schema';
+import { useSession } from '@/utils/AuthProvider';
 import {
   About,
   AboutText,
@@ -55,6 +58,7 @@ export default function EventPage({
 }) {
   const [event, setEvent] = useState<Event>();
   const [facility, setFacility] = useState<Facilities>();
+  const { session } = useSession();
 
   useEffect(() => {
     const getEvent = async () => {
@@ -123,7 +127,24 @@ export default function EventPage({
           'Help setup the show!',
           '/images/help.svg',
         )}
-        <SignUp> Sign up</SignUp>
+        <SignUp
+          type="button"
+          onClick={() => {
+            if (session?.user?.id && event?.event_id) {
+              eventSignUp({
+                id: session.user.id as UUID,
+                event_id: event.event_id as UUID,
+                role: session.user.role as string,
+                group_size: 0,
+                additional_info: '',
+              });
+            } else {
+              console.error('Missing user ID or event ID');
+            }
+          }}
+        >
+          Sign up
+        </SignUp>
       </Body>
     </Container>
   );
