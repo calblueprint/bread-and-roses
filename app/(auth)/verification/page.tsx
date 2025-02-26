@@ -8,7 +8,6 @@ import {
   insertVolunteer,
   resendVerificationEmail,
 } from '@/api/supabase/queries/auth';
-import { useSession } from '@/utils/AuthProvider';
 import Bud from '@/public/images/bud.svg';
 import EmailIcon from '@/public/images/email.svg';
 import COLORS from '@/styles/colors';
@@ -23,6 +22,7 @@ import {
   Title,
 } from '@/styles/styles';
 import { P } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
 import {
   EmailContainer,
   EmailIconStyled,
@@ -111,13 +111,15 @@ export default function Verification() {
           <Title>Verification Needed</Title>
           <P>Thanks for signing up!</P>
           <P>
-            A verification link has been sent to the email you specified, please
+            A verification link has been sent to the email you specified. Please
             check your inbox for next steps.
           </P>
 
           <EmailContainer>
             <EmailIconStyled src={EmailIcon} alt="Email Icon" />
-            <EmailText>{tempEmail ? tempEmail : 'Email address not found'}</EmailText>
+            <EmailText>
+              {tempEmail ? tempEmail : 'Email address not found'}
+            </EmailText>
           </EmailContainer>
 
           {/* This button is styled as before without the transient bgColor/textColor props */}
