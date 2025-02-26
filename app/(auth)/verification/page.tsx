@@ -35,38 +35,27 @@ export default function Verification() {
   const [tempEmail, setTempEmail] = useState<string | null>(null);
   const [resendStatus, setResendStatus] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
-  const [isEmailConfirmed, setIsEmailConfirmed] = useState<boolean>(false);
 
   useEffect(() => {
     const email = getTempEmail();
     setTempEmail(email);
   }, []);
 
-  // Using session to check if the email is confirmed
   useEffect(() => {
-    if (session?.user) {
-      const isVerified = session.user.email_confirmed_at !== null;
-      setIsEmailConfirmed(isVerified);
-    }
-  }, [session]);
-
-  useEffect(() => {
-    if (isEmailConfirmed && session?.user) {
-      const addUserToVolunteers = async () => {
-        const email = session.user.email;
-        if (!email) {
-          setIsError(true);
-          setResendStatus('Email is undefined. Please try again.');
-          return;
-        }
-
-        // Check if the volunteer already exists to prevent duplicate inserts
+    // Only trigger if a session exists and the email_confirmed_at field is truthy.
+    if (session?.user && session.user.email_confirmed_at) {
+      const email = session.user.email;
+      if (!email) {
+        setIsError(true);
+        setResendStatus('Email is undefined. Please try again.');
+        return;
+      }
+      (async () => {
         const exists = await checkUserExists(session.user.id, 'volunteer');
         if (exists) {
           router.push('/success');
           return;
         }
-
         try {
           const result = await insertVolunteer({
             id: session.user.id,
@@ -83,11 +72,9 @@ export default function Verification() {
           setIsError(true);
           setResendStatus('An error occurred while processing your request.');
         }
-      };
-
-      addUserToVolunteers();
+      })();
     }
-  }, [isEmailConfirmed, session, router]);
+  }, [session?.user?.email_confirmed_at, session, router]);
 
   const handleResendLink = async () => {
     if (tempEmail) {
@@ -96,6 +83,7 @@ export default function Verification() {
       setResendStatus(message);
     } else {
       setIsError(true);
+      setResendStatus('No email found.');
     }
   };
 
@@ -112,7 +100,7 @@ export default function Verification() {
           <Title>Verification Needed</Title>
           <P>Thanks for signing up!</P>
           <P>
-            A verification link has been sent to the email you specified, please
+            A verification link has been sent to the email you specified. Please
             check your inbox for next steps.
           </P>
 
@@ -123,17 +111,13 @@ export default function Verification() {
             </EmailText>
           </EmailContainer>
 
-          <RoundedCornerButton
-            onClick={handleUseAnotherAccount}
-            width="70%"
-            $bgColor="white"
-            $textColor="black"
-          >
+          {/* This button is styled as before without the transient bgColor/textColor props */}
+          <RoundedCornerButton onClick={handleUseAnotherAccount} width="70%">
             Use another account
           </RoundedCornerButton>
 
           <Footer>
-            Didn&apos;t receive it?{' '}
+            Didn’t receive it?{' '}
             <Link href="#" onClick={handleResendLink}>
               Resend link
             </Link>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { H6, SMALL } from '@/styles/text'; // Adjust imports for your typography styles
+import { H6, SMALL } from '@/styles/text';
 import {
   BoxContainer,
   Checkbox,
@@ -7,8 +7,6 @@ import {
   RoleContainer,
   TextContainer,
 } from './styles';
-
-// Adjust imports to match your project
 
 interface RoleSelectorProps {
   isSelected: boolean;
@@ -30,7 +28,7 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
   shape = 'square',
 }) => {
   return (
-    <BoxContainer isSelected={isSelected}>
+    <BoxContainer $isSelected={isSelected}>
       <RoleContainer>
         <Checkbox
           name={name}

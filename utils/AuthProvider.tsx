@@ -1,3 +1,4 @@
+// AuthProvider.tsx
 'use client';
 
 import React, {
@@ -16,6 +17,7 @@ export interface AuthState {
   signUp: (email: string, password: string) => Promise<AuthResponse>;
   signInWithEmail: (email: string, password: string) => Promise<AuthResponse>;
   signOut: () => void;
+  userRole: 'volunteer' | 'facility' | null;
 }
 
 const AuthContext = createContext({} as AuthState);
@@ -30,15 +32,16 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [session, setSession] = useState<Session | null>(null);
+  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
+    null,
+  );
 
   useEffect(() => {
-    // Fetch the initial session
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
       console.log('Initial session:', newSession);
       setSession(newSession);
     });
 
-    // Subscribe to auth state changes and store the subscription
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, newSession) => {
@@ -46,11 +49,42 @@ export function AuthContextProvider({
       setSession(newSession);
     });
 
-    // Clean up the subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
   }, []);
+
+  // Fetch user role when session is updated
+  useEffect(() => {
+    async function fetchUserRole(
+      email: string,
+    ): Promise<'volunteer' | 'facility' | null> {
+      const { data: volunteerData } = await supabase
+        .from('volunteers')
+        .select('user_id')
+        .eq('email', email)
+        .maybeSingle();
+      if (volunteerData) return 'volunteer';
+
+      const { data: facilityData } = await supabase
+        .from('facility_contacts')
+        .select('user_id')
+        .eq('email', email)
+        .maybeSingle();
+      if (facilityData) return 'facility';
+
+      return null;
+    }
+
+    if (session && session.user && session.user.email) {
+      fetchUserRole(session.user.email).then(role => {
+        setUserRole(role);
+        console.log('User role set to:', role);
+      });
+    } else {
+      setUserRole(null);
+    }
+  }, [session]);
 
   const signIn = (newSession: Session | null) => {
     setSession(newSession);
@@ -61,7 +95,6 @@ export function AuthContextProvider({
       email,
       password,
     });
-    // The listener will update the session automatically.
     return response;
   };
 
@@ -70,7 +103,6 @@ export function AuthContextProvider({
       email,
       password,
       options: {
-        // Match the redirect URL used in your sign-up process.
         emailRedirectTo: 'http://localhost:3000/verification',
       },
     });
@@ -81,6 +113,7 @@ export function AuthContextProvider({
     supabase.auth.signOut();
     localStorage.removeItem('tempEmail');
     setSession(null);
+    setUserRole(null);
   };
 
   const authContextValue = useMemo(
@@ -90,8 +123,9 @@ export function AuthContextProvider({
       signUp,
       signInWithEmail,
       signOut,
+      userRole,
     }),
-    [session],
+    [session, userRole],
   );
 
   return (

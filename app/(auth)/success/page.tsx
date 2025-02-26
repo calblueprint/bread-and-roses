@@ -24,10 +24,10 @@ export default function Success() {
       <InlineContainer>
         <ReviewContainer>
           <Title>Successfully verified!</Title>
-          <text>
+          <p>
             Your email has been verified. Please use this email address to login
             in the future.
-          </text>
+          </p>
           <RoundedCornerButton onClick={handleContinue}>
             Continue
           </RoundedCornerButton>
