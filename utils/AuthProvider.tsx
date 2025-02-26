@@ -32,18 +32,14 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
-    null,
-  );
+  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(null);
 
   useEffect(() => {
-    // Fetch the initial session
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
       console.log('Initial session:', newSession);
       setSession(newSession);
     });
 
-    // Subscribe to auth state changes and store the subscription
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, newSession) => {
@@ -51,7 +47,6 @@ export function AuthContextProvider({
       setSession(newSession);
     });
 
-    // Clean up the subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
@@ -59,19 +54,17 @@ export function AuthContextProvider({
 
   // Fetch user role when session is updated
   useEffect(() => {
-    async function fetchUserRole(
-      email: string,
-    ): Promise<'volunteer' | 'facility' | null> {
+    async function fetchUserRole(email: string): Promise<'volunteer' | 'facility' | null> {
       const { data: volunteerData } = await supabase
         .from('volunteers')
-        .select('user_id')
+        .select('id')
         .eq('email', email)
         .maybeSingle();
       if (volunteerData) return 'volunteer';
 
       const { data: facilityData } = await supabase
         .from('facility_contacts')
-        .select('user_id')
+        .select('id')
         .eq('email', email)
         .maybeSingle();
       if (facilityData) return 'facility';
@@ -98,7 +91,6 @@ export function AuthContextProvider({
       email,
       password,
     });
-    // The listener will update the session automatically.
     return response;
   };
 
@@ -107,7 +99,6 @@ export function AuthContextProvider({
       email,
       password,
       options: {
-        // Match the redirect URL used in your sign-up process.
         emailRedirectTo: 'http://localhost:3000/verification',
       },
     });

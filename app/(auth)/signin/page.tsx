@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import isEmail from 'validator/lib/isEmail';
 import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';
+import { useSession } from '@/utils/AuthProvider';
 import BRLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
 import { H5, SMALL } from '@/styles/text';
-import { useSession } from '@/utils/AuthProvider';
 import {
   Button,
   Card,
@@ -79,7 +79,7 @@ export default function SignIn() {
       if (userRole === 'volunteer') {
         router.push('/discover');
       } else if (userRole === 'facility') {
-        router.push('/availability/general');
+        router.push('/availabilities');
       }
     }
   }, [session, userRole, router]);

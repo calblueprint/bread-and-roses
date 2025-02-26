@@ -8,6 +8,7 @@ import {
   insertVolunteer,
   resendVerificationEmail,
 } from '@/api/supabase/queries/auth';
+import { useSession } from '@/utils/AuthProvider';
 import Bud from '@/public/images/bud.svg';
 import EmailIcon from '@/public/images/email.svg';
 import COLORS from '@/styles/colors';
@@ -22,7 +23,6 @@ import {
   Title,
 } from '@/styles/styles';
 import { P } from '@/styles/text';
-import { useSession } from '@/utils/AuthProvider';
 import {
   EmailContainer,
   EmailIconStyled,
@@ -43,6 +43,15 @@ export default function Verification() {
   }, []);
 
   useEffect(() => {
+    // Only trigger if a session exists and the email_confirmed_at field is truthy.
+    if (session?.user && session.user.email_confirmed_at) {
+      const email = session.user.email;
+      if (!email) {
+        setIsError(true);
+        setResendStatus('Email is undefined. Please try again.');
+        return;
+      }
+      (async () => {
     // Only trigger if a session exists and the email_confirmed_at field is truthy.
     if (session?.user && session.user.email_confirmed_at) {
       const email = session.user.email;
@@ -74,6 +83,7 @@ export default function Verification() {
           setResendStatus('An error occurred while processing your request.');
         }
       })();
+      })();
     }
   }, [session?.user?.email_confirmed_at, session, router]);
 
@@ -99,19 +109,15 @@ export default function Verification() {
       <InlineContainer>
         <ReviewContainer>
           <Title>Verification Needed</Title>
-          <P $fontWeight={400} $color={COLORS.gray12}>
-            Thanks for signing up!
-          </P>
-          <P $fontWeight={400} $color={COLORS.gray12}>
+          <P>Thanks for signing up!</P>
+          <P>
             A verification link has been sent to the email you specified, please
             check your inbox for next steps.
           </P>
 
           <EmailContainer>
             <EmailIconStyled src={EmailIcon} alt="Email Icon" />
-            <EmailText>
-              {tempEmail ? tempEmail : 'Email address not found'}
-            </EmailText>
+            <EmailText>{tempEmail ? tempEmail : 'Email address not found'}</EmailText>
           </EmailContainer>
 
           {/* This button is styled as before without the transient bgColor/textColor props */}
@@ -120,6 +126,7 @@ export default function Verification() {
           </RoundedCornerButton>
 
           <Footer>
+            Didn’t receive it?{' '}
             Didn’t receive it?{' '}
             <Link href="#" onClick={handleResendLink}>
               Resend link
