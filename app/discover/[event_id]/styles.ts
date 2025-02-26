@@ -107,7 +107,9 @@ export const InterestBlock = styled.div`
   margin-bottom: 0.75rem;
 `;
 
-export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+export const Checkbox = styled.input.attrs<{ checked?: boolean }>({
+  type: 'checkbox',
+})`
   width: 20px;
   height: 20px;
   border: 2px solid ${COLORS.rose10};
@@ -117,8 +119,8 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   cursor: pointer;
 
   &:checked {
-    background-color: ${COLORS.rose10}; /* Optional: Red background when checked */
-    border-color: ${COLORS.rose10}; /* Border stays red when checked */
+    background-color: ${COLORS.rose10};
+    border-color: ${COLORS.rose10};
   }
 `;
 
@@ -144,4 +146,11 @@ export const SignUp = styled.button`
   height: 2.25rem;
   margin-bottom: 10rem;
   cursor: pointer;
+`;
+
+export const SignUpContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 30px;
 `;

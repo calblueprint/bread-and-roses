@@ -29,17 +29,24 @@ import {
   Location,
   ShowInterest,
   SignUp,
+  SignUpContainer,
   TagDiv,
   TextWithIcon,
   Time,
   Title,
 } from './styles';
 
-function InterestBlockGen(title: string, about: string, icon: string) {
+function InterestBlockGen(
+  title: string,
+  about: string,
+  icon: string,
+  checked: boolean,
+  onChange: () => void,
+) {
   return (
     <InterestBlock>
       {' '}
-      <Checkbox type="checkbox" />
+      <Checkbox type="checkbox" checked={checked} onChange={onChange} />
       <TextWithIcon>
         <div>
           <InterestTitle $fontWeight="500"> {title}</InterestTitle>
@@ -59,6 +66,9 @@ export default function EventPage({
   const [event, setEvent] = useState<Event>();
   const [facility, setFacility] = useState<Facilities>();
   const { session } = useSession();
+
+  const [performChecked, setPerformChecked] = useState(false);
+  const [hostChecked, setHostChecked] = useState(false);
 
   useEffect(() => {
     const getEvent = async () => {
@@ -121,30 +131,51 @@ export default function EventPage({
           'To Perform',
           'Be the star of the show!',
           '/images/star.svg',
+          performChecked,
+          () => setPerformChecked(!performChecked),
         )}
-        {InterestBlockGen(
-          'To Host',
-          'Help setup the show!',
-          '/images/help.svg',
-        )}
-        <SignUp
-          type="button"
-          onClick={() => {
-            if (session?.user?.id && event?.event_id) {
-              eventSignUp({
-                id: session.user.id as UUID,
-                event_id: event.event_id as UUID,
-                role: session.user.role as string,
-                group_size: 0,
-                additional_info: '',
-              });
-            } else {
-              console.error('Missing user ID or event ID');
-            }
-          }}
-        >
-          Sign up
-        </SignUp>
+        {event?.needs_host == true &&
+          InterestBlockGen(
+            'To Host',
+            'Help setup the show!',
+            '/images/help.svg',
+            hostChecked,
+            () => setHostChecked(!hostChecked),
+          )}
+        <SignUpContainer>
+          <SignUp
+            type="button"
+            onClick={() => {
+              if (session?.user?.id && event?.event_id) {
+                if (!performChecked && !hostChecked) {
+                  console.error('No preference selected.');
+                }
+                if (performChecked) {
+                  eventSignUp({
+                    id: session.user.id as UUID,
+                    event_id: event.event_id as UUID,
+                    role: 'PERFORMER',
+                    group_size: 0,
+                    additional_info: '',
+                  });
+                }
+                if (hostChecked) {
+                  eventSignUp({
+                    id: session.user.id as UUID,
+                    event_id: event.event_id as UUID,
+                    role: 'HOST',
+                    group_size: 0,
+                    additional_info: '',
+                  });
+                }
+              } else {
+                console.error('Missing user ID or event ID');
+              }
+            }}
+          >
+            Sign up
+          </SignUp>
+        </SignUpContainer>
       </Body>
     </Container>
   );
