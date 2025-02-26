@@ -3,19 +3,23 @@
 import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { H6, P } from '@/styles/text';
+import { P, SMALL, SMALLER } from '@/styles/text';
+
+interface TagProps {
+  $bgColor?: string;
+}
 
 export const Container = styled.div`
   display: inline-block;
-  height: 18.75rem;
-  width: 15.625rem;
+  height: 17.5rem;
+  width: 13.875rem;
   background-color: ${COLORS.bread1};
   border-radius: 0.5rem;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
 `;
 
 export const ImageContainer = styled.div`
-  height: 6.25rem;
+  height: 9.375rem;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -38,7 +42,7 @@ export const EventLabel = styled.div`
   gap: 0.25rem;
 `;
 
-export const EventTitle = styled(H6)`
+export const EventTitle = styled(P)`
   color: ${COLORS.gray12};
   font-weight: 500;
   text-overflow: ellipsis;
@@ -46,31 +50,37 @@ export const EventTitle = styled(H6)`
   overflow: hidden;
 `;
 
-export const EventDescription = styled(P)`
-  color: ${COLORS.gray11};
-  font-weight: 400;
-  overflow: hidden;
-  text-overflow: ellipsis;
+export const EventTag = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 export const Subtitle = styled(P)`
   display: flex;
   align-items: center;
   align-self: stretch;
-  column-gap: 0.5rem;
+  column-gap: 0.25rem;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-export const SubtitleText = styled(P)`
-  color: ${COLORS.gray12};
+export const SubtitleText = styled(SMALL)`
+  color: ${COLORS.gray11};
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const LocationText = styled(SMALLER)`
+  color: ${COLORS.gray10};
   font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
@@ -78,6 +88,22 @@ export const SubtitleText = styled(P)`
 `;
 
 export const Icon = styled(NextImage)`
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
+`;
+
+export const IndividualTag = styled(SMALLER)<TagProps>`
+  color: ${COLORS.gray11};
+  font-weight: 400;
+  background-color: ${({ $bgColor }) => $bgColor || 'gray'};
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.375rem;
+  margin-right: 0.625rem;
+`;
+
+export const MoreTags = styled(SMALLER)`
+  color: ${COLORS.lilac8};
+  font-weight: 400;
 `;
