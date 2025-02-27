@@ -31,6 +31,7 @@ export default function Onboarding() {
             We recommend checking out some upcoming events in the Discover page.
             If you&apos;re interested in participating, please sign up!
           </P>
+          </P>
           <ContinueButton onClick={handleContinue}>
             <SMALL $fontWeight="400" $color="white">
               Continue
