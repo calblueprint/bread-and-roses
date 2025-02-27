@@ -53,6 +53,11 @@ export const SettingDetail = styled.main`
   gap: 0.25rem;
 `;
 
+export const SettingListedItems = styled.main`
+  paddingLeft: '1.5rem';
+  listStyleType: 'disc';
+`;
+
 export const Edit = styled(NextImage)`
   width: 24px;
   height: 24px;
@@ -64,4 +69,14 @@ export const TruncatedText = styled(SMALL)`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+`;
+
+export const TruncatedListedText = styled(SMALL)`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  paddingLeft: '1.5rem';
+  listStyleType: 'disc';
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
-import { H5, P } from '@/styles/text';
+import { H5, P, UL } from '@/styles/text';
 import * as styles from './styles';
 
 export default function SettingCardPerformanceInterest() {
@@ -22,7 +22,7 @@ export default function SettingCardPerformanceInterest() {
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
                 Type of Act
               </P>
-              <ul style={{ paddingLeft: '1.25rem', listStyleType: 'disc' }}>
+              <UL>
                 <li>
                   <styles.TruncatedText
                     $fontWeight="400"
@@ -41,13 +41,13 @@ export default function SettingCardPerformanceInterest() {
                     Music
                   </styles.TruncatedText>
                 </li>
-              </ul>
+              </UL>
             </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
                 Genre
               </P>
-              <ul style={{ paddingLeft: '1.25rem', listStyleType: 'disc' }}>
+              <UL>
                 <li>
                   <styles.TruncatedText
                     $fontWeight="400"
@@ -66,7 +66,7 @@ export default function SettingCardPerformanceInterest() {
                     Country
                   </styles.TruncatedText>
                 </li>
-              </ul>
+              </UL>
             </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
