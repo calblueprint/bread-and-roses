@@ -54,7 +54,9 @@ export const InfoSectionLine = styled.main`
 
 export const InfoSectionTitle = styled.main`
   display: flex;
+  width: 100%;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 
 export const SubSection = styled.main`

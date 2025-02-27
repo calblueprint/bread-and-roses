@@ -194,7 +194,6 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    width: 85%;
     bottom: 40px;
   }
 `;

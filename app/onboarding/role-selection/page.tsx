@@ -46,7 +46,6 @@ export default function Onboarding() {
   return (
     <Background>
       <InlineContainer>
-        <Image src={Back} alt="Back icon" />
         <Title $fontWeight={500}>
           How would you describe
           <br />
