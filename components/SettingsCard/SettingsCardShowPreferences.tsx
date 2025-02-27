@@ -28,7 +28,6 @@ export default function SettingCardShowPreferences() {
                     $fontWeight="400"
                     $color={COLORS.gray11}
                     $align="left"
-                    $paddingLeft="1.25rem"
                   >
                     Hospitals
                   </styles.TruncatedText>
@@ -36,12 +35,12 @@ export default function SettingCardShowPreferences() {
                 <li>
                   <styles.TruncatedText
                     $fontWeight="400"
-                     $color={COLORS.gray11}
-                     $align="left"
-                   >
-                     Senior Homes
-                   </styles.TruncatedText>
-                 </li>
+                    $color={COLORS.gray11}
+                    $align="left"
+                  >
+                    Senior Homes
+                  </styles.TruncatedText>
+                </li>
               </UL>
             </styles.SettingDetail>
             <styles.SettingDetail>

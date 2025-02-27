@@ -56,8 +56,8 @@ export const P = styled.p<TextProps>`
 
 export const UL = styled.ul<TextProps>`
   ${TextStyles}
-  paddingLeft: '2.5rem' !important; 
-  listStyleType: 'disc';
+  paddingLeft: '2.5rem' !important;
+  liststyletype: 'disc';
 `;
 
 export const SMALL = styled.p<TextProps>`
