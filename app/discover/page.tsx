@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { fetchAllActiveEvents } from '@/api/supabase/queries/events';
-import EventListingCard from '@/components/EventListingCard/EventListingCard';
+import DiscoverCard from '@/components/DiscoverCard/DiscoverCard';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import { H6, SMALL } from '@/styles/text';
 import { Event } from '@/types/schema';
 import {
   Discover,
+  DiscoverCardContainer,
   DiscoverHolder,
-  EventListingDiv,
   Page,
   SearchBar,
   TitleBar,
@@ -40,15 +40,13 @@ export default function ActiveEventsPage() {
             <H6 $fontWeight="500"> Near You </H6>
             <SMALL $color="purple"> show all </SMALL>
           </TitleBar>
-          <EventListingDiv>
-            {events.map(event => (
-              <EventListingCard
-                key={event.event_id}
-                id={event.event_id}
-                performance_type={event.performance_type}
-              />
-            ))}
-          </EventListingDiv>
+          <DiscoverCardContainer>
+            {events.length > 0
+              ? events.map(event => (
+                  <DiscoverCard key={event.event_id} event={event} />
+                ))
+              : null}
+          </DiscoverCardContainer>
         </DiscoverHolder>
       </Page>
     </div>

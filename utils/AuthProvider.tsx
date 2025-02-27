@@ -1,3 +1,4 @@
+// AuthProvider.tsx
 'use client';
 
 import React, {
@@ -16,13 +17,13 @@ export interface AuthState {
   signUp: (email: string, password: string) => Promise<AuthResponse>;
   signInWithEmail: (email: string, password: string) => Promise<AuthResponse>;
   signOut: () => void;
+  userRole: 'volunteer' | 'facility' | null;
 }
 
 const AuthContext = createContext({} as AuthState);
 
 export function useSession() {
-  const value = useContext(AuthContext);
-  return value;
+  return useContext(AuthContext);
 }
 
 export function AuthContextProvider({
@@ -31,6 +32,9 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [session, setSession] = useState<Session | null>(null);
+  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
+    null,
+  );
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
@@ -38,22 +42,59 @@ export function AuthContextProvider({
       setSession(newSession);
     });
 
-    supabase.auth.onAuthStateChange((_event, newSession) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, newSession) => {
       console.log('Session change event:', newSession);
       setSession(newSession);
     });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
+
+  // Fetch user role when session is updated
+  useEffect(() => {
+    async function fetchUserRole(
+      email: string,
+    ): Promise<'volunteer' | 'facility' | null> {
+      const { data: volunteerData } = await supabase
+        .from('volunteers')
+        .select('user_id')
+        .eq('email', email)
+        .maybeSingle();
+      if (volunteerData) return 'volunteer';
+
+      const { data: facilityData } = await supabase
+        .from('facility_contacts')
+        .select('user_id')
+        .eq('email', email)
+        .maybeSingle();
+      if (facilityData) return 'facility';
+
+      return null;
+    }
+
+    if (session && session.user && session.user.email) {
+      fetchUserRole(session.user.email).then(role => {
+        setUserRole(role);
+        console.log('User role set to:', role);
+      });
+    } else {
+      setUserRole(null);
+    }
+  }, [session]);
 
   const signIn = (newSession: Session | null) => {
     setSession(newSession);
   };
 
   const signInWithEmail = async (email: string, password: string) => {
-    const response = supabase.auth.signInWithPassword({
+    const response = await supabase.auth.signInWithPassword({
       email,
       password,
-    }); // will trigger the use effect to update the session
-
+    });
     return response;
   };
 
@@ -61,8 +102,10 @@ export function AuthContextProvider({
     const response = await supabase.auth.signUp({
       email,
       password,
-    }); // will trigger the use effect to update the session
-
+      options: {
+        emailRedirectTo: 'http://localhost:3000/verification',
+      },
+    });
     return response;
   };
 
@@ -70,6 +113,7 @@ export function AuthContextProvider({
     supabase.auth.signOut();
     localStorage.removeItem('tempEmail');
     setSession(null);
+    setUserRole(null);
   };
 
   const authContextValue = useMemo(
@@ -79,8 +123,9 @@ export function AuthContextProvider({
       signUp,
       signInWithEmail,
       signOut,
+      userRole,
     }),
-    [session],
+    [session, userRole],
   );
 
   return (

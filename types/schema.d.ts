@@ -87,6 +87,7 @@ export interface Event {
   start_date_time: string; //timestamptz
   end_date_time: string; //timestamptz
   performance_type: PerformanceType;
+  name: string;
   genre?: Genre;
   needs_host: boolean;
   event_status: EventStatus;
@@ -130,6 +131,7 @@ export interface Facilities {
   city: string;
   street_address_1: string;
   street_address_2?: string;
+  zip: string;
   audience: Audience;
   type: FacilityType;
   host_name?: string;

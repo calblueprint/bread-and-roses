@@ -13,10 +13,12 @@ export const BackImage = styled(NextImage)`
 `;
 
 export const ImageWrapper = styled.div`
-  position: relative;
+  height: 17.5rem;
   width: 100%;
-  height: auto;
-  display: flex;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background-color: ${COLORS.gray12};
 `;
 
 export const EventImage = styled(NextImage)`

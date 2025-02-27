@@ -4,7 +4,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 
-export const BoxContainer = styled.div<{ isSelected: boolean }>`
+export const BoxContainer = styled.div<{ $isSelected: boolean }>`
   display: flex;
   padding: 12px 16px;
   align-items: center;
@@ -13,15 +13,15 @@ export const BoxContainer = styled.div<{ isSelected: boolean }>`
   width: 100%;
   border-radius: 8px;
   border: 1px solid
-    ${({ isSelected }) => (isSelected ? COLORS.rose10 : COLORS.gray6)};
-  background: ${({ isSelected }) =>
-    isSelected ? COLORS['bread1.5'] : COLORS.bread2};
+    ${({ $isSelected }) => ($isSelected ? COLORS.rose10 : COLORS.gray6)};
+  background: ${({ $isSelected }) =>
+    $isSelected ? COLORS['bread1.5'] : COLORS.bread2};
   transition: all 0.3s ease;
 
-  ${({ isSelected }) =>
-    isSelected &&
+  ${({ $isSelected }) =>
+    $isSelected &&
     `
-    box-shadow: 0px 0px 8px 0px rgba(227, 66, 66, 0.25); =
+    box-shadow: 0px 0px 8px 0px rgba(227, 66, 66, 0.25);
   `}
 `;
 
