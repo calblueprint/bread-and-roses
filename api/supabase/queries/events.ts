@@ -41,12 +41,27 @@ export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
   return events;
 }
 
-// fetches all events that have event_status = 'Active'
+export async function fetchAllActiveEventsByFacilityName(search: string) {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*, facilities!inner(name)')
+    .eq('event_status', 'Active')
+    .ilike('facilities.name', `%${search}%`);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+// fetches all events that have event_status = 'Active',
 export async function fetchAllActiveEvents() {
   const { data, error } = await supabase
     .from('events')
     .select('*')
     .eq('event_status', 'Active');
+
   if (error) {
     throw new Error(error.message);
   }
