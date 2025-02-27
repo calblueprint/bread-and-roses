@@ -83,25 +83,26 @@ export const ContinueButton = styled.button`
 `;
 
 interface RoundedCornerButtonProps {
+interface RoundedCornerButtonProps {
   width?: string;
-  $bgColor?: string;
-  $textColor?: string;
+  bgColor?: string;
+  textColor?: string;
 }
 
 export const RoundedCornerButton = styled.button<RoundedCornerButtonProps>`
   font-family: ${Sans.style.fontFamily};
-  background-color: ${({ $bgColor }) => $bgColor || COLORS.pomegranate12};
-  color: ${({ $textColor }) => $textColor || 'white'};
+  background-color: ${props => props.bgColor || COLORS.pomegranate12};
+  color: ${props => props.textColor || 'white'};
   font-size: 1rem;
   padding: 0.55rem;
   border: 1.5px solid black;
   border-radius: 8px;
+
   cursor: pointer;
   margin-top: 0.5rem;
-  width: ${({ width }) => width || '100%'};
+  width: ${props => props.width || '100%'};
   margin-left: auto;
   margin-right: auto;
-  transition: background-color 0.3s ease;
 `;
 
 export const Footer = styled.div`
