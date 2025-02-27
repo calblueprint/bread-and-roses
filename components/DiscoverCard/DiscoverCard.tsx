@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import LocationPin from '@/public/images/location_pin.svg';
@@ -93,7 +93,7 @@ export default function DiscoverCard({ event }: { event: Event }) {
   }, [event]);
 
   /* Iteratively remove IndividualTags until all fit in EventTag container. */
-  useEffect(() => {
+  useLayoutEffect(() => {
     const checkOverflow = () => {
       if (tagsContainerRef.current) {
         const containerWidth = tagsContainerRef.current.offsetWidth;
@@ -126,7 +126,7 @@ export default function DiscoverCard({ event }: { event: Event }) {
     if (tagsToShow.length > 0) {
       checkOverflow();
     }
-  }, [tagsToShow.length, tagsContainerRef.current]);
+  });
 
   if (!facility || !eventDate) {
     return null;
