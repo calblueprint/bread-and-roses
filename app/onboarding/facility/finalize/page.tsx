@@ -1,7 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Rose from '@/public/images/rose.svg';
+import { Background } from '@/app/onboarding/styles';
+import Bread from '@/public/images/bread.png';
 import COLORS from '@/styles/colors';
 import {
   ContinueButton,
@@ -10,26 +11,25 @@ import {
   ReviewContainer,
 } from '@/styles/styles';
 import { H3, P, SMALL } from '@/styles/text';
-import { Background } from '../styles';
 
 export default function Onboarding() {
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
   const handleContinue = () => {
-    router.push('/discover'); // Navigate to the Discover page
+    router.push('/discover');
   };
 
   return (
     <Background isCentered={true}>
-      <Image src={Rose} alt="Rose" />
+      <Image src={Bread} alt="Bread" />
       <InlineContainer>
         <ReviewContainer>
           <H3 $color={COLORS.gray12} $fontWeight="400">
-            You&apos;re all set!
+            We&apos;ll be in touch!
           </H3>
           <P $fontWeight={400} $color={COLORS.gray12}>
-            We recommend checking out some upcoming events in the Discover page.
-            If you&apos;re interested in participating, please sign up!
+            We&apos;ve received your application. A member of Bread & Roses will
+            review it and contact you soon.
           </P>
           <ContinueButton onClick={handleContinue}>
             <SMALL $fontWeight="400" $color="white">

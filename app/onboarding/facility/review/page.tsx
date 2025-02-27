@@ -2,8 +2,7 @@
 
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
-//DO THIS BEFORE PR
-import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
+import { submitFacilityOnboardingData } from '@/api/supabase/queries/onboarding';
 import {
   Background,
   Image,
@@ -52,8 +51,7 @@ export default function Review() {
 
   const submitData = async () => {
     if (!generalInfo || !location) return;
-    //DO THIS BEFORE PR
-    await submitOnboardingData(generalInfo, location);
+    await submitFacilityOnboardingData(generalInfo, location);
   };
 
   return (
@@ -95,8 +93,8 @@ export default function Review() {
               </SubSection>
 
               <SubSection>
-                <P $fontWeight={500}>State</P>
-                <SmallText>{displayValue(location.state)}</SmallText>
+                <P $fontWeight={500}>County</P>
+                <SmallText>{displayValue(location.county)}</SmallText>
               </SubSection>
             </RowContainer>
 
@@ -144,7 +142,7 @@ export default function Review() {
           <SmallText>* Everything can be modified later in settings</SmallText>
         </ReviewContainer>
 
-        <StyledLink href="/onboarding/finalize">
+        <StyledLink href="/onboarding/facility/finalize">
           <SubmitButton onClick={submitData}>
             <SMALL $fontWeight="400" $color="white">
               Everything looks good!

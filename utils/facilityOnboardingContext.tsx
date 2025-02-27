@@ -11,7 +11,7 @@ export interface FacilityGeneralInfo {
 export interface Location {
   address: string;
   city: string;
-  state: string;
+  county: string;
   zipCode: string;
 }
 
@@ -40,7 +40,7 @@ export const FacilityOnboardingProvider = ({
   const [location, setLocation] = useState<Location>({
     address: '',
     city: '',
-    state: '',
+    county: '',
     zipCode: '',
   });
 

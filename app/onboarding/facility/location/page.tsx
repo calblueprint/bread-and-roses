@@ -43,7 +43,7 @@ export default function Onboarding() {
     if (
       !location.address ||
       !location.city ||
-      !location.state ||
+      !location.county ||
       !location.zipCode
     ) {
       return;
@@ -91,12 +91,12 @@ export default function Onboarding() {
 
             <InputContainer>
               <Label>
-                State <RedAsterisk>*</RedAsterisk>
+                County <RedAsterisk>*</RedAsterisk>
               </Label>
               <Input
-                name="state"
-                placeholder="CA"
-                value={location.state}
+                name="county"
+                placeholder="Alameda"
+                value={location.county}
                 onChange={handleChange}
               />
             </InputContainer>
@@ -122,7 +122,7 @@ export default function Onboarding() {
             disabled={
               !location.address ||
               !location.city ||
-              !location.state ||
+              !location.county ||
               !location.zipCode
             }
           >

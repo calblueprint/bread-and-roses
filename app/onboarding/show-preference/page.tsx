@@ -41,7 +41,7 @@ const locationOptions = new Set([
   'Contra Costa',
   'Marin',
   'Napa',
-  'San Fransisco',
+  'San Francisco',
   'San Mateo',
   'Santa Clara',
   'Sonoma',

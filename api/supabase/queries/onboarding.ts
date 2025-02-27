@@ -75,6 +75,61 @@ export async function submitOnboardingData(
 }
 
 export async function submitFacilityOnboardingData(
-  FacilityGeneralInfo: FacilityGeneralInfo,
+  facilityGeneralInfo: FacilityGeneralInfo,
   location: Location,
-): Promise<void> {}
+): Promise<void> {
+  try {
+    const { data: sessionData, error: sessionError } =
+      await supabase.auth.getSession();
+
+    if (sessionError || !sessionData?.session) {
+      console.error('Session retrieval error:', sessionError);
+      throw new Error('Failed to retrieve user session.');
+    }
+
+    const user_id = sessionData.session.user.id;
+    const email = sessionData.session.user.email;
+
+    const volunteerPayload = {
+      user_id,
+      email,
+      first_name: facilityGeneralInfo.firstName,
+      last_name: facilityGeneralInfo.lastName,
+      phone_number: facilityGeneralInfo.phoneNumber,
+      notifications_opt_in: false,
+    };
+
+    const { error: volunteerError } = await supabase
+      .from('volunteers')
+      .upsert([volunteerPayload], { onConflict: 'user_id' });
+
+    if (volunteerError) {
+      console.error('Error upserting volunteer data:', volunteerError);
+      throw new Error(`Volunteer data error: ${volunteerError.message}`);
+    }
+
+    const facilityPayload = {
+      name: '',
+      county: location.county,
+      city: location.city,
+      zip: location.zipCode,
+      street_address_1: location.address,
+      audience: '',
+      type: '',
+      is_approved: false,
+      info: '',
+    };
+
+    const { error: facilityError } = await supabase
+      .from('facilities')
+      .insert([facilityPayload]);
+
+    if (facilityError) {
+      console.error('Error inserting facility data:', facilityError);
+      throw new Error(`Facility data error: ${facilityError.message}`);
+    }
+  } catch (error) {
+    console.error('Error during onboarding data submission:', error);
+    throw error;
+  }
+}

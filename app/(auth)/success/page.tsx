@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import Rose from '@/public/images/rose-greenbg.svg';
+import COLORS from '@/styles/colors';
+import { P } from '@/styles/text';
 import {
   Background,
   Image,
@@ -15,7 +17,7 @@ export default function Success() {
   const router = useRouter(); // Initialize useRouter
 
   const handleContinue = () => {
-    router.push('/onboarding/role-selection'); // Navigate to the onboarding/general page
+    router.push('/onboarding/facility/basic-information'); // Navigate to the onboarding/general page
   };
 
   return (
@@ -24,10 +26,10 @@ export default function Success() {
       <InlineContainer>
         <ReviewContainer>
           <Title>Successfully verified!</Title>
-          <p>
+          <P $fontWeight={400} $color={COLORS.gray12}>
             Your email has been verified. Please use this email address to login
             in the future.
-          </p>
+          </P>
           <RoundedCornerButton onClick={handleContinue}>
             Continue
           </RoundedCornerButton>
