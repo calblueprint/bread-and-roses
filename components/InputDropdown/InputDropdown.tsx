@@ -25,16 +25,17 @@ interface CommonProps {
   error?: string;
   disabled?: boolean;
   required?: boolean;
-  value: Set<string>;
 }
 
 interface MultiSelectProps extends CommonProps {
   multi: true;
+  value: Set<string>;
   onChange?: (value: Set<string>) => void;
 }
 
 interface SingleSelectProps extends CommonProps {
   multi?: false;
+  value: string | null;
   onChange?: (value: string | null) => void;
 }
 
@@ -63,6 +64,7 @@ export default function InputDropdown({
   multi,
   value,
 }: InputDropdownProps) {
+  console.log(value);
   const optionsArray = useMemo(
     () =>
       options instanceof Set
@@ -81,7 +83,7 @@ export default function InputDropdown({
         label: options instanceof Map ? options.get(v) || v : v,
       }));
     } else {
-      const singleValue = Array.from(value)[0];
+      const singleValue = value;
       return singleValue
         ? {
             value: singleValue,
@@ -110,10 +112,10 @@ export default function InputDropdown({
   return (
     <DropdownWrapper>
       <InputLabel>
-        <P $color={COLORS.gray11} $fontWeight={400}>
+        <P $color={COLORS.gray11} $fontWeight={500}>
           {label}
         </P>
-        {required && <SMALL $color={COLORS.rose10}>{'*'}</SMALL>}
+        {required && <SMALL $color={COLORS.rose10}>&nbsp;{'*'}</SMALL>}
       </InputLabel>
       <Select
         components={{ Menu: AnimatedMenu }}

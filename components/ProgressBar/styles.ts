@@ -3,7 +3,7 @@ import COLORS from '@/styles/colors';
 
 export const ProgressBarContainer = styled.div`
   width: 100%;
-  height: 2px;
+  height: 0.125rem;
   background-color: ${COLORS.gray4};
   border-radius: 2px;
   margin-top: 1.5rem;

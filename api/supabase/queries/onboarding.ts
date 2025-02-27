@@ -1,5 +1,6 @@
 import {
   FacilityGeneralInfo,
+  FacilityInfo,
   Location,
 } from '@/utils/facilityOnboardingContext';
 import { GeneralInfo, Preferences, Role } from '@/utils/onboardingContext';
@@ -95,12 +96,13 @@ export async function submitFacilityOnboardingData(
       county: location.county,
       city: location.city,
       street_address_1: location.address,
-      audience: '',
+      audience: [],
       type: '',
       user_id: user_id,
       is_approved: false,
       info: '',
       zip: location.zipCode,
+      is_finalized: false,
     };
 
     const { data: facilityData, error: facilityError } = await supabase
@@ -140,5 +142,70 @@ export async function submitFacilityOnboardingData(
   } catch (error) {
     console.error('Error during onboarding data submission:', error);
     throw error;
+  }
+}
+
+export async function fetchCurrentUserFacility(user_id?: string) {
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
+
+  if (sessionError || !sessionData?.session) {
+    console.error('Session retrieval error:', sessionError);
+    throw new Error('Failed to retrieve user session.');
+  }
+
+  user_id = user_id != null ? user_id : sessionData.session.user.id;
+
+  const { data: facility, error: facility_error } = await supabase
+    .from('facilities')
+    .select('is_approved, street_address_1, city, zip, county')
+    .eq('user_id', user_id)
+    .single();
+
+  if (facility_error) {
+    console.error('Error getting facility details: ', facility_error);
+  }
+
+  return facility;
+}
+
+export async function submitFullFacilityOnboardingData(
+  generalInfo: FacilityGeneralInfo,
+  specificInfo: FacilityInfo,
+): Promise<void> {
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
+
+  if (sessionError || !sessionData?.session) {
+    console.error('Session retrieval error:', sessionError);
+    throw new Error('Failed to retrieve user session.');
+  }
+
+  const user_id = sessionData.session.user.id;
+
+  const facilityPayload = {
+    name: generalInfo.facilityName,
+    audience: generalInfo.audience,
+    type: generalInfo.facilityType,
+    directions: generalInfo.directions,
+    capacity: generalInfo.capacity,
+    is_finalized: true,
+    admin_notes: specificInfo.admin_notes,
+    volunteer_notes: specificInfo.volunteer_notes,
+    info: {
+      has_piano: specificInfo.has_piano,
+      has_sound_equipment: specificInfo.has_sound_equipment,
+      parking: specificInfo.parking,
+    },
+  };
+
+  const { error: facilityError } = await supabase
+    .from('facilities')
+    .update([facilityPayload])
+    .eq('user_id', user_id);
+
+  if (facilityError) {
+    console.error('Error inserting facility data:', facilityError);
+    throw new Error(`Facility data error: ${facilityError.message}`);
   }
 }

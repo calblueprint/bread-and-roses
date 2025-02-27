@@ -131,18 +131,22 @@ export interface Facilities {
   city: string;
   street_address_1: string;
   street_address_2?: string;
-  audience: Audience;
+  audience: Audience[];
   type: FacilityType;
   host_name?: string;
   host_email?: string;
   host_phone_number?: string;
   user_id: UUID;
   is_approved: boolean;
-  notes?: string;
+  admin_notes?: string;
   info: FacilityInfo;
   host_email: string;
   zip: string;
   has_host: boolean;
+  is_finalized: boolean;
+  volunteer_notes?: string;
+  directions: string;
+  capacity: string;
 }
 
 export interface Volunteers {

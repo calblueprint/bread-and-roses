@@ -4,8 +4,8 @@ import COLORS from '../../../styles/colors';
 export const CalendarContainer = styled.div`
   margin-top: 5rem;
   margin-left: 2rem;
-  width: 500px;
-  height: 500px;
+  width: 31.25rem;
+  height: 31.25rem;
   cursor: default;
   .fc-prev-button,
   .fc-next-button {

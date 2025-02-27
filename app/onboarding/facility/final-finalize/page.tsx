@@ -16,7 +16,7 @@ export default function Onboarding() {
   const router = useRouter();
 
   const handleContinue = () => {
-    router.push('/onboarding/facility/status');
+    router.push('/availability/general');
   };
 
   return (
@@ -25,15 +25,15 @@ export default function Onboarding() {
       <InlineContainer>
         <ReviewContainer>
           <H3 $color={COLORS.gray12} $fontWeight="400">
-            We&apos;ll be in touch!
+            You&apos;re all set!
           </H3>
           <P $fontWeight={400} $color={COLORS.gray12}>
-            We&apos;ve received your application. A member of Bread & Roses will
-            review it and contact you soon.
+            When you want to put on a show, just fill out your availabilities
+            and our producers will curate an event that matches!
           </P>
           <ContinueButton onClick={handleContinue}>
             <SMALL $fontWeight="400" $color="white">
-              Continue
+              Okay!
             </SMALL>
           </ContinueButton>
         </ReviewContainer>

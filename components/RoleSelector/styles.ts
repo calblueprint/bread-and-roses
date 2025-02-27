@@ -6,10 +6,10 @@ import COLORS from '@/styles/colors';
 
 export const BoxContainer = styled.div<{ $isSelected: boolean }>`
   display: flex;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 1rem;
   width: 100%;
   border-radius: 8px;
   border: 1px solid
@@ -30,7 +30,7 @@ export const RoleContainer = styled.div`
   flex-direction: row;
   height: 100%;
   align-items: center;
-  gap: 15px;
+  gap: 0.9375rem;
 `;
 
 export const TextContainer = styled.div`
@@ -43,10 +43,10 @@ export const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin: 42px 0px;
+  margin: 2.625rem 0rem;
   justify-content: space-between;
   border-radius: 8px;
-  gap: 16px;
+  gap: 1rem;
   height: 100%;
 `;
 

@@ -6,6 +6,11 @@ export interface FacilityGeneralInfo {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  facilityName: string;
+  facilityType: string | null;
+  directions: string;
+  capacity: string;
+  audience: string[];
 }
 
 export interface Location {
@@ -15,11 +20,23 @@ export interface Location {
   zipCode: string;
 }
 
+export type ParkingOptions = 'Street' | 'Parking Lot' | 'None';
+
+export interface FacilityInfo {
+  parking: ParkingOptions | null;
+  has_piano: boolean | null;
+  has_sound_equipment: boolean | null;
+  volunteer_notes: string;
+  admin_notes: string;
+}
+
 interface FacilityOnboardingContextType {
   facilityGeneralInfo: FacilityGeneralInfo;
   setGeneralInfo: (info: FacilityGeneralInfo) => void;
   location: Location;
   setLocation: (location: Location) => void;
+  facilitySpecificInfo: FacilityInfo;
+  setSpecificInfo: (info: FacilityInfo) => void;
 }
 
 export const FacilityOnboardingContext = createContext<
@@ -35,6 +52,11 @@ export const FacilityOnboardingProvider = ({
     firstName: '',
     lastName: '',
     phoneNumber: '',
+    facilityName: '',
+    facilityType: null,
+    directions: '',
+    capacity: '',
+    audience: [],
   });
 
   const [location, setLocation] = useState<Location>({
@@ -44,6 +66,14 @@ export const FacilityOnboardingProvider = ({
     zipCode: '',
   });
 
+  const [specificInfo, setSpecificInfo] = useState<FacilityInfo>({
+    parking: null,
+    has_piano: null,
+    has_sound_equipment: null,
+    volunteer_notes: '',
+    admin_notes: '',
+  });
+
   return (
     <FacilityOnboardingContext.Provider
       value={{
@@ -51,6 +81,8 @@ export const FacilityOnboardingProvider = ({
         setGeneralInfo,
         location,
         setLocation,
+        facilitySpecificInfo: specificInfo,
+        setSpecificInfo,
       }}
     >
       {children}
