@@ -38,6 +38,10 @@ export default function Status() {
     router.push('/');
   };
 
+  const handleForward = () => {
+    router.push('/onboarding/facility/about');
+  };
+
   useEffect(() => {
     async function setFacilityDetails() {
       const { data: sessionData, error: sessionError } =
@@ -132,7 +136,11 @@ export default function Status() {
                   info@breadandroses.org.
                 </span>
               </P>
-              <RoundedCornerButton $bgColor={COLORS.pomegranate12} width="100%">
+              <RoundedCornerButton
+                $bgColor={COLORS.pomegranate12}
+                width="100%"
+                onClick={handleForward}
+              >
                 <P $fontWeight={400} $color={COLORS.gray1}>
                   Begin Setup
                 </P>

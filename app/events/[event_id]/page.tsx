@@ -153,7 +153,7 @@ export default function EventDisplay({
                 $color={COLORS.gray11}
                 $align="left"
               >
-                {facility.notes}
+                {facility.volunteer_notes}
               </styles.ParaText>
             </div>
             <div>
