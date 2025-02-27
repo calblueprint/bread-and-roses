@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
+import { formatPhoneNumber } from '@/utils/formatPhoneNumber';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   BackButton,
@@ -14,6 +15,7 @@ import {
   Checkbox,
   Container,
   ContinueText,
+  FixedFooter,
   Image,
   InlineContainer,
   Input,
@@ -40,13 +42,16 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
+    const formattedPhoneNumber = formatPhoneNumber(generalInfo.phoneNumber);
     if (
       !generalInfo.firstName ||
       !generalInfo.lastName ||
-      !generalInfo.phoneNumber
+      !formattedPhoneNumber
     ) {
       return;
     }
+
+    setGeneralInfo({ ...generalInfo, phoneNumber: formattedPhoneNumber });
     router.push('/onboarding/show-preference');
   };
 
@@ -109,13 +114,14 @@ export default function Onboarding() {
         </Container>
 
         <ButtonContainer>
+          <FixedFooter />
           <Button
-            position="fixed"
+            position="sticky"
             onClick={handleSubmit}
             disabled={
               !generalInfo.firstName ||
               !generalInfo.lastName ||
-              !generalInfo.phoneNumber
+              !/^\d{10}$/.test(generalInfo.phoneNumber.replace(/\D/g, '')) //user not allowed to continue unless a full phone number is input
             }
           >
             <ContinueText>Continue</ContinueText>

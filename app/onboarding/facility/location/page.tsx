@@ -10,6 +10,7 @@ import {
   ButtonContainer,
   Container,
   ContinueText,
+  FixedFooter,
   Image,
   InlineContainer,
   Input,
@@ -116,8 +117,9 @@ export default function Onboarding() {
         </Container>
 
         <ButtonContainer>
+          <FixedFooter />
           <Button
-            position="fixed"
+            position="sticky"
             onClick={handleSubmit}
             disabled={
               !location.address ||

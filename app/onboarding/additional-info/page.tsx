@@ -12,12 +12,11 @@ import {
   ButtonContainer,
   Container,
   ContinueText,
+  FixedFooter,
   Image,
   InlineContainer,
   InputContainer,
   Label,
-  SkipButton,
-  SkipText,
   Title,
 } from '../styles';
 import { TextArea } from './styles';
@@ -80,9 +79,7 @@ export default function Onboarding() {
         </Container>
 
         <ButtonContainer>
-          <SkipButton onClick={handleSubmit}>
-            <SkipText>skip</SkipText>
-          </SkipButton>
+          <FixedFooter />
           <Button onClick={handleSubmit} position="fixed">
             <ContinueText>Continue</ContinueText>
           </Button>

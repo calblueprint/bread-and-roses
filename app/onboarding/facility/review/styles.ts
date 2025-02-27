@@ -8,13 +8,16 @@ export const ReviewContainer = styled.main`
   margin-top: 2rem;
   margin-bottom: 2rem;
   display: flex;
-  padding: 2rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background: ${COLORS.bread1};
   border-radius: 16px;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+
+  @media (min-width: 768px) {
+    background: ${COLORS.bread1};
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+  }
 `;
 
 export const SmallText = styled(P)`
