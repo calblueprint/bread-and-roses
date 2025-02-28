@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { Background } from '@/app/onboarding/styles';
 import Bread from '@/public/images/bread.png';
 import COLORS from '@/styles/colors';
@@ -13,10 +13,10 @@ import {
 import { H3, P, SMALL } from '@/styles/text';
 
 export default function Onboarding() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleContinue = () => {
-    router.push('/discover');
+    // push to application status page, will be done in next sprint
   };
 
   return (
