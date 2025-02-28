@@ -41,13 +41,17 @@ export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
   return events;
 }
 
-export async function fetchAllActiveEventsByFacilityName(search: string) {
+/* Find events by facility name, city, or county */
+export async function fetchAllActiveEventsBySearch(search: string) {
+  const pattern = `%${search}%`;
+
   const { data, error } = await supabase
     .from('events')
-    .select('*, facilities!inner(name)')
+    .select('*, facilities!inner(name, county, city)')
     .eq('event_status', 'Active')
-    .ilike('facilities.name', `%${search}%`);
-
+    .or(`name.ilike.${pattern},city.ilike.${pattern},county.ilike.${pattern}`, {
+      foreignTable: 'facilities',
+    });
   if (error) {
     throw new Error(error.message);
   }

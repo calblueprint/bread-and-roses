@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   fetchAllActiveEvents,
-  fetchAllActiveEventsByFacilityName,
+  fetchAllActiveEventsBySearch,
 } from '@/api/supabase/queries/events';
 import DiscoverCard from '@/components/DiscoverCard/DiscoverCard';
 import MenuBar from '@/components/MenuBar/MenuBar';
@@ -29,7 +29,7 @@ export default function ActiveEventsPage() {
 
   const getFilteredEvents = async () => {
     const filteredEvents: Event[] =
-      await fetchAllActiveEventsByFacilityName(searchInput);
+      await fetchAllActiveEventsBySearch(searchInput);
     setFilteredEvents(filteredEvents);
   };
 
