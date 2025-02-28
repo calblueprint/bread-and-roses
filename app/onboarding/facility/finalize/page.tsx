@@ -13,10 +13,10 @@ import {
 import { H3, P, SMALL } from '@/styles/text';
 
 export default function Onboarding() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleContinue = () => {
-    router.push('/discover');
+    // push to application status page
   };
 
   return (
