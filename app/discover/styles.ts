@@ -1,14 +1,27 @@
+'use client';
+
+import NextImage from 'next/image';
 import styled from 'styled-components';
+import COLORS from '@/styles/colors';
 import { H3 } from '@/styles/text';
 
 export const SearchBar = styled.div`
+  display: flex;
+  padding: 0.75rem 1rem;
+  align-items: center;
+  gap: 8px;
   width: 100%;
-  height: 2.25rem;
-  line-height: 2.25rem;
-  padding-left: 1rem;
-  border-radius: 0.5rem;
-  background-color: #d9d9d940;
+  border-radius: 625rem;
+  background-color: ${COLORS.bread2};
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
   margin-top: 1.25rem;
+`;
+
+export const SearchInput = styled.input`
+  all: unset;
+  color: ${COLORS.gray10};
+  width: 100%;
+  font-weight: 400;
 `;
 
 export const TitleBar = styled.div`
@@ -57,4 +70,9 @@ export const DiscoverCardContainer = styled.div`
   }
 
   white-space: normal;
+`;
+
+export const Icon = styled(NextImage)`
+  width: 20px;
+  height: 20px;
 `;

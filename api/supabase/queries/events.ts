@@ -41,12 +41,31 @@ export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
   return events;
 }
 
-// fetches all events that have event_status = 'Active'
+/* Find events by facility name, city, or county */
+export async function fetchAllActiveEventsBySearch(search: string) {
+  const pattern = `%${search}%`;
+
+  const { data, error } = await supabase
+    .from('events')
+    .select('*, facilities!inner(name, county, city)')
+    .eq('event_status', 'Active')
+    .or(`name.ilike.${pattern},city.ilike.${pattern},county.ilike.${pattern}`, {
+      foreignTable: 'facilities',
+    });
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+// fetches all events that have event_status = 'Active',
 export async function fetchAllActiveEvents() {
   const { data, error } = await supabase
     .from('events')
     .select('*')
     .eq('event_status', 'Active');
+
   if (error) {
     throw new Error(error.message);
   }
