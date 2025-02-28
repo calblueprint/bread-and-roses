@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
-import { H4, P } from '@/styles/text';
+import { H4, P, SMALL } from '@/styles/text';
 
 export const Background = styled.main<{ isCentered?: boolean }>`
   flex-direction: column;
@@ -198,10 +198,11 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   }
 `;
 
-export const ContinueText = styled.text`
+export const ContinueText = styled(SMALL)`
   ${Sans.style}
   color: white;
   font-size: 14px;
+  font-weight: 400;
   padding: 10px;
   text-decoration: none;
 `;
