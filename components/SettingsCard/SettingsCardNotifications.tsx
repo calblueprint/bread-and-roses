@@ -32,7 +32,7 @@ export default function SettingCardNotifications() {
             </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
-                Recieved Sign Up Form
+                Received Sign Up Form
               </P>
               <styles.TruncatedText
                 $fontWeight="400"
