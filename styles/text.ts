@@ -54,12 +54,6 @@ export const P = styled.p<TextProps>`
   // font-weight: 400;
 `;
 
-export const UL = styled.ul<TextProps>`
-  ${TextStyles}
-  paddingLeft: '2.5rem' !important;
-  liststyletype: 'disc';
-`;
-
 export const SMALL = styled.p<TextProps>`
   ${TextStyles}
   font-size: .875rem;
