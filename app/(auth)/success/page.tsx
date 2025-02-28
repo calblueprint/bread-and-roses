@@ -17,7 +17,8 @@ export default function Success() {
   const router = useRouter(); // Initialize useRouter
 
   const handleContinue = () => {
-    router.push('/onboarding/facility/basic-information'); // Navigate to the onboarding/general page
+    //this needs to change, it should be routed to a new page that allows user to select whether they are a volunteer or facility
+    router.push('/onboarding/role-selection'); // Navigate to the onboarding/general page
   };
 
   return (
