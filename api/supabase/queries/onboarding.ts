@@ -90,43 +90,52 @@ export async function submitFacilityOnboardingData(
     const user_id = sessionData.session.user.id;
     const email = sessionData.session.user.email;
 
-    const volunteerPayload = {
-      user_id,
-      email,
-      first_name: facilityGeneralInfo.firstName,
-      last_name: facilityGeneralInfo.lastName,
-      phone_number: facilityGeneralInfo.phoneNumber,
-      notifications_opt_in: false,
-    };
-
-    const { error: volunteerError } = await supabase
-      .from('volunteers')
-      .upsert([volunteerPayload], { onConflict: 'user_id' });
-
-    if (volunteerError) {
-      console.error('Error upserting volunteer data:', volunteerError);
-      throw new Error(`Volunteer data error: ${volunteerError.message}`);
-    }
-
     const facilityPayload = {
       name: '',
       county: location.county,
       city: location.city,
-      zip: location.zipCode,
       street_address_1: location.address,
       audience: '',
       type: '',
       is_approved: false,
       info: '',
+      zip: location.zipCode,
     };
 
-    const { error: facilityError } = await supabase
+    const { data: facilityData, error: facilityError } = await supabase
       .from('facilities')
-      .insert([facilityPayload]);
+      .insert([facilityPayload])
+      .select('facility_id, facility_contact_id')
+      .single();
 
     if (facilityError) {
       console.error('Error inserting facility data:', facilityError);
       throw new Error(`Facility data error: ${facilityError.message}`);
+    }
+
+    const facility_id = facilityData?.facility_id;
+    const facility_contact_id = facilityData?.facility_contact_id;
+    if (!facility_id || facility_contact_id) {
+      throw new Error('Failed to retrieve facility ID after insertion.');
+    }
+
+    const facilityContactPayload = {
+      facility_contact_id,
+      user_id,
+      email,
+      first_name: facilityGeneralInfo.firstName,
+      last_name: facilityGeneralInfo.lastName,
+      phone_number: facilityGeneralInfo.phoneNumber,
+      facility_id,
+    };
+
+    const { error: facilityContactError } = await supabase
+      .from('volunteers')
+      .upsert([facilityContactPayload], { onConflict: 'user_id' });
+
+    if (facilityContactError) {
+      console.error('Error upserting volunteer data:', facilityContactError);
+      throw new Error(`Volunteer data error: ${facilityContactError.message}`);
     }
   } catch (error) {
     console.error('Error during onboarding data submission:', error);

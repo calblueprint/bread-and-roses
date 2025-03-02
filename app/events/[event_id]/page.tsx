@@ -68,7 +68,7 @@ export default function EventDisplay({
       } else {
         setHostEmail('email column needs to be added to facility table');
         setHostName(fetchedFacility.host_name);
-        setHostPhoneNumber(fetchedFacility.host_contact);
+        setHostPhoneNumber(fetchedFacility.host_phone_number);
       }
 
       const fetchedPerformer: Volunteers = await fetchPerformer(
