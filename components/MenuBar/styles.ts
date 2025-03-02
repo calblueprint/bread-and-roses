@@ -43,6 +43,18 @@ export const MenuItem = styled.button<{ $expanded: boolean }>`
   cursor: pointer;
 `;
 
+export const SignOutItem = styled.button<{ $expanded: boolean }>`
+  width: 100%;
+  background-color: transparent;
+  border-style: solid;
+  border-color: transparent;
+  color: ${COLORS.rose6};
+  display: flex;
+  align-items: end;
+  justify-content: ${({ $expanded }) => ($expanded ? 'flex-start' : 'center')};
+  cursor: pointer;
+`;
+
 export const MenuIconWrapper = styled.div<{ $expanded: boolean }>`
   width: 20px;
   height: 20px;
@@ -61,6 +73,14 @@ export const Icon = styled(Image)`
 export const MenuLabel = styled(P)<{ $expanded: boolean; $active: boolean }>`
   ${Sans.style}
   color: ${COLORS.gray3};
+  display: ${({ $expanded }) => ($expanded ? 'flex' : 'none')};
+  font-weight: ${({ $active }) => ($active ? '600' : '400')};
+  transition: font-weight 0.03s ease-in-out;
+`;
+
+export const SignOutLabel = styled(P)<{ $expanded: boolean; $active: boolean }>`
+  ${Sans.style}
+  color: ${COLORS.rose6};
   display: ${({ $expanded }) => ($expanded ? 'flex' : 'none')};
   font-weight: ${({ $active }) => ($active ? '600' : '400')};
   transition: font-weight 0.03s ease-in-out;

@@ -3,7 +3,9 @@ import { useRouter } from 'next/navigation';
 import Availability from '@/public/images/availabilities.svg';
 import Discover from '@/public/images/discover.svg';
 import Settings from '@/public/images/settings.svg';
+import SignOut from '@/public/images/sign_out.svg';
 import Events from '@/public/images/upcoming-events.svg';
+import { useSession } from '@/utils/AuthProvider';
 import { useSession } from '@/utils/AuthProvider';
 import {
   Icon,
@@ -11,6 +13,8 @@ import {
   MenuIconWrapper,
   MenuItem,
   MenuLabel,
+  SignOutItem,
+  SignOutLabel,
   ToggleButton,
 } from './styles';
 
@@ -21,6 +25,7 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const router = useRouter();
   const { userRole } = useSession();
+  const { signOut } = useSession();
 
   const toggleMenu = () => {
     const newExpanded = !expanded;
@@ -31,6 +36,11 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
   const handleClick = (item: string, path: string) => {
     setActiveItem(item);
     router.push(path);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    router.push('/');
   };
 
   return (
@@ -102,6 +112,15 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
               Profile & Settings
             </MenuLabel>
           </MenuItem>
+          <SignOutItem $expanded={expanded} onClick={() => handleSignOut()}>
+            <Icon src={SignOut} alt="Sign Out" />
+            <SignOutLabel
+              $expanded={expanded}
+              $active={activeItem === 'sign out'}
+            >
+              Sign Out
+            </SignOutLabel>
+          </SignOutItem>
         </>
       )}
     </MenuContainer>
