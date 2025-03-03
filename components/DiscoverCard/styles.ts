@@ -1,29 +1,54 @@
 'use client';
 
 import NextImage from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { P, SMALL, SMALLER } from '@/styles/text';
+import { P, SMALLER } from '@/styles/text';
 
 interface TagProps {
   $bgColor?: string;
 }
 
-export const Container = styled.div`
-  display: inline-block;
-  height: 17.5rem;
-  width: 13.875rem;
-  background-color: ${COLORS.bread1};
-  border-radius: 0.5rem;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+export const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
-export const ImageContainer = styled.div`
-  height: 9.375rem;
-  width: 100%;
+export const Container = styled.div<{ $search: boolean }>`
+  ${({ $search }) =>
+    $search
+      ? `
+          display: flex;
+          height: 100%;
+          width: 100%;
+          box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.06);
+        `
+      : `
+          display: inline-block;
+          height: 17.5rem;
+          width: 13.875rem;
+          box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+        `}
+  background-color: ${COLORS.bread1};
+  border: none;
+  border-radius: 0.5rem;
+`;
+
+export const ImageContainer = styled.div<{ $search: boolean }>`
+  ${({ $search }) =>
+    $search
+      ? `
+          height: 100%;
+          width: 8rem;
+          border-radius: 0.5rem 0 0 0.5rem;
+        `
+      : `
+          height: 9.375rem;
+          width: 100%;
+          border-radius: 0.5rem 0.5rem 0 0;
+        `}
   position: relative;
   overflow: hidden;
-  border-radius: 0.5rem 0.5rem 0 0;
   background-color: ${COLORS.gray12};
 `;
 
@@ -71,7 +96,7 @@ export const Subtitle = styled(P)`
   text-overflow: ellipsis;
 `;
 
-export const SubtitleText = styled(SMALL)`
+export const SubtitleText = styled(SMALLER)`
   color: ${COLORS.gray11};
   font-weight: 400;
   white-space: nowrap;
