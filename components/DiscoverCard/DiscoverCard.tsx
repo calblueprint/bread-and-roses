@@ -1,5 +1,4 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import LocationPin from '@/public/images/location_pin.svg';
 import COLORS from '@/styles/colors';
@@ -15,12 +14,19 @@ import {
   IndividualTag,
   LocationText,
   MoreTags,
+  StyledLink,
   Subtitle,
   SubtitleText,
   TextContainer,
 } from './styles';
 
-export default function DiscoverCard({ event }: { event: Event }) {
+export default function DiscoverCard({
+  search,
+  event,
+}: {
+  search: boolean;
+  event: Event;
+}) {
   const [facility, setFacility] = useState<Facilities>();
   const [eventDate, setEventDate] = useState<string>();
 
@@ -114,7 +120,7 @@ export default function DiscoverCard({ event }: { event: Event }) {
 
         let totalWidth = tagWidths.reduce((a, b) => a + b, 0);
 
-        if (totalWidth > containerWidth) {
+        while (totalWidth > containerWidth) {
           const newTags = tagsToShow.slice(0, -1);
           setHiddenTagCount(prev => prev + 1);
           setTagsToShow(newTags);
@@ -133,9 +139,9 @@ export default function DiscoverCard({ event }: { event: Event }) {
   }
 
   return (
-    <Link href={`/discover/${event.event_id}`}>
-      <Container>
-        <ImageContainer>
+    <StyledLink href={`/discover/${event.event_id}`}>
+      <Container $search={search}>
+        <ImageContainer $search={search}>
           {performanceToPhotoMap(
             event.performance_type,
             event.genre?.toString() ?? null,
@@ -158,6 +164,6 @@ export default function DiscoverCard({ event }: { event: Event }) {
           </EventTag>
         </TextContainer>
       </Container>
-    </Link>
+    </StyledLink>
   );
 }
