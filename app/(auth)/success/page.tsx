@@ -17,8 +17,7 @@ export default function Success() {
   const router = useRouter(); // Initialize useRouter
 
   const handleContinue = () => {
-    //this needs to change, it should be routed to a new page that allows user to select whether they are a volunteer or facility
-    router.push('/onboarding/role-selection'); // Navigate to the onboarding/general page
+    router.push('/onboarding/user-role-selection');
   };
 
   return (
@@ -31,8 +30,14 @@ export default function Success() {
             Your email has been verified. Please use this email address to login
             in the future.
           </P>
-          <RoundedCornerButton onClick={handleContinue}>
-            Continue
+          <RoundedCornerButton
+            $bgColor={COLORS.pomegranate12}
+            width="100%"
+            onClick={handleContinue}
+          >
+            <P $fontWeight={400} $color={COLORS.gray1}>
+              Continue
+            </P>
           </RoundedCornerButton>
         </ReviewContainer>
       </InlineContainer>

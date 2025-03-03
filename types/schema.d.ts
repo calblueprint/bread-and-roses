@@ -109,11 +109,11 @@ export interface EventSignups {
 
 export interface FacilityContacts {
   user_id: UUID;
-  facility_id: UUID;
   email: string;
   first_name: string;
   last_name: string;
   phone_number: string;
+  facility_id: UUID;
 }
 
 export type ParkingOptions = 'Street' | 'Parking Lot' | 'None';
@@ -135,7 +135,6 @@ export interface Facilities {
   type: FacilityType;
   host_name?: string;
   host_phone_number?: string;
-  facility_contact_id: UUID;
   is_approved: boolean;
   notes?: string;
   info: FacilityInfo;

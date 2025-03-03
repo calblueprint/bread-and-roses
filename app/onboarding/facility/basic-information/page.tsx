@@ -4,11 +4,13 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import {
+  BackButton,
   Background,
   Button,
   ButtonContainer,
   Container,
   ContinueText,
+  Image,
   InlineContainer,
   Input,
   InputContainer,
@@ -16,6 +18,7 @@ import {
   Title,
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import Back from '@/public/images/back.svg';
 import { FacilityOnboardingContext } from '@/utils/facilityOnboardingContext';
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber';
 import { RedAsterisk } from './styles';
@@ -52,9 +55,16 @@ export default function Onboarding() {
     router.push('/onboarding/facility/location');
   };
 
+  const handleBack = async () => {
+    router.push('/onboarding/user-role-selection');
+  };
+
   return (
     <Background>
       <InlineContainer>
+        <BackButton onClick={handleBack}>
+          <Image src={Back} alt="Back icon" />
+        </BackButton>
         <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
         <ProgressBar from={0} to={33} />
         <Container>

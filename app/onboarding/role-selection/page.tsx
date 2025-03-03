@@ -4,14 +4,17 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import RoleSelector from '@/components/RoleSelector/RoleSelector';
+import Back from '@/public/images/back.svg';
 import Help from '@/public/images/help.svg';
 import Star from '@/public/images/star.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
+  BackButton,
   Background,
   Button,
   ButtonContainer,
   ContinueText,
+  Image,
   InlineContainer,
   RoleContainer,
   Title,
@@ -41,9 +44,16 @@ export default function Onboarding() {
     router.push('/onboarding/basic-information');
   };
 
+  const handleBack = async () => {
+    router.push('/onboarding/user-role-selection');
+  };
+
   return (
     <Background>
       <InlineContainer>
+        <BackButton onClick={handleBack}>
+          <Image src={Back} alt="Back icon" />
+        </BackButton>
         <Title $fontWeight={500}>
           How would you describe
           <br />

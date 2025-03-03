@@ -97,6 +97,7 @@ export async function submitFacilityOnboardingData(
       street_address_1: location.address,
       audience: '',
       type: '',
+      user_id: user_id,
       is_approved: false,
       info: '',
       zip: location.zipCode,
@@ -105,7 +106,7 @@ export async function submitFacilityOnboardingData(
     const { data: facilityData, error: facilityError } = await supabase
       .from('facilities')
       .insert([facilityPayload])
-      .select('facility_id, facility_contact_id')
+      .select('facility_id')
       .single();
 
     if (facilityError) {
@@ -114,23 +115,22 @@ export async function submitFacilityOnboardingData(
     }
 
     const facility_id = facilityData?.facility_id;
-    const facility_contact_id = facilityData?.facility_contact_id;
-    if (!facility_id || facility_contact_id) {
+
+    if (!facility_id) {
       throw new Error('Failed to retrieve facility ID after insertion.');
     }
 
     const facilityContactPayload = {
-      facility_contact_id,
-      user_id,
-      email,
+      user_id: user_id,
+      email: email,
       first_name: facilityGeneralInfo.firstName,
       last_name: facilityGeneralInfo.lastName,
       phone_number: facilityGeneralInfo.phoneNumber,
-      facility_id,
+      facility_id: facility_id,
     };
 
     const { error: facilityContactError } = await supabase
-      .from('volunteers')
+      .from('facility_contacts')
       .upsert([facilityContactPayload], { onConflict: 'user_id' });
 
     if (facilityContactError) {
