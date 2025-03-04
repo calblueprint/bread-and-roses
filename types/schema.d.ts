@@ -135,6 +135,7 @@ export interface Facilities {
   type: FacilityType;
   host_name?: string;
   host_phone_number?: string;
+  user_id: UUID;
   is_approved: boolean;
   notes?: string;
   info: FacilityInfo;
