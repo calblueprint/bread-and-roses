@@ -17,7 +17,7 @@ export default function Success() {
   const router = useRouter(); // Initialize useRouter
 
   const handleContinue = () => {
-    router.push('/onboarding/user-role-selection');
+    router.push('/roles');
   };
 
   return (
