@@ -41,6 +41,7 @@ export const LocationDetails = styled.main`
 export const StyledUL = styled.ul`
   position: relative;
   list-style: none;
+  margin-bottom: 1.25rem;
 
   &::before {
     content: '';
@@ -57,7 +58,6 @@ export const StyledLI = styled.li<{ $completed: string }>`
   list-style: none;
   position: relative;
   margin: 0 0 28px 0;
-  padding: 0;
   display: flex;
   align-items: center;
   color: ${({ $completed }) =>
@@ -80,4 +80,33 @@ export const StyledLI = styled.li<{ $completed: string }>`
   &:last-child {
     margin-bottom: -20px;
   }
+`;
+
+export const UserDetails = styled.main`
+  margin-top: 2.625rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+`;
+
+export const Email = styled.main`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const ContentAfterSteps = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+`;
+
+export const Page = styled.main`
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 3rem;
 `;
