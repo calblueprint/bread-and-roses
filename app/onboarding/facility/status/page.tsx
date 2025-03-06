@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchCurrentUserFacility } from '@/api/supabase/queries/onboarding';
 import bnrLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
 import { RoundedCornerButton } from '@/styles/styles';
@@ -19,7 +20,24 @@ import {
 } from './styles';
 
 export default function Status() {
-  const [isApproved] = useState<boolean | null>(false);
+  const [isApproved, setIsApproved] = useState<boolean | null>(true);
+  const [address, setAddress] = useState<string | null>(null);
+  const [city, setCity] = useState<string | null>(null);
+  const [zip, setZip] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function setFacilityDetails() {
+      const facility = await fetchCurrentUserFacility();
+      if (!facility) {
+        return null;
+      }
+      setIsApproved(facility?.is_approved);
+      setAddress(facility?.street_address_1);
+      setCity(facility?.city);
+      setZip(facility?.zip);
+    }
+    setFacilityDetails();
+  }, []);
 
   interface Step {
     label: string;
@@ -45,9 +63,9 @@ export default function Status() {
           <LocationDetails>
             <P $fontWeight={500}>Facility Location</P>
             <P $fontWeight={400}>
-              1411 E 31st St
+              {address}
               <br />
-              Oakland, CA 94602
+              {city}, CA {zip}
             </P>
           </LocationDetails>
           <StyledUL>
