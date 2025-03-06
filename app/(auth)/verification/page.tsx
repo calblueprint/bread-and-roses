@@ -10,6 +10,7 @@ import {
 } from '@/api/supabase/queries/auth';
 import Bud from '@/public/images/bud.svg';
 import EmailIcon from '@/public/images/email.svg';
+import COLORS from '@/styles/colors';
 import {
   Background,
   Footer,
@@ -98,9 +99,11 @@ export default function Verification() {
       <InlineContainer>
         <ReviewContainer>
           <Title>Verification Needed</Title>
-          <P>Thanks for signing up!</P>
-          <P>
-            A verification link has been sent to the email you specified. Please
+          <P $fontWeight={400} $color={COLORS.gray12}>
+            Thanks for signing up!
+          </P>
+          <P $fontWeight={400} $color={COLORS.gray12}>
+            A verification link has been sent to the email you specified, please
             check your inbox for next steps.
           </P>
 
