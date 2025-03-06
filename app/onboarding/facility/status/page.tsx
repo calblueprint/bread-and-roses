@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import supabase from '@/api/supabase/createClient';
 import { fetchCurrentUserFacility } from '@/api/supabase/queries/onboarding';
 import bnrLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
@@ -20,23 +21,43 @@ import {
 } from './styles';
 
 export default function Status() {
-  const [isApproved, setIsApproved] = useState<boolean | null>(true);
+  const [isApproved, setIsApproved] = useState<boolean | null>(null);
   const [address, setAddress] = useState<string | null>(null);
   const [city, setCity] = useState<string | null>(null);
   const [zip, setZip] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     async function setFacilityDetails() {
-      const facility = await fetchCurrentUserFacility();
-      if (!facility) {
+      const { data: sessionData, error: sessionError } =
+        await supabase.auth.getSession();
+
+      if (sessionError || !sessionData?.session?.user?.id) {
+        console.error('Failed to retrieve user session.');
+        setError(true);
         return null;
       }
+
+      const facility = await fetchCurrentUserFacility(
+        sessionData.session.user.id,
+      );
+
+      if (!facility) {
+        console.error('Failed to retrieve facility details');
+        setError(true);
+        return null;
+      }
+
       setIsApproved(facility?.is_approved);
       setAddress(facility?.street_address_1);
       setCity(facility?.city);
       setZip(facility?.zip);
+      setEmail(sessionData.session.user.email ?? null);
     }
     setFacilityDetails();
+    setLoading(false);
   }, []);
 
   interface Step {
@@ -52,6 +73,14 @@ export default function Status() {
 
   if (isApproved) {
     steps.push({ label: 'Facility Setup', completed: false });
+  }
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>An error occurred.</p>;
   }
 
   return (
@@ -106,9 +135,7 @@ export default function Status() {
           <Email>
             <SMALL $fontWeight={400}>
               You are currently logged in as{' '}
-              <span style={{ color: COLORS.gray10 }}>
-                joosymoosy@gmail.com.
-              </span>
+              <span style={{ color: COLORS.gray10 }}>{email}.</span>
             </SMALL>
           </Email>
           {/* how are we handling logout? has it been implemented yet? */}

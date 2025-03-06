@@ -143,18 +143,7 @@ export async function submitFacilityOnboardingData(
   }
 }
 
-export async function fetchCurrentUserFacility() {
-  //is drawing user_id directly in function ok? If this function is also used in admin dashboard or something like that, it may be better to pass in user_id as an argument
-  const { data: sessionData, error: sessionError } =
-    await supabase.auth.getSession();
-
-  if (sessionError || !sessionData?.session?.user?.id) {
-    console.error('Failed to retrieve user session.');
-    return null;
-  }
-
-  const user_id = sessionData.session.user.id;
-
+export async function fetchCurrentUserFacility(user_id: string) {
   const { data: facility, error: facility_error } = await supabase
     .from('facilities')
     .select('is_approved, street_address_1, city, zip')

@@ -14,7 +14,6 @@ export const Background = styled.main<{ isCentered?: boolean }>`
   display: flex;
   align-items: center;
   ${({ isCentered }) => isCentered && 'justify-content: center;'}
-  background-color: ${COLORS.bread2};
   overflow: hidden;
 `;
 
