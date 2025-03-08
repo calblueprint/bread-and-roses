@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
-import { H4, P } from '@/styles/text';
+import { H4, P, SMALL } from '@/styles/text';
 
 export const Background = styled.main<{ isCentered?: boolean }>`
   flex-direction: column;
@@ -37,6 +37,13 @@ export const InlineContainer = styled.main`
     width: 85%;
     margin-top: 20%;
   }
+`;
+
+export const RowContainer = styled.main`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 6%;
 `;
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
@@ -149,9 +156,9 @@ export const Button = styled.button<{
   width: ${({ position }) => (position === 'fixed' ? '30%' : '100%')};
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
@@ -173,9 +180,9 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   width: 100%;
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
@@ -187,15 +194,15 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    width: 85%;
     bottom: 40px;
   }
 `;
 
-export const ContinueText = styled.text`
+export const ContinueText = styled(SMALL)`
   ${Sans.style}
   color: white;
   font-size: 14px;
+  font-weight: 400;
   padding: 10px;
   text-decoration: none;
 `;

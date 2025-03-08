@@ -31,7 +31,7 @@ export const AvailabilityTitle = styled.main`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 0.25rem;
 `;
 
 export const Content = styled.main`
@@ -44,9 +44,19 @@ export const Content = styled.main`
 export const SubHeader = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 1.5rem;
   justify-content: start;
   margin-bottom: 0.25rem;
+`;
+
+export const SettingDetail = styled.main`
+  gap: 0.25rem;
+`;
+
+export const SettingListedItems = styled.ul`
+  padding-left: 1.5rem;
+  list-style-type: disc;
+  list-style-position: outside;
 `;
 
 export const Edit = styled(NextImage)`
@@ -56,9 +66,7 @@ export const Edit = styled(NextImage)`
 
 export const TruncatedText = styled(SMALL)`
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limit to 2 lines */
   -webkit-box-orient: vertical;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
 `;

@@ -9,6 +9,7 @@ import Help from '@/public/images/help.svg';
 import Star from '@/public/images/star.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
+  BackButton,
   Background,
   Button,
   ButtonContainer,
@@ -43,10 +44,16 @@ export default function Onboarding() {
     router.push('/onboarding/basic-information');
   };
 
+  const handleBack = async () => {
+    router.push('/onboarding/user-role-selection');
+  };
+
   return (
     <Background>
       <InlineContainer>
-        <Image src={Back} alt="Back icon" />
+        <BackButton onClick={handleBack}>
+          <Image src={Back} alt="Back icon" />
+        </BackButton>
         <Title $fontWeight={500}>
           How would you describe
           <br />

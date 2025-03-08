@@ -109,11 +109,11 @@ export interface EventSignups {
 
 export interface FacilityContacts {
   user_id: UUID;
-  facility_id: UUID;
   email: string;
   first_name: string;
   last_name: string;
   phone_number: string;
+  facility_id: UUID;
 }
 
 export type ParkingOptions = 'Street' | 'Parking Lot' | 'None';
@@ -131,15 +131,18 @@ export interface Facilities {
   city: string;
   street_address_1: string;
   street_address_2?: string;
-  zip: string;
   audience: Audience;
   type: FacilityType;
   host_name?: string;
   host_email?: string;
   host_phone_number?: string;
+  user_id: UUID;
   is_approved: boolean;
   notes?: string;
   info: FacilityInfo;
+  host_email: string;
+  zip: string;
+  has_host: boolean;
 }
 
 export interface Volunteers {
