@@ -32,7 +32,9 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(null);
+  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
+    null,
+  );
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
@@ -86,7 +88,9 @@ export function AuthContextProvider({
 
   // Fetch user role when session is updated
   useEffect(() => {
-    async function fetchUserRole(email: string): Promise<'volunteer' | 'facility' | null> {
+    async function fetchUserRole(
+      email: string,
+    ): Promise<'volunteer' | 'facility' | null> {
       const { data: volunteerData } = await supabase
         .from('volunteers')
         .select('id')

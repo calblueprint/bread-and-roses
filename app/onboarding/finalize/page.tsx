@@ -2,13 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 import Rose from '@/public/images/rose.svg';
+import { P, SMALL } from '@/styles/text';
 import {
   ContinueButton,
   Image,
   InlineContainer,
   ReviewContainer,
 } from '@/styles/styles';
-import { P, SMALL } from '@/styles/text';
 import { Background, Title } from '../styles';
 
 export default function Onboarding() {
