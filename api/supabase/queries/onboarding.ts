@@ -101,6 +101,7 @@ export async function submitFacilityOnboardingData(
       is_approved: false,
       info: '',
       zip: location.zipCode,
+      is_finalized: false,
     };
 
     const { data: facilityData, error: facilityError } = await supabase

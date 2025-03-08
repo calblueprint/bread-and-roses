@@ -143,6 +143,7 @@ export interface Facilities {
   host_email: string;
   zip: string;
   has_host: boolean;
+  is_finalized: boolean;
 }
 
 export interface Volunteers {
