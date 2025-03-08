@@ -52,15 +52,6 @@ export default function Verification() {
         return;
       }
       (async () => {
-    // Only trigger if a session exists and the email_confirmed_at field is truthy.
-    if (session?.user && session.user.email_confirmed_at) {
-      const email = session.user.email;
-      if (!email) {
-        setIsError(true);
-        setResendStatus('Email is undefined. Please try again.');
-        return;
-      }
-      (async () => {
         const exists = await checkUserExists(session.user.id, 'volunteer');
         if (exists) {
           router.push('/success');
@@ -82,7 +73,6 @@ export default function Verification() {
           setIsError(true);
           setResendStatus('An error occurred while processing your request.');
         }
-      })();
       })();
     }
   }, [session?.user?.email_confirmed_at, session, router]);
@@ -122,13 +112,11 @@ export default function Verification() {
             </EmailText>
           </EmailContainer>
 
-          {/* This button is styled as before without the transient bgColor/textColor props */}
           <RoundedCornerButton onClick={handleUseAnotherAccount} width="70%">
             Use another account
           </RoundedCornerButton>
 
           <Footer>
-            Didn’t receive it?{' '}
             Didn’t receive it?{' '}
             <Link href="#" onClick={handleResendLink}>
               Resend link

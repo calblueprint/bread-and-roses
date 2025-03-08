@@ -32,9 +32,7 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
-    null,
-  );
+  const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
@@ -59,6 +57,36 @@ export function AuthContextProvider({
     async function fetchUserRole(
       email: string,
     ): Promise<'volunteer' | 'facility' | null> {
+      const { data: volunteerData } = await supabase
+        .from('volunteers')
+        .select('user_id')
+        .eq('email', email)
+        .maybeSingle();
+      if (volunteerData) return 'volunteer';
+
+      const { data: facilityData } = await supabase
+        .from('facility_contacts')
+        .select('user_id')
+        .eq('email', email)
+        .maybeSingle();
+      if (facilityData) return 'facility';
+
+      return null;
+    }
+
+    if (session && session.user && session.user.email) {
+      fetchUserRole(session.user.email).then(role => {
+        setUserRole(role);
+        console.log('User role set to:', role);
+      });
+    } else {
+      setUserRole(null);
+    }
+  }, [session]);
+
+  // Fetch user role when session is updated
+  useEffect(() => {
+    async function fetchUserRole(email: string): Promise<'volunteer' | 'facility' | null> {
       const { data: volunteerData } = await supabase
         .from('volunteers')
         .select('id')
@@ -113,6 +141,7 @@ export function AuthContextProvider({
     supabase.auth.signOut();
     localStorage.removeItem('tempEmail');
     setSession(null);
+    setUserRole(null);
     setUserRole(null);
   };
 

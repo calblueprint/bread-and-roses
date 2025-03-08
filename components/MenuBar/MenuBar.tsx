@@ -6,7 +6,6 @@ import Settings from '@/public/images/settings.svg';
 import SignOut from '@/public/images/sign_out.svg';
 import Events from '@/public/images/upcoming-events.svg';
 import { useSession } from '@/utils/AuthProvider';
-import { useSession } from '@/utils/AuthProvider';
 import {
   Icon,
   MenuContainer,
