@@ -54,8 +54,15 @@ export const Location = styled(P)`
   align-items: start;
 `;
 
-export const CalLocPin = styled(NextImage)`
-  width: 1rem;
+export const CalendarIcon = styled(NextImage)`
+  width: 1.25rem;
+  height: auto;
+  margin-right: 0.5rem;
+`;
+
+export const LocationIcon = styled(NextImage)`
+  margin-top: 0.125rem;
+  width: 1.25rem;
   height: auto;
   margin-right: 0.5rem;
 `;

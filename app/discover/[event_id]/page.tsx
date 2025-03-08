@@ -23,7 +23,7 @@ import {
   BackButton,
   Body,
   Bullet,
-  CalLocPin,
+  CalendarIcon,
   Checkbox,
   Container,
   Divider,
@@ -38,6 +38,7 @@ import {
   InterestBlock,
   InterestTitle,
   Location,
+  LocationIcon,
   Preferences,
   ShowInterest,
   SignUp,
@@ -165,14 +166,14 @@ export default function EventPage({
         <Title> {event?.name} </Title>
         <Divider />
         <TimeDiv>
-          <CalLocPin src={Calendar} alt="Calendar" />
+          <CalendarIcon src={Calendar} alt="Calendar" />
           <P $fontWeight="400" $color={COLORS.gray12}>
             {time}
           </P>
         </TimeDiv>
         <Location $fontWeight="400" $color={COLORS.gray12}>
           {' '}
-          <CalLocPin src={LocationPin} alt="Location"></CalLocPin>
+          <LocationIcon src={LocationPin} alt="Location" />
           <div>
             {facility?.name}
             <SMALL $fontWeight="400" $color={COLORS.gray10}>
