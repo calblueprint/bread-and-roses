@@ -50,6 +50,8 @@ export const SignOutItem = styled.button<{ $expanded: boolean }>`
   border-color: transparent;
   color: ${COLORS.rose6};
   display: flex;
+  margin-top: auto;
+  margin-bottom: 2rem;
   align-items: end;
   justify-content: ${({ $expanded }) => ($expanded ? 'flex-start' : 'center')};
   cursor: pointer;
