@@ -234,7 +234,7 @@ export default function EventPage({
         {hostChecked && (
           <div>
             <HostInfo>
-              <CalLocPin src={InfoIcon} alt="InfoIcon"></CalLocPin>{' '}
+              <CalendarIcon src={InfoIcon} alt="InfoIcon"></CalendarIcon>{' '}
               <P $fontWeight="500" $color={COLORS.gray11}>
                 {' '}
                 Responsibilities of a Host
