@@ -28,3 +28,17 @@ export async function fetchFacilityContactByID(facility_id: UUID) {
 
   return data;
 }
+
+export async function fetchFacilityIDByUserID(user_id: string) {
+  const { data, error } = await supabase
+    .from('facilities')
+    .select('facility_id')
+    .eq('user_id', user_id)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data?.facility_id;
+}

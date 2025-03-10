@@ -31,7 +31,6 @@ import {
 export default function Page() {
   const router = useRouter();
   const availabilityContext = useContext(AvailabilityContext);
-
   if (!availabilityContext) return null;
 
   const { days, generalInfo, times, submitAvailabilityData } =

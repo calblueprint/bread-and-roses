@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   fetchAllAvailabilities,
   fetchDatesByAvailabilityID,
@@ -22,37 +23,30 @@ type AvailabilitiesByYear = {
 };
 
 export default function AvailabilityPage() {
+  const router = useRouter();
   const [groupedByYear, setGroupedByYear] = useState<AvailabilitiesByYear>({});
   const [isLoading, setIsLoading] = useState(true);
-  const [menuExpanded, setMenuExpanded] = useState(false); // Track the expanded state of the menu
+  const [menuExpanded, setMenuExpanded] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchAndGroupData() {
       try {
-        // Step 1: Fetch all availabilities
         const availabilities = await fetchAllAvailabilities();
+        if (!availabilities) return;
 
-        if (!availabilities) {
-          return;
-        }
-
-        // Step 2: Group by year while fetching associated dates
         const grouped: AvailabilitiesByYear = {};
         for (const availability of availabilities) {
           const availableDates = await fetchDatesByAvailabilityID(
             availability.availability_id,
           );
-
           const year = availableDates?.[0]?.start_date_time
             ? new Date(availableDates[0].start_date_time)
                 .getFullYear()
                 .toString()
             : null;
 
-          //don't display availability cards that have no availabilities associated
-          if (year == null) {
-            continue;
-          }
+          if (year == null) continue;
 
           if (!grouped[year]) {
             grouped[year] = [];
@@ -63,6 +57,7 @@ export default function AvailabilityPage() {
             available_dates: availableDates ?? [],
           });
         }
+
         for (const year in grouped) {
           grouped[year].sort((a, b) => {
             const firstDateA = new Date(
@@ -76,7 +71,7 @@ export default function AvailabilityPage() {
         }
 
         setGroupedByYear(grouped);
-        setIsLoading(false); // Stop loading after data fetch
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -85,11 +80,64 @@ export default function AvailabilityPage() {
     fetchAndGroupData();
   }, []);
 
+  // ✅ Handle success or failure popup notification
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const success = params.get('success');
+
+    if (success === 'true') {
+      setPopupMessage('Your availability has been added.');
+    } else if (success === 'false') {
+      setPopupMessage('Error submitting your availability.');
+    }
+
+    if (success) {
+      // Hide the notification after 5 seconds
+      setTimeout(() => {
+        setPopupMessage(null);
+        router.replace('/availability/general', undefined);
+      }, 5000);
+    }
+  }, []);
+
   return (
     <div>
-      <MenuBar setMenuExpanded={setMenuExpanded} />{' '}
-      {/* Pass function to update state */}
+      <MenuBar setMenuExpanded={setMenuExpanded} />
       <styles.Page $menuExpanded={menuExpanded}>
+        {popupMessage && (
+          <div
+            style={{
+              position: 'fixed',
+              bottom: '20px',
+              right: '20px',
+              backgroundColor: '#d4edda', // Soft green
+              color: '#155724', // Dark green text
+              padding: '10px 15px',
+              borderRadius: '5px',
+              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+              fontSize: '14px',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            {popupMessage}
+            <button
+              onClick={() => setPopupMessage(null)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#155724',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+              }}
+            >
+              ✖
+            </button>
+          </div>
+        )}
+
         <styles.AllAvailabilitiesHolder>
           <styles.TitleContainer>
             <H3 $fontWeight="500" $color="#000" $align="left">
@@ -99,7 +147,6 @@ export default function AvailabilityPage() {
               <styles.AddImage src={Add} alt="add icon" />
             </Link>
           </styles.TitleContainer>
-          {/* Check if there are no availabilities */}
           {isLoading ? (
             <styles.message
               $fontWeight="400"
@@ -114,9 +161,7 @@ export default function AvailabilityPage() {
               $color={COLORS.gray11}
               $align="center"
             >
-              No availabilities yet,
-              <br />
-              add one with the plus sign!
+              No availabilities yet, <br /> add one with the plus sign!
             </styles.message>
           ) : (
             Object.entries(groupedByYear).map(([year, availabilities]) => (
