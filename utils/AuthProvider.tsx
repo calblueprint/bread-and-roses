@@ -114,7 +114,6 @@ export function AuthContextProvider({
     localStorage.removeItem('tempEmail');
     setSession(null);
     setUserRole(null);
-    setUserRole(null);
   };
 
   const authContextValue = useMemo(
