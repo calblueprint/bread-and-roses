@@ -11,7 +11,7 @@ export async function fetchAllEvents() {
   return data;
 }
 
-export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
+export async function fetchAcceptedEventsByVolunteer(user_id: string) {
   const { data, error } = await supabase
     .from('event_signups')
     .select('*')
@@ -37,9 +37,23 @@ export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
   if (eventsError) {
     throw eventsError;
   }
-
   return events;
 }
+
+export async function fetchAcceptedEventsByFacility(facility_id: string) {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('facility_id', facility_id)
+    .eq('event_status', 'Active');
+
+  if (error) {
+    throw error;
+  }
+
+  return data || [];
+ }
+ 
 
 /* Find events by facility name, city, or county */
 export async function fetchAllActiveEventsBySearch(search: string) {
