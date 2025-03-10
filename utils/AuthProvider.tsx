@@ -86,38 +86,6 @@ export function AuthContextProvider({
     }
   }, [session]);
 
-  // Fetch user role when session is updated
-  useEffect(() => {
-    async function fetchUserRole(
-      email: string,
-    ): Promise<'volunteer' | 'facility' | null> {
-      const { data: volunteerData } = await supabase
-        .from('volunteers')
-        .select('id')
-        .eq('email', email)
-        .maybeSingle();
-      if (volunteerData) return 'volunteer';
-
-      const { data: facilityData } = await supabase
-        .from('facility_contacts')
-        .select('id')
-        .eq('email', email)
-        .maybeSingle();
-      if (facilityData) return 'facility';
-
-      return null;
-    }
-
-    if (session && session.user && session.user.email) {
-      fetchUserRole(session.user.email).then(role => {
-        setUserRole(role);
-        console.log('User role set to:', role);
-      });
-    } else {
-      setUserRole(null);
-    }
-  }, [session]);
-
   const signIn = (newSession: Session | null) => {
     setSession(newSession);
   };

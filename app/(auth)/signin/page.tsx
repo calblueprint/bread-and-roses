@@ -79,7 +79,7 @@ export default function SignIn() {
       if (userRole === 'volunteer') {
         router.push('/discover');
       } else if (userRole === 'facility') {
-        router.push('/availabilities');
+        router.push('/availability/general');
       }
     }
   }, [session, userRole, router]);
