@@ -1,6 +1,36 @@
 import { UUID } from 'crypto';
 import supabase from '../createClient';
 
+export async function fetchVolunteerInfo(user_id: string) {
+  const { data, error } = await supabase
+    .from('volunteers')
+    .select('first_name, last_name, email, phone_number')
+    .eq('user_id', user_id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function fetchVolunteerPreferences(user_id: string) {
+  const { data, error } = await supabase
+    .from('volunteer_preferences')
+    .select(
+      'facility_type, audience_type, genre, performance_type, locations, additional_info ',
+    )
+    .eq('user_id', user_id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
 export async function fetchPerformer(event_id: UUID) {
   const { data, error } = await supabase
     .from('event_signups')

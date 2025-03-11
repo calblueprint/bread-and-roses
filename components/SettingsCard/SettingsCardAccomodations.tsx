@@ -4,7 +4,11 @@ import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
 import * as styles from './styles';
 
-export default function SettingCardAccomodations() {
+export default function SettingCardAccomodations({
+  accomodations,
+}: {
+  accomodations: string;
+}) {
   return (
     <styles.AvailabilityContainer>
       <styles.AvailabilityHeader>
@@ -27,11 +31,7 @@ export default function SettingCardAccomodations() {
                 $color={COLORS.gray11}
                 $align="left"
               >
-                Burnt tomatoes pineapple rib red. Tomato string spinach white
-                steak meat lovers buffalo pie. String onions sausage party
-                spinach ricotta spinach. Marinara stuffed pizza Chicago Philly
-                style tossed. Thin parmesan lasagna lot buffalo lasagna tomatoes
-                onions green.
+                {accomodations}
               </styles.TruncatedText>
             </styles.SettingDetail>
           </styles.SubHeader>

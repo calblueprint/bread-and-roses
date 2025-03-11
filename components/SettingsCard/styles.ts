@@ -49,6 +49,16 @@ export const SubHeader = styled.main`
   margin-bottom: 0.25rem;
 `;
 
+export const inp = styled.input`
+  border: none; /* Remove border */
+  background: none; /* Remove background */
+  font-size: 1.75rem; /* Same font size as h3 */
+  font-weight: bold; /* Same weight as h3 */
+  color: inherit; /* Inherit color */
+  text-align: left; /* Align text as a heading */
+  outline: none; /* Remove outline */
+  cursor: default; /* Change cursor to default to indicate it's disabled */
+`;
 export const SettingDetail = styled.main`
   gap: 0.25rem;
 `;
