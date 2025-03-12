@@ -1,4 +1,3 @@
-// AuthProvider.tsx
 'use client';
 
 import React, {
@@ -8,6 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { AuthResponse, Session } from '@supabase/supabase-js';
 import supabase from '@/api/supabase/createClient';
 
@@ -31,30 +31,87 @@ export function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
   const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
     null,
   );
+  const pathname = usePathname();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
-      console.log('Initial session:', newSession);
       setSession(newSession);
     });
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      console.log('Session change event:', newSession);
+    } = supabase.auth.onAuthStateChange(async (event, newSession) => {
       setSession(newSession);
+
+      if (event === 'PASSWORD_RECOVERY') {
+        localStorage.setItem('passwordRecoveryMode', 'true');
+        router.push('/resetpassword');
+      }
+
+      if (event === 'SIGNED_IN') {
+        const isInRecovery =
+          localStorage.getItem('passwordRecoveryMode') === 'true';
+        if (!isInRecovery) {
+          const email = newSession?.user?.email;
+
+          if (email) {
+            const { data: volunteerData } = await supabase
+              .from('volunteers')
+              .select('user_id')
+              .eq('email', email)
+              .maybeSingle();
+
+            if (volunteerData) {
+              router.push('/discover');
+              return;
+            }
+
+            const { data: facilityData } = await supabase
+              .from('facility_contacts')
+              .select('user_id')
+              .eq('email', email)
+              .maybeSingle();
+
+            if (facilityData) {
+              router.push('/availability/general');
+              return;
+            }
+          }
+        }
+      }
+
+      if (event === 'USER_UPDATED') {
+        const isInRecovery =
+          localStorage.getItem('passwordRecoveryMode') === 'true';
+        if (isInRecovery && pathname === '/resetpassword') {
+          return;
+        }
+        localStorage.removeItem('passwordRecoveryMode');
+      }
+
+      if (
+        (event === 'SIGNED_IN' || event === 'USER_UPDATED') &&
+        pathname === '/verification'
+      ) {
+        const confirmed = newSession?.user?.email_confirmed_at;
+        if (confirmed && window.location.pathname === '/verification') {
+          router.push('/success');
+        }
+      }
+
+      if (event === 'SIGNED_OUT') {
+        setUserRole(null);
+      }
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+    return () => subscription.unsubscribe();
+  }, [router, pathname]);
 
-  // Fetch user role when session is updated
   useEffect(() => {
     async function fetchUserRole(
       email: string,

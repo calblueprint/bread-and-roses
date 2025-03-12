@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { sendPasswordResetEmail } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import Back from '@/public/images/back.svg';
 import { H5 } from '@/styles/text';
 import {
+  AuthSpacer,
   Button,
   Card,
   Container,
@@ -19,20 +21,26 @@ import {
   TitleUnderline,
 } from '../auth-styles';
 
-export default function SignIn() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [password, setPassword] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [message, setMessage] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const { success, message } = await sendPasswordResetEmail(email);
+    setIsLoading(false);
+    setIsError(!success);
+    setMessage(message);
+  };
 
   return (
     <Container>
-      <Logo src={BRLogo} alt="An example image" />
+      <Logo src={BRLogo} alt="B&R Logo" />
       <Card>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Link href="/signin">
             <Image src={Back} alt="Back icon" />
           </Link>
@@ -46,11 +54,25 @@ export default function SignIn() {
           </Label>
           <Input
             name="email"
+            type="email"
             placeholder="jane.doe@gmail.com"
             onChange={e => setEmail(e.target.value)}
             value={email}
+            required
           />
-          <Button>Send Email</Button>
+          <Button disabled={isLoading}>
+            {isLoading ? 'Sending...' : 'Send Email'}
+          </Button>
+          <AuthSpacer>
+            {message && (
+              <Instructions
+                $fontWeight={400}
+                style={{ color: isError ? 'red' : 'green' }}
+              >
+                {message}
+              </Instructions>
+            )}
+          </AuthSpacer>
         </Form>
       </Card>
       <Footer>

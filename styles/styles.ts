@@ -82,18 +82,25 @@ export const ContinueButton = styled.button`
   cursor: pointer;
 `;
 
-export const RoundedCornerButton = styled.button<{
+interface RoundedCornerButtonProps {
   width?: string;
   $bgColor?: string;
   $textColor?: string;
-}>`
-  width: ${({ width }) => width || 'auto'};
-  background-color: ${({ $bgColor }) => $bgColor || 'transparent'};
-  color: ${({ $textColor }) => $textColor || 'inherit'};
-  border: none;
-  padding: 8px 16px;
+}
+
+export const RoundedCornerButton = styled.button<RoundedCornerButtonProps>`
+  font-family: ${Sans.style.fontFamily};
+  background-color: ${({ $bgColor }) => $bgColor || COLORS.pomegranate12};
+  color: ${({ $textColor }) => $textColor || 'white'};
+  font-size: 1rem;
+  padding: 0.55rem;
+  border: 1.5px solid black;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 0.5rem;
+  width: ${({ width }) => width || '100%'};
+  margin-left: auto;
+  margin-right: auto;
   transition: background-color 0.3s ease;
 `;
 

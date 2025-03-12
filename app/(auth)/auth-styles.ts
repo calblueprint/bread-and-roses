@@ -64,10 +64,19 @@ export const Fields = styled.div`
   gap: 1.75rem;
 `;
 
-export const Label = styled(P)`
-  font-family: ${Sans.style.fontFamily};
+export const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+export const Label = styled.label<{ required?: boolean }>`
   font-weight: 500;
-  margin-bottom: 0.2rem;
+
+  &::after {
+    content: ${({ required }) => (required ? "' *'" : "''")};
+    color: red;
+  }
 `;
 
 export const Input = styled.input`
@@ -132,4 +141,8 @@ export const Footer = styled.div`
 
 export const Instructions = styled(P)`
   padding-bottom: 1.5rem;
+`;
+
+export const AuthSpacer = styled.div`
+  margin-top: 0.5rem;
 `;

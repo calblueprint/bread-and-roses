@@ -43,6 +43,18 @@ export default function Verification() {
   }, []);
 
   useEffect(() => {
+    const listener = (e: StorageEvent) => {
+      if (e.key === 'emailVerified' && e.newValue === 'true') {
+        localStorage.removeItem('emailVerified');
+        router.push('/success');
+      }
+    };
+
+    window.addEventListener('storage', listener);
+    return () => window.removeEventListener('storage', listener);
+  }, [router]);
+
+  useEffect(() => {
     // Only trigger if a session exists and the email_confirmed_at field is truthy.
     if (session?.user && session.user.email_confirmed_at) {
       const email = session.user.email;

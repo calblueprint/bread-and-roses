@@ -120,6 +120,56 @@ export const handleSignOut = async () => {
   }
 };
 
+export async function sendPasswordResetEmail(
+  email: string,
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) {
+      return {
+        success: false,
+        message: `Password reset failed: ${error.message}`,
+      };
+    }
+    return {
+      success: true,
+      message: 'Password reset email sent successfully.',
+    };
+  } catch (err) {
+    return {
+      success: false,
+      message: 'An unexpected error occurred while sending reset email.',
+    };
+  }
+}
+
+export async function updatePassword(
+  newPassword: string,
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+
+    if (error) {
+      return {
+        success: false,
+        message: `Password update failed: ${error.message}`,
+      };
+    }
+
+    return {
+      success: true,
+      message: 'Password updated successfully! Redirecting...',
+    };
+  } catch (err) {
+    return {
+      success: false,
+      message: 'An unexpected error occurred while updating password.',
+    };
+  }
+}
+
 export async function ensureLoggedOutForNewUser(
   newEmail: string,
 ): Promise<void> {

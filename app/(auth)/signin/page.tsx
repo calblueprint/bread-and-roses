@@ -9,6 +9,7 @@ import COLORS from '@/styles/colors';
 import { H5, SMALL } from '@/styles/text';
 import { useSession } from '@/utils/AuthProvider';
 import {
+  AuthSpacer,
   Button,
   Card,
   Container,
@@ -146,9 +147,11 @@ export default function SignIn() {
             </div>
           </Fields>
 
-          <SMALL $fontWeight={400} $align="right">
-            <Link href="/forgotpassword">Forgot Password?</Link>
-          </SMALL>
+          <AuthSpacer>
+            <SMALL $fontWeight={400} $align="right">
+              <Link href="/forgotpassword">Forgot Password?</Link>
+            </SMALL>
+          </AuthSpacer>
 
           <Button type="submit" disabled={isLoggingIn}>
             {isLoggingIn ? 'Logging In...' : 'Login'}
