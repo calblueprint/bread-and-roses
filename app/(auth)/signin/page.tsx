@@ -75,8 +75,8 @@ export default function SignIn() {
 
     if (redirectTo === 'discover') {
       return;
-    } else if (redirectTo === 'role-selection') {
-      router.push('/role-selection');
+    } else if (redirectTo === 'roles') {
+      router.push('/roles');
     }
 
     setErrorMessage('');

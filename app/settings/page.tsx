@@ -40,19 +40,20 @@ export default function SettingsPage() {
 
   useEffect(() => {
     const getUserData = async () => {
+      if (!session || !session.user) {
+        return;
+      }
       const fetchedUserInfo = await fetchVolunteerInfo(session.user.id);
       setUserInfo(fetchedUserInfo);
-
       const fetchedUserPreferences = await fetchVolunteerPreferences(
         session.user.id,
       );
       setUserPreferences(fetchedUserPreferences);
     };
-
     getUserData();
-  }, [session.user.id]);
+  }, [session]);
 
-  if (!userInfo || !userPreferences) {
+  if (!session || !session.user || !userInfo || !userPreferences) {
     return <div>Loading...</div>;
   }
 

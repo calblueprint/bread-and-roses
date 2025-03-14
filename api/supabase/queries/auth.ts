@@ -70,7 +70,7 @@ export async function handleSignIn(
 ): Promise<{
   success: boolean;
   message: string;
-  redirectTo?: 'verification' | 'role-selection' | 'discover';
+  redirectTo?: 'verification' | 'roles' | 'discover';
 }> {
   try {
     await ensureLoggedOutForNewUser(email);
@@ -129,7 +129,7 @@ export async function handleSignIn(
       return {
         success: true,
         message: 'Login successful! Needs onboarding.',
-        redirectTo: 'role-selection',
+        redirectTo: 'roles',
       };
     }
   } catch (err) {
