@@ -34,7 +34,7 @@ export default function FilterMenu({ filters }: { filters: Filter[] }) {
   return (
     <Container>
       {filters.map(({ placeholder, options, value, onChange }) => (
-        <IndividualFilterContainer>
+        <IndividualFilterContainer key={placeholder}>
           <Title>{placeholder}</Title>
           <Divider />
           <InputContainer>
