@@ -110,6 +110,12 @@ export default function ActiveEventsPage() {
     }
   };
 
+  const handleClearFilters = () => {
+    setFacilityFilters(new Set());
+    setCountyFilters(new Set());
+    setHostFilters(new Set());
+  };
+
   const applyFilters = (
     newFacilityFilters: Set<string>,
     newCountyFilters: Set<string>,
@@ -124,37 +130,32 @@ export default function ActiveEventsPage() {
     );
     setIsFiltering(true);
 
-    fetchAllActiveEventsByFilter('').then(data => {
-      const filtered = data.filter(event => {
-        const facilityTypeMatch =
-          newFacilityFilters.size === 0 ||
-          newFacilityFilters.has(event.facilities.type);
-        const countyMatch =
-          newCountyFilters.size === 0 ||
-          newCountyFilters.has(event.facilities.county);
+    const filtered = events.filter(event => {
+      const facilityTypeMatch =
+        newFacilityFilters.size === 0 ||
+        newFacilityFilters.has(event.facilities.type);
+      const countyMatch =
+        newCountyFilters.size === 0 ||
+        newCountyFilters.has(event.facilities.county);
 
-        const hostMatch =
-          newHostFilters.size === 0 ||
-          (newHostFilters.has('Has Host') && event.needs_host) ||
-          (newHostFilters.has('No Host') && !event.needs_host);
+      const hostMatch =
+        newHostFilters.size === 0 ||
+        (newHostFilters.has('Has Host') && event.needs_host) ||
+        (newHostFilters.has('No Host') && !event.needs_host);
 
-        return facilityTypeMatch && countyMatch && hostMatch;
-      });
-
-      setFilteredEvents(filtered);
-      setIsFiltering(false);
+      return facilityTypeMatch && countyMatch && hostMatch;
     });
+
+    setFilteredEvents(filtered);
+    setIsFiltering(false);
+  };
+
+  const handleApplyClick = () => {
+    applyFilters(facilityFilters, countyFilters, hostFilters);
+    setFilterMenuExpanded(false);
   };
 
   const handleFilterClick = () => {
-    /* When the filter button is clicked, clear all filters */
-    if (!filterMenuExpanded) {
-      setFacilityFilters(new Set());
-      setCountyFilters(new Set());
-      setHostFilters(new Set());
-    } else {
-      applyFilters(facilityFilters, countyFilters, hostFilters);
-    }
     setFilterMenuExpanded(!filterMenuExpanded);
   };
 
@@ -238,6 +239,8 @@ export default function ActiveEventsPage() {
                         onChange: newValue => setHostFilters(newValue),
                       },
                     ]}
+                    onClear={handleClearFilters}
+                    onApply={handleApplyClick}
                   />
                 </FilterMenuContainer>
               </FilterRow>

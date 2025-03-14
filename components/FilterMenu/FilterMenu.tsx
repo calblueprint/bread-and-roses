@@ -1,5 +1,8 @@
 import React from 'react';
 import {
+  Button,
+  ButtonContainer,
+  ButtonText,
   Checkbox,
   Container,
   Divider,
@@ -16,7 +19,15 @@ interface Filter {
   onChange: (newValue: Set<string>) => void;
 }
 
-export default function FilterMenu({ filters }: { filters: Filter[] }) {
+export default function FilterMenu({
+  filters,
+  onClear,
+  onApply,
+}: {
+  filters: Filter[];
+  onClear: () => void;
+  onApply: () => void;
+}) {
   const handleSelectOption = (
     option: string,
     currentValue: Set<string>,
@@ -41,6 +52,7 @@ export default function FilterMenu({ filters }: { filters: Filter[] }) {
             {[...options].map(option => (
               <Input key={option} data-label={option}>
                 <Checkbox
+                  checked={value.has(option)}
                   onChange={() => handleSelectOption(option, value, onChange)}
                 />
               </Input>
@@ -48,6 +60,14 @@ export default function FilterMenu({ filters }: { filters: Filter[] }) {
           </InputContainer>
         </IndividualFilterContainer>
       ))}
+      <ButtonContainer>
+        <Button onClick={onApply}>
+          <ButtonText>Apply</ButtonText>
+        </Button>
+        <Button onClick={onClear}>
+          <ButtonText>Clear</ButtonText>
+        </Button>
+      </ButtonContainer>
     </Container>
   );
 }
