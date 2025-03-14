@@ -7,6 +7,7 @@ import { updatePassword } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import Back from '@/public/images/back.svg';
 import { H5 } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
 import {
   AuthSpacer,
   Button,
@@ -29,6 +30,7 @@ export default function ResetPasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
+  const { signOut } = useSession();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +49,7 @@ export default function ResetPasswordPage() {
 
     if (success) {
       localStorage.removeItem('passwordRecoveryMode');
+      await signOut();
       setTimeout(() => {
         router.push('/signin');
       }, 1500);

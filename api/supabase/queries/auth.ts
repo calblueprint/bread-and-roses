@@ -67,13 +67,26 @@ export const insertVolunteer = async (user: { id: string; email: string }) => {
 export async function handleSignIn(
   email: string,
   password: string,
-): Promise<{ success: boolean; message: string }> {
+): Promise<{
+  success: boolean;
+  message: string;
+  redirectTo?: 'verification' | 'role-selection' | 'discover';
+}> {
   try {
     await ensureLoggedOutForNewUser(email);
+
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+
+    if (signInError?.message === 'Email not confirmed') {
+      return {
+        success: false,
+        message: 'Please verify your email before logging in.',
+        redirectTo: 'verification',
+      };
+    }
 
     if (signInError) {
       return {
@@ -88,19 +101,39 @@ export async function handleSignIn(
     if (sessionError || !sessionData?.session) {
       return {
         success: false,
-        message: 'Failed to retrieve session information after login.',
+        message: 'Failed to retrieve session after login.',
       };
     }
 
-    const user_id = sessionData.session.user.id;
+    const user = sessionData.session.user;
 
-    const userExists = await checkUserExists(user_id, 'volunteer');
+    const { data: volunteerData } = await supabase
+      .from('volunteers')
+      .select('user_id')
+      .eq('email', email)
+      .maybeSingle();
 
-    if (!userExists) {
-      return { success: false, message: 'User not found in volunteers table.' };
+    const { data: facilityData } = await supabase
+      .from('facility_contacts')
+      .select('user_id')
+      .eq('email', email)
+      .maybeSingle();
+
+    const onboarded = volunteerData || facilityData;
+
+    if (onboarded) {
+      return {
+        success: true,
+        message: 'Login successful!',
+        redirectTo: 'discover',
+      };
+    } else {
+      return {
+        success: true,
+        message: 'Login successful! Needs onboarding.',
+        redirectTo: 'role-selection',
+      };
     }
-
-    return { success: true, message: 'Login successful!' };
   } catch (err) {
     if (err instanceof Error) {
       return { success: false, message: `Login failed: ${err.message}` };

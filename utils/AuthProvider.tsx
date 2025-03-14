@@ -57,30 +57,33 @@ export function AuthContextProvider({
         const isInRecovery =
           localStorage.getItem('passwordRecoveryMode') === 'true';
         if (!isInRecovery) {
-          const email = newSession?.user?.email;
+          const user = newSession?.user;
 
-          if (email) {
-            const { data: volunteerData } = await supabase
-              .from('volunteers')
-              .select('user_id')
-              .eq('email', email)
-              .maybeSingle();
+          if (!user?.email) return;
 
-            if (volunteerData) {
-              router.push('/discover');
-              return;
-            }
+          if (!user.email_confirmed_at) {
+            router.push('/verification');
+            return;
+          }
 
-            const { data: facilityData } = await supabase
-              .from('facility_contacts')
-              .select('user_id')
-              .eq('email', email)
-              .maybeSingle();
+          const { data: volunteerData } = await supabase
+            .from('volunteers')
+            .select('user_id')
+            .eq('email', user.email)
+            .maybeSingle();
 
-            if (facilityData) {
-              router.push('/availability/general');
-              return;
-            }
+          const { data: facilityData } = await supabase
+            .from('facility_contacts')
+            .select('user_id')
+            .eq('email', user.email)
+            .maybeSingle();
+
+          const isOnboarded = !!volunteerData || !!facilityData;
+
+          if (isOnboarded) {
+            router.push('/discover');
+          } else {
+            router.push('/role-selection');
           }
         }
       }
@@ -166,8 +169,8 @@ export function AuthContextProvider({
     return response;
   };
 
-  const signOut = () => {
-    supabase.auth.signOut();
+  const signOut = async () => {
+    await supabase.auth.signOut();
     localStorage.removeItem('tempEmail');
     setSession(null);
     setUserRole(null);

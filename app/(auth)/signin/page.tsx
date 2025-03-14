@@ -61,15 +61,24 @@ export default function SignIn() {
 
     setIsLoggingIn(true);
 
-    const { success, message } = await signInUser(email, password);
+    const { success, message, redirectTo } = await signInUser(email, password);
 
     if (!success) {
-      setErrorMessage(message);
+      if (redirectTo === 'verification') {
+        router.push('/verification');
+      } else {
+        setErrorMessage(message);
+      }
       setIsLoggingIn(false);
       return;
     }
 
-    // Let the AuthProvider update session & userRole.
+    if (redirectTo === 'discover') {
+      return;
+    } else if (redirectTo === 'role-selection') {
+      router.push('/role-selection');
+    }
+
     setErrorMessage('');
     setIsLoggingIn(false);
   };
