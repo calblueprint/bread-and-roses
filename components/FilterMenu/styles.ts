@@ -5,8 +5,14 @@ import { P } from '@/styles/text';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   height: 100%;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
 
 export const Divider = styled.hr`
@@ -69,4 +75,21 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
     background-color: ${COLORS.rose10};
     border-color: ${COLORS.rose10};
   }
+`;
+
+export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: ${COLORS.pomegranate12};
+  cursor: pointer;
+`;
+
+export const ButtonText = styled(P)`
+  color: ${COLORS.gray1};
+  font-weight: 400;
 `;
