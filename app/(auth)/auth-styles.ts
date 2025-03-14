@@ -22,8 +22,8 @@ export const Container = styled.div`
 
 export const TitleUnderline = styled.div<TitleUnderlineProps>`
   margin-bottom: 1.5rem;
-  width: ${props => props.width || '68px'};
-  height: 4px;
+  width: ${props => props.width || '4.25rem'};
+  height: 0.25rem;
   background-color: ${COLORS.rose8};
 `;
 
@@ -43,7 +43,7 @@ export const Card = styled.div`
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  max-width: 25rem;
   width: 100%;
   box-sizing: border-box;
   display: flex;

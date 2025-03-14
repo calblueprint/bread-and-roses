@@ -73,13 +73,13 @@ export const Container = styled.main`
   /* justify-content: space-between; */
   background-color: ${COLORS.bread1};
   border-radius: 8px;
-  padding: 32px;
-  gap: 28px;
+  padding: 2rem;
+  gap: 1.75rem;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
-  margin: 42px 0;
+  margin: 2.625rem 0;
 
   @media (max-width: 768px) {
-    padding: 20px;
+    padding: 1.25rem;
   }
 `;
 
@@ -87,10 +87,10 @@ export const RoleContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin: 42px 0px;
+  margin: 2.625rem 0px;
   justify-content: space-between;
   border-radius: 8px;
-  gap: 16px;
+  gap: 1rem;
   height: 100%;
 `;
 
@@ -123,13 +123,13 @@ export const Label = styled(P)`
 
 export const SkipButton = styled.button`
   position: fixed;
-  bottom: 140px;
+  bottom: 8.75rem;
   background: transparent;
   border: none;
   cursor: pointer;
 
   @media (max-width: 768px) {
-    bottom: 100px;
+    bottom: 6.25rem;
   }
 `;
 
@@ -151,7 +151,7 @@ export const Button = styled.button<{
   position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
 }>`
   position: ${({ position = 'fixed' }) => position};
-  bottom: 70px;
+  bottom: 4.375rem;
   width: ${({ position }) => (position === 'fixed' ? '30%' : '100%')};
   height: 2.75rem;
   background-color: ${({ disabled }) =>
@@ -161,7 +161,7 @@ export const Button = styled.button<{
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   justify-content: center;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -170,12 +170,12 @@ export const Button = styled.button<{
 
   @media (max-width: 768px) {
     width: 85%;
-    bottom: 40px;
+    bottom: 2.5rem;
   }
 `;
 
 export const SubmitButton = styled.button<{ disabled?: boolean }>`
-  margin-top: 42px;
+  margin-top: 2.625rem;
   width: 100%;
   height: 2.75rem;
   background-color: ${({ disabled }) =>
@@ -185,7 +185,7 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   justify-content: center;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -193,16 +193,16 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    bottom: 40px;
+    bottom: 2.5rem;
   }
 `;
 
 export const ContinueText = styled(SMALL)`
   ${Sans.style}
   color: white;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
-  padding: 10px;
+  padding: 0.625rem;
   text-decoration: none;
 `;
 

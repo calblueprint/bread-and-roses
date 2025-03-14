@@ -22,7 +22,7 @@ export const InlineContainer = styled.main`
 
 export const BoxContentContainer = styled.main`
   display: flex;
-  padding: 32px;
+  padding: 2rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -47,9 +47,9 @@ export const StyledUL = styled.ul`
     content: '';
     position: absolute;
     left: 0.5rem; /* Aligns with the center of circles */
-    top: 2px;
+    top: 0.125rem;
     bottom: 0;
-    width: 2px;
+    width: 0.125rem;
     background: ${COLORS.rose6};
   }
 `;
@@ -57,7 +57,7 @@ export const StyledUL = styled.ul`
 export const StyledLI = styled.li<{ $completed: string }>`
   list-style: none;
   position: relative;
-  margin: 0 0 28px 0;
+  margin: 0 0 1.75rem 0;
   display: flex;
   align-items: center;
   color: ${({ $completed }) =>
@@ -78,7 +78,7 @@ export const StyledLI = styled.li<{ $completed: string }>`
   }
 
   &:last-child {
-    margin-bottom: -20px;
+    margin-bottom: -1.25rem;
   }
 `;
 

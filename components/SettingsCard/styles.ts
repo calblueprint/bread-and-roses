@@ -35,7 +35,7 @@ export const AvailabilityTitle = styled.main`
 `;
 
 export const Content = styled.main`
-  padding: 0px 24px 24px 24px;
+  padding: 0rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

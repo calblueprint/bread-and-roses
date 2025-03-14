@@ -45,7 +45,7 @@ export default function ForgotPassword() {
             <Image src={Back} alt="Back icon" />
           </Link>
           <H5>Forgot Password?</H5>
-          <TitleUnderline width="208px" />
+          <TitleUnderline width="13rem" />
           <Instructions $fontWeight={200}>
             We&apos;ll send you an email to reset your password.
           </Instructions>

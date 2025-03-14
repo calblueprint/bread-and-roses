@@ -6,7 +6,7 @@ import { Sans } from '@/styles/fonts';
 
 export const TextArea = styled.textarea`
   font-family: ${Sans.style.fontFamily};
-  height: 120px;
+  height: 7.5rem;
   padding: 1rem;
   margin-top: 0.1875rem;
   border: 1px solid ${COLORS.gray6};

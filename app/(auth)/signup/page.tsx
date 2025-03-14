@@ -55,7 +55,7 @@ export default function SignUp() {
       <Card>
         <Form>
           <H5>Sign Up</H5>
-          <TitleUnderline width="90px" />
+          <TitleUnderline width="5.625rem" />
           {message && (
             <StyledErrorMessage $isError={isError}>
               {message}
