@@ -3,19 +3,28 @@
 import React, { useEffect, useState } from 'react';
 import {
   fetchAllActiveEvents,
-  fetchAllActiveEventsBySearch,
+  fetchAllActiveEventsByFilter,
 } from '@/api/supabase/queries/events';
 import DiscoverCard from '@/components/DiscoverCard/DiscoverCard';
+import FilterMenu from '@/components/FilterMenu/FilterMenu';
 import MenuBar from '@/components/MenuBar/MenuBar';
+import Back from '@/public/images/back.svg';
+import Cancel from '@/public/images/cancel.svg';
 import Filter from '@/public/images/filter.svg';
 import SadIcon from '@/public/images/sad.svg';
 import SearchIcon from '@/public/images/search_icon.svg';
 import { Event } from '@/types/schema';
 import {
+  Button,
   Discover,
   DiscoverCardContainer,
   DiscoverHolder,
   FilterIcon,
+  FilterMenuContainer,
+  FilterRow,
+  FilterTag,
+  FilterTagContainer,
+  FilterWrapper,
   Found,
   Icon,
   NearYou,
@@ -26,7 +35,40 @@ import {
   SearchInput,
   ShowAllText,
   TitleBar,
+  XIcon,
 } from './styles';
+
+const facilityTypeOptions = new Set([
+  'Assisted Living',
+  "Children's Day Care",
+  'Detention Center',
+  'Developmentally Disabled',
+  'Food Bank',
+  'Homeless Services',
+  'Hospital',
+  'Mental Health Services',
+  'Recovery Center',
+  'Senior Day Program',
+  'Skilled Nursing Care',
+  'Special Needs School',
+  'Visually Impaired',
+]);
+
+const locationOptions = new Set([
+  'Alameda',
+  'Contra Costa',
+  'Marin',
+  'Napa',
+  'San Francisco',
+  'San Mateo',
+  'Santa Clara',
+  'Sonoma',
+]);
+
+const hostOptions = new Map<string, boolean>([
+  ['Has Host', false],
+  ['No Host', true],
+]);
 
 export default function ActiveEventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -35,12 +77,15 @@ export default function ActiveEventsPage() {
   const [isSearchActive, setSearchActive] = useState<boolean>(false);
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
   const [menuExpanded, setMenuExpanded] = useState(false); // Track the expanded state of the menu
+  const [filterMenuExpanded, setFilterMenuExpanded] = useState(false);
+  const [facilityFilters, setFacilityFilters] = useState(new Set<string>());
+  const [countyFilters, setCountyFilters] = useState(new Set<string>());
+  const [hostFilters, setHostFilters] = useState(new Set<string>());
 
   const getFilteredEvents = async () => {
     setIsFiltering(true);
-    const filteredEvents: Event[] =
-      await fetchAllActiveEventsBySearch(searchInput);
-    setFilteredEvents(filteredEvents);
+    const filtered: Event[] = await fetchAllActiveEventsByFilter(searchInput);
+    setFilteredEvents(filtered);
     setIsFiltering(false);
   };
 
@@ -61,6 +106,73 @@ export default function ActiveEventsPage() {
     }
   };
 
+  const applyFilters = (
+    newFacilityFilters: Set<string>,
+    newCountyFilters: Set<string>,
+    newHostFilters: Set<string>,
+  ) => {
+    setSearchActive(
+      !!(
+        newFacilityFilters.size ||
+        newCountyFilters.size ||
+        newHostFilters.size
+      ),
+    );
+    setIsFiltering(true);
+    fetchAllActiveEventsByFilter('').then(data => {
+      const filtered = data.filter(event => {
+        const facilityTypeMatch =
+          newFacilityFilters.size === 0 ||
+          newFacilityFilters.has(event.facilities.type);
+        const countyMatch =
+          newCountyFilters.size === 0 ||
+          newCountyFilters.has(event.facilities.county);
+        const hostFilterHasHost = newHostFilters.has('Has Host');
+        const hostFilterNoHost = newHostFilters.has('No Host');
+
+        const hostMatch =
+          newHostFilters.size === 0 ||
+          (hostFilterHasHost && event.needs_host) ||
+          (hostFilterNoHost && !event.needs_host);
+
+        return facilityTypeMatch && countyMatch && hostMatch;
+      });
+
+      setFilteredEvents(filtered);
+      setIsFiltering(false);
+    });
+  };
+
+  const handleFilterClick = () => {
+    /* When the filter button is clicked, clear all filters */
+    if (!filterMenuExpanded) {
+      setFacilityFilters(new Set());
+      setCountyFilters(new Set());
+      setHostFilters(new Set());
+    } else {
+      applyFilters(facilityFilters, countyFilters, hostFilters);
+    }
+    setFilterMenuExpanded(!filterMenuExpanded);
+  };
+
+  const handleRemoveFilter = (filter: string) => {
+    /* Find filter's category and remove it */
+    const newFacilityFilters = new Set(facilityFilters);
+    const newCountyFilters = new Set(countyFilters);
+    const newHostFilters = new Set(hostFilters);
+
+    if (facilityFilters.has(filter)) newFacilityFilters.delete(filter);
+    if (countyFilters.has(filter)) newCountyFilters.delete(filter);
+    if (hostFilters.has(filter)) newHostFilters.delete(filter);
+
+    /* Update the filters */
+    setFacilityFilters(newFacilityFilters);
+    setCountyFilters(newCountyFilters);
+    setHostFilters(newHostFilters);
+
+    applyFilters(newFacilityFilters, newCountyFilters, newHostFilters);
+  };
+
   /* Render all events on page mount */
   useEffect(() => {
     const getAllActiveEvents = async () => {
@@ -72,6 +184,11 @@ export default function ActiveEventsPage() {
   }, []);
 
   const noMatches = isSearchActive && filteredEvents.length === 0;
+  const allFilters = new Set([
+    ...facilityFilters,
+    ...countyFilters,
+    ...hostFilters,
+  ]);
 
   return (
     <div>
@@ -88,7 +205,55 @@ export default function ActiveEventsPage() {
               onKeyDown={handleEnter}
             />
           </SearchBar>
-          <FilterIcon src={Filter} alt="Filter icon" />
+          <FilterWrapper>
+            {filterMenuExpanded ? (
+              <FilterRow>
+                <Button type="button" onClick={handleFilterClick}>
+                  <FilterIcon src={Back} alt="Back icon" />
+                </Button>
+                <FilterMenuContainer>
+                  <FilterMenu
+                    filters={[
+                      {
+                        placeholder: 'Facility Type',
+                        options: facilityTypeOptions,
+                        value: facilityFilters,
+                        onChange: newValue => setFacilityFilters(newValue),
+                      },
+                      {
+                        placeholder: 'County',
+                        options: locationOptions,
+                        value: countyFilters,
+                        onChange: newValue => setCountyFilters(newValue),
+                      },
+                      {
+                        placeholder: 'Host Status',
+                        options: new Set(hostOptions.keys()),
+                        value: hostFilters,
+                        onChange: newValue => setHostFilters(newValue),
+                      },
+                    ]}
+                  />
+                </FilterMenuContainer>
+              </FilterRow>
+            ) : (
+              <FilterRow>
+                <Button onClick={handleFilterClick}>
+                  <FilterIcon src={Filter} alt="Filter icon" />
+                </Button>
+                <FilterTagContainer>
+                  {[...allFilters].map((filter, index) => (
+                    <FilterTag key={index}>
+                      {filter}
+                      <Button onClick={() => handleRemoveFilter(filter)}>
+                        <XIcon src={Cancel} alt="Cancel icon" />
+                      </Button>
+                    </FilterTag>
+                  ))}
+                </FilterTagContainer>
+              </FilterRow>
+            )}
+          </FilterWrapper>
           <TitleBar>
             {isSearchActive ? (
               filteredEvents.length === 0 || isFiltering ? null : (

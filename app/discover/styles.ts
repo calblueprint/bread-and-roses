@@ -35,7 +35,6 @@ export const Page = styled.main<{ $menuExpanded: boolean }>`
   min-width: 90%;
   min-height: 100vh;
   justify-content: center;
-  overflow: hidden;
   margin-left: ${({ $menuExpanded }) =>
     $menuExpanded ? '15%' : '0px'}; /* Adjust margin based on menu expansion */
   transition: margin-left 0.3s ease; /* Smooth transition for menu toggle */
@@ -84,11 +83,68 @@ export const Icon = styled(NextImage)`
   height: 20px;
 `;
 
+export const Button = styled.button`
+  display: flex;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  z-index: 999;
+  padding: 0;
+`;
+
 export const FilterIcon = styled(NextImage)`
+  width: 20px;
+  height: 20px;
+`;
+
+export const XIcon = styled(NextImage)`
+  width: 12px;
+  height: 12px;
+`;
+
+export const FilterWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const FilterRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: start;
   margin-top: 1rem;
   margin-left: 0.5rem;
-  width: 16px;
-  height: 16px;
+`;
+
+export const FilterTagContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 1rem;
+  gap: 0.5rem;
+`;
+
+export const FilterTag = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  background-color: ${COLORS.gray3};
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+`;
+
+export const FilterMenuContainer = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 0.875rem;
+  z-index: 1000;
+  background-color: ${COLORS.gray1};
+  overflow-y: auto;
 `;
 
 export const NoMatchContainer = styled.div`
