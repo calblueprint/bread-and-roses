@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  checkUserExists,
   getTempEmail,
-  insertVolunteer,
   resendVerificationEmail,
 } from '@/api/supabase/queries/auth';
 import Bud from '@/public/images/bud.svg';
