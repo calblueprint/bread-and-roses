@@ -88,12 +88,10 @@ export default function SignIn() {
 
       //if userRole not found -> push to role selection
 
-      console.log(userRole == null);
+      console.log('user Role is', userRole);
       if (!userRole) {
         router.push('/roles');
-      }
-
-      if (userRole === 'volunteer') {
+      } else if (userRole === 'volunteer') {
         router.push('/discover');
       } else if (userRole === 'facility') {
         try {
