@@ -1,10 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-  fetchAllActiveEvents,
-  fetchAllActiveEventsByFilter,
-} from '@/api/supabase/queries/events';
+import { fetchAllActiveEventsByFilter } from '@/api/supabase/queries/events';
 import DiscoverCard from '@/components/DiscoverCard/DiscoverCard';
 import FilterMenu from '@/components/FilterMenu/FilterMenu';
 import MenuBar from '@/components/MenuBar/MenuBar';
@@ -19,7 +16,6 @@ import {
   Discover,
   DiscoverCardContainer,
   DiscoverHolder,
-  FilterIcon,
   FilterMenuContainer,
   FilterRow,
   FilterTag,
@@ -70,9 +66,16 @@ const hostOptions = new Map<string, boolean>([
   ['No Host', true],
 ]);
 
+export interface EventWithFacility extends Event {
+  facilities: {
+    county: string;
+    type: string;
+  };
+}
+
 export default function ActiveEventsPage() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventWithFacility[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<EventWithFacility[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const [isSearchActive, setSearchActive] = useState<boolean>(false);
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
@@ -82,9 +85,10 @@ export default function ActiveEventsPage() {
   const [countyFilters, setCountyFilters] = useState(new Set<string>());
   const [hostFilters, setHostFilters] = useState(new Set<string>());
 
-  const getFilteredEvents = async () => {
+  const getSearchEvents = async () => {
     setIsFiltering(true);
-    const filtered: Event[] = await fetchAllActiveEventsByFilter(searchInput);
+    const filtered: EventWithFacility[] =
+      await fetchAllActiveEventsByFilter(searchInput);
     setFilteredEvents(filtered);
     setIsFiltering(false);
   };
@@ -101,7 +105,7 @@ export default function ActiveEventsPage() {
         setFilteredEvents(events);
       } else {
         setSearchActive(true);
-        getFilteredEvents();
+        getSearchEvents();
       }
     }
   };
@@ -119,6 +123,7 @@ export default function ActiveEventsPage() {
       ),
     );
     setIsFiltering(true);
+
     fetchAllActiveEventsByFilter('').then(data => {
       const filtered = data.filter(event => {
         const facilityTypeMatch =
@@ -127,13 +132,11 @@ export default function ActiveEventsPage() {
         const countyMatch =
           newCountyFilters.size === 0 ||
           newCountyFilters.has(event.facilities.county);
-        const hostFilterHasHost = newHostFilters.has('Has Host');
-        const hostFilterNoHost = newHostFilters.has('No Host');
 
         const hostMatch =
           newHostFilters.size === 0 ||
-          (hostFilterHasHost && event.needs_host) ||
-          (hostFilterNoHost && !event.needs_host);
+          (newHostFilters.has('Has Host') && event.needs_host) ||
+          (newHostFilters.has('No Host') && !event.needs_host);
 
         return facilityTypeMatch && countyMatch && hostMatch;
       });
@@ -170,13 +173,15 @@ export default function ActiveEventsPage() {
     setCountyFilters(newCountyFilters);
     setHostFilters(newHostFilters);
 
+    /* Reapply new filters */
     applyFilters(newFacilityFilters, newCountyFilters, newHostFilters);
   };
 
   /* Render all events on page mount */
   useEffect(() => {
     const getAllActiveEvents = async () => {
-      const fetchedActiveEvents: Event[] = await fetchAllActiveEvents();
+      const fetchedActiveEvents: EventWithFacility[] =
+        await fetchAllActiveEventsByFilter('');
       setEvents(fetchedActiveEvents);
       setFilteredEvents(fetchedActiveEvents);
     };
@@ -209,7 +214,7 @@ export default function ActiveEventsPage() {
             {filterMenuExpanded ? (
               <FilterRow>
                 <Button type="button" onClick={handleFilterClick}>
-                  <FilterIcon src={Back} alt="Back icon" />
+                  <Icon src={Back} alt="Back icon" />
                 </Button>
                 <FilterMenuContainer>
                   <FilterMenu
@@ -239,7 +244,7 @@ export default function ActiveEventsPage() {
             ) : (
               <FilterRow>
                 <Button onClick={handleFilterClick}>
-                  <FilterIcon src={Filter} alt="Filter icon" />
+                  <Icon src={Filter} alt="Filter icon" />
                 </Button>
                 <FilterTagContainer>
                   {[...allFilters].map((filter, index) => (
