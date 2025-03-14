@@ -105,8 +105,6 @@ export async function handleSignIn(
       };
     }
 
-    const user = sessionData.session.user;
-
     const { data: volunteerData } = await supabase
       .from('volunteers')
       .select('user_id')
