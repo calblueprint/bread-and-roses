@@ -105,37 +105,12 @@ export default function AvailabilityPage() {
       <MenuBar setMenuExpanded={setMenuExpanded} />
       <styles.Page $menuExpanded={menuExpanded}>
         {popupMessage && (
-          <div
-            style={{
-              position: 'fixed',
-              bottom: '20px',
-              right: '20px',
-              backgroundColor: '#d4edda', // Soft green
-              color: '#155724', // Dark green text
-              padding: '10px 15px',
-              borderRadius: '5px',
-              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-              fontSize: '14px',
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-            }}
-          >
+          <styles.PopUpDiv>
             {popupMessage}
-            <button
-              onClick={() => setPopupMessage(null)}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#155724',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-              }}
-            >
+            <styles.PopUpButton onClick={() => setPopupMessage(null)}>
               ✖
-            </button>
-          </div>
+            </styles.PopUpButton>
+          </styles.PopUpDiv>
         )}
 
         <styles.AllAvailabilitiesHolder>
