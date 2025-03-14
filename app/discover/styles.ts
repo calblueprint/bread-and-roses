@@ -9,7 +9,7 @@ export const SearchBar = styled.div`
   display: flex;
   padding: 0.75rem 1rem;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   width: 100%;
   border-radius: 0.5rem;
   background-color: ${COLORS.bread2};
@@ -92,11 +92,6 @@ export const Button = styled.button`
   padding: 0;
 `;
 
-export const FilterIcon = styled(NextImage)`
-  width: 20px;
-  height: 20px;
-`;
-
 export const XIcon = styled(NextImage)`
   width: 12px;
   height: 12px;
@@ -142,7 +137,7 @@ export const FilterMenuContainer = styled.div`
   left: 0;
   width: 100%;
   padding: 0.875rem;
-  z-index: 1000;
+  z-index: 999;
   background-color: ${COLORS.gray1};
   overflow-y: auto;
 `;
