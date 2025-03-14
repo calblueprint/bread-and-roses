@@ -42,7 +42,7 @@ export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
 }
 
 /* Find events by facility name, city, or county */
-export async function fetchAllActiveEventsBySearch(search: string) {
+export async function fetchAllActiveEventsByFilter(search: string) {
   const pattern = `%${search}%`;
 
   const { data, error } = await supabase
