@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import supabase from '@/api/supabase/createClient';
 import { fetchCurrentUserFacility } from '@/api/supabase/queries/onboarding';
 import bnrLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
 import { RoundedCornerButton } from '@/styles/styles';
 import { H4, P, SMALL } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
 import {
   BNRLogo,
   BoxContentContainer,
@@ -28,6 +30,13 @@ export default function Status() {
   const [email, setEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
+  const { signOut } = useSession();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    signOut();
+    router.push('/');
+  };
 
   useEffect(() => {
     async function setFacilityDetails() {
@@ -139,7 +148,12 @@ export default function Status() {
             </SMALL>
           </Email>
           {/* how are we handling logout? has it been implemented yet? */}
-          <SMALL $fontWeight={400} $color={COLORS.rose11}>
+          <SMALL
+            $fontWeight={400}
+            $color={COLORS.rose11}
+            onClick={handleSignOut}
+            style={{ cursor: 'pointer' }}
+          >
             Logout?
           </SMALL>
         </UserDetails>
