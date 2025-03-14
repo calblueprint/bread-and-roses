@@ -91,7 +91,7 @@ export const RoundedCornerButton = styled.button<{
   background-color: ${({ $bgColor }) => $bgColor || 'transparent'};
   color: ${({ $textColor }) => $textColor || 'inherit'};
   border: none;
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
