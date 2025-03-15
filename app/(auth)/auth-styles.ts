@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import styled from 'styled-components';
+import RouterLink from '@/components/RouterLink/RouterLink';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
 import { H3, P, SMALL } from '@/styles/text';
@@ -108,15 +109,21 @@ export const ForgotPassword = styled(SMALL)`
 `;
 
 export const StyledErrorMessage = styled(SMALL)<{ $isError: boolean }>`
-  color: ${COLORS.rose11};
+  color: ${({ $isError }) => ($isError ? COLORS.rose11 : 'green')};
   font-weight: 400;
   text-align: left;
   margin-bottom: 1rem;
 `;
 
-export const Link = styled.a`
+export const Link = styled(RouterLink)`
   color: ${COLORS.lilac9};
   text-decoration: none;
+  background: none;
+  border: none;
+  font-family: ${Sans.style.fontFamily};
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
 
   &:hover {
     text-decoration: underline;

@@ -40,8 +40,8 @@ export default function SignUp() {
 
     const { success, message } = await signUpUser(email, password);
 
-    setMessage(message);
     setIsError(!success);
+    setMessage(message);
 
     if (success) {
       router.push('/verification');

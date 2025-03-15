@@ -14,7 +14,7 @@ import {
 } from '../../../styles/styles';
 
 export default function Success() {
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
   const handleContinue = () => {
     router.push('/roles');
