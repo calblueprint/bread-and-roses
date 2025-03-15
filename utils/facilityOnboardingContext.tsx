@@ -6,6 +6,8 @@ export interface FacilityGeneralInfo {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  facilityName: string;
+  facilityType: string | null;
 }
 
 export interface Location {
@@ -35,6 +37,8 @@ export const FacilityOnboardingProvider = ({
     firstName: '',
     lastName: '',
     phoneNumber: '',
+    facilityName: '',
+    facilityType: null,
   });
 
   const [location, setLocation] = useState<Location>({
