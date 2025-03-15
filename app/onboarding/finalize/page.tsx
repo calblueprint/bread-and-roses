@@ -20,7 +20,7 @@ export default function Onboarding() {
   };
 
   return (
-    <Background isCentered={true}>
+    <Background iscentered={'true'}>
       <Image src={Rose} alt="Rose" />
       <InlineContainer>
         <ReviewContainer>

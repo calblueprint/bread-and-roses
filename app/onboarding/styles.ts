@@ -7,13 +7,14 @@ import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';
 import { H4, P, SMALL } from '@/styles/text';
 
-export const Background = styled.main<{ isCentered?: boolean }>`
+export const Background = styled.main<{ iscentered?: string }>`
   flex-direction: column;
   min-width: 100%;
   min-height: 100svh;
   display: flex;
   align-items: center;
-  ${({ isCentered }) => isCentered && 'justify-content: center;'}
+  ${({ iscentered: isCentered }) =>
+    isCentered == 'true' && 'justify-content: center;'}
   overflow: hidden;
 `;
 
