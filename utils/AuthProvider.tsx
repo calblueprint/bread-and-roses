@@ -83,7 +83,7 @@ export function AuthContextProvider({
           if (isOnboarded) {
             router.push('/discover');
           } else {
-            router.push('/role-selection');
+            router.push('/roles');
           }
         }
       }

@@ -65,7 +65,7 @@ export default function ResetPasswordPage() {
             <Image src={Back} alt="Back icon" />
           </Link>
           <H5>Reset Password</H5>
-          <TitleUnderline width="208px" />
+          <TitleUnderline width="182px" />
           <Instructions $fontWeight={400}>
             Enter and confirm your new password below.
           </Instructions>
