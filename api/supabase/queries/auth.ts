@@ -129,9 +129,7 @@ export async function handleSignIn(
         redirectTo: 'discover',
       };
     } else if (facilityData) {
-      console.log('facility data');
       if (facilityData.is_finalized) {
-        console.log('facility onboard complete');
         return {
           success: true,
           message: 'Login successful!',
