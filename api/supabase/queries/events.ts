@@ -47,7 +47,7 @@ export async function fetchAllActiveEventsByFilter(search: string) {
 
   const { data, error } = await supabase
     .from('events')
-    .select('*, facilities!inner(name, county, city)')
+    .select('*, facilities!inner(name, county, city, type)')
     .eq('event_status', 'Active')
     .or(`name.ilike.${pattern},city.ilike.${pattern},county.ilike.${pattern}`, {
       foreignTable: 'facilities',
