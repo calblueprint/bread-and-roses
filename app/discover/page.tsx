@@ -180,29 +180,28 @@ export default function ActiveEventsPage() {
     newCountyFilters: Set<string>,
     newHostFilters: Set<string>,
   ) => {
-    setSearchActive(
-      !!(
-        newFacilityFilters.size ||
-        newCountyFilters.size ||
-        newHostFilters.size
-      ),
+    const active = !!(
+      newFacilityFilters.size ||
+      newCountyFilters.size ||
+      newHostFilters.size
     );
+    setSearchActive(active);
     setIsFiltering(true);
 
     const filtered = events.filter(event => {
       const facilityTypeMatch =
-        newFacilityFilters.size === 0 ||
+        newFacilityFilters.size > 0 &&
         newFacilityFilters.has(event.facilities.type);
+
       const countyMatch =
-        newCountyFilters.size === 0 ||
+        newCountyFilters.size > 0 &&
         newCountyFilters.has(event.facilities.county);
 
       const hostMatch =
-        newHostFilters.size === 0 ||
         (newHostFilters.has('Has Host') && event.needs_host) ||
         (newHostFilters.has('No Host') && !event.needs_host);
 
-      return facilityTypeMatch && countyMatch && hostMatch;
+      return facilityTypeMatch || countyMatch || hostMatch || !active;
     });
 
     setFilteredEvents(filtered);
