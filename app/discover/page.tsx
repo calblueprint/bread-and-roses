@@ -191,18 +191,19 @@ export default function ActiveEventsPage() {
 
     const filtered = events.filter(event => {
       const facilityTypeMatch =
-        newFacilityFilters.size === 0 ||
+        newFacilityFilters.size > 0 &&
         newFacilityFilters.has(event.facilities.type);
+
       const countyMatch =
-        newCountyFilters.size === 0 ||
+        newCountyFilters.size > 0 &&
         newCountyFilters.has(event.facilities.county);
 
       const hostMatch =
-        newHostFilters.size === 0 ||
-        (newHostFilters.has('Has Host') && event.needs_host) ||
-        (newHostFilters.has('No Host') && !event.needs_host);
+        newHostFilters.size > 0 &&
+        ((newHostFilters.has('Has Host') && event.needs_host) ||
+          (newHostFilters.has('No Host') && !event.needs_host));
 
-      return facilityTypeMatch && countyMatch && hostMatch;
+      return facilityTypeMatch || countyMatch || hostMatch;
     });
 
     setFilteredEvents(filtered);
