@@ -16,7 +16,7 @@ export const Background = styled.main`
 `;
 
 export const Title = styled.h1`
-  font-size: 24px;
+  font-size: 1.5rem;
   text-align: start;
   color: ${COLORS.gray11};
   font-weight: 500;
@@ -58,11 +58,11 @@ export const Circle = styled.main`
 export const ReviewContainer = styled.main`
   position: relative; /* This makes the Circle position relative to this container */
   display: flex;
-  padding: 60px 32px 32px 32px;
+  padding: 3.75rem 2rem 2rem 2rem;
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  gap: 20px;
+  gap: 1.25rem;
   border-radius: 16px;
   background: var(--bread-1, #fefdfc);
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
@@ -71,7 +71,7 @@ export const ReviewContainer = styled.main`
 export const ContinueButton = styled.button`
   display: flex;
   margin-top: 0.75rem;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   justify-content: center;
   align-items: center;
   align-self: stretch;

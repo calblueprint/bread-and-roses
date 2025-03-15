@@ -7,5 +7,5 @@ import { P } from '@/styles/text';
 export const ChooseBothText = styled(P)`
   font-weight: 200;
   color: ${COLORS.gray11};
-  margin-top: 30px;
+  margin-top: 1.875rem;
 `;

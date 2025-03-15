@@ -8,7 +8,7 @@ export const ReviewContainer = styled.main`
   margin-top: 2rem;
   margin-bottom: 2rem;
   display: flex;
-  padding: 32px 32px 32px 32px;
+  padding: 2rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -26,7 +26,7 @@ export const SmallText = styled(P)`
 
 export const Line = styled.main`
   width: 100%;
-  height: 2px;
+  height: 0.125rem;
   color: black;
   background: linear-gradient(
     90deg,
@@ -48,7 +48,7 @@ export const InfoSection = styled.main`
 export const InfoSectionLine = styled.main`
   display: flex;
   width: 100%;
-  height: 1px;
+  height: 0.0625rem;
   background: ${COLORS.gray7};
 `;
 
@@ -69,11 +69,6 @@ export const RowContainer = styled.main`
   display: flex;
   width: 100%;
   gap: 40%;
-`;
-
-export const ConfirmText = styled.text`
-  color: white;
-  font-size: 14px;
 `;
 
 export const BackButton = styled.button`

@@ -19,7 +19,7 @@ export const AvailabilityContainer = styled.main`
 
 export const AvailabilityHeader = styled.main`
   display: flex;
-  padding: 16px 24px;
+  padding: 1rem 1.5rem;
   justify-content: space-between;
   align-items: center;
   background: ${COLORS.pomegranate11};
@@ -31,11 +31,11 @@ export const AvailabilityTitle = styled.main`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 0.25rem;
 `;
 
 export const Content = styled.main`
-  padding: 0px 24px 24px 24px;
+  padding: 0rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -44,7 +44,7 @@ export const Content = styled.main`
 export const SubHeader = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   justify-content: start;
   margin-bottom: 0.25rem;
 `;

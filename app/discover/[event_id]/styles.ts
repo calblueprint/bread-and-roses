@@ -215,7 +215,7 @@ export const SignUpContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 1.875rem;
 `;
 
 export const AdditionalInfoInput = styled.textarea`

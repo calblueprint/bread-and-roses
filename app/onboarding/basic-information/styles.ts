@@ -17,7 +17,7 @@ export const InputContainer = styled.div`
 
 export const UpdateText = styled.text`
   text-align: left;
-  margin-left: 15px;
+  margin-left: 0.9375rem;
 `;
 
 export const RedAsterisk = styled.span`

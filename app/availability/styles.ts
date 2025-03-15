@@ -16,7 +16,7 @@ export const Rectangle = styled.div<{
   width: string;
 }>`
   width: ${({ width }) => width};
-  height: 2px;
+  height: 0.125rem;
   display: inline-block;
   background: ${({ variant }) =>
     variant === 'light' ? COLORS.gray4 : COLORS.gray12};
@@ -75,7 +75,7 @@ export const Image = styled(NextImage)`
   margin-bottom: 16px;
 `;
 export const Button = styled.button<{ disabled?: boolean }>`
-  bottom: 70px;
+  bottom: 4.375rem;
   margin-left: 10%;
   margin-bottom: 2rem;
   width: 80%;
@@ -87,7 +87,7 @@ export const Button = styled.button<{ disabled?: boolean }>`
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   justify-content: center;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -95,13 +95,13 @@ export const Button = styled.button<{ disabled?: boolean }>`
   transition: all 0.3s ease;
   @media (max-width: 768px) {
     width: 85%;
-    bottom: 40px;
+    bottom: 2.5rem;
   }
 `;
 export const ContinueText = styled.text`
   ${Sans.style}
   color: white;
-  font-size: 14px;
-  padding: 10px;
+  font-size: 0.875rem;
+  padding: 0.625rem;
   text-decoration: none;
 `;

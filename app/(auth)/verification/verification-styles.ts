@@ -7,7 +7,7 @@ export const EmailContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: -0.9rem;
-  gap: 8px;
+  gap: 0.5rem;
 `;
 
 export const EmailIconStyled = styled(NextImage)`

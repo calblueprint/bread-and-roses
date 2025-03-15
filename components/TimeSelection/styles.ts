@@ -11,14 +11,14 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    padding: 0 15px;
-    font-size: 13px;
+    padding: 0 0.9375rem;
+    font-size: 0.8125rem;
     line-height: 1;
-    height: 35px;
-    gap: 5px;
+    height: 2.1875rem;
+    gap: 0.3125rem;
     background-color: white;
     color = ${COLORS.gray11};
-    border: 1px solid ${COLORS.gray8};
+    border: 0.0625rem solid ${COLORS.gray8};
   }
 
   .SelectTrigger:hover {
@@ -30,9 +30,9 @@ export const Container = styled.div`
   }
 
   .SelectLabel {
-    padding: 0 25px;
-    font-size: 12px;
-    line-height: 25px;
+    padding: 0 1.5625rem;
+    font-size: 0.75rem;
+    line-height: 1.5625rem;
     color = ${COLORS.gray8};
   }
 `;
@@ -57,21 +57,21 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 25px;
+    height: 1.5625rem;
     background-color: white;
     color: var(--violet-11);
     cursor: default;
   }
 
   .SelectItem {
-    font-size: 13px;
+    font-size: 0.8125rem;
     line-height: 1;
     color: black;
     border-radius: 8px;
     display: flex;
     align-items: center;
-    height: 30px;
-    padding: 0 25px 0 25px;
+    height: 1.875rem;
+    padding: 0 1.5625rem 0 1.5625rem;
     position: relative;
     user-select: none;
     color = ${COLORS.gray11};
@@ -84,13 +84,13 @@ export const Content = styled.div`
   }
 
   .SelectViewport {
-    padding: 5px;
+    padding: 0.3125rem;
   }
 
   .SelectItemIndicator {
     position: absolute;
     left: 0;
-    width: 25px;
+    width: 1.5625rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;

@@ -45,7 +45,7 @@ export default function Onboarding() {
   };
 
   const handleBack = async () => {
-    router.push('/onboarding/user-role-selection');
+    router.push('/roles');
   };
 
   return (

@@ -101,6 +101,7 @@ export async function submitFacilityOnboardingData(
       is_approved: false,
       info: '',
       zip: location.zipCode,
+      is_finalized: false,
     };
 
     const { data: facilityData, error: facilityError } = await supabase
@@ -141,4 +142,18 @@ export async function submitFacilityOnboardingData(
     console.error('Error during onboarding data submission:', error);
     throw error;
   }
+}
+
+export async function fetchCurrentUserFacility(user_id: string) {
+  const { data: facility, error: facility_error } = await supabase
+    .from('facilities')
+    .select('is_approved, street_address_1, city, zip')
+    .eq('user_id', user_id)
+    .single();
+
+  if (facility_error) {
+    console.error('Error getting facility details: ', facility_error);
+  }
+
+  return facility;
 }

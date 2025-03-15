@@ -8,7 +8,7 @@ export const ReviewContainer = styled.main`
   margin-top: 2rem;
   margin-bottom: 2rem;
   display: flex;
-  padding: 32px 32px 32px 32px;
+  padding: 2rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -26,7 +26,7 @@ export const SmallText = styled(P)`
 
 export const Line = styled.main`
   width: 100%;
-  height: 2px;
+  height: 0.125rem;
   color: black;
   background: linear-gradient(
     90deg,
@@ -35,11 +35,6 @@ export const Line = styled.main`
     rgba(184, 184, 184, 0) 100%
   );
   margin: 1.5rem 0;
-`;
-
-export const ConfirmText = styled.text`
-  color: white;
-  font-size: 14px;
 `;
 
 export const BackButton = styled.button`

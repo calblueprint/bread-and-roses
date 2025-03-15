@@ -5,7 +5,7 @@ import COLORS from '@/styles/colors';
 export const Container = styled.div``;
 
 export const Bar = styled.hr`
-  height: 1px;
+  height: 0.0625rem;
   color: ${COLORS.gray6};
   background: ${COLORS.gray6};
   font-size: 0;

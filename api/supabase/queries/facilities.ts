@@ -1,4 +1,5 @@
 import { UUID } from 'crypto';
+import { Facilities } from '@/types/schema';
 import supabase from '../createClient';
 
 // fetches an event by its event_id
@@ -24,6 +25,22 @@ export async function fetchFacilityContactByID(facility_id: UUID) {
 
   if (error) {
     throw new Error(error.message);
+  }
+  return data;
+}
+
+export async function fetchFacilityByUserID(
+  user_id: string,
+): Promise<Facilities | null> {
+  const { data, error } = await supabase
+    .from('facilities')
+    .select('*')
+    .eq('user_id', user_id)
+    .single();
+
+  if (error) {
+    console.log(error.message);
+    return null;
   }
 
   return data;

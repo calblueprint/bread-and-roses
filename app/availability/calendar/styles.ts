@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 
 export const Container = styled.div`
-  width: 500px;
-  margin: 100px;
+  width: 31.25rem;
+  margin: 6.25rem;
   cursor: default;
   .fc-prev-button,
   .fc-next-button {
@@ -38,8 +38,8 @@ export const Container = styled.div`
   .selected-date::after {   
     content: '';
     position: absolute;
-    width: 45px;
-    height: 45px;
+    width: 2.8125rem;
+    height: 2.8125rem;
     bottom: 5.5px;
     transform: translateX(11px);
     border-radius: 50%;

@@ -42,7 +42,7 @@ export const Email = styled(P)`
 `;
 
 export const SignOutButton = styled.button`
-  border: 1px solid ${COLORS.pomegranate12};
+  border: 0.0625rem solid ${COLORS.pomegranate12};
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   width: 7.4rem;
