@@ -10,6 +10,7 @@ export async function handleSignUp(
       email,
       password,
       options: {
+        // TODO: change this
         emailRedirectTo: 'http://localhost:3000/verification',
       },
     });
