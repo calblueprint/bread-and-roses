@@ -69,7 +69,7 @@ export async function fetchAcceptedEventsByFacility(user_id: string) {
 }
 
 /* Find events by facility name, city, or county */
-export async function fetchAllActiveEventsBySearch(search: string) {
+export async function fetchAllActiveEventsByFilter(search: string) {
   const pattern = `%${search}%`;
 
   const { data, error } = await supabase
