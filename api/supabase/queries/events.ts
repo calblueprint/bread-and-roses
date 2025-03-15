@@ -69,12 +69,12 @@ export async function fetchAcceptedEventsByFacility(user_id: string) {
 }
 
 /* Find events by facility name, city, or county */
-export async function fetchAllActiveEventsBySearch(search: string) {
+export async function fetchAllActiveEventsByFilter(search: string) {
   const pattern = `%${search}%`;
 
   const { data, error } = await supabase
     .from('events')
-    .select('*, facilities!inner(name, county, city)')
+    .select('*, facilities!inner(name, county, city, type)')
     .eq('event_status', 'Active')
     .or(`name.ilike.${pattern},city.ilike.${pattern},county.ilike.${pattern}`, {
       foreignTable: 'facilities',
