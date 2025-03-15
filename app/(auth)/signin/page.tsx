@@ -1,14 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import isEmail from 'validator/lib/isEmail';
 import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';
-import { fetchFacilityByUserID } from '@/api/supabase/queries/facilities';
 import BRLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
 import { H5, SMALL } from '@/styles/text';
-import { useSession } from '@/utils/AuthProvider';
 import {
   AuthSpacer,
   Button,
@@ -27,7 +25,6 @@ import {
 
 export default function SignIn() {
   const router = useRouter();
-  const { session, userRole } = useSession();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -74,52 +71,11 @@ export default function SignIn() {
       return;
     }
 
-    if (redirectTo === 'discover') {
-      return;
-    } else if (redirectTo === 'roles') {
-      router.push('/roles');
-    }
+    router.push('/' + redirectTo);
 
     setErrorMessage('');
     setIsLoggingIn(false);
   };
-
-  // Once session and userRole are set, redirect appropriately.
-  useEffect(() => {
-    const redirectUser = async () => {
-      if (!session) {
-        return;
-      }
-      //different possibilities: didn't verify email -> verify, verified email but didn't onboard -> push to role selection, verified email and onboarded -> push to regular page
-
-      //if userRole not found -> push to role selection
-
-      console.log('user Role is', userRole);
-      if (!userRole) {
-        router.push('/roles');
-      } else if (userRole === 'volunteer') {
-        router.push('/discover');
-      } else if (userRole === 'facility') {
-        try {
-          const facility = await fetchFacilityByUserID(session.user.id);
-          if (!facility) {
-            //no onboarding was done at all but role as facility was selected
-            router.push('onboarding/facility/basic-information');
-          } else if (!facility.is_finalized) {
-            //first part of onboarding was done, but post approval onboarding was not done
-            router.push('onboarding/facility/status');
-          } else {
-            //all onboarding was completed
-            router.push('/availability/general');
-          }
-        } catch (error) {
-          console.error('Error fetching facility status:', error);
-        }
-      }
-    };
-
-    redirectUser();
-  }, [session, userRole, router]);
 
   return (
     <Container>

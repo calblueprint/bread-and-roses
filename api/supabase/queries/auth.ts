@@ -70,7 +70,12 @@ export async function handleSignIn(
 ): Promise<{
   success: boolean;
   message: string;
-  redirectTo?: 'verification' | 'roles' | 'discover';
+  redirectTo?:
+    | 'verification'
+    | 'roles'
+    | 'discover'
+    | 'onboarding/facility/status'
+    | 'availability/general';
 }> {
   try {
     await ensureLoggedOutForNewUser(email);
@@ -112,23 +117,35 @@ export async function handleSignIn(
       .maybeSingle();
 
     const { data: facilityData } = await supabase
-      .from('facility_contacts')
-      .select('user_id')
-      .eq('email', email)
+      .from('facilities')
+      .select('user_id, is_finalized')
+      .eq('user_id', sessionData.session.user.id)
       .maybeSingle();
 
-    const onboarded = volunteerData || facilityData;
-
-    if (onboarded) {
+    if (volunteerData) {
       return {
         success: true,
         message: 'Login successful!',
         redirectTo: 'discover',
       };
+    } else if (facilityData) {
+      if (facilityData.is_finalized) {
+        return {
+          success: true,
+          message: 'Login successful!',
+          redirectTo: 'availability/general',
+        };
+      } else {
+        return {
+          success: true,
+          message: 'Login successful!',
+          redirectTo: 'onboarding/facility/status',
+        };
+      }
     } else {
       return {
         success: true,
-        message: 'Login successful! Needs onboarding.',
+        message: 'Login successful!',
         redirectTo: 'roles',
       };
     }

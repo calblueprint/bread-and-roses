@@ -78,12 +78,12 @@ export function AuthContextProvider({
             .eq('email', user.email)
             .maybeSingle();
 
-          const isOnboarded = !!volunteerData || !!facilityData;
-
-          if (isOnboarded) {
+          if (!!volunteerData) {
             router.push('/discover');
+          } else if (!!facilityData) {
+            router.push('/availability/general');
           } else {
-            router.push('/role-selection');
+            router.push('/roles');
           }
         }
       }
