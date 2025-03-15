@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { H3, H6, P, SMALL } from '@/styles/text';
+import { H3, H6, P, SMALLER } from '@/styles/text';
 
 export const SearchBar = styled.div`
   display: flex;
@@ -40,12 +40,17 @@ export const Page = styled.main<{ $menuExpanded: boolean }>`
   transition: margin-left 0.3s ease; /* Smooth transition for menu toggle */
 `;
 
-export const NearYou = styled(H6)`
+export const Label = styled(H6)`
   font-weight: 500;
 `;
 
 export const Found = styled(P)`
   font-weight: 500;
+`;
+
+export const RowContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const DiscoverHolder = styled.main`
@@ -58,6 +63,12 @@ export const DiscoverHolder = styled.main`
 
 export const Discover = styled(H3)`
   padding-top: 1.5rem;
+`;
+
+export const DiscoverContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
 `;
 
 export const DiscoverCardContainer = styled.div<{ $search: boolean }>`
@@ -156,7 +167,8 @@ export const NoMatchText = styled(P)`
   font-weight: 500;
 `;
 
-export const ShowAllText = styled(SMALL)<{ $hidden: boolean }>`
-  display: ${({ $hidden }) => ($hidden ? 'none' : 'flex')};
-  color: purple;
+export const ShowAllText = styled(SMALLER)`
+  display: flex;
+  font-weight: 500;
+  color: #755392;
 `;
