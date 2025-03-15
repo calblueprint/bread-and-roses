@@ -35,7 +35,7 @@ export default function MyEventCard(eventData: Event) {
             $color="#000"
             $align="left"
           >
-            placeholder
+            {facility?.name}
           </styles.EventDescriptionText>
           <styles.LocationText
             $fontWeight="400"

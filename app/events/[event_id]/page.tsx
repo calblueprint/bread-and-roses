@@ -63,7 +63,6 @@ export default function EventDisplay({
           setHostEmail(host.email);
           setHostName(`${host.first_name} ${host.last_name}`);
           setHostPhoneNumber(host.phone_number);
-          console.log(host);
         }
       } else {
         setHostEmail(fetchedFacility.host_email);

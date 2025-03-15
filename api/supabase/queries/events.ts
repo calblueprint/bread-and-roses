@@ -50,7 +50,6 @@ export async function fetchAcceptedEventsByFacility(user_id: string) {
     throw error;
   }
 
-  console.log(data);
   if (!data || data.length === 0) {
     //No facility contact found for this user
     return [];
