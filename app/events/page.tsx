@@ -2,12 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { fetchAcceptedEventsByFacility, fetchAcceptedEventsByVolunteer } from '@/api/supabase/queries/events';
+import {
+  fetchAcceptedEventsByFacility,
+  fetchAcceptedEventsByVolunteer,
+} from '@/api/supabase/queries/events';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
 import { Event } from '@/types/schema';
-import * as styles from './styles';
 import { useSession } from '@/utils/AuthProvider';
+import * as styles from './styles';
 
 type GroupedEvents = {
   [monthYear: string]: Event[]; // Each key is a "Month Year" string, and the value is an array of Events
@@ -20,12 +23,9 @@ export default function EventPage() {
   const { userRole } = useSession();
 
   useEffect(() => {
-
     if (session?.user) {
       const fetchRoleAndEvents = async () => {
         try {
-   
-   
           let eventsData = [];
           if (userRole === 'volunteer') {
             eventsData = await fetchAcceptedEventsByVolunteer(session.user.id);
@@ -37,13 +37,10 @@ export default function EventPage() {
           console.error('Error fetching events:', error);
         }
       };
-   
-   
+
       fetchRoleAndEvents();
     }
- 
   }, [session?.user, session?.user.id, userRole]);
- 
 
   const groupEventsByMonth = (events: Event[]) => {
     return events.reduce((acc: GroupedEvents, event) => {
