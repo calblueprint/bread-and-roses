@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {
-  getTempEmail,
-  resendVerificationEmail,
-} from '@/api/supabase/queries/auth';
+import { resendVerificationEmail } from '@/api/supabase/queries/auth';
 import Bud from '@/public/images/bud.svg';
 import EmailIcon from '@/public/images/email.svg';
 import COLORS from '@/styles/colors';
@@ -21,6 +18,7 @@ import {
 } from '@/styles/styles';
 import { P } from '@/styles/text';
 import { useSession } from '@/utils/AuthProvider';
+import { decryptEmail } from '@/utils/emailTokenUtils';
 import {
   EmailContainer,
   EmailIconStyled,
@@ -30,15 +28,26 @@ import {
 
 export default function Verification() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { session } = useSession();
-  const [tempEmail, setTempEmail] = useState<string | null>(null);
+
+  const [email, setEmail] = useState<string | null>(null);
   const [resendStatus, setResendStatus] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
-    const email = getTempEmail();
-    setTempEmail(email);
-  }, []);
+    const token = searchParams.get('token');
+
+    if (token) {
+      decryptEmail(token)
+        .then(setEmail)
+        .catch(() => {
+          setEmail(null);
+          setIsError(true);
+          setResendStatus('Invalid or expired verification link.');
+        });
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (session?.user?.email_confirmed_at) {
@@ -47,19 +56,24 @@ export default function Verification() {
   }, [session?.user?.email_confirmed_at, router]);
 
   const handleResendLink = async () => {
-    if (tempEmail) {
-      const message = await resendVerificationEmail(tempEmail);
-      setIsError(message.includes('Error'));
-      setResendStatus(message);
-    } else {
+    if (!email) {
       setIsError(true);
       setResendStatus('No email found.');
+      return;
     }
+
+    if (session?.user?.email_confirmed_at) {
+      setResendStatus('You are already verified!');
+      return;
+    }
+
+    const message = await resendVerificationEmail(email);
+    setIsError(message.includes('Error'));
+    setResendStatus(message);
   };
 
   const handleUseAnotherAccount = () => {
     router.push('/signin');
-    localStorage.removeItem('tempEmail');
   };
 
   return (
@@ -72,14 +86,12 @@ export default function Verification() {
             Thanks for signing up!
           </P>
           <P $fontWeight={400} $color={COLORS.gray12}>
-            A verification link has been sent to the email you specified, please
-            check your inbox for next steps.
+            A verification link has been sent to your email. Please check your
+            inbox.
           </P>
           <EmailContainer>
             <EmailIconStyled src={EmailIcon} alt="Email Icon" />
-            <EmailText>
-              {tempEmail ? tempEmail : 'Email address not found'}
-            </EmailText>
+            <EmailText>{email || 'Email address not found'}</EmailText>
           </EmailContainer>
 
           <RoundedCornerButton onClick={handleUseAnotherAccount} width="70%">
@@ -93,17 +105,16 @@ export default function Verification() {
             </Link>
           </Footer>
 
-          {isError && !tempEmail && (
-            <ResendMessage $isError={isError}>
-              Email address not found!{' '}
+          {!email && isError && (
+            <ResendMessage $isError={true}>
+              Email not found or invalid link.{' '}
               <Link href="#" onClick={() => router.push('/signup')}>
-                Return to the sign-up page
-              </Link>{' '}
-              to restart the sign-up process.
+                Sign up again
+              </Link>
             </ResendMessage>
           )}
 
-          {resendStatus && tempEmail && (
+          {resendStatus && email && (
             <ResendMessage $isError={isError}>{resendStatus}</ResendMessage>
           )}
         </ReviewContainer>
