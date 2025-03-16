@@ -53,41 +53,6 @@ export function AuthContextProvider({
         router.push('/resetpassword');
       }
 
-      if (event === 'SIGNED_IN') {
-        const isInRecovery =
-          localStorage.getItem('passwordRecoveryMode') === 'true';
-        if (!isInRecovery) {
-          const user = newSession?.user;
-
-          if (!user?.email) return;
-
-          if (!user.email_confirmed_at) {
-            router.push('/verification');
-            return;
-          }
-
-          const { data: volunteerData } = await supabase
-            .from('volunteers')
-            .select('user_id')
-            .eq('email', user.email)
-            .maybeSingle();
-
-          const { data: facilityData } = await supabase
-            .from('facility_contacts')
-            .select('user_id')
-            .eq('email', user.email)
-            .maybeSingle();
-
-          const isOnboarded = !!volunteerData || !!facilityData;
-
-          if (isOnboarded) {
-            router.push('/discover');
-          } else {
-            router.push('/roles');
-          }
-        }
-      }
-
       if (event === 'USER_UPDATED') {
         const isInRecovery =
           localStorage.getItem('passwordRecoveryMode') === 'true';

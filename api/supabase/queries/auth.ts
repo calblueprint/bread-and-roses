@@ -1,4 +1,5 @@
 import supabase from '@/api/supabase/createClient';
+import { encryptEmail } from '@/utils/emailTokenUtils';
 
 export async function handleSignUp(
   email: string,
@@ -7,12 +8,14 @@ export async function handleSignUp(
   try {
     await ensureLoggedOutForNewUser(email);
 
+    const encryptedEmail = await encryptEmail(email);
+    const redirectUrl = `http://localhost:3000/verification?token=${encodeURIComponent(encryptedEmail)}`;
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        // TODO: Change this
-        emailRedirectTo: 'http://localhost:3000/verification',
+        emailRedirectTo: redirectUrl,
       },
     });
 
@@ -23,7 +26,6 @@ export async function handleSignUp(
       };
     }
 
-    // Check if this is an existing user (identities array will be empty)
     const identities = data?.user?.identities;
     const isNewUser = identities && identities.length > 0;
 
@@ -34,8 +36,6 @@ export async function handleSignUp(
           'An account with this email already exists. Please log in instead.',
       };
     }
-
-    localStorage.setItem('tempEmail', email);
 
     return { success: true, message: 'Sign-up successful!' };
   } catch (err) {
