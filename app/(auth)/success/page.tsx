@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Rose from '@/public/images/rose-greenbg.svg';
 import COLORS from '@/styles/colors';
 import { P } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
 import {
   Background,
   Image,
@@ -15,6 +17,17 @@ import {
 
 export default function Success() {
   const router = useRouter();
+  const { session, userRole } = useSession();
+
+  useEffect(() => {
+    if (session && userRole) {
+      if (userRole === 'volunteer') {
+        router.push('/discover');
+      } else if (userRole === 'facility') {
+        router.push('/availability/general');
+      }
+    }
+  }, [session, userRole, router]);
 
   const handleContinue = () => {
     router.push('/roles');

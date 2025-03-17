@@ -131,10 +131,12 @@ export function AuthContextProvider({
   }, [session]);
 
   const signIn = (newSession: Session | null) => {
+    localStorage.removeItem('supabase.auth.token-signal');
     setSession(newSession);
   };
 
   const signInWithEmail = async (email: string, password: string) => {
+    localStorage.removeItem('supabase.auth.token-signal');
     const response = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -143,6 +145,7 @@ export function AuthContextProvider({
   };
 
   const signUp = async (email: string, password: string) => {
+    localStorage.removeItem('supabase.auth.token-signal');
     return await supabase.auth.signUp({
       email,
       password,
@@ -155,6 +158,7 @@ export function AuthContextProvider({
   const signOut = async () => {
     await supabase.auth.signOut();
     localStorage.setItem('supabase.auth.token-signal', `${Date.now()}`);
+    localStorage.removeItem('passwordRecoveryMode');
     setSession(null);
     setUserRole(null);
   };
