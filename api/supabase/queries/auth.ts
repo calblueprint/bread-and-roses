@@ -128,14 +128,6 @@ export async function handleSignIn(
   }
 }
 
-export const handleSignOut = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.error('Error during logout:', error.message);
-    return;
-  }
-};
-
 export async function sendPasswordResetEmail(
   email: string,
 ): Promise<{ success: boolean; message: string }> {

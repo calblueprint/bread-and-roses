@@ -47,7 +47,7 @@ export default function SignUp() {
 
     if (success) {
       setTimeout(() => {
-        router.push(`/verification?email=${encodeURIComponent(token)}`);
+        router.push(`/verification?token=${encodeURIComponent(token)}`);
       }, 1500);
     }
   };
