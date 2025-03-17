@@ -31,23 +31,32 @@ export default function Verification() {
   const searchParams = useSearchParams();
   const { session } = useSession();
 
+  const [hydrated, setHydrated] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   const [resendStatus, setResendStatus] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+
     const token = searchParams.get('token');
 
     if (token) {
       decryptEmail(token)
-        .then(setEmail)
-        .catch(() => {
+        .then(decrypted => {
+          setEmail(decrypted);
+        })
+        .catch(err => {
           setEmail(null);
           setIsError(true);
           setResendStatus('Invalid or expired verification link.');
         });
     }
-  }, [searchParams]);
+  }, [hydrated, searchParams]);
 
   useEffect(() => {
     if (session?.user?.email_confirmed_at) {

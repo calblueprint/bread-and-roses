@@ -32,12 +32,14 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [session, setSession] = useState<Session | null>(null);
   const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
     null,
   );
-  const pathname = usePathname();
 
+  // Initialize session on mount
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
       setSession(newSession);
@@ -56,9 +58,7 @@ export function AuthContextProvider({
       if (event === 'USER_UPDATED') {
         const isInRecovery =
           localStorage.getItem('passwordRecoveryMode') === 'true';
-        if (isInRecovery && pathname === '/resetpassword') {
-          return;
-        }
+        if (isInRecovery && pathname === '/resetpassword') return;
         localStorage.removeItem('passwordRecoveryMode');
       }
 
@@ -77,9 +77,28 @@ export function AuthContextProvider({
       }
     });
 
-    return () => subscription.unsubscribe();
+    const syncSessionAcrossTabs = async (event: StorageEvent) => {
+      if (event.key === 'supabase.auth.token-signal') {
+        const {
+          data: { session: updatedSession },
+        } = await supabase.auth.getSession();
+        setSession(updatedSession || null);
+
+        if (!updatedSession && pathname !== '/signin') {
+          router.push('/signin');
+        }
+      }
+    };
+
+    window.addEventListener('storage', syncSessionAcrossTabs);
+
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener('storage', syncSessionAcrossTabs);
+    };
   }, [router, pathname]);
 
+  // Fetch user role
   useEffect(() => {
     async function fetchUserRole(
       email: string,
@@ -101,7 +120,7 @@ export function AuthContextProvider({
       return null;
     }
 
-    if (session && session.user && session.user.email) {
+    if (session?.user?.email) {
       fetchUserRole(session.user.email).then(role => {
         setUserRole(role);
         console.log('User role set to:', role);
@@ -124,19 +143,18 @@ export function AuthContextProvider({
   };
 
   const signUp = async (email: string, password: string) => {
-    const response = await supabase.auth.signUp({
+    return await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: 'http://localhost:3000/verification',
       },
     });
-    return response;
   };
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    localStorage.removeItem('tempEmail');
+    localStorage.setItem('supabase.auth.token-signal', `${Date.now()}`);
     setSession(null);
     setUserRole(null);
   };
