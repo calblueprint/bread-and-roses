@@ -9,7 +9,6 @@ export async function handleSignUp(
   try {
     await ensureLoggedOutForNewUser(email);
 
-    const encryptedEmail = await encryptEmail(email);
     const redirectUrl = `${window.location.origin}/success`;
 
     const { data, error } = await supabase.auth.signUp({
