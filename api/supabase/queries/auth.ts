@@ -5,11 +5,12 @@ export async function handleSignUp(
   email: string,
   password: string,
 ): Promise<{ success: boolean; message: string }> {
+  localStorage.removeItem('supabase.auth.token-signal');
   try {
     await ensureLoggedOutForNewUser(email);
 
     const encryptedEmail = await encryptEmail(email);
-    const redirectUrl = `http://localhost:3000/verification?token=${encodeURIComponent(encryptedEmail)}`;
+    const redirectUrl = `${window.location.origin}/success`;
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -57,6 +58,7 @@ export async function handleSignIn(
   message: string;
   redirectTo?: 'verification' | 'roles' | 'discover';
 }> {
+  localStorage.removeItem('supabase.auth.token-signal');
   try {
     await ensureLoggedOutForNewUser(email);
 
@@ -234,9 +236,14 @@ export async function checkUserExists(
 
 export async function resendVerificationEmail(email: string): Promise<string> {
   try {
+    const redirectUrl = `${window.location.origin}/success`;
+
     const { error } = await supabase.auth.resend({
       type: 'signup',
       email: email,
+      options: {
+        emailRedirectTo: redirectUrl,
+      },
     });
 
     if (error) {
