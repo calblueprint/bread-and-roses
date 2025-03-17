@@ -50,7 +50,7 @@ export default function Verification() {
         .then(decrypted => {
           setEmail(decrypted);
         })
-        .catch(_err => {
+        .catch(() => {
           setEmail(null);
           setIsError(true);
           setResendStatus('Invalid or expired verification link.');
