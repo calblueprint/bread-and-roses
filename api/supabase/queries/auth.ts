@@ -1,5 +1,4 @@
 import supabase from '@/api/supabase/createClient';
-import { encryptEmail } from '@/utils/emailTokenUtils';
 
 export async function handleSignUp(
   email: string,
