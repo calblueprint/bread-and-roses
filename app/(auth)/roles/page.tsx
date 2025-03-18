@@ -3,23 +3,19 @@
 //temporary page
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import ProgressBar from '@/components/ProgressBar/ProgressBar';
-import Star from '@/public/images/star.svg';
-import Facility from '@/public/images/facility_contact.svg'
-import RoleSelector from '@/components/RoleSelector/RoleSelector';
-
 import {
-  SelectOneText,
-  Title,
-} from './styles';
-import { 
   Background,
-  ButtonContainer,
-  RoleContainer,
   Button,
+  ButtonContainer,
   ContinueText,
-  InlineContainer
+  InlineContainer,
+  RoleContainer,
 } from '@/app/onboarding/styles';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import RoleSelector from '@/components/RoleSelector/RoleSelector';
+import Facility from '@/public/images/facility_contact.svg';
+import Star from '@/public/images/star.svg';
+import { SelectOneText, Title } from './styles';
 
 export interface Role {
   isFacility: boolean;
@@ -27,73 +23,79 @@ export interface Role {
 }
 
 export default function OnboardingPage() {
- const router = useRouter();
- 
-const [role, setRole] = useState<Role>({
-  isFacility: false,
-  isVolunteer: false,
-});
+  const router = useRouter();
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { name } = e.target;
-
-  setRole({
-    isFacility: name === 'facility',
-    isVolunteer: name === 'volunteer',
+  const [role, setRole] = useState<Role>({
+    isFacility: false,
+    isVolunteer: false,
   });
-};
 
-const handleContinue = async () => {
-  if (role.isFacility) {
-    router.push('/onboarding/facility/basic-information');
-  } else if (role.isVolunteer) {
-    router.push('/onboarding/role-selection');
-  }
-  
-};
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+
+    setRole({
+      isFacility: name === 'facility',
+      isVolunteer: name === 'volunteer',
+    });
+  };
+
+  const handleContinue = async () => {
+    if (role.isFacility) {
+      router.push('/onboarding/facility/basic-information');
+    } else if (role.isVolunteer) {
+      router.push('/onboarding/role-selection');
+    }
+  };
   return (
     <Background>
       <InlineContainer>
-      <Title $fontWeight={500}>
-                What describes
-                <br />
-                you best?
-      </Title>
-      <ProgressBar from={0} to={0} />
-      <RoleContainer>
-        <SelectOneText>Select one.</SelectOneText>
-        <label onClick={() => setRole({ isFacility: true, isVolunteer: false })} style={{ cursor: 'pointer', width: '100%' }}>
-          <RoleSelector
-            isSelected={role.isFacility}
-            name="facility"
-            title="Facility Contact"
-            description="Represent your facility"
-            shape='circle' 
-            iconSrc={Facility} 
-            onChange={handleChange}        />
-        </label>
-        <label onClick={() => setRole({ isFacility: false, isVolunteer: true })} style={{ cursor: 'pointer', width: '100%' }}>
+        <Title $fontWeight={500}>
+          What describes
+          <br />
+          you best?
+        </Title>
+        <ProgressBar from={0} to={0} />
+        <RoleContainer>
+          <SelectOneText>Select one.</SelectOneText>
+          <label
+            onClick={() => setRole({ isFacility: true, isVolunteer: false })}
+            style={{ cursor: 'pointer', width: '100%' }}
+          >
             <RoleSelector
-            isSelected={role.isVolunteer}
-            name="volunteer"
-            title="Event Volunteer"
-            description="Host or Perform"
-            shape='circle' 
-            iconSrc={Star} 
-            onChange={handleChange}        />
-        </label>
-      </RoleContainer>
-      <ButtonContainer>
-        <Button 
-        position="fixed"
-        onClick={handleContinue}
-        disabled={!role.isFacility && !role.isVolunteer}
-        >
-          <ContinueText>Continue</ContinueText>
-        </Button>
-      </ButtonContainer>
+              isSelected={role.isFacility}
+              name="facility"
+              title="Facility Contact"
+              description="Represent your facility"
+              shape="circle"
+              iconSrc={Facility}
+              onChange={handleChange}
+            />
+          </label>
+          <label
+            onClick={() => setRole({ isFacility: false, isVolunteer: true })}
+            style={{ cursor: 'pointer', width: '100%' }}
+          >
+            <RoleSelector
+              isSelected={role.isVolunteer}
+              name="volunteer"
+              title="Event Volunteer"
+              description="Host or Perform"
+              shape="circle"
+              iconSrc={Star}
+              onChange={handleChange}
+            />
+          </label>
+        </RoleContainer>
+        <ButtonContainer>
+          <Button
+            position="fixed"
+            onClick={handleContinue}
+            disabled={!role.isFacility && !role.isVolunteer}
+          >
+            <ContinueText>Continue</ContinueText>
+          </Button>
+        </ButtonContainer>
       </InlineContainer>
     </Background>
-
   );
 }

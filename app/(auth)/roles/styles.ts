@@ -12,5 +12,4 @@ export const Title = styled(H4)`
 export const SelectOneText = styled(P)`
   font-weight: 500;
   color: ${COLORS.gray12};
-  
 `;
