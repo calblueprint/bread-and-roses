@@ -117,7 +117,7 @@ export default function Onboarding() {
 
         <ButtonContainer>
           <Button
-            position="fixed"
+            position="sticky"
             onClick={handleSubmit}
             disabled={
               !location.address ||

@@ -73,7 +73,7 @@ export default function Onboarding() {
 
         <ButtonContainer>
           <Button
-            position="fixed"
+            position="sticky"
             onClick={handleSubmit}
             disabled={
               facilitySpecificInfo.has_piano === null ||

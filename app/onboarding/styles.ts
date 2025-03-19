@@ -170,7 +170,7 @@ export const Button = styled.button<{
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    width: 85%;
+    width: ${({ position }) => (position === 'fixed' ? '85%' : '100%')};
     bottom: 2.5rem;
   }
 `;

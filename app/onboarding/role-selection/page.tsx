@@ -81,7 +81,7 @@ export default function Onboarding() {
         </RoleContainer>
         <ButtonContainer>
           <Button
-            position="fixed"
+            position="sticky"
             onClick={handleContinue}
             disabled={!role.isHost && !role.isPerformer}
           >

@@ -132,7 +132,7 @@ export default function Onboarding() {
           <SkipButton onClick={handleSubmit}>
             <SkipText>skip</SkipText>
           </SkipButton>
-          <Button onClick={handleSubmit} position="fixed">
+          <Button onClick={handleSubmit} position="sticky">
             <ContinueText>Continue</ContinueText>
           </Button>
         </ButtonContainer>
