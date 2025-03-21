@@ -180,28 +180,34 @@ export default function ActiveEventsPage() {
     newCountyFilters: Set<string>,
     newHostFilters: Set<string>,
   ) => {
-    const active = !!(
-      newFacilityFilters.size ||
-      newCountyFilters.size ||
-      newHostFilters.size
+    setSearchActive(
+      !!(
+        newFacilityFilters.size ||
+        newCountyFilters.size ||
+        newHostFilters.size
+      ),
     );
-    setSearchActive(active);
     setIsFiltering(true);
 
+    /* Check if the filter has any match in its category */
+    const checkMatch = (value: string, filters: Set<string>) => {
+      if (filters.size > 0) {
+        return filters.has(value);
+      }
+      return true;
+    };
+
     const filtered = events.filter(event => {
-      const facilityTypeMatch =
-        newFacilityFilters.size > 0 &&
-        newFacilityFilters.has(event.facilities.type);
-
-      const countyMatch =
-        newCountyFilters.size > 0 &&
-        newCountyFilters.has(event.facilities.county);
-
-      const hostMatch =
-        (newHostFilters.has('Has Host') && event.needs_host) ||
-        (newHostFilters.has('No Host') && !event.needs_host);
-
-      return facilityTypeMatch || countyMatch || hostMatch || !active;
+      const facilityTypeMatch = checkMatch(
+        event.facilities.type,
+        newFacilityFilters,
+      );
+      const countyMatch = checkMatch(event.facilities.county, newCountyFilters);
+      const hostMatch = checkMatch(
+        event.needs_host ? 'Has Host' : 'No Host',
+        newHostFilters,
+      );
+      return facilityTypeMatch && countyMatch && hostMatch;
     });
 
     setFilteredEvents(filtered);
