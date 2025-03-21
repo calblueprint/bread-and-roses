@@ -32,6 +32,7 @@ export const Input = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.25rem;
+  cursor: pointer;
 
   &::after {
     content: attr(data-label);
