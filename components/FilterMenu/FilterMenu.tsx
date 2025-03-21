@@ -50,11 +50,12 @@ export default function FilterMenu({
           <Divider />
           <InputContainer>
             {[...options].map(option => (
-              <Input key={option} data-label={option}>
-                <Checkbox
-                  checked={value.has(option)}
-                  onChange={() => handleSelectOption(option, value, onChange)}
-                />
+              <Input
+                key={option}
+                data-label={option}
+                onClick={() => handleSelectOption(option, value, onChange)}
+              >
+                <Checkbox checked={value.has(option)} />
               </Input>
             ))}
           </InputContainer>
