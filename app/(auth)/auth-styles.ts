@@ -9,6 +9,7 @@ import { H3, P, SMALL } from '@/styles/text';
 
 interface TitleUnderlineProps {
   width?: string;
+  align?: 'left' | 'center' | 'right';
 }
 
 export const Container = styled.div`
@@ -26,6 +27,10 @@ export const TitleUnderline = styled.div<TitleUnderlineProps>`
   width: ${props => props.width || '68px'};
   height: 4px;
   background-color: ${COLORS.rose8};
+  margin-left: ${props =>
+    props.align === 'left' ? '0' : props.align === 'right' ? 'auto' : 'auto'};
+  margin-right: ${props =>
+    props.align === 'left' ? 'auto' : props.align === 'right' ? '0' : 'auto'};
 `;
 
 export const Logo = styled(Image)`

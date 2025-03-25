@@ -1,7 +1,9 @@
 'use client';
 
 import React, {
+  ComponentType,
   createContext,
+  FC,
   useContext,
   useEffect,
   useMemo,
@@ -24,6 +26,29 @@ const AuthContext = createContext({} as AuthState);
 
 export function useSession() {
   return useContext(AuthContext);
+}
+
+export function withRequireAuth<P extends object>(
+  Component: ComponentType<P>,
+): FC<P> {
+  return function ProtectedComponent(props: P) {
+    const { session } = useSession();
+    const router = useRouter();
+    const [hydrated, setHydrated] = useState(false);
+
+    useEffect(() => {
+      setHydrated(true);
+    }, []);
+
+    useEffect(() => {
+      if (hydrated && session === null) {
+        router.push('/access-error');
+      }
+    }, [session, hydrated, router]);
+
+    if (!hydrated || !session) return null;
+    return <Component {...props} />;
+  };
 }
 
 export function AuthContextProvider({

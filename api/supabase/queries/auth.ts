@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import supabase from '@/api/supabase/createClient';
+import { useSession } from '@/utils/AuthProvider';
 
 export async function handleSignUp(
   email: string,

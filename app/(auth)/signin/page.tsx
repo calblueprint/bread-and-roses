@@ -100,7 +100,7 @@ export default function SignIn() {
       <Card>
         <Form onSubmit={handleSignIn}>
           <H5>Login</H5>
-          <TitleUnderline />
+          <TitleUnderline align="left" />
 
           {errorMessage && (
             <StyledErrorMessage $isError={true}>

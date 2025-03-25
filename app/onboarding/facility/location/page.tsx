@@ -20,10 +20,11 @@ import {
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
+import { withRequireAuth } from '@/utils/AuthProvider';
 import { FacilityOnboardingContext } from '@/utils/facilityOnboardingContext';
 import { RedAsterisk } from './styles';
 
-export default function Onboarding() {
+function Onboarding() {
   const router = useRouter();
   const facilityOnboardingContext = useContext(FacilityOnboardingContext);
 
@@ -133,3 +134,5 @@ export default function Onboarding() {
     </Background>
   );
 }
+
+export default withRequireAuth(Onboarding);

@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
+import { withRequireAuth } from '@/utils/AuthProvider';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   BackButton,
@@ -22,8 +23,9 @@ import {
 } from '../styles';
 import { TextArea } from './styles';
 
-export default function Onboarding() {
+function Onboarding() {
   const router = useRouter();
+
   const onboardingContext = useContext(OnboardingContext);
   if (!onboardingContext) return null;
 
@@ -91,3 +93,5 @@ export default function Onboarding() {
     </Background>
   );
 }
+
+export default withRequireAuth(Onboarding);
