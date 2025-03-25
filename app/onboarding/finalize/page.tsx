@@ -9,10 +9,9 @@ import {
   ReviewContainer,
 } from '@/styles/styles';
 import { P, SMALL } from '@/styles/text';
-import { withRequireAuth } from '@/utils/AuthProvider';
 import { Background, Title } from '../styles';
 
-function Onboarding() {
+export default function Onboarding() {
   const router = useRouter(); // Initialize useRouter
 
   const handleContinue = () => {
@@ -39,5 +38,3 @@ function Onboarding() {
     </Background>
   );
 }
-
-export default withRequireAuth(Onboarding);

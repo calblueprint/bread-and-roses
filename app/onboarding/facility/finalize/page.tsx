@@ -11,9 +11,8 @@ import {
   ReviewContainer,
 } from '@/styles/styles';
 import { H3, P, SMALL } from '@/styles/text';
-import { withRequireAuth } from '@/utils/AuthProvider';
 
-function Onboarding() {
+export default function Onboarding() {
   // const router = useRouter();
 
   const handleContinue = () => {
@@ -42,5 +41,3 @@ function Onboarding() {
     </Background>
   );
 }
-
-export default withRequireAuth(Onboarding);

@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
-import { withRequireAuth } from '@/utils/AuthProvider';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   BackButton,
@@ -50,7 +49,7 @@ const locationOptions = new Set([
 
 const audienceOptions = new Set(['Youth', 'Adults', 'Senior ']);
 
-function Onboarding() {
+export default function Onboarding() {
   const router = useRouter();
   const onboardingContext = useContext(OnboardingContext);
 
@@ -141,5 +140,3 @@ function Onboarding() {
     </Background>
   );
 }
-
-export default withRequireAuth(Onboarding);

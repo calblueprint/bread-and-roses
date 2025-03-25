@@ -15,7 +15,6 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import COLORS from '@/styles/colors';
 import { H5, P, SMALL } from '@/styles/text';
-import { withRequireAuth } from '@/utils/AuthProvider';
 import { FacilityOnboardingContext } from '@/utils/facilityOnboardingContext';
 import {
   BackButton,
@@ -29,7 +28,7 @@ import {
   SubSection,
 } from './styles';
 
-function Review() {
+export default function Review() {
   const router = useRouter();
 
   const facilityOnboardingContext = useContext(FacilityOnboardingContext);
@@ -154,5 +153,3 @@ function Review() {
     </Background>
   );
 }
-
-export default withRequireAuth(Review);

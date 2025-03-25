@@ -21,20 +21,16 @@ export default function Success() {
 
   useEffect(() => {
     if (session && userRole) {
-      setTimeout(() => {
-        if (userRole === 'volunteer') {
-          router.push('/discover');
-        } else if (userRole === 'facility') {
-          router.push('/availability/general');
-        }
-      }, 500);
+      if (userRole === 'volunteer') {
+        router.push('/discover');
+      } else if (userRole === 'facility') {
+        router.push('/availability/general');
+      }
     }
   }, [session, userRole, router]);
 
   const handleContinue = () => {
-    setTimeout(() => {
-      router.push('/roles');
-    }, 500);
+    router.push('/roles');
   };
 
   return (

@@ -6,7 +6,6 @@ import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { SMALL } from '@/styles/text';
-import { withRequireAuth } from '@/utils/AuthProvider';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
@@ -19,7 +18,7 @@ import {
 } from '../styles';
 import { BackButton, Line, ReviewContainer, SmallText } from './styles';
 
-function Review() {
+export default function Review() {
   const router = useRouter();
 
   const onboardingContext = useContext(OnboardingContext);
@@ -100,5 +99,3 @@ function Review() {
     </Background>
   );
 }
-
-export default withRequireAuth(Review);

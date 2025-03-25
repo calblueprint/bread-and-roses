@@ -7,7 +7,6 @@ import RoleSelector from '@/components/RoleSelector/RoleSelector';
 import Back from '@/public/images/back.svg';
 import Help from '@/public/images/help.svg';
 import Star from '@/public/images/star.svg';
-import { withRequireAuth } from '@/utils/AuthProvider';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   BackButton,
@@ -22,7 +21,7 @@ import {
 } from '../styles';
 import { ChooseBothText } from './styles';
 
-function Onboarding() {
+export default function Onboarding() {
   const router = useRouter();
 
   // Access the onboarding context
@@ -93,5 +92,3 @@ function Onboarding() {
     </Background>
   );
 }
-
-export default withRequireAuth(Onboarding);
