@@ -275,7 +275,11 @@ export default function ActiveEventsPage() {
   const showFiltered =
     isSearchActive && !isFiltering && filteredEvents.length > 0;
   const showDefault =
-    !isSearchActive && !isFiltering && filteredEvents.length > 0 && !noMatches;
+    !isSearchActive &&
+    !isFiltering &&
+    !filterMenuExpanded &&
+    filteredEvents.length > 0 &&
+    !noMatches;
   const allFilters = new Set([
     ...facilityFilters,
     ...countyFilters,
@@ -354,7 +358,6 @@ export default function ActiveEventsPage() {
               <Icon src={SadIcon} alt="Sad face icon" />
             </NoMatchContainer>
           )}
-          {/* Near You + Based On Your Interests View */}
           {showDefault && (
             <DiscoverContainer>
               <RowContainer>
@@ -393,7 +396,6 @@ export default function ActiveEventsPage() {
               </RowContainer>
             </DiscoverContainer>
           )}
-
           {/* Filtered Events View */}
           {showFiltered && (
             <RowContainer>
