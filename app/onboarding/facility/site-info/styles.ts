@@ -21,6 +21,7 @@ export const GrayInput = styled.div<GrayInputProps>`
   margin-top: 0.1875rem;
   border-radius: 0.5rem;
   width: 100%;
+  cursor: pointer;
   box-sizing: border-box;
   padding: 12px 16px 12px 16px;
   align-items: flex-center;
@@ -35,7 +36,6 @@ export const GrayInput = styled.div<GrayInputProps>`
 export const RadioContainer = styled.label`
   display: flex;
   flex-direction: column;
-  cursor: pointer;
   width: 100%;
   gap: 0.5rem;
 
