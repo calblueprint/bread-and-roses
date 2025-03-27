@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import isEmail from 'validator/lib/isEmail';
 import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';

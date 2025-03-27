@@ -76,12 +76,6 @@ export async function handleSignIn(
     | 'discover'
     | 'onboarding/facility/status'
     | 'availability/general';
-  redirectTo?:
-    | 'verification'
-    | 'roles'
-    | 'discover'
-    | 'onboarding/facility/status'
-    | 'availability/general';
 }> {
   try {
     await ensureLoggedOutForNewUser(email);
@@ -126,12 +120,8 @@ export async function handleSignIn(
       .from('facilities')
       .select('user_id, is_finalized')
       .eq('user_id', sessionData.session.user.id)
-      .from('facilities')
-      .select('user_id, is_finalized')
-      .eq('user_id', sessionData.session.user.id)
       .maybeSingle();
 
-    if (volunteerData) {
     if (volunteerData) {
       return {
         success: true,
@@ -155,7 +145,6 @@ export async function handleSignIn(
     } else {
       return {
         success: true,
-        message: 'Login successful!',
         message: 'Login successful!',
         redirectTo: 'roles',
       };
