@@ -1,5 +1,6 @@
 import React from 'react';
-import { H6, SMALL } from '@/styles/text';
+import COLORS from '@/styles/colors';
+import { P } from '@/styles/text';
 import {
   BoxContainer,
   Checkbox,
@@ -37,8 +38,12 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
           shape={shape}
         />
         <TextContainer>
-          <H6 $fontWeight={500}>{title}</H6>
-          <SMALL $fontWeight={400}>{description}</SMALL>
+          <P $color={COLORS.gray11} $fontWeight={500}>
+            {title}
+          </P>
+          <P $color={COLORS.gray10} $fontWeight={400}>
+            {description}
+          </P>
         </TextContainer>
       </RoleContainer>
       <Icon src={iconSrc} alt={name} />

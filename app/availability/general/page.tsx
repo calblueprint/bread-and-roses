@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   fetchAllAvailabilities,
+  fetchAvailabilitiesByFacilityId,
   fetchDatesByAvailabilityID,
 } from '@/api/supabase/queries/availability';
 import AvailabilityCard from '@/components/AvailabilityCard/AvailabilityCard';
@@ -32,7 +33,7 @@ export default function AvailabilityPage() {
   useEffect(() => {
     async function fetchAndGroupData() {
       try {
-        const availabilities = await fetchAllAvailabilities();
+        const availabilities = await fetchAvailabilitiesByUserId();
         if (!availabilities) return;
 
         const grouped: AvailabilitiesByYear = {};

@@ -48,6 +48,7 @@ export const Page = styled.div`
   min-width: 100%;
   min-height: 100svh;
   overflow: hidden;
+  margin-bottom: 2rem;
   @media (max-width: 768px) {
     margin-bottom: 3.75rem;
   }

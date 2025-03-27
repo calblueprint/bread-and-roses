@@ -64,7 +64,7 @@ interface CheckboxProps {
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
   width: 20px;
   height: 20px;
-  border: 2px solid ${COLORS.rose10};
+  border: 2px solid ${COLORS.gray10};
   border-radius: ${({ shape }) => (shape === 'circle' ? '50%' : '4px')};
   appearance: none;
   outline: none;

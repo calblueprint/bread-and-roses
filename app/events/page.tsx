@@ -2,10 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { fetchAcceptedEventsByVolunteer } from '@/api/supabase/queries/events';
+import {
+  fetchAcceptedEventsByFacility,
+  fetchAcceptedEventsByVolunteer,
+} from '@/api/supabase/queries/events';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
 import { Event } from '@/types/schema';
+import { useSession } from '@/utils/AuthProvider';
 import * as styles from './styles';
 
 type GroupedEvents = {
@@ -15,15 +19,28 @@ type GroupedEvents = {
 export default function EventPage() {
   const [data, setData] = useState<Event[]>([]);
   const [menuExpanded, setMenuExpanded] = useState(false); // Track the expanded state of the menu
+  const { session } = useSession();
+  const { userRole } = useSession();
 
   useEffect(() => {
-    fetchAcceptedEventsByVolunteer('7182b798-b8a3-497d-8407-e1724c89ca6f').then(
-      //placeholder user id
-      eventsData => {
-        setData(eventsData ?? []);
-      },
-    );
-  }, []);
+    if (session?.user) {
+      const fetchRoleAndEvents = async () => {
+        try {
+          let eventsData = [];
+          if (userRole === 'volunteer') {
+            eventsData = await fetchAcceptedEventsByVolunteer(session.user.id);
+          } else if (userRole === 'facility') {
+            eventsData = await fetchAcceptedEventsByFacility(session.user.id);
+          }
+          setData(eventsData ?? []);
+        } catch (error) {
+          console.error('Error fetching events:', error);
+        }
+      };
+
+      fetchRoleAndEvents();
+    }
+  }, [session?.user, session?.user.id, userRole]);
 
   const groupEventsByMonth = (events: Event[]) => {
     return events.reduce((acc: GroupedEvents, event) => {

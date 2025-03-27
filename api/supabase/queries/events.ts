@@ -11,7 +11,7 @@ export async function fetchAllEvents() {
   return data;
 }
 
-export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
+export async function fetchAcceptedEventsByVolunteer(user_id: string) {
   const { data, error } = await supabase
     .from('event_signups')
     .select('*')
@@ -31,14 +31,41 @@ export async function fetchAcceptedEventsByVolunteer(user_id: UUID) {
   const { data: events, error: eventsError } = await supabase
     .from('events')
     .select('*')
-    .eq('event_status', 'Active')
+    .gt('start_date_time', new Date().toISOString())
     .in('event_id', eventIDs);
 
   if (eventsError) {
     throw eventsError;
   }
-
   return events;
+}
+
+export async function fetchAcceptedEventsByFacility(user_id: string) {
+  const { data, error } = await supabase
+    .from('facility_contacts')
+    .select('facility_id')
+    .eq('user_id', user_id);
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data || data.length === 0) {
+    //No facility contact found for this user
+    return [];
+  }
+
+  const { data: events, error: eventsError } = await supabase
+    .from('events')
+    .select('*')
+    .eq('facility_id', data[0].facility_id)
+    .gt('start_date_time', new Date().toISOString());
+
+  if (eventsError) {
+    throw eventsError;
+  }
+
+  return events || [];
 }
 
 /* Find events by facility name, city, or county */
