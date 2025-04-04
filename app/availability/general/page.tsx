@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSession } from '@/utils/AuthProvider';
 import {
-  fetchAllAvailabilities,
-  fetchAvailabilitiesByFacilityId,
+  
+  fetchAvailabilitiesByFacilityUser,
   fetchDatesByAvailabilityID,
 } from '@/api/supabase/queries/availability';
 import AvailabilityCard from '@/components/AvailabilityCard/AvailabilityCard';
@@ -29,11 +30,14 @@ export default function AvailabilityPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [menuExpanded, setMenuExpanded] = useState(false);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const { session } = useSession();
 
   useEffect(() => {
     async function fetchAndGroupData() {
       try {
-        const availabilities = await fetchAvailabilitiesByUserId();
+        if (!session?.user) return;
+
+        const availabilities = await fetchAvailabilitiesByFacilityUser(session.user.id);
         if (!availabilities) return;
 
         const grouped: AvailabilitiesByYear = {};
@@ -79,7 +83,7 @@ export default function AvailabilityPage() {
     }
 
     fetchAndGroupData();
-  }, []);
+  }, [session?.user]);
 
   // ✅ Handle success or failure popup notification
   useEffect(() => {
