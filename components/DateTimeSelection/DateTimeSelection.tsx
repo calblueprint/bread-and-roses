@@ -22,28 +22,32 @@ export default function DateTimeSelection({ date }: { date: string }) {
   const { times, setTimes } = availabilityContext;
   console.log(times);
   const addTimeRange = () => {
+    /* Assign a unique ID to each time slot to ensure correct deletion*/
     setTimes({
       ...times,
-      [date]: [...times[date], structuredClone(defaultRange)],
+      [date]: [
+        ...times[date],
+        { ...structuredClone(defaultRange), id: crypto.randomUUID() },
+      ],
     });
   };
 
-  const updateTimeRange = (
-    index: number,
-    selectType: string,
-    newVal: number,
-  ) => {
-    const newDateTimes = [...times[date]];
-    if (selectType == 'start') {
-      newDateTimes[index].start = newVal;
-    } else {
-      newDateTimes[index].end = newVal;
-    }
+  const updateTimeRange = (id: string, selectType: string, newVal: number) => {
+    const newDateTimes = times[date].map(time => {
+      if (time.id === id) {
+        return {
+          ...time,
+          [selectType]: newVal,
+        };
+      }
+      return time;
+    });
+
     setTimes({ ...times, [date]: newDateTimes });
   };
 
-  const deleteTimeRange = (index: number) => {
-    setTimes({ ...times, [date]: times[date].filter((_, i) => i !== index) });
+  const deleteTimeRange = (id: string) => {
+    setTimes({ ...times, [date]: times[date].filter(time => time.id !== id) });
   };
 
   return (
@@ -58,23 +62,23 @@ export default function DateTimeSelection({ date }: { date: string }) {
       </H6>
       <Bar />
       <TimeList>
-        {times[date].map((time, index) => (
-          <Times key={index}>
+        {times[date].map(time => (
+          <Times key={time.id}>
             {/* initialize at 9 am / 5 pm */}
             <TimeSelection
               minutes={time.start}
               selectType="start"
               updateTimeRange={updateTimeRange}
-              index={index}
+              id={time.id}
             />
             <H6 $color={COLORS.gray8}> &ndash; </H6>
             <TimeSelection
               minutes={time.end}
               selectType="end"
               updateTimeRange={updateTimeRange}
-              index={index}
+              id={time.id}
             />
-            <DeleteButton onClick={() => deleteTimeRange(index)}>
+            <DeleteButton onClick={() => deleteTimeRange(time.id)}>
               <Image src={X} alt="delete" />
             </DeleteButton>
           </Times>

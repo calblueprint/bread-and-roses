@@ -87,6 +87,7 @@ export default function EventDisplay({
     new Date(event.start_date_time),
     new Date(event.end_date_time),
     true,
+    true,
   );
 
   return (

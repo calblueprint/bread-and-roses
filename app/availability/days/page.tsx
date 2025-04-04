@@ -39,38 +39,13 @@ export default function Page() {
   const router = useRouter();
   const availabilityContext = useContext(AvailabilityContext);
 
-  if (!availabilityContext) return null;
-
-  const { generalInfo, days, setDays, times, setTimes } = availabilityContext;
-
-  const handleSelect = (info: Info) => {
-    const { start, end } = info; // Get start and end of the selected range
-    while (start < end) {
-      if (!checkValidSelectDate(start)) {
-        const dateStr: string = start.toISOString();
-        if (days.includes(dateStr)) {
-          setDays(days.filter(days => days !== dateStr));
-        } else {
-          setDays([...days, dateStr]);
-        }
-      }
-      start.setDate(start.getDate() + 1); // Move to the next day
-    }
-  };
-
-  const updateMonth = (info: Info) => {
-    const middate = new Date((info.start.getTime() + info.end.getTime()) / 2);
-    setMonth(middate.getMonth());
-  };
-
   const dayCellClassNames = (date: DateObj) => {
     const dateObj = date.date;
-    const dateStr = dateObj.toISOString();
+    const dateStr = dateObj.toLocaleDateString('en-US'); /*mm/dd/yyyy format*/
     const month = dateObj.getMonth();
     // Default classes
     const classNames = [];
 
-    // Highlight selected dates
     if (days.includes(dateStr)) {
       classNames.push('selected-date');
       if (curMonth != month) {
@@ -87,6 +62,31 @@ export default function Page() {
 
     // Return the dynamic class names
     return classNames;
+  };
+
+  if (!availabilityContext) return null;
+  const { generalInfo, days, setDays, times, setTimes } = availabilityContext;
+
+  const handleSelect = (info: Info) => {
+    const { start, end } = info; // Get start and end of the selected range
+    while (start < end) {
+      if (!checkValidSelectDate(start)) {
+        const dateStr: string = start.toLocaleDateString('en-US');
+        const datePrefix =
+          start.toLocaleDateString('en-US'); /* Extract mm/dd/yyyy format */
+        if (days.includes(datePrefix)) {
+          setDays(days.filter(day => day !== datePrefix));
+        } else {
+          setDays([...days, dateStr]);
+        }
+      }
+      start.setDate(start.getDate() + 1); // Move to the next day
+    }
+  };
+
+  const updateMonth = (info: Info) => {
+    const middate = new Date((info.start.getTime() + info.end.getTime()) / 2);
+    setMonth(middate.getMonth());
   };
 
   function checkValidSelectDate(date: Date): boolean {
@@ -129,6 +129,7 @@ export default function Page() {
   const handleBack = () => {
     router.push('/availability/details');
   };
+
   return (
     <Container>
       <BackButton onClick={handleBack}>
@@ -146,6 +147,7 @@ export default function Page() {
             right: 'prev next',
           }}
           dayCellContent={arg => arg.date.getDate()}
+          editable={true}
           selectable={true}
           dayCellClassNames={dayCellClassNames}
           selectOverlap={false}

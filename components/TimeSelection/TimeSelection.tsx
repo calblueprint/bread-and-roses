@@ -9,12 +9,12 @@ export default function TimeSelection({
   minutes,
   updateTimeRange,
   selectType,
-  index,
+  id,
 }: {
   minutes: number;
-  updateTimeRange: (index: number, selectType: string, newVal: number) => void;
+  updateTimeRange: (id: string, selectType: string, newVal: number) => void;
   selectType: string;
-  index: number;
+  id: string;
 }) {
   const minutesToFormatted = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
@@ -41,8 +41,8 @@ export default function TimeSelection({
   return (
     <Container>
       <Select.Root
-        defaultValue={minutes.toString()}
-        onValueChange={val => updateTimeRange(index, selectType, +val)}
+        value={minutes.toString()}
+        onValueChange={val => updateTimeRange(id, selectType, +val)}
       >
         <Select.Trigger className="SelectTrigger" aria-label="Food">
           <Select.Value placeholder={minutesToFormatted(minutes)} />

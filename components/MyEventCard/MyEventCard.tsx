@@ -20,6 +20,7 @@ export default function MyEventCard(eventData: Event) {
     new Date(eventData.start_date_time),
     new Date(eventData.end_date_time),
     false,
+    true,
   );
 
   return (

@@ -1,6 +1,7 @@
 'use client';
 
 import NextImage from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { SMALL } from '@/styles/text';
@@ -62,4 +63,8 @@ export const TruncatedText = styled(SMALL)`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
 `;

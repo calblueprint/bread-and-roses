@@ -2,6 +2,7 @@
 
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { UUID } from 'crypto';
 import supabase from '@/api/supabase/createClient';
 import { fetchFacilityIDByUserID } from '@/api/supabase/queries/facilities';
 import { useSession } from './AuthProvider';
@@ -10,14 +11,17 @@ export interface GeneralInfo {
   eventName: string;
   additionalInfo: string;
   facilityId: string;
+  availabilityId?: UUID /* Exists if availability is being edited*/;
 }
 
 export interface TimeRange {
+  id: string;
   start: number;
   end: number;
 }
 
 export const defaultRange: TimeRange = {
+  id: crypto.randomUUID(),
   start: 9 * 60,
   end: 17 * 60,
 };
@@ -61,6 +65,29 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
 
   const submitAvailabilityData = async () => {
     try {
+      /* Delete previous availability if editing, before re-inserting new availability*/
+      const editId = generalInfo.availabilityId;
+      if (editId) {
+        const { error: deleteAvailabilityError } = await supabase
+          .from('availabilities')
+          .delete()
+          .eq('availability_id', editId);
+
+        if (deleteAvailabilityError) throw deleteAvailabilityError;
+
+        const { error: deleteDatesError } = await supabase
+          .from('available_dates')
+          .delete()
+          .eq('availability_id', editId);
+
+        if (deleteDatesError) throw deleteDatesError;
+
+        console.log(
+          `Deleted previous availability and dates for availability_id: ${editId}`,
+        );
+      }
+
+      /* Insert new availability and dates */
       const { data: availabilityData, error: availabilityError } =
         await supabase
           .from('availabilities')
@@ -81,10 +108,14 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
         ([date, timeRanges]) =>
           timeRanges.map(timeRange => {
             const startDate = new Date(date);
-            startDate.setMinutes(timeRange.start);
+            const startHour = Math.floor(timeRange.start / 60);
+            const startMin = timeRange.start % 60;
+            startDate.setHours(startHour, startMin);
 
             const endDate = new Date(date);
-            endDate.setMinutes(timeRange.end);
+            const endHour = Math.floor(timeRange.end / 60);
+            const endMin = timeRange.end % 60;
+            endDate.setHours(endHour, endMin);
 
             return {
               date_id: crypto.randomUUID(),
@@ -102,7 +133,6 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
       if (dateError) throw dateError;
 
       console.log('Availabilites successfully submitted');
-
       router.push('/availability/general?success=true');
     } catch (error) {
       console.error('Error submitting availabilities:', error);

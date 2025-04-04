@@ -2,6 +2,7 @@ export default function formatTime(
   eventStart: Date,
   eventEnd: Date,
   long: boolean,
+  includeDate: boolean,
 ) {
   const formatMinutes = (date: Date) => {
     const minutes = date.getMinutes();
@@ -49,6 +50,9 @@ export default function formatTime(
       ];
 
   const monthText = monthNames[eventStart.getMonth()];
+  const datePrefix = includeDate
+    ? `${monthText} ${eventStart.getDate()}, `
+    : '';
 
-  return `${monthText} ${eventStart.getDate()}, ${startTime} - ${endTime}`;
+  return `${datePrefix} ${startTime} - ${endTime}`;
 }

@@ -1,6 +1,7 @@
 import type { UUID } from 'crypto';
 import supabase from '../createClient';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function fetchAvailabilitiesByFacilityId(facility_id: UUID) {
   try {
     const { data, error } = await supabase
@@ -22,6 +23,20 @@ export async function fetchAvailabilitiesByFacilityId(facility_id: UUID) {
     console.error(`An unexpected error occurred:`, error);
     return null; // Return null on unexpected error
   }
+}
+
+export async function fetchAvailabilityByAvailabilityId(availability_id: UUID) {
+  const { data, error } = await supabase
+    .from('availabilities')
+    .select('*')
+    .eq('availability_id', availability_id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data || [];
 }
 
 export async function fetchAllAvailabilities() {
@@ -60,6 +75,6 @@ export async function fetchDatesByAvailabilityID(availability_id: UUID) {
     return data;
   } catch (error) {
     console.error('An unexpected error occured:', error);
-    return null;
+    return [];
   }
 }

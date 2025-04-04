@@ -58,34 +58,36 @@ export default function AvailabilityCard({
   }
 
   return (
-    <styles.AvailabilityContainer>
-      <styles.AvailabilityHeader>
-        <styles.AvailabilityTitle>
-          <H5 $fontWeight="500" $color={COLORS.bread1} $align="left">
-            {availability.name}
-          </H5>
-          <P $fontWeight="400" $color={COLORS.gray4} $align="left">
-            {formattedRange}
-          </P>
-        </styles.AvailabilityTitle>
-        <styles.Arrow src={Arrow} alt="arrow" />
-      </styles.AvailabilityHeader>
-      <styles.Content>
-        <div>
-          <styles.SubHeader>
-            <P $fontWeight="500" $color={COLORS.gray12} $align="left">
-              Description
+    <styles.StyledLink href={`/availability/${availability.availability_id}`}>
+      <styles.AvailabilityContainer>
+        <styles.AvailabilityHeader>
+          <styles.AvailabilityTitle>
+            <H5 $fontWeight="500" $color={COLORS.bread1} $align="left">
+              {availability.name}
+            </H5>
+            <P $fontWeight="400" $color={COLORS.gray4} $align="left">
+              {formattedRange}
             </P>
-            <styles.TruncatedText
-              $fontWeight="400"
-              $color={COLORS.gray11}
-              $align="left"
-            >
-              {availability.additional_info}
-            </styles.TruncatedText>
-          </styles.SubHeader>
-        </div>
-      </styles.Content>
-    </styles.AvailabilityContainer>
+          </styles.AvailabilityTitle>
+          <styles.Arrow src={Arrow} alt="arrow" />
+        </styles.AvailabilityHeader>
+        <styles.Content>
+          <div>
+            <styles.SubHeader>
+              <P $fontWeight="500" $color={COLORS.gray12} $align="left">
+                Description
+              </P>
+              <styles.TruncatedText
+                $fontWeight="400"
+                $color={COLORS.gray11}
+                $align="left"
+              >
+                {availability.additional_info}
+              </styles.TruncatedText>
+            </styles.SubHeader>
+          </div>
+        </styles.Content>
+      </styles.AvailabilityContainer>
+    </styles.StyledLink>
   );
 }

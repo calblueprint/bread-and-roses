@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   fetchAllAvailabilities,
-  fetchAvailabilitiesByFacilityId,
   fetchDatesByAvailabilityID,
 } from '@/api/supabase/queries/availability';
 import AvailabilityCard from '@/components/AvailabilityCard/AvailabilityCard';
@@ -14,6 +13,7 @@ import Add from '@/public/images/add.svg';
 import COLORS from '@/styles/colors';
 import { H3 } from '@/styles/text';
 import { Availabilities, AvailableDates } from '@/types/schema';
+import { AvailabilityContext } from '@/utils/availabilityContext';
 import * as styles from './styles';
 
 type AvailabilitiesByYear = {
@@ -29,11 +29,12 @@ export default function AvailabilityPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [menuExpanded, setMenuExpanded] = useState(false);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const availabilityContext = useContext(AvailabilityContext);
 
   useEffect(() => {
     async function fetchAndGroupData() {
       try {
-        const availabilities = await fetchAvailabilitiesByUserId();
+        const availabilities = await fetchAllAvailabilities();
         if (!availabilities) return;
 
         const grouped: AvailabilitiesByYear = {};
@@ -101,6 +102,19 @@ export default function AvailabilityPage() {
     }
   }, [router]);
 
+  if (!availabilityContext) return null;
+  const { setGeneralInfo, setDays, setTimes } = availabilityContext;
+
+  const clearEditContext = () => {
+    setGeneralInfo({
+      eventName: '',
+      additionalInfo: '',
+      facilityId: '',
+    });
+    setDays([]);
+    setTimes({});
+  };
+
   return (
     <div>
       <MenuBar setMenuExpanded={setMenuExpanded} />
@@ -119,7 +133,7 @@ export default function AvailabilityPage() {
             <H3 $fontWeight="500" $color="#000" $align="left">
               Availabilities
             </H3>
-            <Link href={`/availability/details`}>
+            <Link href="/availability/details" onClick={clearEditContext}>
               <styles.AddImage src={Add} alt="add icon" />
             </Link>
           </styles.TitleContainer>
