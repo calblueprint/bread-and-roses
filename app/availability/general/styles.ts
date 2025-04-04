@@ -2,14 +2,16 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
+import COLORS from '@/styles/colors';
 import { H6, P } from '@/styles/text';
 
-export const PopUpDiv = styled.div`
+export const PopUpDiv = styled.div<{ type: string }>`
   position: fixed;
   bottom: 1.25rem;
   right: 1.25rem;
-  background-color: #d4edda; // Soft green
-  color: #155724; // Dark green
+  background-color: ${({ type }) =>
+    type === 'edited' ? COLORS.lilac4 : '#d4edda'};
+  color: ${COLORS.gray12};
   padding: 0.625rem 1rem;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -23,7 +25,7 @@ export const PopUpDiv = styled.div`
 export const PopUpButton = styled.button`
   background: none;
   border: none;
-  color: #155724;
+  color: ${COLORS.gray10};
   fontweight: bold;
   cursor: pointer;
 `;

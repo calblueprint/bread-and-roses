@@ -133,7 +133,11 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
       if (dateError) throw dateError;
 
       console.log('Availabilites successfully submitted');
-      router.push('/availability/general?success=true');
+      if (editId) {
+        router.push('/availability/general?success=edited');
+      } else {
+        router.push('/availability/general?success=true');
+      }
     } catch (error) {
       console.error('Error submitting availabilities:', error);
       router.push('/availability/general?success=false');

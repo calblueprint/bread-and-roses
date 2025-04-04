@@ -29,6 +29,7 @@ export default function AvailabilityPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [menuExpanded, setMenuExpanded] = useState(false);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [popupType, setPopupType] = useState<string>('');
   const availabilityContext = useContext(AvailabilityContext);
 
   useEffect(() => {
@@ -89,14 +90,20 @@ export default function AvailabilityPage() {
 
     if (success === 'true') {
       setPopupMessage('Your availability has been added.');
+      setPopupType('success');
     } else if (success === 'false') {
       setPopupMessage('Error submitting your availability.');
+      setPopupType('error');
+    } else if (success === 'edited') {
+      setPopupMessage('Your availability has been updated!');
+      setPopupType('edited');
     }
 
     if (success) {
       // Hide the notification after 5 seconds
       setTimeout(() => {
         setPopupMessage(null);
+        setPopupType('');
         router.replace('/availability/general', undefined);
       }, 5000);
     }
@@ -120,7 +127,7 @@ export default function AvailabilityPage() {
       <MenuBar setMenuExpanded={setMenuExpanded} />
       <styles.Page $menuExpanded={menuExpanded}>
         {popupMessage && (
-          <styles.PopUpDiv>
+          <styles.PopUpDiv type={popupType}>
             {popupMessage}
             <styles.PopUpButton onClick={() => setPopupMessage(null)}>
               ✖
