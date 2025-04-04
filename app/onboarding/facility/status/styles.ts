@@ -83,7 +83,14 @@ export const StyledLI = styled.li<{ $completed: string }>`
 `;
 
 export const UserDetails = styled.main`
-  margin-top: 2.625rem;
+  @media (min-width: 768px) {
+    margin-top: 2.625rem;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 5rem;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;

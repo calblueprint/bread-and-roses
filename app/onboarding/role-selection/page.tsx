@@ -14,6 +14,7 @@ import {
   Button,
   ButtonContainer,
   ContinueText,
+  FixedFooter,
   Image,
   InlineContainer,
   RoleContainer,
@@ -80,6 +81,7 @@ export default function Onboarding() {
           <ChooseBothText>* feel free to choose both!</ChooseBothText>
         </RoleContainer>
         <ButtonContainer>
+          <FixedFooter />
           <Button
             position="sticky"
             onClick={handleContinue}

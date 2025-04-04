@@ -13,6 +13,7 @@ import {
   ButtonContainer,
   Container,
   ContinueText,
+  FixedFooter,
   Image,
   InlineContainer,
   SkipButton,
@@ -132,7 +133,16 @@ export default function Onboarding() {
           <SkipButton onClick={handleSubmit}>
             <SkipText>skip</SkipText>
           </SkipButton>
-          <Button onClick={handleSubmit} position="sticky">
+          <FixedFooter />
+          <Button
+            onClick={handleSubmit}
+            position="fixed"
+            disabled={
+              !preferences.facilityType.length ||
+              !preferences.location.length ||
+              !preferences.audience.length
+            }
+          >
             <ContinueText>Continue</ContinueText>
           </Button>
         </ButtonContainer>

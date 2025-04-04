@@ -70,16 +70,14 @@ export const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* justify-content: space-between; */
-  background-color: ${COLORS.bread1};
   border-radius: 8px;
-  padding: 2rem;
   gap: 1.75rem;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
   margin: 2.625rem 0;
 
-  @media (max-width: 768px) {
-    padding: 1.25rem;
+  @media (min-width: 768px) {
+    background-color: ${COLORS.bread1};
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
   }
 `;
 
@@ -145,15 +143,18 @@ export const ButtonContainer = styled.div`
   justify-content: flex-end;
   height: 80%;
   width: 100%;
+  @media (max-width: 768px) {
+    margin-top: 6rem;
+  }
 `;
 
 export const Button = styled.button<{
   disabled?: boolean;
   position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
 }>`
-  position: ${({ position = 'fixed' }) => position};
+  position: sticky;
   bottom: 4.375rem;
-  width: ${({ position }) => (position === 'fixed' ? '30%' : '100%')};
+  width: 100%;
   height: 2.75rem;
   background-color: ${({ disabled }) =>
     disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
@@ -168,10 +169,12 @@ export const Button = styled.button<{
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   text-decoration: none;
   transition: all 0.3s ease;
+  z-index: 2;
 
   @media (max-width: 768px) {
-    width: ${({ position }) => (position === 'fixed' ? '85%' : '100%')};
-    bottom: 2.5rem;
+    position: fixed;
+    width: 85%;
+    bottom: 2rem;
   }
 `;
 
@@ -194,7 +197,7 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    bottom: 2.5rem;
+    margin-bottom: 2.5rem;
   }
 `;
 
@@ -221,4 +224,20 @@ export const StyledTextarea = styled.textarea`
   border-radius: 0.25rem;
   resize: none;
   min-height: 6.25rem;
+`;
+
+export const FixedFooter = styled.div`
+  @media (max-width: 768px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 93px;
+    background-color: #f5f5f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    border-top: 2px solid ${COLORS.gray4};
+  }
 `;
