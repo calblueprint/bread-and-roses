@@ -3,9 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSession } from '@/utils/AuthProvider';
 import {
-  
   fetchAvailabilitiesByFacilityUser,
   fetchDatesByAvailabilityID,
 } from '@/api/supabase/queries/availability';
@@ -15,6 +13,7 @@ import Add from '@/public/images/add.svg';
 import COLORS from '@/styles/colors';
 import { H3 } from '@/styles/text';
 import { Availabilities, AvailableDates } from '@/types/schema';
+import { useSession } from '@/utils/AuthProvider';
 import * as styles from './styles';
 
 type AvailabilitiesByYear = {
@@ -37,7 +36,9 @@ export default function AvailabilityPage() {
       try {
         if (!session?.user) return;
 
-        const availabilities = await fetchAvailabilitiesByFacilityUser(session.user.id);
+        const availabilities = await fetchAvailabilitiesByFacilityUser(
+          session.user.id,
+        );
         if (!availabilities) return;
 
         const grouped: AvailabilitiesByYear = {};

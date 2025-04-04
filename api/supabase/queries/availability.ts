@@ -18,42 +18,45 @@ export async function fetchAvailabilitiesByFacilityUser(user_id: string) {
     //   console.log(
     //     'No availabilities found for this facility_id or facility_id is undefined',
     //   );
-      
+
     //   return null; // Return null if no matching data found
     // }
 
     // return data;
     const { data, error } = await supabase
-    .from('facilities')
-    .select('facility_id')
-    .eq('user_id', user_id)
-    .single();
+      .from('facilities')
+      .select('facility_id')
+      .eq('user_id', user_id)
+      .single();
 
-  if (error) {
-    console.error('Error fetching facility ID for user:', error);
-    return [];
-  }
+    if (error) {
+      console.error('Error fetching facility ID for user:', error);
+      return [];
+    }
 
-  if (!data) {
-    console.log('No facility found for user:', user_id);
-    return [];
-  }
+    if (!data) {
+      console.log('No facility found for user:', user_id);
+      return [];
+    }
 
-  const facility_id = data.facility_id;
+    const facility_id = data.facility_id;
 
-  // Fetch availabilities using the facility ID
-  const { data: availabilities, error: availabilitiesError } = await supabase
-    .from('availabilities')
-    .select('*')
-    .eq('facility_id', facility_id)
-    .gt('end_date_time', new Date().toISOString());
+    // Fetch availabilities using the facility ID
+    const { data: availabilities, error: availabilitiesError } = await supabase
+      .from('availabilities')
+      .select('*')
+      .eq('facility_id', facility_id)
+      .gt('end_date_time', new Date().toISOString());
 
-  if (availabilitiesError) {
-    console.error('Error fetching availabilities for facility:', availabilitiesError);
-    return [];
-  }
+    if (availabilitiesError) {
+      console.error(
+        'Error fetching availabilities for facility:',
+        availabilitiesError,
+      );
+      return [];
+    }
 
-  return availabilities ?? [];
+    return availabilities ?? [];
 
     //console.log('Availability of facility', facility_id, ':', data);
   } catch (error) {
