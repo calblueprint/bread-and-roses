@@ -49,6 +49,15 @@ export default function SettingCardPerformanceInterest({
   };
 
   const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [genresArray, setGenresArray] = useState<string[]>(genres);
+  const [performanceTypeArray, setPerformanceTypesArray] =
+    useState<string[]>(performance_types);
+
+  const handleCancel = () => {
+    setGenresArray(genres);
+    setPerformanceTypesArray(performance_types);
+    setIsEditable(!isEditable);
+  };
 
   return (
     <styles.AvailabilityContainer>
@@ -75,7 +84,10 @@ export default function SettingCardPerformanceInterest({
                     placeholder="Select performance type"
                     multi
                     options={performanceTypeOptions}
-                    value={new Set(performance_types)}
+                    value={new Set(performanceTypeArray)}
+                    onChange={selected =>
+                      setPerformanceTypesArray(Array.from(selected))
+                    }
                   />
                 ) : (
                   performance_types.map(performance_type => {
@@ -105,7 +117,8 @@ export default function SettingCardPerformanceInterest({
                     multi
                     //onChange={handlePerformanceTypeChange}
                     options={genreOptions}
-                    value={new Set(genres)}
+                    value={new Set(genresArray)}
+                    onChange={selected => setGenresArray(Array.from(selected))}
                   />
                 ) : (
                   genres.map(genre => {
@@ -137,6 +150,14 @@ export default function SettingCardPerformanceInterest({
               </styles.TruncatedText>
             </styles.SettingDetail>
           </styles.SubHeader>
+          {isEditable ? (
+            <div>
+              <button>save</button>
+              <button>cancel</button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </styles.Content>
     </styles.AvailabilityContainer>

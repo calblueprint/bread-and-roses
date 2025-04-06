@@ -44,6 +44,25 @@ export default function SettingCardShowPreferences({
   audience_preferences: string[];
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [facilitiesArray, setFacilitiesArray] =
+    useState<string[]>(facility_preferences);
+  const [audienceArray, setAudienceArray] =
+    useState<string[]>(audience_preferences);
+  const [locationsArray, setLocationsArray] = useState<string[]>(locations);
+
+  const handleCancel = () => {
+    setLocationsArray(locations);
+    setFacilitiesArray(facility_preferences);
+    setAudienceArray(audience_preferences);
+    setIsEditable(!isEditable);
+  };
+
+  const handleSave = () => {
+    locations = locationsArray;
+    facility_preferences = facilitiesArray;
+    audience_preferences = audienceArray;
+    setIsEditable(!isEditable);
+  };
 
   return (
     <styles.AvailabilityContainer>
@@ -70,7 +89,10 @@ export default function SettingCardShowPreferences({
                     placeholder="Select performance type"
                     multi
                     options={facilityTypeOptions}
-                    value={new Set(facility_preferences)}
+                    value={new Set(facilitiesArray)}
+                    onChange={selected =>
+                      setFacilitiesArray(Array.from(selected))
+                    }
                   />
                 ) : (
                   facility_preferences.map(facility => {
@@ -99,7 +121,10 @@ export default function SettingCardShowPreferences({
                     placeholder="Select performance type"
                     multi
                     options={locationOptions}
-                    value={new Set(locations)}
+                    value={new Set(locationsArray)}
+                    onChange={selected =>
+                      setLocationsArray(Array.from(selected))
+                    }
                   />
                 ) : (
                   locations.map(location => {
@@ -128,7 +153,10 @@ export default function SettingCardShowPreferences({
                     placeholder="Select performance type"
                     multi
                     options={audienceOptions}
-                    value={new Set(audience_preferences)}
+                    value={new Set(audienceArray)}
+                    onChange={selected =>
+                      setAudienceArray(Array.from(selected))
+                    }
                   />
                 ) : (
                   audience_preferences.map(audience => {
@@ -148,6 +176,14 @@ export default function SettingCardShowPreferences({
               </styles.SettingListedItems>
             </styles.SettingDetail>
           </styles.SubHeader>
+          {isEditable ? (
+            <div>
+              <button onClick={handleSave}>save</button>
+              <button onClick={handleCancel}>cancel</button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </styles.Content>
     </styles.AvailabilityContainer>

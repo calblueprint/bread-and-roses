@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
+import { UserInfo } from '@/utils/settingsInfo';
 import * as styles from './styles';
 import { Input, InputContainer, Label, RedAsterisk } from './styles';
 
@@ -9,24 +10,43 @@ export default function SettingCardPersonalDetails({
   first_name,
   last_name,
   phone,
-  edit_info,
+  editInfo,
+  setEditInfo,
 }: {
   first_name: string;
   last_name: string;
   phone: string;
-  edit_info: UserInfo;
+  editInfo: UserInfo;
+  setEditInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
-  const handleChange = event => {};
-  const updateField = <K extends keyof UserInfo>(
+  /*const updateField = <K extends keyof UserInfo>(
     field: K,
     value: UserInfo[K],
   ) => {
-    setEditedUserInfo(editedUserInfo => ({
-      ...editedUserInfo!,
+    setEdit_info(edit_info => ({
+      ...edit_info!,
       [field]: value,
     }));
+  };*/
+
+  const updateFirstName = (value: string) => {
+    //if (!editInfo) return first_name;
+    setEditInfo(prev => ({
+      ...prev,
+      first_name: value,
+    }));
+  };
+
+  const handleCancel = () => {
+    updateFirstName(first_name);
+
+    setIsEditable(!isEditable);
+  };
+
+  const handleSave = () => {
+    setIsEditable(!isEditable);
   };
 
   return (
@@ -53,8 +73,8 @@ export default function SettingCardPersonalDetails({
                   <Input
                     name="first_name"
                     placeholder="Jane"
-                    value={first_name}
-                    onChange={handleChange}
+                    value={editInfo.first_name}
+                    onChange={e => updateFirstName(e.target.value)}
                   />
                 </InputContainer>
               ) : (
@@ -65,7 +85,7 @@ export default function SettingCardPersonalDetails({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {first_name}
+                    {editInfo.first_name}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -123,6 +143,14 @@ export default function SettingCardPersonalDetails({
               )}
             </styles.SettingDetail>
           </styles.SubHeader>
+          {isEditable ? (
+            <div>
+              <button onClick={handleSave}>save</button>
+              <button onClick={handleCancel}>cancel</button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </styles.Content>
     </styles.AvailabilityContainer>
