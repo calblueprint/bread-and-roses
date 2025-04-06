@@ -31,6 +31,25 @@ export async function fetchVolunteerPreferences(user_id: string) {
   return data;
 }
 
+export async function updateVolunteerInfo(user_id1: string) {
+  const updatedFields = [''];
+
+  //check which fields need to be updated
+
+  //update the data
+  if (updatedFields.length > 0) {
+    const { data, error } = await supabase
+      .from('volunteers')
+      .update(updatedFields);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  }
+}
+
 export async function fetchPerformer(event_id: UUID) {
   const { data, error } = await supabase
     .from('event_signups')

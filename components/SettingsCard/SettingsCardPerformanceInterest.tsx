@@ -42,12 +42,6 @@ export default function SettingCardPerformanceInterest({
   genres: string[];
   performance_types: string[];
 }) {
-  const handlePerformanceTypeChange = (selectedOptions: Set<string>) => {
-    const selectedArray = Array.from(selectedOptions);
-    //setPreferences({ ...preferences, performanceType: selectedArray });
-    performance_types = selectedArray;
-  };
-
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [genresArray, setGenresArray] = useState<string[]>(genres);
   const [performanceTypeArray, setPerformanceTypesArray] =
