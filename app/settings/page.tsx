@@ -99,6 +99,7 @@ export default function SettingsPage() {
             first_name={userInfo.first_name}
             last_name={userInfo.last_name}
             phone={userInfo.phone_number}
+            userInfo={userInfo}
             editInfo={editedUserInfo}
             setEditInfo={setEditedUserInfo}
           />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { updateVolunteerInfo } from '@/api/supabase/queries/volunteers';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
@@ -10,6 +11,7 @@ export default function SettingCardPersonalDetails({
   first_name,
   last_name,
   phone,
+  userInfo,
   editInfo,
   setEditInfo,
 }: {
@@ -17,35 +19,41 @@ export default function SettingCardPersonalDetails({
   last_name: string;
   phone: string;
   editInfo: UserInfo;
+  userInfo: UserInfo;
   setEditInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
-  /*const updateField = <K extends keyof UserInfo>(
-    field: K,
-    value: UserInfo[K],
-  ) => {
-    setEdit_info(edit_info => ({
-      ...edit_info!,
-      [field]: value,
-    }));
-  };*/
-
   const updateFirstName = (value: string) => {
-    //if (!editInfo) return first_name;
     setEditInfo(prev => ({
       ...prev,
       first_name: value,
     }));
   };
 
+  const updateLastName = (value: string) => {
+    setEditInfo(prev => ({
+      ...prev,
+      last_name: value,
+    }));
+  };
+
+  const updatePhoneNumber = (value: string) => {
+    setEditInfo(prev => ({
+      ...prev,
+      phone_number: value,
+    }));
+  };
+
   const handleCancel = () => {
     updateFirstName(first_name);
-
+    updateLastName(last_name);
+    updatePhoneNumber(phone);
     setIsEditable(!isEditable);
   };
 
   const handleSave = () => {
+    updateVolunteerInfo();
     setIsEditable(!isEditable);
   };
 
@@ -99,8 +107,8 @@ export default function SettingCardPersonalDetails({
                   <Input
                     name="last_name"
                     placeholder="Doe"
-                    //value={generalInfo.firstName}
-                    //onChange={handleChange}
+                    value={editInfo.last_name}
+                    onChange={e => updateLastName(e.target.value)}
                   />
                 </InputContainer>
               ) : (
@@ -111,7 +119,7 @@ export default function SettingCardPersonalDetails({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {last_name}
+                    {editInfo.last_name}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -125,8 +133,8 @@ export default function SettingCardPersonalDetails({
                   <Input
                     name="phone_number"
                     placeholder="(987) 654 3210)"
-                    //value={generalInfo.firstName}
-                    //onChange={handleChange}
+                    value={editInfo.phone_number}
+                    onChange={e => updatePhoneNumber(e.target.value)}
                   />
                 </InputContainer>
               ) : (
@@ -137,7 +145,7 @@ export default function SettingCardPersonalDetails({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {phone}
+                    {editInfo.phone_number}
                   </styles.TruncatedText>
                 </div>
               )}
