@@ -50,7 +50,6 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
   });
   const [days, setDays] = useState<string[]>([]);
   const [times, setTimes] = useState<{ [date: string]: TimeRange[] }>({});
-
   useEffect(() => {
     if (session?.user?.id) {
       fetchFacilityIDByUserID(session.user.id)
@@ -61,7 +60,7 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
         })
         .catch(error => console.error('Error fetching facility ID:', error));
     }
-  }, [session?.user?.id]);
+  }, [session]);
 
   const submitAvailabilityData = async () => {
     try {
@@ -100,10 +99,10 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
           ])
           .select('availability_id')
           .single();
-
+      console.log('PREERROR');
       if (availabilityError) throw availabilityError;
       const availabilityId = availabilityData.availability_id;
-
+      console.log(availabilityId);
       const availabilities = Object.entries(times).flatMap(
         ([date, timeRanges]) =>
           timeRanges.map(timeRange => {

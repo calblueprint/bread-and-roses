@@ -10,7 +10,11 @@ export const PopUpDiv = styled.div<{ type: string }>`
   bottom: 1.25rem;
   right: 1.25rem;
   background-color: ${({ type }) =>
-    type === 'edited' ? COLORS.lilac4 : '#d4edda'};
+    type === 'edited'
+      ? COLORS.lilac4
+      : type === 'error'
+        ? COLORS.rose11
+        : '#d4edda'};
   color: ${COLORS.gray12};
   padding: 0.625rem 1rem;
   border-radius: 5px;
