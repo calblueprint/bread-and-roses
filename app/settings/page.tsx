@@ -90,6 +90,7 @@ export default function SettingsPage() {
             first_name={userInfo.first_name}
             last_name={userInfo.last_name}
             phone={userInfo.phone_number}
+            edit_info={editedUserInfo}
           />
           <SettingsCardNotifications />
           <SettingsCardShowPreferences
