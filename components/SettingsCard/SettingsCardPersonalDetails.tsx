@@ -9,12 +9,25 @@ export default function SettingCardPersonalDetails({
   first_name,
   last_name,
   phone,
+  edit_info,
 }: {
   first_name: string;
   last_name: string;
   phone: string;
+  edit_info: UserInfo;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
+
+  const handleChange = event => {};
+  const updateField = <K extends keyof UserInfo>(
+    field: K,
+    value: UserInfo[K],
+  ) => {
+    setEditedUserInfo(editedUserInfo => ({
+      ...editedUserInfo!,
+      [field]: value,
+    }));
+  };
 
   return (
     <styles.AvailabilityContainer>
@@ -40,8 +53,8 @@ export default function SettingCardPersonalDetails({
                   <Input
                     name="first_name"
                     placeholder="Jane"
-                    //value={generalInfo.firstName}
-                    //onChange={handleChange}
+                    value={first_name}
+                    onChange={handleChange}
                   />
                 </InputContainer>
               ) : (
