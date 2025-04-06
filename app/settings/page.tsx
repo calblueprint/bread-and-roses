@@ -13,9 +13,10 @@ import SettingsCardPersonalDetails from '@/components/SettingsCard/SettingsCardP
 import SettingsCardShowPreferences from '@/components/SettingsCard/SettingsCardShowPreferences';
 import SignOut from '@/public/images/signout.svg';
 import { useSession } from '@/utils/AuthProvider';
+import { UserInfo, UserPreferences } from '@/utils/settingsInfo';
 import * as styles from './styles';
 
-interface UserInfo {
+/*interface UserInfo {
   first_name: string;
   last_name: string;
   email: string;
@@ -29,19 +30,28 @@ interface UserPreferences {
   performance_type: string[];
   locations: string[];
   additional_info: string;
-}
+}*/
 
 export default function SettingsPage() {
   const [menuExpanded, setMenuExpanded] = useState<boolean>(false); // Track the expanded state of the menu
   const { session } = useSession();
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [userPreferences, setUserPreferences] =
-    useState<UserPreferences | null>(null);
-  const [editedUserInfo, setEditedUserInfo] = useState<UserInfo | null>(
-    userInfo,
-  );
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone_number: '',
+  });
+  const [userPreferences, setUserPreferences] = useState<UserPreferences>({
+    facility_type: [],
+    audience_type: [],
+    genre: [],
+    performance_type: [],
+    locations: [],
+    additional_info: '',
+  });
+  const [editedUserInfo, setEditedUserInfo] = useState<UserInfo>(userInfo);
   const [editedUserPrefs, setEditedUserPrefs] =
-    useState<UserPreferences | null>(userPreferences);
+    useState<UserPreferences>(userPreferences);
 
   const updateField = <K extends keyof UserInfo>(
     field: K,
@@ -89,7 +99,8 @@ export default function SettingsPage() {
             first_name={userInfo.first_name}
             last_name={userInfo.last_name}
             phone={userInfo.phone_number}
-            edit_info={editedUserInfo}
+            editInfo={editedUserInfo}
+            setEditInfo={setEditedUserInfo}
           />
           <SettingsCardNotifications />
           <SettingsCardShowPreferences
