@@ -368,13 +368,20 @@ export default function ActiveEventsPage() {
                   </Button>
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
-                  {nearYouEvents.map(event => (
-                    <DiscoverCard
-                      search={isSearchActive}
-                      key={event.event_id}
-                      event={event}
-                    />
-                  ))}
+                  {nearYouEvents.length > 0 ? (
+                    nearYouEvents.map(event => (
+                      <DiscoverCard
+                        search={isSearchActive}
+                        key={event.event_id}
+                        event={event}
+                      />
+                    ))
+                  ) : (
+                    <NoMatchContainer>
+                      <NoMatchText>No matches</NoMatchText>
+                      <Icon src={SadIcon} alt="Sad face icon" />
+                    </NoMatchContainer>
+                  )}
                 </DiscoverCardContainer>
               </RowContainer>
               <RowContainer>
