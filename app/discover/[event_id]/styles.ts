@@ -10,15 +10,72 @@ interface TagProps {
   $bgColor?: string;
 }
 
-export const Container = styled.div`
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-top: 1rem;
+export const ImageWrapper = styled.div`
+  height: 17.5rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background-color: ${COLORS.gray12};
 `;
 
-export const Body = styled.div`
-  margin-left: 1rem;
-  margin-right: 1rem;
+export const Page = styled.div`
+  flex-direction: column;
+  display: flex;
+  min-width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  // margin-bottom: 2rem;
+  @media (max-width: 768px) {
+    margin-bottom: 3.75rem;
+  }
+`;
+
+export const Curve = styled.div`
+  z-index: 2;
+  margin: -1.5rem 0;
+  position: relative;
+  padding: 0.75rem 2rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    border-radius: 20px 20px 0 0;
+  }
+  background: ${COLORS.gray1};
+`;
+
+export const LeftWrapper = styled.div`
+  @media (min-width: 768px) {
+    padding-right: 3.875rem;
+  }
+`;
+
+export const RightWrapper = styled.div`
+  margin-top: 1.188rem;
+  @media (min-width: 768px) {
+    padding-left: 3.875rem;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid ${COLORS.gray6};
+    height: 100%;
+  }
+`;
+
+export const Container = styled.div<{ $column?: boolean }>`
+  display: grid;
+  padding-top: 2rem;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    margin-left: 1.75rem;
+    margin-right: 1.75rem;
+  }
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: ${({ $column }) => ($column ? '1fr' : '3fr 2fr')};
+    margin-left: 5.1875rem;
+    margin-right: 5.1875rem;
+  }
+  justify-content: space-between;
 `;
 
 export const Image = styled(NextImage)<{ $checked?: boolean }>`
@@ -54,15 +111,15 @@ export const Location = styled(P)`
   align-items: start;
 `;
 
-export const CalendarIcon = styled(NextImage)`
-  width: 1.25rem;
+export const Icon = styled(NextImage)`
+  width: 1rem;
   height: auto;
   margin-right: 0.5rem;
 `;
 
 export const LocationIcon = styled(NextImage)`
   margin-top: 0.125rem;
-  width: 1.25rem;
+  width: 1rem;
   height: auto;
   margin-right: 0.5rem;
 `;
@@ -148,7 +205,6 @@ export const Asterisk = styled(P)`
 export const ShowInterest = styled(H5)`
   margin-top: 2.5rem;
   font-weight: 500;
-  margin-bottom: 1.5rem;
 `;
 
 export const InterestBlock = styled.div<{ $checked?: boolean }>`
@@ -240,4 +296,64 @@ export const GroupSizeInput = styled.textarea`
   padding: 0.375rem;
   margin-top: 0.375rem;
   ${Sans.style}
+`;
+
+export const ConfirmationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin: 4rem 0;
+`;
+
+export const BreadImage = styled(Image)`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85px;
+  height: 85px;
+  z-index: 2;
+`;
+
+export const ConfirmationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: ${COLORS.bread1};
+  justify-content: center;
+  align-items: start;
+  gap: 1.5rem;
+  padding: 3.25rem 2rem 2rem 2rem;
+  border-radius: 1rem;
+  border: 1px solid ${COLORS.gray2};
+  box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
+`;
+export const ConfirmationTitle = styled(H5)`
+  font-weight: 500;
+`;
+
+export const ConfirmationBodyText = styled(P)`
+  font-weight: 400;
+`;
+
+export const ConfirmationButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: ${COLORS.pomegranate12};
+  cursor: pointer;
+`;
+
+export const ConfirmationButtonText = styled(P)`
+  color: ${COLORS.gray1};
+  font-weight: 400;
+`;
+
+export const IconContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
 `;
