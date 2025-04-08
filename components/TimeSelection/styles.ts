@@ -12,7 +12,7 @@ export const Container = styled.div`
     justify-content: center;
     border-radius: 8px;
     padding: 0 0.9375rem;
-    font-size: 0.8125rem;
+    font-size: 1rem;
     line-height: 1;
     height: 2.1875rem;
     gap: 0.3125rem;
@@ -31,7 +31,7 @@ export const Container = styled.div`
 
   .SelectLabel {
     padding: 0 1.5625rem;
-    font-size: 0.75rem;
+    font-size: 1rem;
     line-height: 1.5625rem;
     color = ${COLORS.gray8};
   }
@@ -64,7 +64,7 @@ export const Content = styled.div`
   }
 
   .SelectItem {
-    font-size: 0.8125rem;
+    font-size: 1rem;
     line-height: 1;
     color: black;
     border-radius: 8px;

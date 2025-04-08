@@ -6,6 +6,7 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
+  AnswerContainer,
   Asterisk,
   BackButton,
   Button,
@@ -61,21 +62,23 @@ export default function Page() {
         </BackButton>
         <Title $fontWeight={500}> What&apos;s the Occasion? </Title>
         <ProgressBar from={0} to={25} />
-        <EventName>
-          Event Name &nbsp; <Asterisk> * </Asterisk>
-        </EventName>
-        <EventNameInput
-          placeholder="Event Name"
-          name="eventName"
-          value={generalInfo.eventName}
-          onChange={handleChange}
-        />
-        <AdditionalInfo> Additional Info </AdditionalInfo>
-        <AdditionalInfoInput
-          name="additionalInfo"
-          value={generalInfo.additionalInfo}
-          onChange={handleChange}
-        />
+        <AnswerContainer>
+          <EventName>
+            Event Name &nbsp; <Asterisk> * </Asterisk>
+          </EventName>
+          <EventNameInput
+            placeholder="Event Name"
+            name="eventName"
+            value={generalInfo.eventName}
+            onChange={handleChange}
+          />
+          <AdditionalInfo> Additional Information </AdditionalInfo>
+          <AdditionalInfoInput
+            name="additionalInfo"
+            value={generalInfo.additionalInfo}
+            onChange={handleChange}
+          />
+        </AnswerContainer>
       </QuestionsContainer>
       <ButtonContainer>
         <Divider />

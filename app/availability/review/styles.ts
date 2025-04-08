@@ -3,8 +3,8 @@ import COLORS from '@/styles/colors';
 import { P } from '@/styles/text';
 
 export const EditButton = styled.button`
-  cursor: pointer;
   all: unset;
+  cursor: pointer;
 `;
 
 export const TextContainer = styled.div`
@@ -15,6 +15,11 @@ export const TextContainer = styled.div`
 
 export const EditText = styled(P)`
   color: ${COLORS.lilac9};
+  font-weight: 400;
+`;
+
+export const AvailabilityDiv = styled.div`
+  margin-top: 4rem;
 `;
 
 export const ReviewContainer = styled.div`

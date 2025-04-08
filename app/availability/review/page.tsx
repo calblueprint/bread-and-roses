@@ -8,6 +8,8 @@ import COLORS from '@/styles/colors';
 import { P } from '@/styles/text';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
+  AnswerContainer,
+  AvailabilityText,
   BackButton,
   Button,
   ButtonContainer,
@@ -18,6 +20,7 @@ import {
   Title,
 } from '../styles';
 import {
+  AvailabilityDiv,
   BulletedList,
   Divider,
   EditButton,
@@ -83,41 +86,45 @@ export default function Page() {
         <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
         </BackButton>
-        <Title $fontWeight={500}> Does everything look right? </Title>
+        <Title $fontWeight={500}> Did we get everything? </Title>
         <ProgressBar from={75} to={100} />
-        <SplitText>
-          <Title $fontWeight={500}> About </Title>
-          <EditButton onClick={handleDetails}>
-            <EditText> edit </EditText>
-          </EditButton>
-        </SplitText>
-        <Divider />
-        <TextContainer>
-          <div>
-            <P $fontWeight={500}> Event Name </P>
-            <P $fontWeight={400} $color={COLORS.gray11}>
-              {generalInfo.eventName}
-            </P>
-          </div>
-          <div>
-            <P $fontWeight={500}> Additional Info </P>
-            <P $fontWeight={400} $color={COLORS.gray11}>
-              {generalInfo.additionalInfo || '(blank)'}
-            </P>
-          </div>
-        </TextContainer>
-        <SplitText>
-          <Title $fontWeight={500}> Availabilties </Title>
-          <EditButton onClick={handleDays}>
-            <EditText> edit </EditText>
-          </EditButton>
-        </SplitText>
-        <Divider />
-        <TextContainer> {Availabilities}</TextContainer>
-        <GradientDivider />
-        <TipText $fontWeight={400} $color={COLORS.gray11}>
-          * Everything can be modified later!
-        </TipText>
+        <AnswerContainer>
+          <SplitText>
+            <Title $fontWeight={500}> About </Title>
+            <EditButton onClick={handleDetails}>
+              <EditText> edit </EditText>
+            </EditButton>
+          </SplitText>
+          <Divider />
+          <TextContainer>
+            <div>
+              <P $fontWeight={500}> Event Name </P>
+              <P $fontWeight={400} $color={COLORS.gray11}>
+                {generalInfo.eventName}
+              </P>
+            </div>
+            <div>
+              <P $fontWeight={500}> Additional Info </P>
+              <P $fontWeight={400} $color={COLORS.gray11}>
+                {generalInfo.additionalInfo || '(blank)'}
+              </P>
+            </div>
+          </TextContainer>
+          <AvailabilityDiv>
+            <SplitText>
+              <Title $fontWeight={500}> Availabilties </Title>
+              <EditButton onClick={handleDays}>
+                <EditText> edit </EditText>
+              </EditButton>
+            </SplitText>
+          </AvailabilityDiv>
+          <Divider />
+          <TextContainer> {Availabilities}</TextContainer>
+          <GradientDivider />
+          <TipText $fontWeight={400} $color={COLORS.gray11}>
+            * Everything can be modified later!
+          </TipText>
+        </AnswerContainer>
         <ButtonContainer>
           <Button onClick={submitAvailabilityData}>
             <ContinueText>Everything look&apos;s good!</ContinueText>

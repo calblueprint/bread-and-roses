@@ -10,4 +10,7 @@ export const TimeContainer = styled.div`
 export const DaylightTime = styled(P)`
   color: ${COLORS.gray10};
   font-weight: 400;
+  @media (min-width: 1024px) {
+    display: none;
+  }
 `;

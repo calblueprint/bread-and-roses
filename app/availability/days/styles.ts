@@ -81,10 +81,10 @@ export const Calendar = styled.div`
     content: '';
     position: absolute;
     transform: translateX(18px);
-    bottom: 141px;
+    bottom: 142px;
     @media(min-width: 1024px) {
-      bottom: 192px;
-      transform: translateX(24px);
+      bottom: 193px;
+      transform: translateX(25px);
     }
     width: 4px; /* Diameter of the dot */
     height: 4px; /* Diameter of the dot */
