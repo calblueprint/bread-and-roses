@@ -302,7 +302,8 @@ export const ConfirmationWrapper = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  margin: 4rem 0;
+  margin: 4rem auto;
+  max-width: 35rem;
 `;
 
 export const BreadImage = styled(Image)`

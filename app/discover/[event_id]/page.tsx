@@ -195,7 +195,7 @@ export default function EventPage({
     <ConfirmationWrapper>
       <ConfirmationContainer>
         <BreadImage src={Bread} alt="Bread Icon" />
-        <H5>We&apos;ll be in touch!</H5>
+        <H5 $fontWeight="500">We&apos;ll be in touch!</H5>
         <ConfirmationBodyText>
           Your interest in volunteering at {facility.name} is greatly
           appreciated! Whether you&apos;re performing or hosting, your
@@ -214,7 +214,7 @@ export default function EventPage({
 
         <ConfirmationBodyText>
           We’ll be in touch soon with more details. In the meantime, if you have
-          any questions, feel free to reach out to {facility.host_email}.
+          any questions, feel free to reach out to info@breadandroses.org.
         </ConfirmationBodyText>
         <ConfirmationBodyText>
           Thank you for making a difference!
@@ -391,9 +391,11 @@ export default function EventPage({
                           });
                         }
                         /* Check required fields filled before confirmation. */
-                        if (groupSize > 0 && acknowledgeChecked) {
-                          setIsSubmitted(true);
-                        }
+
+                        // if (groupSize > 0 && acknowledgeChecked) {
+                        setIsSubmitted(true);
+                        //   console.log('Submitted!');
+                        // }
                       }
                     } else {
                       console.error('Missing user ID or event ID');
