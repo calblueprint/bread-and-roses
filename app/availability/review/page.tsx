@@ -9,7 +9,6 @@ import { P } from '@/styles/text';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
   AnswerContainer,
-  AvailabilityText,
   BackButton,
   Button,
   ButtonContainer,
