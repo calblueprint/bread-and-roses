@@ -50,6 +50,8 @@ export const Container = styled.div`
   overflow-x: hidden;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0 auto;
+  max-width: 35rem;
   justify-content: space-between;
   padding-left: 2rem;
   padding-right: 2rem;
