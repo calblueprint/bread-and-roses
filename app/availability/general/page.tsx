@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
-  fetchAllAvailabilities,
+  fetchAvailabilitiesByFacilityId,
   fetchDatesByAvailabilityID,
 } from '@/api/supabase/queries/availability';
 import AvailabilityCard from '@/components/AvailabilityCard/AvailabilityCard';
@@ -15,6 +15,7 @@ import { H3 } from '@/styles/text';
 import { Availabilities, AvailableDates } from '@/types/schema';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import * as styles from './styles';
+import { useSession } from '@/utils/AuthProvider';
 
 type AvailabilitiesByYear = {
   [year: string]: {
@@ -31,57 +32,60 @@ export default function AvailabilityPage() {
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
   const [popupType, setPopupType] = useState<string>('');
   const availabilityContext = useContext(AvailabilityContext);
+  const { session } = useSession();
 
   useEffect(() => {
     async function fetchAndGroupData() {
       try {
-        const availabilities = await fetchAllAvailabilities();
-        if (!availabilities) return;
-
+        const facility_id = session?.user.id;
+        console.log('[DEBUG] Facility ID:', facility_id);
+        if (!facility_id) {
+          setIsLoading(false);
+          return;
+        }
+  
+        const availabilities = await fetchAvailabilitiesByFacilityId(facility_id);
+        if (!availabilities) {
+          setIsLoading(false);
+          return;
+        }
+  
         const grouped: AvailabilitiesByYear = {};
         for (const availability of availabilities) {
-          const availableDates = await fetchDatesByAvailabilityID(
-            availability.availability_id,
-          );
-          const year = availableDates?.[0]?.start_date_time
-            ? new Date(availableDates[0].start_date_time)
-                .getFullYear()
-                .toString()
+          const availableDates = availability.available_dates ?? [];
+  
+          const year = availableDates[0]?.start_date_time
+            ? new Date(availableDates[0].start_date_time).getFullYear().toString()
             : null;
-
-          if (year == null) continue;
-
-          if (!grouped[year]) {
-            grouped[year] = [];
-          }
-
+  
+          if (!year) continue;
+  
+          if (!grouped[year]) grouped[year] = [];
+  
           grouped[year].push({
             availability,
-            available_dates: availableDates ?? [],
+            available_dates: availableDates,
           });
         }
-
+  
         for (const year in grouped) {
           grouped[year].sort((a, b) => {
-            const firstDateA = new Date(
-              a.available_dates[0]?.start_date_time ?? 0,
-            ).getTime();
-            const firstDateB = new Date(
-              b.available_dates[0]?.start_date_time ?? 0,
-            ).getTime();
+            const firstDateA = new Date(a.available_dates[0]?.start_date_time ?? 0).getTime();
+            const firstDateB = new Date(b.available_dates[0]?.start_date_time ?? 0).getTime();
             return firstDateA - firstDateB;
           });
         }
-
+  
         setGroupedByYear(grouped);
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setIsLoading(false);
       }
     }
-
+  
     fetchAndGroupData();
-  }, []);
+  }, [session?.user.id]);
 
   // ✅ Handle success or failure popup notification
   useEffect(() => {

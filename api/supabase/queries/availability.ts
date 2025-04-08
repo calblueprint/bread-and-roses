@@ -2,26 +2,40 @@ import type { UUID } from 'crypto';
 import supabase from '../createClient';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function fetchAvailabilitiesByFacilityId(facility_id: UUID) {
+export async function fetchAvailabilitiesByFacilityId(facility_id: string) {
   try {
     const { data, error } = await supabase
       .from('availabilities')
-      .select('*')
+      .select('*, available_dates(*)')
       .eq('facility_id', facility_id);
+
     if (error) {
       console.error('Error fetching availability by facility id:', error);
+      return null;
     }
-    //Check if data array is not empty
-    if (data && data.length == 0) {
-      console.log(
-        'No availabilities found for this facility_id or facility_id is undefined',
-      );
-      return null; // Return null if no matching data found
+
+    const now = new Date().toISOString();
+    console.log('[DEBUG] Now:', now);
+    console.log('[DEBUG] Raw data from Supabase:', data);
+
+    // Only keep availabilities with at least one future end_date_time
+    const futureAvailabilities = (data ?? []).filter((availability) =>
+      availability.available_dates?.some(
+        (date: any) => date.end_date_time > now
+      )
+    );
+
+    console.log('[DEBUG] Filtered future availabilities:', futureAvailabilities);
+
+    if (futureAvailabilities.length === 0) {
+      console.log('No future availabilities for facility:', facility_id);
+      return null;
     }
-    console.log('Availability of facility', facility_id, ':', data);
+
+    return futureAvailabilities;
   } catch (error) {
-    console.error(`An unexpected error occurred:`, error);
-    return null; // Return null on unexpected error
+    console.error('An unexpected error occurred:', error);
+    return null;
   }
 }
 
