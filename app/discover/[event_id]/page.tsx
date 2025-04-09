@@ -114,8 +114,9 @@ export default function EventPage({
   const [acknowledgeChecked, setAcknowledgeChecked] = useState(false);
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [groupSize, setGroupSize] = useState(0);
-  const [groupSizeError, setGroupSizeError] = useState(false);
+  const [groupSizeError, setGroupSizeError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const getEvent = async () => {
@@ -135,13 +136,13 @@ export default function EventPage({
     const { value } = e.target;
     // regex for checking if input is number numbers
     if (!/^-?\d+$/.test(value) && value != '') {
-      setGroupSizeError(true);
+      setGroupSizeError('Please enter a number');
       return;
     }
 
-    const size = parseInt(value);
+    const size = value != '' ? parseInt(value) : 0;
     setGroupSize(size);
-    setGroupSizeError(false);
+    setGroupSizeError('');
   };
 
   if (!event || !facility) {
@@ -338,9 +339,7 @@ export default function EventPage({
                     </P>
                     <Asterisk> *</Asterisk>
                   </GroupSizeText>
-                  {groupSizeError && (
-                    <Asterisk> Please enter a number. </Asterisk>
-                  )}
+                  {groupSizeError && <Asterisk>{groupSizeError}</Asterisk>}
                   <GroupSizeInput
                     name="sizeInfo"
                     onChange={handleGroupSizeChange}
@@ -364,6 +363,7 @@ export default function EventPage({
                   <Asterisk> * </Asterisk>
                 </AcknowledgementText>
               </Acknowledgement>
+              {errorMessage && <Asterisk>{errorMessage}</Asterisk>}
               <SignUpContainer>
                 <SignUp
                   type="button"
@@ -371,8 +371,13 @@ export default function EventPage({
                     if (session?.user?.id && event?.event_id) {
                       if (!performChecked && !hostChecked) {
                         console.error('No preference selected.');
+                        setErrorMessage('Please select a role preference.');
                       } else {
-                        if (performChecked) {
+                        if (
+                          performChecked &&
+                          groupSize > 0 &&
+                          acknowledgeChecked
+                        ) {
                           eventSignUp({
                             id: session.user.id as UUID,
                             event_id: event.event_id as UUID,
@@ -380,8 +385,9 @@ export default function EventPage({
                             group_size: groupSize,
                             additional_info: additionalInfo,
                           });
+                          setIsSubmitted(true);
                         }
-                        if (hostChecked) {
+                        if (hostChecked && acknowledgeChecked) {
                           eventSignUp({
                             id: session.user.id as UUID,
                             event_id: event.event_id as UUID,
@@ -389,13 +395,18 @@ export default function EventPage({
                             group_size: 0,
                             additional_info: additionalInfo,
                           });
+                          setIsSubmitted(true);
                         }
-                        /* Check required fields filled before confirmation. */
-
-                        // if (groupSize > 0 && acknowledgeChecked) {
-                        setIsSubmitted(true);
-                        //   console.log('Submitted!');
-                        // }
+                        if (!acknowledgeChecked) {
+                          setIsSubmitted(false);
+                          setErrorMessage(
+                            'Please complete all required fields.',
+                          );
+                        }
+                        if (performChecked && groupSize === 0) {
+                          setIsSubmitted(false);
+                          setErrorMessage('Please indicate a group size.');
+                        }
                       }
                     } else {
                       console.error('Missing user ID or event ID');

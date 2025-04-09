@@ -2,6 +2,7 @@
 
 import NextImage from 'next/image';
 import styled from 'styled-components';
+import Check from '@/public/images/checkmark.svg';
 import COLORS from '@/styles/colors';
 import { H3, H5, P } from '@/styles/text';
 import { Sans } from '../../../styles/fonts';
@@ -154,6 +155,7 @@ export const AcknowledgementText = styled.div`
 
 export const Acknowledgement = styled.div`
   margin-top: 2rem;
+  margin-bottom: 1rem;
   display: flex;
 `;
 
@@ -230,8 +232,25 @@ export const Checkbox = styled.input.attrs<{ $checked?: boolean }>({
   appearance: none;
   outline: none;
   cursor: pointer;
-
+  position: relative;
   background-color: ${props => (props.$checked ? COLORS.rose10 : '')};
+
+  // Add checkmark
+  &::before {
+    content: '';
+    display: ${props => (props.$checked ? 'inline-block' : 'none')};
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    // Center checkmark
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(${Check.src});
+    background-position: center;
+  }
 `;
 
 export const InterestTitle = styled(P)`
