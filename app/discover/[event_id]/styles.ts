@@ -202,6 +202,7 @@ export const FacilityName = styled(P)`
 
 export const Asterisk = styled(P)`
   color: ${COLORS.rose11};
+  font-weight: 400;
 `;
 
 export const ShowInterest = styled(H5)`

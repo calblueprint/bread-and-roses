@@ -400,7 +400,7 @@ export default function EventPage({
                         if (!acknowledgeChecked) {
                           setIsSubmitted(false);
                           setErrorMessage(
-                            'Please complete all required fields.',
+                            'Please acknowledge that you understand the requirements.',
                           );
                         }
                         if (performChecked && groupSize === 0) {
