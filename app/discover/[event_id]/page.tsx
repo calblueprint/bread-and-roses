@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { UUID } from 'crypto';
 import { fetchEventById } from '@/api/supabase/queries/events';
 import { fetchFacilityById } from '@/api/supabase/queries/facilities';
-import { eventSignUp } from '@/api/supabase/queries/volunteers';
+import {
+  checkUserSignedupEvent,
+  eventSignUp,
+} from '@/api/supabase/queries/volunteers';
 import Back from '@/public/images/back.svg';
 import Bread from '@/public/images/bread.png';
 import Calendar from '@/public/images/calendar_icon.svg';
@@ -36,6 +39,7 @@ import {
   Curve,
   Divider,
   FacilityName,
+  FacilityNotes,
   GroupSizeInput,
   GroupSizeText,
   HostInfo,
@@ -52,8 +56,8 @@ import {
   Location,
   LocationIcon,
   Page,
-  Preferences,
   RightWrapper,
+  SelectAllText,
   ShowInterest,
   SignUp,
   SignUpContainer,
@@ -109,6 +113,7 @@ export default function EventPage({
   const [facility, setFacility] = useState<Facilities>();
   const { session } = useSession();
 
+  const [signedUp, setSignedUp] = useState(false);
   const [performChecked, setPerformChecked] = useState(false);
   const [hostChecked, setHostChecked] = useState(false);
   const [acknowledgeChecked, setAcknowledgeChecked] = useState(false);
@@ -129,6 +134,19 @@ export default function EventPage({
     };
     getEvent();
   }, [params.event_id]);
+
+  useEffect(() => {
+    const checkUserSignup = async () => {
+      if (session?.user) {
+        const signedUp = await checkUserSignedupEvent(
+          session.user.id,
+          params.event_id,
+        );
+        setSignedUp(signedUp);
+      }
+    };
+    checkUserSignup();
+  }, [session?.user, params.event_id]);
 
   const router = useRouter();
 
@@ -228,6 +246,9 @@ export default function EventPage({
     </ConfirmationWrapper>
   );
 
+  const signedUpText =
+    'Looks like you’re one step ahead! You’ve already signed up for this event.';
+
   return (
     <Page>
       <ImageWrapper>
@@ -248,18 +269,6 @@ export default function EventPage({
               </BackButton>
               <Title> {facility.name} </Title>
               <Divider />
-              <TimeRow text={time} src={Calendar} alt="Calendar" />
-              <Location $fontWeight="400" $color={COLORS.gray12}>
-                {' '}
-                <LocationIcon src={LocationPin} alt="Location" />
-                <div>
-                  {facility.name}
-                  <SMALL $fontWeight="400" $color={COLORS.gray10}>
-                    {facility.street_address_1}, {facility.city}, CA,
-                    {facility.zip}
-                  </SMALL>
-                </div>
-              </Location>
               {event && (
                 <TagDiv>
                   {event?.needs_host && (
@@ -277,7 +286,18 @@ export default function EventPage({
                   )}
                 </TagDiv>
               )}
-              <Preferences> Preferences </Preferences>
+              <TimeRow text={time} src={Calendar} alt="Calendar" />
+              <Location>
+                <LocationIcon src={LocationPin} alt="Location" />
+                <div>
+                  {facility.name}
+                  <SMALL $fontWeight="400" $color={COLORS.gray10}>
+                    {facility.street_address_1}, {facility.city}, CA,{' '}
+                    {facility.zip}
+                  </SMALL>
+                </div>
+              </Location>
+              <FacilityNotes> Facility Notes </FacilityNotes>
               <Divider />
               <FacilityName> {facility?.name} </FacilityName>
               <Bullet $fontWeight="400">
@@ -300,124 +320,136 @@ export default function EventPage({
             <RightWrapper>
               <ShowInterest> Show Interest </ShowInterest>
               <Divider />
-              {InterestBlockGen(
-                'To Perform',
-                'Be the star of the show!',
-                '/images/star.svg',
-                performChecked,
-                () => setPerformChecked(!performChecked),
-              )}
-              {event?.needs_host == true &&
-                InterestBlockGen(
-                  'To Host',
-                  'Help setup the show!',
-                  '/images/help.svg',
-                  hostChecked,
-                  () => setHostChecked(!hostChecked),
-                )}
-              {hostChecked && (
-                <div>
-                  <HostInfo>
-                    <Icon src={InfoIcon} alt="InfoIcon"></Icon>
-                    <P $fontWeight="500" $color={COLORS.gray11}>
-                      {' '}
-                      Responsibilities of a Host
-                    </P>
-                  </HostInfo>
-                  <HostList>
-                    <li> Track audience demographic statistics </li>
-                    <li> If needed, help performer carry equipment </li>
-                    <li> Manage show logistics </li>
-                  </HostList>
-                </div>
-              )}
-              {performChecked && (
-                <div>
-                  <GroupSizeText>
-                    <P $fontWeight="500" $color={COLORS.gray11}>
-                      Group Size &nbsp;
-                    </P>
-                    <Asterisk> *</Asterisk>
-                  </GroupSizeText>
-                  {groupSizeError && <Asterisk>{groupSizeError}</Asterisk>}
-                  <GroupSizeInput
-                    name="sizeInfo"
-                    onChange={handleGroupSizeChange}
+              {signedUp ? (
+                <Asterisk>{signedUpText}</Asterisk>
+              ) : (
+                <>
+                  <SelectAllText>Select all that apply.</SelectAllText>
+                  {InterestBlockGen(
+                    'To Perform',
+                    'Be the star of the show!',
+                    '/images/star.svg',
+                    performChecked,
+                    () => setPerformChecked(!performChecked),
+                  )}
+                  {event?.needs_host == true &&
+                    InterestBlockGen(
+                      'To Host',
+                      'Help setup the show!',
+                      '/images/help.svg',
+                      hostChecked,
+                      () => setHostChecked(!hostChecked),
+                    )}
+                  {hostChecked && (
+                    <div>
+                      <HostInfo>
+                        <Icon src={InfoIcon} alt="InfoIcon"></Icon>
+                        <P $fontWeight="500" $color={COLORS.gray11}>
+                          {' '}
+                          Responsibilities of a Host
+                        </P>
+                      </HostInfo>
+                      <HostList>
+                        <li> Track audience demographic statistics </li>
+                        <li> If needed, help performer carry equipment </li>
+                        <li> Manage show logistics </li>
+                      </HostList>
+                    </div>
+                  )}
+                  {performChecked && (
+                    <div>
+                      <GroupSizeText>
+                        <P $fontWeight="500" $color={COLORS.gray11}>
+                          Group Size &nbsp;
+                        </P>
+                        <Asterisk> *</Asterisk>
+                      </GroupSizeText>
+                      {groupSizeError && <Asterisk>{groupSizeError}</Asterisk>}
+                      <GroupSizeInput
+                        name="sizeInfo"
+                        onChange={handleGroupSizeChange}
+                      />
+                    </div>
+                  )}
+                  <AdditionalInfoText>
+                    {' '}
+                    Additional Information{' '}
+                  </AdditionalInfoText>
+                  <AdditionalInfoInput
+                    name="additionalInfo"
+                    onChange={handleInfoChange}
                   />
-                </div>
-              )}
-              <AdditionalInfoText> Additional Info </AdditionalInfoText>
-              <AdditionalInfoInput
-                name="additionalInfo"
-                onChange={handleInfoChange}
-              />
-              <Acknowledgement>
-                <Checkbox
-                  type="checkbox"
-                  $checked={acknowledgeChecked}
-                  onChange={() => setAcknowledgeChecked(!acknowledgeChecked)}
-                />
-                <AcknowledgementText>
-                  I’ve read and understood the requirements to be a volunteer
-                  &nbsp;
-                  <Asterisk> * </Asterisk>
-                </AcknowledgementText>
-              </Acknowledgement>
-              {errorMessage && <Asterisk>{errorMessage}</Asterisk>}
-              <SignUpContainer>
-                <SignUp
-                  type="button"
-                  onClick={() => {
-                    if (session?.user?.id && event?.event_id) {
-                      if (!performChecked && !hostChecked) {
-                        console.error('No preference selected.');
-                        setErrorMessage('Please select a role preference.');
-                      } else {
-                        if (
-                          performChecked &&
-                          groupSize > 0 &&
-                          acknowledgeChecked
-                        ) {
-                          eventSignUp({
-                            id: session.user.id as UUID,
-                            event_id: event.event_id as UUID,
-                            role: 'PERFORMER',
-                            group_size: groupSize,
-                            additional_info: additionalInfo,
-                          });
-                          setIsSubmitted(true);
-                        }
-                        if (hostChecked && acknowledgeChecked) {
-                          eventSignUp({
-                            id: session.user.id as UUID,
-                            event_id: event.event_id as UUID,
-                            role: 'HOST',
-                            group_size: 0,
-                            additional_info: additionalInfo,
-                          });
-                          setIsSubmitted(true);
-                        }
-                        if (!acknowledgeChecked) {
-                          setIsSubmitted(false);
-                          setErrorMessage(
-                            'Please complete all required fields.',
-                          );
-                        }
-                        if (performChecked && groupSize === 0) {
-                          setIsSubmitted(false);
-                          setErrorMessage('Please indicate a group size.');
-                        }
+                  <Acknowledgement>
+                    <Checkbox
+                      type="checkbox"
+                      $checked={acknowledgeChecked}
+                      onChange={() =>
+                        setAcknowledgeChecked(!acknowledgeChecked)
                       }
-                    } else {
-                      console.error('Missing user ID or event ID');
-                    }
-                  }}
-                >
-                  <P $fontWeight="400" $color={COLORS.gray1}>
-                    Sign up
-                  </P>
-                </SignUp>
-              </SignUpContainer>
+                    />
+                    <AcknowledgementText>
+                      I’ve read and understood the requirements to be a
+                      volunteer &nbsp;
+                      <Asterisk> * </Asterisk>
+                    </AcknowledgementText>
+                  </Acknowledgement>
+                  {errorMessage && <Asterisk>{errorMessage}</Asterisk>}
+                  <SignUpContainer>
+                    <SignUp
+                      type="button"
+                      onClick={() => {
+                        if (session?.user?.id && event?.event_id) {
+                          if (!performChecked && !hostChecked) {
+                            console.error('No preference selected.');
+                            setErrorMessage('Please select a role preference.');
+                          } else {
+                            if (
+                              performChecked &&
+                              groupSize > 0 &&
+                              acknowledgeChecked
+                            ) {
+                              eventSignUp({
+                                id: session.user.id as UUID,
+                                event_id: event.event_id as UUID,
+                                role: 'PERFORMER',
+                                group_size: groupSize,
+                                additional_info: additionalInfo,
+                              });
+                              setIsSubmitted(true);
+                            }
+                            if (hostChecked && acknowledgeChecked) {
+                              eventSignUp({
+                                id: session.user.id as UUID,
+                                event_id: event.event_id as UUID,
+                                role: 'HOST',
+                                group_size: 0,
+                                additional_info: additionalInfo,
+                              });
+                              setIsSubmitted(true);
+                            }
+                            if (!acknowledgeChecked) {
+                              setIsSubmitted(false);
+                              setErrorMessage(
+                                'Please acknowledge that you understand the requirements.',
+                              );
+                            }
+                            if (performChecked && groupSize === 0) {
+                              setIsSubmitted(false);
+                              setErrorMessage('Please indicate a group size.');
+                            }
+                          }
+                        } else {
+                          console.error('Missing user ID or event ID');
+                        }
+                      }}
+                    >
+                      <P $fontWeight="400" $color={COLORS.gray1}>
+                        Sign up
+                      </P>
+                    </SignUp>
+                  </SignUpContainer>
+                </>
+              )}
             </RightWrapper>
           </>
         )}

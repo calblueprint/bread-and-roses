@@ -99,3 +99,20 @@ export async function eventSignUp(user: {
     message: 'User successfully signed up for event.',
   };
 }
+
+export async function checkUserSignedupEvent(
+  user_id: string,
+  event_id: string,
+) {
+  const { data, error } = await supabase
+    .from('event_signups')
+    .select('signup_id')
+    .eq('user_id', user_id)
+    .eq('event_id', event_id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data.length > 0;
+}

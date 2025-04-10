@@ -24,12 +24,16 @@ export const Page = styled.div`
   flex-direction: column;
   display: flex;
   min-width: 100%;
-  min-height: 100svh;
+  min-height: 100vh;
   overflow: hidden;
-  // margin-bottom: 2rem;
+
   @media (max-width: 768px) {
     margin-bottom: 3.75rem;
   }
+
+  transition:
+    margin-left 0.3s ease,
+    width 0.3s ease;
 `;
 
 export const Curve = styled.div`
@@ -46,8 +50,21 @@ export const Curve = styled.div`
 `;
 
 export const LeftWrapper = styled.div`
+  position: relative;
   @media (min-width: 768px) {
     padding-right: 3.875rem;
+
+    // Vertical divider
+    &::after {
+      content: '';
+      position: absolute;
+      top: -4.125rem;
+      right: 0;
+      height: calc(100% + 4.125rem);
+      width: 1px;
+      background-color: ${COLORS.gray6};
+      z-index: 100;
+    }
   }
 `;
 
@@ -57,14 +74,14 @@ export const RightWrapper = styled.div`
     padding-left: 3.875rem;
     display: flex;
     flex-direction: column;
-    border-left: 1px solid ${COLORS.gray6};
     height: 100%;
   }
 `;
 
 export const Container = styled.div<{ $column?: boolean }>`
+  flex: 1;
   display: grid;
-  padding-top: 2rem;
+  padding-top: 3.875rem;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     margin-left: 1.75rem;
@@ -99,7 +116,7 @@ export const BackButton = styled.button`
 
 export const Title = styled(H3)`
   font-weight: 500;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 `;
 
 export const TimeDiv = styled.div`
@@ -110,6 +127,8 @@ export const Location = styled(P)`
   margin-top: 0.375rem;
   display: flex;
   align-items: start;
+  font-weight: 400;
+  color: ${COLORS.gray12};
 `;
 
 export const Icon = styled(NextImage)`
@@ -131,12 +150,14 @@ export const IndividualTag = styled.span<TagProps>`
   align-items: center;
   border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
+  font-size: 14px;
+  color: ${COLORS.gray12};
 `;
 
 export const TagDiv = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 1rem;
+  margin: 1rem 0;
   gap: 0.25rem;
 `;
 
@@ -159,7 +180,7 @@ export const Acknowledgement = styled.div`
   display: flex;
 `;
 
-export const Preferences = styled(H5)`
+export const FacilityNotes = styled(H5)`
   margin-top: 2.375rem;
   font-weight: 500;
 `;
@@ -196,7 +217,7 @@ export const Bullet = styled(P)`
 `;
 
 export const FacilityName = styled(P)`
-  margin-top: 2.25rem;
+  margin-top: 2rem;
   font-weight: 500;
 `;
 
@@ -210,6 +231,11 @@ export const ShowInterest = styled(H5)`
   font-weight: 500;
 `;
 
+export const SelectAllText = styled(P)`
+  font-weight: 500;
+  margin: 1rem 0;
+`;
+
 export const InterestBlock = styled.div<{ $checked?: boolean }>`
   border: 1px solid ${props => (props.$checked ? COLORS.rose10 : COLORS.gray6)};
   cursor: pointer;
@@ -220,7 +246,7 @@ export const InterestBlock = styled.div<{ $checked?: boolean }>`
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 `;
 
 export const Checkbox = styled.input.attrs<{ $checked?: boolean }>({
@@ -228,7 +254,7 @@ export const Checkbox = styled.input.attrs<{ $checked?: boolean }>({
 })`
   width: 20px;
   height: 20px;
-  border: 2px solid ${COLORS.rose10};
+  border: 2px solid ${props => (props.$checked ? COLORS.rose10 : COLORS.gray10)};
   border-radius: 4px;
   appearance: none;
   outline: none;
@@ -282,7 +308,7 @@ export const SignUp = styled.button`
   border: 0;
   border-radius: 0.5rem;
   margin-bottom: 2.5rem;
-  margin-top: 4rem;
+  margin-top: 1rem;
   cursor: pointer;
   ${Sans.style}
 `;
@@ -291,7 +317,6 @@ export const SignUpContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  margin-top: 1.875rem;
 `;
 
 export const AdditionalInfoInput = styled.textarea`
