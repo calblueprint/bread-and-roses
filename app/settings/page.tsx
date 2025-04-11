@@ -71,7 +71,7 @@ export default function SettingsPage() {
       const fetchedUserInfo = await fetchVolunteerInfo(session.user.id);
       setUserInfo(fetchedUserInfo);
       const fetchedUserPreferences = await fetchVolunteerPreferences(
-        session.user.id,
+        session?.user.id,
       );
       setUserPreferences(fetchedUserPreferences);
     };
@@ -103,6 +103,8 @@ export default function SettingsPage() {
             userInfo={userInfo}
             editInfo={editedUserInfo}
             setEditInfo={setEditedUserInfo}
+            setUserInfo={setUserInfo}
+            sessionId={session?.user.id}
           />
           <SettingsCardNotifications />
           <SettingsCardShowPreferences

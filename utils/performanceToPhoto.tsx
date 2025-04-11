@@ -55,7 +55,7 @@ export default function performanceToPhoto(
   performance_type: string,
   genre: string | null,
 ) {
-  performance_type = performance_type.toLowerCase();
+  //performance_type = performance_type.toLowerCase();
   let imgSrc = otherGenre;
   if (!performanceToPhotoMap.has(performance_type)) {
     imgSrc = otherGenre;

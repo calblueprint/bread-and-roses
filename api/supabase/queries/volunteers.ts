@@ -1,4 +1,5 @@
 import { UUID } from 'crypto';
+import { UserInfo } from '@/utils/settingsInfo';
 import supabase from '../createClient';
 
 export async function fetchVolunteerInfo(user_id: string) {
@@ -31,21 +32,57 @@ export async function fetchVolunteerPreferences(user_id: string) {
   return data;
 }
 
-export async function updateVolunteerInfo(user_id1: string) {
-  const updatedFields = [''];
+export async function updateVolunteerInfo(
+  id: string,
+  user_info: UserInfo,
+  edit_info: UserInfo,
+) {
+  /*const updatedFields: Partial<UserInfo> = {};
 
   //check which fields need to be updated
+  Object.keys(user_info).forEach((key) => {
+    if (user_info[key] !== edit_info[key]) {
+      updatedFields[key] = edit_info[key];
+    }
+  });
 
   //update the data
-  if (updatedFields.length > 0) {
+  if (Object.keys(updatedFields).length > 0) {
+    const {data, error} = await supabase
+      .from('volunteers')
+      .update(updatedFields)
+      .eq('user_id', id);
+     
+    if (error) {
+      throw new Error(error.message);
+    } 
+
+    return data;
+
+    }
+  */
+  const updatedKeys: { [key: string]: string } = {};
+  if (user_info.first_name != edit_info.first_name) {
+    updatedKeys['first_name'] = edit_info.first_name;
+  }
+
+  if (user_info.last_name != edit_info.last_name) {
+    updatedKeys['last_name'] = edit_info.last_name;
+  }
+
+  if (user_info.phone_number != edit_info.phone_number) {
+    updatedKeys['phone_number'] = edit_info.phone_number;
+  }
+
+  if (Object.keys(updatedKeys).length > 0) {
     const { data, error } = await supabase
       .from('volunteers')
-      .update(updatedFields);
+      .update(updatedKeys)
+      .eq('user_id', id);
 
     if (error) {
       throw new Error(error.message);
     }
-
     return data;
   }
 }
