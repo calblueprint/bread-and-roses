@@ -65,17 +65,17 @@ export default function SettingsPage() {
 
   useEffect(() => {
     const getUserData = async () => {
-      const fetchedUserInfo = await fetchVolunteerInfo(session.user.id);
+      const fetchedUserInfo = await fetchVolunteerInfo(session?.user.id);
       setUserInfo(fetchedUserInfo);
 
       const fetchedUserPreferences = await fetchVolunteerPreferences(
-        session.user.id,
+        session?.user.id,
       );
       setUserPreferences(fetchedUserPreferences);
     };
 
     getUserData();
-  }, [session.user.id]);
+  }, [session?.user.id]);
 
   if (!userInfo || !userPreferences) {
     return <div>Loading...</div>;
@@ -102,6 +102,8 @@ export default function SettingsPage() {
             userInfo={userInfo}
             editInfo={editedUserInfo}
             setEditInfo={setEditedUserInfo}
+            setUserInfo={setUserInfo}
+            sessionId={session?.user.id}
           />
           <SettingsCardNotifications />
           <SettingsCardShowPreferences

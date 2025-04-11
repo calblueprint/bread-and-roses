@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { updateVolunteerInfo } from '@/api/supabase/queries/volunteers';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
+import { RoundedCornerButton } from '@/styles/styles';
 import { H5, P } from '@/styles/text';
 import { UserInfo } from '@/utils/settingsInfo';
 import * as styles from './styles';
@@ -14,6 +15,8 @@ export default function SettingCardPersonalDetails({
   userInfo,
   editInfo,
   setEditInfo,
+  setUserInfo,
+  sessionId,
 }: {
   first_name: string;
   last_name: string;
@@ -21,6 +24,8 @@ export default function SettingCardPersonalDetails({
   editInfo: UserInfo;
   userInfo: UserInfo;
   setEditInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+  sessionId: string;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
@@ -52,10 +57,31 @@ export default function SettingCardPersonalDetails({
     setIsEditable(!isEditable);
   };
 
-  const handleSave = () => {
-    updateVolunteerInfo();
+  const handleSave = async () => {
+    const updatedData = await updateVolunteerInfo(
+      sessionId,
+      userInfo,
+      editInfo,
+    );
+    setUserInfo(editInfo);
     setIsEditable(!isEditable);
   };
+
+  /*const handleSave = async () => {
+    try {
+      // Update the data in the database
+      const updatedData = await updateVolunteerInfo(sessionId, userInfo, editInfo);
+      
+      if (updatedData) {
+        // Update the parent state (userInfo) with the edited data
+        setUserInfo(editInfo); // This updates the userInfo in the parent state
+      }
+
+      setIsEditable(!isEditable); // Exit edit mode
+    } catch (error) {
+      console.error('Failed to save info:', error);
+    }
+  };*/
 
   return (
     <styles.AvailabilityContainer>
@@ -93,7 +119,7 @@ export default function SettingCardPersonalDetails({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {editInfo.first_name}
+                    {userInfo.first_name}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -119,7 +145,7 @@ export default function SettingCardPersonalDetails({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {editInfo.last_name}
+                    {userInfo.last_name}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -132,7 +158,7 @@ export default function SettingCardPersonalDetails({
                   </Label>
                   <Input
                     name="phone_number"
-                    placeholder="(987) 654 3210)"
+                    placeholder="(987) 654 3210"
                     value={editInfo.phone_number}
                     onChange={e => updatePhoneNumber(e.target.value)}
                   />
@@ -145,7 +171,7 @@ export default function SettingCardPersonalDetails({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {editInfo.phone_number}
+                    {userInfo.phone_number}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -153,7 +179,9 @@ export default function SettingCardPersonalDetails({
           </styles.SubHeader>
           {isEditable ? (
             <div>
-              <button onClick={handleSave}>save</button>
+              <RoundedCornerButton onClick={handleSave}>
+                save
+              </RoundedCornerButton>
               <button onClick={handleCancel}>cancel</button>
             </div>
           ) : (
