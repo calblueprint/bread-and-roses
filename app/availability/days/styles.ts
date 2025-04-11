@@ -19,7 +19,7 @@ export const Calendar = styled.div`
     border-radius: 8px;
     padding: 2rem;
     gap: 1.75rem;
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
     margin: 2.625rem 0;
     }
   .fc-prev-button,

@@ -11,6 +11,7 @@ import Cancel from '@/public/images/cancel.svg';
 import Filter from '@/public/images/filter.svg';
 import SadIcon from '@/public/images/sad.svg';
 import SearchIcon from '@/public/images/search_icon.svg';
+import X from '@/public/images/x.svg';
 import { Event } from '@/types/schema';
 import { useSession } from '@/utils/AuthProvider';
 import {
@@ -33,6 +34,7 @@ import {
   RowContainer,
   SearchBar,
   SearchInput,
+  SearchXIcon,
   ShowAllText,
   TitleBar,
   XIcon,
@@ -90,6 +92,7 @@ export default function ActiveEventsPage() {
   const [interestBasedEvents, setInterestBasedEvents] = useState<
     EventWithFacility[]
   >([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<EventWithFacility[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const [isSearchActive, setSearchActive] = useState<boolean>(false);
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
@@ -149,10 +152,20 @@ export default function ActiveEventsPage() {
     setInterestBasedEvents(interests);
   };
 
+  const filterUpcoming = () => {
+    const upcoming = [...events].sort((a, b) => {
+      const dateA = new Date(a.start_date_time);
+      const dateB = new Date(b.start_date_time);
+      return dateA.getTime() - dateB.getTime();
+    });
+    setUpcomingEvents(upcoming.slice(0, 10));
+  };
+
   const filterVolunteerPreferences = () => {
     handleClearFilters();
     filterNearby();
     filterFacilityInterest();
+    filterUpcoming();
   };
 
   /* Only make additional fetchAllActiveEvents calls when filtering is needed */
@@ -168,6 +181,11 @@ export default function ActiveEventsPage() {
     }
   };
 
+  const handleClear = () => {
+    setSearchInput('');
+    setSearchActive(false);
+    setFilteredEvents(events);
+  };
   const handleClearFilters = () => {
     setFacilityFilters(new Set());
     setCountyFilters(new Set());
@@ -269,7 +287,7 @@ export default function ActiveEventsPage() {
     if (events.length > 0 && volunteerPreferences) {
       filterVolunteerPreferences();
     }
-  }, [events, volunteerPreferences]);
+  }, [events, volunteerPreferences, filterVolunteerPreferences]);
 
   const noMatches = isSearchActive && filteredEvents.length === 0;
   const showFiltered =
@@ -295,11 +313,14 @@ export default function ActiveEventsPage() {
           <SearchBar>
             <Icon src={SearchIcon} alt="Search icon" />
             <SearchInput
-              placeholder="Search..."
+              placeholder="Click here to search..."
               value={searchInput}
               onChange={handleChange}
               onKeyDown={handleEnter}
             />
+            <Button onClick={handleClear}>
+              <SearchXIcon src={X} alt="X" />
+            </Button>
           </SearchBar>
           <FilterWrapper>
             {filterMenuExpanded ? (
@@ -362,7 +383,7 @@ export default function ActiveEventsPage() {
             <DiscoverContainer>
               <RowContainer>
                 <TitleBar>
-                  <Label>Near You</Label>
+                  <Label>Based on your location preferences...</Label>
                   <Button onClick={handleShowAllNearby}>
                     <ShowAllText> show all </ShowAllText>
                   </Button>
@@ -386,13 +407,30 @@ export default function ActiveEventsPage() {
               </RowContainer>
               <RowContainer>
                 <TitleBar>
-                  <Label>Based on your interests</Label>
+                  <Label>Based on your interests...</Label>
                   <Button onClick={handleShowAllInterests}>
                     <ShowAllText> show all </ShowAllText>
                   </Button>
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
                   {interestBasedEvents.map(event => (
+                    <DiscoverCard
+                      search={isSearchActive}
+                      key={event.event_id}
+                      event={event}
+                    />
+                  ))}
+                </DiscoverCardContainer>
+              </RowContainer>
+              <RowContainer>
+                <TitleBar>
+                  <Label>Upcoming Events...</Label>
+                  <Button onClick={handleShowAllInterests}>
+                    <ShowAllText> show all </ShowAllText>
+                  </Button>
+                </TitleBar>
+                <DiscoverCardContainer $search={isSearchActive}>
+                  {upcomingEvents.map(event => (
                     <DiscoverCard
                       search={isSearchActive}
                       key={event.event_id}

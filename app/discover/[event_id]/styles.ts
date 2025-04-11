@@ -259,7 +259,11 @@ export const Checkbox = styled.input.attrs<{ $checked?: boolean }>({
   appearance: none;
   outline: none;
   cursor: pointer;
-  position: relative;
+
+  clip-path: ${props =>
+    props.$checked
+      ? 'polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%)'
+      : ''};
   background-color: ${props => (props.$checked ? COLORS.rose10 : '')};
 
   // Add checkmark

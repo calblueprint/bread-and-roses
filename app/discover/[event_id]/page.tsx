@@ -220,6 +220,11 @@ export default function EventPage({
           appreciated! Whether you&apos;re performing or hosting, your
           contribution will help create a memorable experience for the audience.
         </ConfirmationBodyText>
+        <ConfirmationBodyText>
+          Your application has been received and is currently under review by
+          our team. If it gets approved, we’ll follow up with next steps and
+          additional details.
+        </ConfirmationBodyText>
 
         <IconContainer>
           <TimeRow text="Event Details" src={Clock} alt="Clock" />
@@ -232,8 +237,8 @@ export default function EventPage({
         </IconContainer>
 
         <ConfirmationBodyText>
-          We’ll be in touch soon with more details. In the meantime, if you have
-          any questions, feel free to reach out to info@breadandroses.org.
+          In the meantime, if you have any questions, feel free to reach out to
+          info@breadandroses.org.
         </ConfirmationBodyText>
         <ConfirmationBodyText>
           Thank you for making a difference!
@@ -269,6 +274,19 @@ export default function EventPage({
               </BackButton>
               <Title> {facility.name} </Title>
               <Divider />
+              <TimeRow text={time} src={Calendar} alt="Calendar" />
+              <Location $fontWeight="400" $color={COLORS.gray12}>
+                {' '}
+                <LocationIcon src={LocationPin} alt="Location" />
+                <div>
+                  {' '}
+                  {facility.name}
+                  <SMALL $fontWeight="400" $color={COLORS.gray10}>
+                    {facility.street_address_1}, {facility.city}, CA,
+                    {facility.zip}
+                  </SMALL>
+                </div>
+              </Location>
               {event && (
                 <TagDiv>
                   {event?.needs_host && (
@@ -277,13 +295,13 @@ export default function EventPage({
                     </IndividualTag>
                   )}
                   <IndividualTag $bgColor={COLORS.bread6}>
-                    {event?.performance_type}
+                    {facility?.type}
                   </IndividualTag>
-                  {event?.genre && (
-                    <IndividualTag $bgColor={COLORS.lilac3}>
-                      {event?.genre}
+                  {facility?.audience.map(audience => (
+                    <IndividualTag key={audience} $bgColor={COLORS.lilac3}>
+                      {audience}
                     </IndividualTag>
-                  )}
+                  ))}
                 </TagDiv>
               )}
               <TimeRow text={time} src={Calendar} alt="Calendar" />
@@ -301,21 +319,22 @@ export default function EventPage({
               <Divider />
               <FacilityName> {facility?.name} </FacilityName>
               <Bullet $fontWeight="400">
-                Prefers {event?.performance_type}
+                {facility?.volunteer_notes || '(blank)'}
               </Bullet>
-              {event?.genre && (
-                <Bullet $fontWeight="400"> Prefers {event?.genre} </Bullet>
-              )}
-              {event?.needs_host ? (
-                <div>
-                  <HostWarningTitle> Bread & Roses Presents </HostWarningTitle>
+              <div>
+                <HostWarningTitle> Bread & Roses Presents </HostWarningTitle>
+                {event?.needs_host && (
                   <Bullet $fontWeight="400">
                     Host should be able to carry 15lbs of equipment
                   </Bullet>
-                </div>
-              ) : (
-                ''
-              )}
+                )}
+                <Bullet $fontWeight="400">
+                  {facility?.admin_added_notes || '(blank)'}
+                </Bullet>
+                {event?.notes && (
+                  <Bullet $fontWeight="400">{event?.notes}</Bullet>
+                )}
+              </div>
             </LeftWrapper>
             <RightWrapper>
               <ShowInterest> Show Interest </ShowInterest>

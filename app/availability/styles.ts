@@ -64,9 +64,8 @@ export const AnswerContainer = styled.div`
   }
 `;
 
-export const Title = styled(H4)`
-  margin-bottom: 0.5rem;
-`;
+export const Title = styled(H4)``;
+
 export const Container = styled.div`
   display: flex;
   overflow-x: hidden;
@@ -107,9 +106,9 @@ export const Button = styled.button<{ disabled?: boolean }>`
   width: 100%;
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;

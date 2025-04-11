@@ -28,7 +28,7 @@ export const BoxContentContainer = styled.main`
   justify-content: flex-start;
   background: ${COLORS.bread1};
   border-radius: 16px;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
   gap: 1.75rem;
 `;
 

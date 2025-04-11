@@ -18,7 +18,7 @@ export const PopUpDiv = styled.div<{ type: string }>`
   color: ${COLORS.gray12};
   padding: 0.625rem 1rem;
   border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
   font-size: 0.875rem;
   font-weight: 500;
   display: flex;
