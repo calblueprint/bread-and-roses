@@ -9,6 +9,7 @@ import {
 } from '@/api/supabase/queries/availability';
 import AvailabilityCard from '@/components/AvailabilityCard/AvailabilityCard';
 import MenuBar from '@/components/MenuBar/MenuBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Add from '@/public/images/add.svg';
 import COLORS from '@/styles/colors';
 import { H3 } from '@/styles/text';
@@ -101,61 +102,67 @@ export default function AvailabilityPage() {
   }, [router]);
 
   return (
-    <div>
-      <MenuBar setMenuExpanded={setMenuExpanded} />
-      <styles.Page $menuExpanded={menuExpanded}>
-        {popupMessage && (
-          <styles.PopUpDiv>
-            {popupMessage}
-            <styles.PopUpButton onClick={() => setPopupMessage(null)}>
-              ✖
-            </styles.PopUpButton>
-          </styles.PopUpDiv>
-        )}
-
-        <styles.AllAvailabilitiesHolder>
-          <styles.TitleContainer>
-            <H3 $fontWeight="500" $color="#000" $align="left">
-              Availabilities
-            </H3>
-            <Link href={`/availability/details`}>
-              <styles.AddImage src={Add} alt="add icon" />
-            </Link>
-          </styles.TitleContainer>
-          {isLoading ? (
-            <styles.message
-              $fontWeight="400"
-              $color={COLORS.gray11}
-              $align="center"
-            >
-              Loading availabilities...
-            </styles.message>
-          ) : Object.keys(groupedByYear).length === 0 ? (
-            <styles.message
-              $fontWeight="400"
-              $color={COLORS.gray11}
-              $align="center"
-            >
-              No availabilities yet, <br /> add one with the plus sign!
-            </styles.message>
-          ) : (
-            Object.entries(groupedByYear).map(([year, availabilities]) => (
-              <div key={year}>
-                <styles.YearText $fontWeight="500" $color="#000" $align="left">
-                  {year}
-                </styles.YearText>
-                {availabilities.map(({ availability, available_dates }) => (
-                  <AvailabilityCard
-                    key={availability.availability_id}
-                    availability={availability}
-                    availableDates={available_dates}
-                  />
-                ))}
-              </div>
-            ))
+    <ProtectedRoute requiredRole="facility">
+      <div>
+        <MenuBar setMenuExpanded={setMenuExpanded} />
+        <styles.Page $menuExpanded={menuExpanded}>
+          {popupMessage && (
+            <styles.PopUpDiv>
+              {popupMessage}
+              <styles.PopUpButton onClick={() => setPopupMessage(null)}>
+                ✖
+              </styles.PopUpButton>
+            </styles.PopUpDiv>
           )}
-        </styles.AllAvailabilitiesHolder>
-      </styles.Page>
-    </div>
+
+          <styles.AllAvailabilitiesHolder>
+            <styles.TitleContainer>
+              <H3 $fontWeight="500" $color="#000" $align="left">
+                Availabilities
+              </H3>
+              <Link href={`/availability/details`}>
+                <styles.AddImage src={Add} alt="add icon" />
+              </Link>
+            </styles.TitleContainer>
+            {isLoading ? (
+              <styles.message
+                $fontWeight="400"
+                $color={COLORS.gray11}
+                $align="center"
+              >
+                Loading availabilities...
+              </styles.message>
+            ) : Object.keys(groupedByYear).length === 0 ? (
+              <styles.message
+                $fontWeight="400"
+                $color={COLORS.gray11}
+                $align="center"
+              >
+                No availabilities yet, <br /> add one with the plus sign!
+              </styles.message>
+            ) : (
+              Object.entries(groupedByYear).map(([year, availabilities]) => (
+                <div key={year}>
+                  <styles.YearText
+                    $fontWeight="500"
+                    $color="#000"
+                    $align="left"
+                  >
+                    {year}
+                  </styles.YearText>
+                  {availabilities.map(({ availability, available_dates }) => (
+                    <AvailabilityCard
+                      key={availability.availability_id}
+                      availability={availability}
+                      availableDates={available_dates}
+                    />
+                  ))}
+                </div>
+              ))
+            )}
+          </styles.AllAvailabilitiesHolder>
+        </styles.Page>
+      </div>
+    </ProtectedRoute>
   );
 }

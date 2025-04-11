@@ -4,6 +4,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -55,73 +56,77 @@ export default function Onboarding() {
   };
 
   return (
-    <Background>
-      <InlineContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-        <ProgressBar from={0} to={20} />
-        <Container>
-          <InputContainer>
-            <Label>
-              First Name <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="firstName"
-              placeholder="Jane"
-              value={generalInfo.firstName}
-              onChange={handleChange}
-            />
-          </InputContainer>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
+          <ProgressBar from={0} to={20} />
+          <Container>
+            <InputContainer>
+              <Label>
+                First Name <RedAsterisk>*</RedAsterisk>
+              </Label>
+              <Input
+                name="firstName"
+                placeholder="Jane"
+                value={generalInfo.firstName}
+                onChange={handleChange}
+              />
+            </InputContainer>
 
-          <InputContainer>
-            <Label>
-              Last Name <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="lastName"
-              placeholder="Doe"
-              value={generalInfo.lastName}
-              onChange={handleChange}
-            />
-          </InputContainer>
+            <InputContainer>
+              <Label>
+                Last Name <RedAsterisk>*</RedAsterisk>
+              </Label>
+              <Input
+                name="lastName"
+                placeholder="Doe"
+                value={generalInfo.lastName}
+                onChange={handleChange}
+              />
+            </InputContainer>
 
-          <InputContainer>
-            <Label>
-              Phone Number <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="phoneNumber"
-              placeholder="(987) 654-3210"
-              value={generalInfo.phoneNumber}
-              onChange={handleChange}
-            />
-          </InputContainer>
-          <UpdateContainer>
-            <Checkbox
-              name="notifications"
-              checked={generalInfo.notifications}
-              onChange={handleChange}
-            />
-            <UpdateText>Notify me when an event matches my interest</UpdateText>
-          </UpdateContainer>
-        </Container>
+            <InputContainer>
+              <Label>
+                Phone Number <RedAsterisk>*</RedAsterisk>
+              </Label>
+              <Input
+                name="phoneNumber"
+                placeholder="(987) 654-3210"
+                value={generalInfo.phoneNumber}
+                onChange={handleChange}
+              />
+            </InputContainer>
+            <UpdateContainer>
+              <Checkbox
+                name="notifications"
+                checked={generalInfo.notifications}
+                onChange={handleChange}
+              />
+              <UpdateText>
+                Notify me when an event matches my interest
+              </UpdateText>
+            </UpdateContainer>
+          </Container>
 
-        <ButtonContainer>
-          <Button
-            position="fixed"
-            onClick={handleSubmit}
-            disabled={
-              !generalInfo.firstName ||
-              !generalInfo.lastName ||
-              !generalInfo.phoneNumber
-            }
-          >
-            <ContinueText>Continue</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </InlineContainer>
-    </Background>
+          <ButtonContainer>
+            <Button
+              position="fixed"
+              onClick={handleSubmit}
+              disabled={
+                !generalInfo.firstName ||
+                !generalInfo.lastName ||
+                !generalInfo.phoneNumber
+              }
+            >
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

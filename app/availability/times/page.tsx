@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import DateTimeSelection from '@/components/DateTimeSelection/DateTimeSelection';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
@@ -39,27 +40,29 @@ export default function Page() {
   };
 
   return (
-    <Container>
-      <TimeContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}> What time&apos;s work best? </Title>
-        <ProgressBar from={50} to={75} />
-        {days.map((day, index) => (
-          <DateTimeSelection date={day} key={index} />
-        ))}
-      </TimeContainer>
-      <ButtonContainer>
-        <SplitText>
-          <EventName $fontWeight={500}> {generalInfo.eventName} </EventName>
-          <DaylightTime> PDT </DaylightTime>
-        </SplitText>
-        <Divider />
-        <Button onClick={handleSubmit} disabled={days.length == 0}>
-          <ContinueText>Continue</ContinueText>
-        </Button>
-      </ButtonContainer>
-    </Container>
+    <ProtectedRoute requiredRole="facility">
+      <Container>
+        <TimeContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}> What time&apos;s work best? </Title>
+          <ProgressBar from={50} to={75} />
+          {days.map((day, index) => (
+            <DateTimeSelection date={day} key={index} />
+          ))}
+        </TimeContainer>
+        <ButtonContainer>
+          <SplitText>
+            <EventName $fontWeight={500}> {generalInfo.eventName} </EventName>
+            <DaylightTime> PDT </DaylightTime>
+          </SplitText>
+          <Divider />
+          <Button onClick={handleSubmit} disabled={days.length == 0}>
+            <ContinueText>Continue</ContinueText>
+          </Button>
+        </ButtonContainer>
+      </Container>
+    </ProtectedRoute>
   );
 }

@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -52,42 +53,44 @@ export default function Onboarding() {
   };
 
   return (
-    <Background>
-      <InlineContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}>
-          Do you have anything
-          <br />
-          you&apos;d like to add?
-        </Title>
-        {role.isPerformer ? (
-          <ProgressBar from={60} to={80} />
-        ) : (
-          <ProgressBar from={50} to={75} />
-        )}
-        <Container>
-          <InputContainer>
-            <Label>Additional Information</Label>
-            <TextArea
-              name="additional information"
-              placeholder="i.e. I need help carrying my equipments."
-              value={preferences.additionalInfo}
-              onChange={handleChange}
-            />
-          </InputContainer>
-        </Container>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}>
+            Do you have anything
+            <br />
+            you&apos;d like to add?
+          </Title>
+          {role.isPerformer ? (
+            <ProgressBar from={60} to={80} />
+          ) : (
+            <ProgressBar from={50} to={75} />
+          )}
+          <Container>
+            <InputContainer>
+              <Label>Additional Information</Label>
+              <TextArea
+                name="additional information"
+                placeholder="i.e. I need help carrying my equipments."
+                value={preferences.additionalInfo}
+                onChange={handleChange}
+              />
+            </InputContainer>
+          </Container>
 
-        <ButtonContainer>
-          <SkipButton onClick={handleSubmit}>
-            <SkipText>skip</SkipText>
-          </SkipButton>
-          <Button onClick={handleSubmit} position="fixed">
-            <ContinueText>Continue</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </InlineContainer>
-    </Background>
+          <ButtonContainer>
+            <SkipButton onClick={handleSubmit}>
+              <SkipText>skip</SkipText>
+            </SkipButton>
+            <Button onClick={handleSubmit} position="fixed">
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

@@ -26,7 +26,7 @@ import {
 
 export default function SignIn() {
   const router = useRouter();
-  const { session, userRole } = useSession();
+  const { session, userRole, signOut } = useSession();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,6 +34,21 @@ export default function SignIn() {
   const [passwordError, setPasswordError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [hasSignedOut, setHasSignedOut] = useState(false);
+
+  useEffect(() => {
+    const clearSessionBeforeLogin = async () => {
+      if (session && !hasSignedOut) {
+        console.log('[SignIn] Logging out existing session');
+        await signOut();
+        setHasSignedOut(true);
+      } else if (!session && !hasSignedOut) {
+        setHasSignedOut(true);
+      }
+    };
+
+    clearSessionBeforeLogin();
+  }, [session, hasSignedOut, signOut]);
 
   const validEmail = (e: string) => e !== '' && isEmail(e);
 
@@ -83,16 +98,24 @@ export default function SignIn() {
     setIsLoggingIn(false);
   };
 
-  // Once session and userRole are set, redirect appropriately.
+  // once session and userRole are set, redirect appropriately
   useEffect(() => {
-    if (session && userRole) {
-      if (userRole === 'volunteer') {
-        router.push('/discover');
-      } else if (userRole === 'facility') {
-        router.push('/availability/general');
-      }
+    if (!session || !userRole) return;
+
+    // the session must be real, not just restored from a half-loaded client
+    const isValidSession =
+      session.user?.email && typeof session.access_token === 'string';
+
+    if (!isValidSession) return;
+
+    if (userRole === 'volunteer') {
+      router.push('/discover');
+    } else if (userRole === 'facility') {
+      router.push('/availability/general');
     }
   }, [session, userRole, router]);
+
+  if (!hasSignedOut) return null;
 
   return (
     <Container>

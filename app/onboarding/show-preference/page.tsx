@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -86,57 +87,59 @@ export default function Onboarding() {
   };
 
   return (
-    <Background>
-      <InlineContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}>
-          Do you have any show
-          <br />
-          preferences?
-        </Title>
-        {role.isPerformer ? (
-          <ProgressBar from={20} to={40} />
-        ) : (
-          <ProgressBar from={25} to={50} />
-        )}
-        <Container>
-          <InputDropdown
-            label="Facility Types"
-            placeholder="Type to filter"
-            multi
-            onChange={handleFacilityChange}
-            options={facilityTypeOptions}
-            value={new Set(preferences.facilityType)}
-          />
-          <InputDropdown
-            label="Location Preferences"
-            placeholder="Type to filter"
-            multi
-            onChange={handleLocationChange}
-            options={locationOptions}
-            value={new Set(preferences.location)}
-          />
-          <InputDropdown
-            label="Preferred Audience"
-            placeholder="Type to filter"
-            multi
-            onChange={handleAudienceChange}
-            options={audienceOptions}
-            value={new Set(preferences.audience)}
-          />
-        </Container>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}>
+            Do you have any show
+            <br />
+            preferences?
+          </Title>
+          {role.isPerformer ? (
+            <ProgressBar from={20} to={40} />
+          ) : (
+            <ProgressBar from={25} to={50} />
+          )}
+          <Container>
+            <InputDropdown
+              label="Facility Types"
+              placeholder="Type to filter"
+              multi
+              onChange={handleFacilityChange}
+              options={facilityTypeOptions}
+              value={new Set(preferences.facilityType)}
+            />
+            <InputDropdown
+              label="Location Preferences"
+              placeholder="Type to filter"
+              multi
+              onChange={handleLocationChange}
+              options={locationOptions}
+              value={new Set(preferences.location)}
+            />
+            <InputDropdown
+              label="Preferred Audience"
+              placeholder="Type to filter"
+              multi
+              onChange={handleAudienceChange}
+              options={audienceOptions}
+              value={new Set(preferences.audience)}
+            />
+          </Container>
 
-        <ButtonContainer>
-          <SkipButton onClick={handleSubmit}>
-            <SkipText>skip</SkipText>
-          </SkipButton>
-          <Button onClick={handleSubmit} position="fixed">
-            <ContinueText>Continue</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </InlineContainer>
-    </Background>
+          <ButtonContainer>
+            <SkipButton onClick={handleSubmit}>
+              <SkipText>skip</SkipText>
+            </SkipButton>
+            <Button onClick={handleSubmit} position="fixed">
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

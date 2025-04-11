@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import {
   AvailabilityContext,
@@ -130,36 +131,38 @@ export default function Page() {
     router.push('/availability/details');
   };
   return (
-    <Container>
-      <BackButton onClick={handleBack}>
-        <Image src={Back} alt="Back icon" />
-      </BackButton>
-      <Title $fontWeight={500}> What day&apos;s work best? </Title>
-      <ProgressBar from={25} to={50} />
-      <CalendarContainer>
-        <FullCalendar
-          plugins={[interactionPlugin, dayGridPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: 'title',
-            center: '',
-            right: 'prev next',
-          }}
-          dayCellContent={arg => arg.date.getDate()}
-          selectable={true}
-          dayCellClassNames={dayCellClassNames}
-          selectOverlap={false}
-          select={handleSelect}
-          datesSet={updateMonth}
-        />
-      </CalendarContainer>
-      <ButtonContainer>
-        <EventName $fontWeight={500}> {generalInfo.eventName} </EventName>
-        <Divider />
-        <Button onClick={handleSubmit} disabled={days.length == 0}>
-          <ContinueText>Continue</ContinueText>
-        </Button>
-      </ButtonContainer>
-    </Container>
+    <ProtectedRoute requiredRole="facility">
+      <Container>
+        <BackButton onClick={handleBack}>
+          <Image src={Back} alt="Back icon" />
+        </BackButton>
+        <Title $fontWeight={500}> What day&apos;s work best? </Title>
+        <ProgressBar from={25} to={50} />
+        <CalendarContainer>
+          <FullCalendar
+            plugins={[interactionPlugin, dayGridPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: 'title',
+              center: '',
+              right: 'prev next',
+            }}
+            dayCellContent={arg => arg.date.getDate()}
+            selectable={true}
+            dayCellClassNames={dayCellClassNames}
+            selectOverlap={false}
+            select={handleSelect}
+            datesSet={updateMonth}
+          />
+        </CalendarContainer>
+        <ButtonContainer>
+          <EventName $fontWeight={500}> {generalInfo.eventName} </EventName>
+          <Divider />
+          <Button onClick={handleSubmit} disabled={days.length == 0}>
+            <ContinueText>Continue</ContinueText>
+          </Button>
+        </ButtonContainer>
+      </Container>
+    </ProtectedRoute>
   );
 }

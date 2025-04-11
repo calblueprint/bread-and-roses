@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
@@ -91,53 +92,55 @@ export default function Onboarding() {
   };
 
   return (
-    <Background>
-      <InlineContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}>
-          What would you like to
-          <br />
-          perform?
-        </Title>
-        <ProgressBar from={40} to={60} />
-        <Container>
-          <InputDropdown
-            label="Type of Performance"
-            placeholder="Select performance type"
-            multi
-            onChange={handlePerformanceTypeChange}
-            options={performanceTypeOptions}
-            value={new Set(preferences.performanceType)}
-          />
-          <InputDropdown
-            label="Performance Genre"
-            placeholder="Select genres"
-            multi
-            onChange={handleGenreChange}
-            options={genreOptions}
-            value={new Set(preferences.genre)}
-          />
-          <InputDropdown
-            label="Group Size"
-            placeholder="Type to filter..."
-            multi
-            onChange={handlePerformerTypeChange}
-            options={performerTypeOptions}
-            value={new Set(preferences.performerType)}
-          />
-        </Container>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}>
+            What would you like to
+            <br />
+            perform?
+          </Title>
+          <ProgressBar from={40} to={60} />
+          <Container>
+            <InputDropdown
+              label="Type of Performance"
+              placeholder="Select performance type"
+              multi
+              onChange={handlePerformanceTypeChange}
+              options={performanceTypeOptions}
+              value={new Set(preferences.performanceType)}
+            />
+            <InputDropdown
+              label="Performance Genre"
+              placeholder="Select genres"
+              multi
+              onChange={handleGenreChange}
+              options={genreOptions}
+              value={new Set(preferences.genre)}
+            />
+            <InputDropdown
+              label="Group Size"
+              placeholder="Type to filter..."
+              multi
+              onChange={handlePerformerTypeChange}
+              options={performerTypeOptions}
+              value={new Set(preferences.performerType)}
+            />
+          </Container>
 
-        <ButtonContainer>
-          <SkipButton onClick={handleSubmit}>
-            <SkipText>skip</SkipText>
-          </SkipButton>
-          <Button onClick={handleSubmit} position="fixed">
-            <ContinueText>Continue</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </InlineContainer>
-    </Background>
+          <ButtonContainer>
+            <SkipButton onClick={handleSubmit}>
+              <SkipText>skip</SkipText>
+            </SkipButton>
+            <Button onClick={handleSubmit} position="fixed">
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

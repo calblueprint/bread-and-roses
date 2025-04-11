@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
@@ -54,35 +55,37 @@ export default function Page() {
   };
 
   return (
-    <Container>
-      <QuestionsContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}> What&apos;s the Occasion? </Title>
-        <ProgressBar from={0} to={25} />
-        <EventName>
-          Event Name &nbsp; <Asterisk> * </Asterisk>
-        </EventName>
-        <EventNameInput
-          placeholder="Event Name"
-          name="eventName"
-          value={generalInfo.eventName}
-          onChange={handleChange}
-        />
-        <AdditionalInfo> Additional Info </AdditionalInfo>
-        <AdditionalInfoInput
-          name="additionalInfo"
-          value={generalInfo.additionalInfo}
-          onChange={handleChange}
-        />
-      </QuestionsContainer>
-      <ButtonContainer>
-        <Divider />
-        <Button onClick={handleSubmit} disabled={!generalInfo.eventName}>
-          <ContinueText>Continue</ContinueText>
-        </Button>
-      </ButtonContainer>
-    </Container>
+    <ProtectedRoute requiredRole="facility">
+      <Container>
+        <QuestionsContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}> What&apos;s the Occasion? </Title>
+          <ProgressBar from={0} to={25} />
+          <EventName>
+            Event Name &nbsp; <Asterisk> * </Asterisk>
+          </EventName>
+          <EventNameInput
+            placeholder="Event Name"
+            name="eventName"
+            value={generalInfo.eventName}
+            onChange={handleChange}
+          />
+          <AdditionalInfo> Additional Info </AdditionalInfo>
+          <AdditionalInfoInput
+            name="additionalInfo"
+            value={generalInfo.additionalInfo}
+            onChange={handleChange}
+          />
+        </QuestionsContainer>
+        <ButtonContainer>
+          <Divider />
+          <Button onClick={handleSubmit} disabled={!generalInfo.eventName}>
+            <ContinueText>Continue</ContinueText>
+          </Button>
+        </ButtonContainer>
+      </Container>
+    </ProtectedRoute>
   );
 }

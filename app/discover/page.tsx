@@ -7,6 +7,7 @@ import {
 } from '@/api/supabase/queries/events';
 import DiscoverCard from '@/components/DiscoverCard/DiscoverCard';
 import MenuBar from '@/components/MenuBar/MenuBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Filter from '@/public/images/filter.svg';
 import SadIcon from '@/public/images/sad.svg';
 import SearchIcon from '@/public/images/search_icon.svg';
@@ -74,55 +75,57 @@ export default function ActiveEventsPage() {
   const noMatches = isSearchActive && filteredEvents.length === 0;
 
   return (
-    <div>
-      <MenuBar setMenuExpanded={setMenuExpanded} />
-      <Page $menuExpanded={menuExpanded}>
-        <DiscoverHolder>
-          <Discover $fontWeight="500"> Discover </Discover>
-          <SearchBar>
-            <Icon src={SearchIcon} alt="Search icon" />
-            <SearchInput
-              placeholder="Search..."
-              value={searchInput}
-              onChange={handleChange}
-              onKeyDown={handleEnter}
-            />
-          </SearchBar>
-          <FilterIcon src={Filter} alt="Filter icon" />
-          <TitleBar>
-            {isSearchActive ? (
-              filteredEvents.length === 0 || isFiltering ? null : (
-                /* Don't show filteredEvents.length until events are finished loading, to prevent flickering from old -> new length */
-                <Found>Found {filteredEvents.length} matches</Found>
-              )
-            ) : (
-              <NearYou>Near You</NearYou>
-            )}
-            {/* Hide ShowAllText while fetching filteredEvents to prevent it from shifting to 
+    <ProtectedRoute requiredRole="volunteer">
+      <div>
+        <MenuBar setMenuExpanded={setMenuExpanded} />
+        <Page $menuExpanded={menuExpanded}>
+          <DiscoverHolder>
+            <Discover $fontWeight="500"> Discover </Discover>
+            <SearchBar>
+              <Icon src={SearchIcon} alt="Search icon" />
+              <SearchInput
+                placeholder="Search..."
+                value={searchInput}
+                onChange={handleChange}
+                onKeyDown={handleEnter}
+              />
+            </SearchBar>
+            <FilterIcon src={Filter} alt="Filter icon" />
+            <TitleBar>
+              {isSearchActive ? (
+                filteredEvents.length === 0 || isFiltering ? null : (
+                  /* Don't show filteredEvents.length until events are finished loading, to prevent flickering from old -> new length */
+                  <Found>Found {filteredEvents.length} matches</Found>
+                )
+              ) : (
+                <NearYou>Near You</NearYou>
+              )}
+              {/* Hide ShowAllText while fetching filteredEvents to prevent it from shifting to 
             the left when there is no Found.. or Near You.. text  */}
-            <ShowAllText $hidden={noMatches || isFiltering}>
-              {' '}
-              show all{' '}
-            </ShowAllText>
-          </TitleBar>
-          <DiscoverCardContainer $search={isSearchActive}>
-            {noMatches ? (
-              <NoMatchContainer>
-                <NoMatchText>No matches</NoMatchText>
-                <Icon src={SadIcon} alt="Sad face icon" />
-              </NoMatchContainer>
-            ) : !isFiltering ? (
-              filteredEvents.map(event => (
-                <DiscoverCard
-                  search={isSearchActive}
-                  key={event.event_id}
-                  event={event}
-                />
-              ))
-            ) : null}
-          </DiscoverCardContainer>
-        </DiscoverHolder>
-      </Page>
-    </div>
+              <ShowAllText $hidden={noMatches || isFiltering}>
+                {' '}
+                show all{' '}
+              </ShowAllText>
+            </TitleBar>
+            <DiscoverCardContainer $search={isSearchActive}>
+              {noMatches ? (
+                <NoMatchContainer>
+                  <NoMatchText>No matches</NoMatchText>
+                  <Icon src={SadIcon} alt="Sad face icon" />
+                </NoMatchContainer>
+              ) : !isFiltering ? (
+                filteredEvents.map(event => (
+                  <DiscoverCard
+                    search={isSearchActive}
+                    key={event.event_id}
+                    event={event}
+                  />
+                ))
+              ) : null}
+            </DiscoverCardContainer>
+          </DiscoverHolder>
+        </Page>
+      </div>
+    </ProtectedRoute>
   );
 }

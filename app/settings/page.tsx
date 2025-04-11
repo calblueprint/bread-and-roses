@@ -6,6 +6,7 @@ import {
   fetchVolunteerPreferences,
 } from '@/api/supabase/queries/volunteers';
 import MenuBar from '@/components/MenuBar/MenuBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import SettingsCardAccomodations from '@/components/SettingsCard/SettingsCardAccomodations';
 import SettingsCardNotifications from '@/components/SettingsCard/SettingsCardNotifications';
 import SettingsCardPerformanceInterest from '@/components/SettingsCard/SettingsCardPerformanceInterest';
@@ -58,39 +59,41 @@ export default function SettingsPage() {
   }
 
   return (
-    <styles.All>
-      <MenuBar setMenuExpanded={setMenuExpanded} />
-      <styles.Page $menuExpanded={menuExpanded}>
-        <styles.SettingDiv>
-          <styles.ProfileName>
-            {' '}
-            {userInfo.first_name} {userInfo.last_name}{' '}
-          </styles.ProfileName>
-          <styles.Email> {userInfo.email} </styles.Email>
-          <styles.SignOutButton>
-            <styles.SignOut src={SignOut} alt="SignOut" />
-            <styles.ButtonText> Sign Out </styles.ButtonText>
-          </styles.SignOutButton>
-          <SettingsCardPersonalDetails
-            first_name={userInfo.first_name}
-            last_name={userInfo.last_name}
-            phone={userInfo.phone_number}
-          />
-          <SettingsCardNotifications />
-          <SettingsCardShowPreferences
-            facility_preferences={userPreferences.facility_type}
-            locations={userPreferences.locations}
-            audience_preferences={userPreferences.audience_type}
-          />
-          <SettingsCardPerformanceInterest
-            performance_types={userPreferences.performance_type}
-            genres={userPreferences.genre}
-          />
-          <SettingsCardAccomodations
-            accomodations={userPreferences.additional_info}
-          />
-        </styles.SettingDiv>
-      </styles.Page>
-    </styles.All>
+    <ProtectedRoute allowAnyRole>
+      <styles.All>
+        <MenuBar setMenuExpanded={setMenuExpanded} />
+        <styles.Page $menuExpanded={menuExpanded}>
+          <styles.SettingDiv>
+            <styles.ProfileName>
+              {' '}
+              {userInfo.first_name} {userInfo.last_name}{' '}
+            </styles.ProfileName>
+            <styles.Email> {userInfo.email} </styles.Email>
+            <styles.SignOutButton>
+              <styles.SignOut src={SignOut} alt="SignOut" />
+              <styles.ButtonText> Sign Out </styles.ButtonText>
+            </styles.SignOutButton>
+            <SettingsCardPersonalDetails
+              first_name={userInfo.first_name}
+              last_name={userInfo.last_name}
+              phone={userInfo.phone_number}
+            />
+            <SettingsCardNotifications />
+            <SettingsCardShowPreferences
+              facility_preferences={userPreferences.facility_type}
+              locations={userPreferences.locations}
+              audience_preferences={userPreferences.audience_type}
+            />
+            <SettingsCardPerformanceInterest
+              performance_types={userPreferences.performance_type}
+              genres={userPreferences.genre}
+            />
+            <SettingsCardAccomodations
+              accomodations={userPreferences.additional_info}
+            />
+          </styles.SettingDiv>
+        </styles.Page>
+      </styles.All>
+    </ProtectedRoute>
   );
 }

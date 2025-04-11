@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import { Container } from './styles';
 
 type Info = {
@@ -85,22 +86,24 @@ export default function Page() {
   }
 
   return (
-    <Container>
-      <FullCalendar
-        plugins={[interactionPlugin, dayGridPlugin]}
-        initialView="dayGridMonth"
-        headerToolbar={{
-          left: 'title',
-          center: '',
-          right: 'prev next',
-        }}
-        dayCellContent={arg => arg.date.getDate()}
-        selectable={true}
-        dayCellClassNames={dayCellClassNames}
-        selectOverlap={false}
-        select={handleSelect}
-        datesSet={updateMonth}
-      />
-    </Container>
+    <ProtectedRoute requiredRole="facility">
+      <Container>
+        <FullCalendar
+          plugins={[interactionPlugin, dayGridPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: 'title',
+            center: '',
+            right: 'prev next',
+          }}
+          dayCellContent={arg => arg.date.getDate()}
+          selectable={true}
+          dayCellClassNames={dayCellClassNames}
+          selectOverlap={false}
+          select={handleSelect}
+          datesSet={updateMonth}
+        />
+      </Container>
+    </ProtectedRoute>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Rose from '@/public/images/rose.svg';
 import {
   ContinueButton,
@@ -19,22 +20,24 @@ export default function Onboarding() {
   };
 
   return (
-    <Background isCentered={true}>
-      <Image src={Rose} alt="Rose" />
-      <InlineContainer>
-        <ReviewContainer>
-          <Title>You&apos;re all set!</Title>
-          <P>
-            We recommend checking out some upcoming events in the Discover page.
-            If you&apos;re interested in participating, please sign up!
-          </P>
-          <ContinueButton onClick={handleContinue}>
-            <SMALL $fontWeight="400" $color="white">
-              Continue
-            </SMALL>
-          </ContinueButton>
-        </ReviewContainer>
-      </InlineContainer>
-    </Background>
+    <ProtectedRoute allowWithoutRole>
+      <Background isCentered={true}>
+        <Image src={Rose} alt="Rose" />
+        <InlineContainer>
+          <ReviewContainer>
+            <Title>You&apos;re all set!</Title>
+            <P>
+              We recommend checking out some upcoming events in the Discover
+              page. If you&apos;re interested in participating, please sign up!
+            </P>
+            <ContinueButton onClick={handleContinue}>
+              <SMALL $fontWeight="400" $color="white">
+                Continue
+              </SMALL>
+            </ContinueButton>
+          </ReviewContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

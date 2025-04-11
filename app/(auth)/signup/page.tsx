@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { handleSignUp as signUpUser } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import { H5 } from '@/styles/text';
+import { useSession } from '@/utils/AuthProvider';
 import { encryptEmail } from '@/utils/emailTokenUtils';
 import {
   Button,
@@ -28,6 +29,26 @@ export default function SignUp() {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
+  const [hasSignedOut, setHasSignedOut] = useState(false);
+  const { session, signOut } = useSession();
+
+  useEffect(() => {
+    if (!hasSignedOut) {
+      const handleInitialSession = async () => {
+        if (session) {
+          console.log('[SignUp] Logging out existing session');
+          await signOut();
+        }
+        setHasSignedOut(true);
+      };
+
+      handleInitialSession();
+
+      if (!session) {
+        setHasSignedOut(true);
+      }
+    }
+  }, [session, signOut]);
 
   const handleSignUp = async () => {
     setMessage('');

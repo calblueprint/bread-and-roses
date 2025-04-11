@@ -12,6 +12,7 @@ import {
   fetchFacilityContactByID,
 } from '@/api/supabase/queries/facilities';
 import { fetchPerformer } from '@/api/supabase/queries/volunteers';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import LocPin from '@/public/images/black_loc_pin.svg';
 import Calendar from '@/public/images/calendar_icon.svg';
@@ -90,238 +91,245 @@ export default function EventDisplay({
   );
 
   return (
-    <styles.Page>
-      <styles.ImageWrapper>
-        {performanceToPhotoMap(
-          event.performance_type,
-          event.genre?.toString() ?? null,
-        )}
-        <styles.GradientOverlay />
-      </styles.ImageWrapper>
-      <styles.Curve />
-      <styles.Container>
-        <styles.LeftWrapper>
-          <Link href={`/events`} style={{ textDecoration: 'none' }}>
-            <styles.BackImage src={Back} alt="Back icon" />
-          </Link>
-          <styles.EventText $fontWeight="500" $color="#000" $align="left">
-            {event.name}
-          </styles.EventText>
-          <styles.DateLocation>
-            <styles.CalLocPin src={Calendar} alt="Calendar" />
-            <styles.ParaText
-              $fontWeight="400"
-              $color={COLORS.gray12}
-              $align="left"
-            >
-              {time}
-            </styles.ParaText>
-          </styles.DateLocation>
-          <styles.DateLocation>
-            <styles.CalLocPin src={LocPin} alt="Location" />
-            <styles.LocationDetails>
+    <ProtectedRoute allowAnyRole>
+      <styles.Page>
+        <styles.ImageWrapper>
+          {performanceToPhotoMap(
+            event.performance_type,
+            event.genre?.toString() ?? null,
+          )}
+          <styles.GradientOverlay />
+        </styles.ImageWrapper>
+        <styles.Curve />
+        <styles.Container>
+          <styles.LeftWrapper>
+            <Link href={`/events`} style={{ textDecoration: 'none' }}>
+              <styles.BackImage src={Back} alt="Back icon" />
+            </Link>
+            <styles.EventText $fontWeight="500" $color="#000" $align="left">
+              {event.name}
+            </styles.EventText>
+            <styles.DateLocation>
+              <styles.CalLocPin src={Calendar} alt="Calendar" />
               <styles.ParaText
                 $fontWeight="400"
                 $color={COLORS.gray12}
                 $align="left"
               >
-                {facility.name}
+                {time}
               </styles.ParaText>
-              <styles.ParaText
-                $fontWeight="400"
-                $color={COLORS.gray10}
-                $align="left"
-              >
-                {facility.street_address_1}, {facility.city}, CA {facility.zip}
-              </styles.ParaText>
-            </styles.LocationDetails>
-          </styles.DateLocation>
-          <styles.AllNotesAndContactsContainer>
-            <styles.SubHeadingText $fontWeight="500" $color="000" $align="left">
-              Notes
-            </styles.SubHeadingText>
-            <div>
-              <styles.ParaText
+            </styles.DateLocation>
+            <styles.DateLocation>
+              <styles.CalLocPin src={LocPin} alt="Location" />
+              <styles.LocationDetails>
+                <styles.ParaText
+                  $fontWeight="400"
+                  $color={COLORS.gray12}
+                  $align="left"
+                >
+                  {facility.name}
+                </styles.ParaText>
+                <styles.ParaText
+                  $fontWeight="400"
+                  $color={COLORS.gray10}
+                  $align="left"
+                >
+                  {facility.street_address_1}, {facility.city}, CA{' '}
+                  {facility.zip}
+                </styles.ParaText>
+              </styles.LocationDetails>
+            </styles.DateLocation>
+            <styles.AllNotesAndContactsContainer>
+              <styles.SubHeadingText
                 $fontWeight="500"
-                $color={COLORS.gray12}
+                $color="000"
                 $align="left"
               >
-                Facility Notes
-              </styles.ParaText>
-              <styles.ParaText
-                $fontWeight="400"
-                $color={COLORS.gray11}
-                $align="left"
-              >
-                {facility.notes}
-              </styles.ParaText>
-            </div>
-            <div>
-              <styles.ParaText
+                Notes
+              </styles.SubHeadingText>
+              <div>
+                <styles.ParaText
+                  $fontWeight="500"
+                  $color={COLORS.gray12}
+                  $align="left"
+                >
+                  Facility Notes
+                </styles.ParaText>
+                <styles.ParaText
+                  $fontWeight="400"
+                  $color={COLORS.gray11}
+                  $align="left"
+                >
+                  {facility.notes}
+                </styles.ParaText>
+              </div>
+              <div>
+                <styles.ParaText
+                  $fontWeight="500"
+                  $color={COLORS.gray12}
+                  $align="left"
+                >
+                  Producer Notes
+                </styles.ParaText>
+                <styles.ParaText
+                  $fontWeight="400"
+                  $color={COLORS.gray11}
+                  $align="left"
+                >
+                  {event.notes}
+                </styles.ParaText>
+              </div>
+            </styles.AllNotesAndContactsContainer>
+          </styles.LeftWrapper>
+          <styles.RightWrapper>
+            <styles.AllNotesAndContactsContainer>
+              <styles.ContactsSubHeadingText
                 $fontWeight="500"
-                $color={COLORS.gray12}
+                $color="000"
                 $align="left"
               >
-                Producer Notes
-              </styles.ParaText>
-              <styles.ParaText
-                $fontWeight="400"
-                $color={COLORS.gray11}
-                $align="left"
-              >
-                {event.notes}
-              </styles.ParaText>
-            </div>
-          </styles.AllNotesAndContactsContainer>
-        </styles.LeftWrapper>
-        <styles.RightWrapper>
-          <styles.AllNotesAndContactsContainer>
-            <styles.ContactsSubHeadingText
-              $fontWeight="500"
-              $color="000"
-              $align="left"
-            >
-              Contacts
-            </styles.ContactsSubHeadingText>
-            <styles.ContactContainer>
-              <styles.ContactPins src={FacilityContactPin} alt="House" />
-              <styles.ContactDetails>
-                <styles.ParaText
-                  $fontWeight="500"
-                  $color={COLORS.gray12}
-                  $align="left"
-                >
-                  {facility_contact
-                    ? `${facility_contact.first_name} ${facility_contact.last_name}`
-                    : 'Facility Contact Not Found'}
-                </styles.ParaText>
-                <styles.ContactTypeText
-                  $fontWeight="400"
-                  $color={COLORS.gray10}
-                  $align="left"
-                >
-                  Facility Contact
-                </styles.ContactTypeText>
-                <styles.EmailText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  {facility_contact && facility_contact.email}
-                </styles.EmailText>
-                <styles.PhoneNumberText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  {facility_contact && facility_contact.phone_number}
-                </styles.PhoneNumberText>
-              </styles.ContactDetails>
-            </styles.ContactContainer>
-            <styles.ContactContainer>
-              <styles.ContactPins src={HostPin} alt="HandHeart" />
-              <styles.ContactDetails>
-                <styles.ParaText
-                  $fontWeight="500"
-                  $color={COLORS.gray12}
-                  $align="left"
-                >
-                  {!event.needs_host || host ? host_name : 'Host Not Found'}
-                </styles.ParaText>
-                <styles.ContactTypeText
-                  $fontWeight="400"
-                  $color={COLORS.gray10}
-                  $align="left"
-                >
-                  Event Host
-                </styles.ContactTypeText>
-                <styles.EmailText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  {(!event.needs_host || host) && host_email}
-                </styles.EmailText>
-                <styles.PhoneNumberText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  {(!event.needs_host || host) && host_phone_number}
-                </styles.PhoneNumberText>
-              </styles.ContactDetails>
-            </styles.ContactContainer>
-            <styles.ContactContainer>
-              <styles.ContactPins src={PerformerPin} alt="Star" />
-              <styles.ContactDetails>
-                <styles.ParaText
-                  $fontWeight="500"
-                  $color={COLORS.gray12}
-                  $align="left"
-                >
-                  {performer
-                    ? `${performer.first_name} ${performer.last_name}`
-                    : 'Performer Not Found'}
-                </styles.ParaText>
-                <styles.ContactTypeText
-                  $fontWeight="400"
-                  $color={COLORS.gray10}
-                  $align="left"
-                >
-                  Volunteer Performer
-                </styles.ContactTypeText>
-                <styles.EmailText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  {performer && performer.email}
-                </styles.EmailText>
-                <styles.PhoneNumberText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  {performer && performer.phone_number}
-                </styles.PhoneNumberText>
-              </styles.ContactDetails>
-            </styles.ContactContainer>
-            <styles.ContactContainer>
-              <styles.ContactPins src={ProducerIcon} alt="Board" />
-              <styles.ContactDetails>
-                <styles.ParaText
-                  $fontWeight="500"
-                  $color={COLORS.gray12}
-                  $align="left"
-                >
-                  Producer Name
-                </styles.ParaText>
-                <styles.ContactTypeText
-                  $fontWeight="400"
-                  $color={COLORS.gray10}
-                  $align="left"
-                >
-                  Show Producer
-                </styles.ContactTypeText>
-                <styles.EmailText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  producer@email.com
-                </styles.EmailText>
-                <styles.PhoneNumberText
-                  $fontWeight="400"
-                  $color={COLORS.rose11}
-                  $align="left"
-                >
-                  800-867-5309
-                </styles.PhoneNumberText>
-              </styles.ContactDetails>
-            </styles.ContactContainer>
-          </styles.AllNotesAndContactsContainer>
-        </styles.RightWrapper>
-      </styles.Container>
-    </styles.Page>
+                Contacts
+              </styles.ContactsSubHeadingText>
+              <styles.ContactContainer>
+                <styles.ContactPins src={FacilityContactPin} alt="House" />
+                <styles.ContactDetails>
+                  <styles.ParaText
+                    $fontWeight="500"
+                    $color={COLORS.gray12}
+                    $align="left"
+                  >
+                    {facility_contact
+                      ? `${facility_contact.first_name} ${facility_contact.last_name}`
+                      : 'Facility Contact Not Found'}
+                  </styles.ParaText>
+                  <styles.ContactTypeText
+                    $fontWeight="400"
+                    $color={COLORS.gray10}
+                    $align="left"
+                  >
+                    Facility Contact
+                  </styles.ContactTypeText>
+                  <styles.EmailText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    {facility_contact && facility_contact.email}
+                  </styles.EmailText>
+                  <styles.PhoneNumberText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    {facility_contact && facility_contact.phone_number}
+                  </styles.PhoneNumberText>
+                </styles.ContactDetails>
+              </styles.ContactContainer>
+              <styles.ContactContainer>
+                <styles.ContactPins src={HostPin} alt="HandHeart" />
+                <styles.ContactDetails>
+                  <styles.ParaText
+                    $fontWeight="500"
+                    $color={COLORS.gray12}
+                    $align="left"
+                  >
+                    {!event.needs_host || host ? host_name : 'Host Not Found'}
+                  </styles.ParaText>
+                  <styles.ContactTypeText
+                    $fontWeight="400"
+                    $color={COLORS.gray10}
+                    $align="left"
+                  >
+                    Event Host
+                  </styles.ContactTypeText>
+                  <styles.EmailText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    {(!event.needs_host || host) && host_email}
+                  </styles.EmailText>
+                  <styles.PhoneNumberText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    {(!event.needs_host || host) && host_phone_number}
+                  </styles.PhoneNumberText>
+                </styles.ContactDetails>
+              </styles.ContactContainer>
+              <styles.ContactContainer>
+                <styles.ContactPins src={PerformerPin} alt="Star" />
+                <styles.ContactDetails>
+                  <styles.ParaText
+                    $fontWeight="500"
+                    $color={COLORS.gray12}
+                    $align="left"
+                  >
+                    {performer
+                      ? `${performer.first_name} ${performer.last_name}`
+                      : 'Performer Not Found'}
+                  </styles.ParaText>
+                  <styles.ContactTypeText
+                    $fontWeight="400"
+                    $color={COLORS.gray10}
+                    $align="left"
+                  >
+                    Volunteer Performer
+                  </styles.ContactTypeText>
+                  <styles.EmailText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    {performer && performer.email}
+                  </styles.EmailText>
+                  <styles.PhoneNumberText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    {performer && performer.phone_number}
+                  </styles.PhoneNumberText>
+                </styles.ContactDetails>
+              </styles.ContactContainer>
+              <styles.ContactContainer>
+                <styles.ContactPins src={ProducerIcon} alt="Board" />
+                <styles.ContactDetails>
+                  <styles.ParaText
+                    $fontWeight="500"
+                    $color={COLORS.gray12}
+                    $align="left"
+                  >
+                    Producer Name
+                  </styles.ParaText>
+                  <styles.ContactTypeText
+                    $fontWeight="400"
+                    $color={COLORS.gray10}
+                    $align="left"
+                  >
+                    Show Producer
+                  </styles.ContactTypeText>
+                  <styles.EmailText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    producer@email.com
+                  </styles.EmailText>
+                  <styles.PhoneNumberText
+                    $fontWeight="400"
+                    $color={COLORS.rose11}
+                    $align="left"
+                  >
+                    800-867-5309
+                  </styles.PhoneNumberText>
+                </styles.ContactDetails>
+              </styles.ContactContainer>
+            </styles.AllNotesAndContactsContainer>
+          </styles.RightWrapper>
+        </styles.Container>
+      </styles.Page>
+    </ProtectedRoute>
   );
 }

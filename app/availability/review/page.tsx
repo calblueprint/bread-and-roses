@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import COLORS from '@/styles/colors';
 import { P } from '@/styles/text';
@@ -78,52 +79,54 @@ export default function Page() {
   };
 
   return (
-    <Container>
-      <ReviewContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}> Does everything look right? </Title>
-        <ProgressBar from={75} to={100} />
-        <SplitText>
-          <Title $fontWeight={500}> About </Title>
-          <EditButton onClick={handleDetails}>
-            <EditText> edit </EditText>
-          </EditButton>
-        </SplitText>
-        <Divider />
-        <TextContainer>
-          <div>
-            <P $fontWeight={500}> Event Name </P>
-            <P $fontWeight={400} $color={COLORS.gray11}>
-              {generalInfo.eventName}
-            </P>
-          </div>
-          <div>
-            <P $fontWeight={500}> Additional Info </P>
-            <P $fontWeight={400} $color={COLORS.gray11}>
-              {generalInfo.additionalInfo || '(blank)'}
-            </P>
-          </div>
-        </TextContainer>
-        <SplitText>
-          <Title $fontWeight={500}> Availabilties </Title>
-          <EditButton onClick={handleDays}>
-            <EditText> edit </EditText>
-          </EditButton>
-        </SplitText>
-        <Divider />
-        <TextContainer> {Availabilities}</TextContainer>
-        <GradientDivider />
-        <TipText $fontWeight={400} $color={COLORS.gray11}>
-          * Everything can be modified later!
-        </TipText>
-        <ButtonContainer>
-          <Button onClick={submitAvailabilityData}>
-            <ContinueText>Everything look&apos;s good!</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </ReviewContainer>
-    </Container>
+    <ProtectedRoute requiredRole="facility">
+      <Container>
+        <ReviewContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}> Does everything look right? </Title>
+          <ProgressBar from={75} to={100} />
+          <SplitText>
+            <Title $fontWeight={500}> About </Title>
+            <EditButton onClick={handleDetails}>
+              <EditText> edit </EditText>
+            </EditButton>
+          </SplitText>
+          <Divider />
+          <TextContainer>
+            <div>
+              <P $fontWeight={500}> Event Name </P>
+              <P $fontWeight={400} $color={COLORS.gray11}>
+                {generalInfo.eventName}
+              </P>
+            </div>
+            <div>
+              <P $fontWeight={500}> Additional Info </P>
+              <P $fontWeight={400} $color={COLORS.gray11}>
+                {generalInfo.additionalInfo || '(blank)'}
+              </P>
+            </div>
+          </TextContainer>
+          <SplitText>
+            <Title $fontWeight={500}> Availabilties </Title>
+            <EditButton onClick={handleDays}>
+              <EditText> edit </EditText>
+            </EditButton>
+          </SplitText>
+          <Divider />
+          <TextContainer> {Availabilities}</TextContainer>
+          <GradientDivider />
+          <TipText $fontWeight={400} $color={COLORS.gray11}>
+            * Everything can be modified later!
+          </TipText>
+          <ButtonContainer>
+            <Button onClick={submitAvailabilityData}>
+              <ContinueText>Everything look&apos;s good!</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </ReviewContainer>
+      </Container>
+    </ProtectedRoute>
   );
 }

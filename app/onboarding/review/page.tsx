@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
@@ -45,57 +46,59 @@ export default function Review() {
   };
 
   return (
-    <Background>
-      <InlineContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}>Did we get everything?</Title>
-        {role.isPerformer ? (
-          <ProgressBar from={80} to={100} />
-        ) : (
-          <ProgressBar from={75} to={100} />
-        )}
-        <ReviewContainer>
-          <Label>First Name</Label>
-          <SmallText>{displayValue(generalInfo.firstName)}</SmallText>
-          <Label>Last Name</Label>
-          <SmallText>{displayValue(generalInfo.lastName)}</SmallText>
-          <Label>Phone Number</Label>
-          <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}>Did we get everything?</Title>
+          {role.isPerformer ? (
+            <ProgressBar from={80} to={100} />
+          ) : (
+            <ProgressBar from={75} to={100} />
+          )}
+          <ReviewContainer>
+            <Label>First Name</Label>
+            <SmallText>{displayValue(generalInfo.firstName)}</SmallText>
+            <Label>Last Name</Label>
+            <SmallText>{displayValue(generalInfo.lastName)}</SmallText>
+            <Label>Phone Number</Label>
+            <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
 
-          <Line />
+            <Line />
 
-          <Label>Facility Type</Label>
-          <SmallText>{displayValue(preferences.facilityType)}</SmallText>
-          <Label>Preferred Location</Label>
-          <SmallText>{displayValue(preferences.location)}</SmallText>
-          <Label>Audience</Label>
-          <SmallText>{displayValue(preferences.audience)}</SmallText>
+            <Label>Facility Type</Label>
+            <SmallText>{displayValue(preferences.facilityType)}</SmallText>
+            <Label>Preferred Location</Label>
+            <SmallText>{displayValue(preferences.location)}</SmallText>
+            <Label>Audience</Label>
+            <SmallText>{displayValue(preferences.audience)}</SmallText>
 
-          <Line />
+            <Line />
 
-          <Label>Performance Type</Label>
-          <SmallText>{displayValue(preferences.performanceType)}</SmallText>
-          <Label>Genre</Label>
-          <SmallText>{displayValue(preferences.genre)}</SmallText>
-          <Label>Group Size</Label>
-          <SmallText>{displayValue(preferences.performerType)}</SmallText>
+            <Label>Performance Type</Label>
+            <SmallText>{displayValue(preferences.performanceType)}</SmallText>
+            <Label>Genre</Label>
+            <SmallText>{displayValue(preferences.genre)}</SmallText>
+            <Label>Group Size</Label>
+            <SmallText>{displayValue(preferences.performerType)}</SmallText>
 
-          <Line />
+            <Line />
 
-          <Label>Additional Information</Label>
-          <SmallText>{displayValue(preferences.additionalInfo)}</SmallText>
-        </ReviewContainer>
+            <Label>Additional Information</Label>
+            <SmallText>{displayValue(preferences.additionalInfo)}</SmallText>
+          </ReviewContainer>
 
-        <StyledLink href="/onboarding/finalize">
-          <SubmitButton onClick={submitData}>
-            <SMALL $fontWeight="400" $color="white">
-              Everything looks good!
-            </SMALL>
-          </SubmitButton>
-        </StyledLink>
-      </InlineContainer>
-    </Background>
+          <StyledLink href="/onboarding/finalize">
+            <SubmitButton onClick={submitData}>
+              <SMALL $fontWeight="400" $color="white">
+                Everything looks good!
+              </SMALL>
+            </SubmitButton>
+          </StyledLink>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

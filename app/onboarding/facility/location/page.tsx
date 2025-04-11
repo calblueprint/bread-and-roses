@@ -19,6 +19,7 @@ import {
   Title,
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { FacilityOnboardingContext } from '@/utils/facilityOnboardingContext';
 import { RedAsterisk } from './styles';
@@ -56,80 +57,82 @@ export default function Onboarding() {
   };
 
   return (
-    <Background>
-      <InlineContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}>Where is the facility located?</Title>
-        <ProgressBar from={33} to={66} />
-        <Container>
-          <InputContainer>
-            <Label>
-              Street Address <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="address"
-              placeholder="1411 E 31st Street"
-              value={location.address}
-              onChange={handleChange}
-            />
-          </InputContainer>
-
-          <RowContainer>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}>Where is the facility located?</Title>
+          <ProgressBar from={33} to={66} />
+          <Container>
             <InputContainer>
               <Label>
-                City <RedAsterisk>*</RedAsterisk>
+                Street Address <RedAsterisk>*</RedAsterisk>
               </Label>
               <Input
-                name="city"
-                placeholder="Oakland"
-                value={location.city}
+                name="address"
+                placeholder="1411 E 31st Street"
+                value={location.address}
                 onChange={handleChange}
               />
             </InputContainer>
 
+            <RowContainer>
+              <InputContainer>
+                <Label>
+                  City <RedAsterisk>*</RedAsterisk>
+                </Label>
+                <Input
+                  name="city"
+                  placeholder="Oakland"
+                  value={location.city}
+                  onChange={handleChange}
+                />
+              </InputContainer>
+
+              <InputContainer>
+                <Label>
+                  County <RedAsterisk>*</RedAsterisk>
+                </Label>
+                <Input
+                  name="county"
+                  placeholder="Alameda"
+                  value={location.county}
+                  onChange={handleChange}
+                />
+              </InputContainer>
+            </RowContainer>
+
             <InputContainer>
               <Label>
-                County <RedAsterisk>*</RedAsterisk>
+                Zip Code <RedAsterisk>*</RedAsterisk>
               </Label>
               <Input
-                name="county"
-                placeholder="Alameda"
-                value={location.county}
+                name="zipCode"
+                placeholder="94602"
+                value={location.zipCode}
                 onChange={handleChange}
               />
             </InputContainer>
-          </RowContainer>
+          </Container>
 
-          <InputContainer>
-            <Label>
-              Zip Code <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="zipCode"
-              placeholder="94602"
-              value={location.zipCode}
-              onChange={handleChange}
-            />
-          </InputContainer>
-        </Container>
-
-        <ButtonContainer>
-          <Button
-            position="fixed"
-            onClick={handleSubmit}
-            disabled={
-              !location.address ||
-              !location.city ||
-              !location.county ||
-              !location.zipCode
-            }
-          >
-            <ContinueText>Continue</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </InlineContainer>
-    </Background>
+          <ButtonContainer>
+            <Button
+              position="fixed"
+              onClick={handleSubmit}
+              disabled={
+                !location.address ||
+                !location.city ||
+                !location.county ||
+                !location.zipCode
+              }
+            >
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

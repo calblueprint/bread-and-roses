@@ -18,6 +18,7 @@ import {
   Title,
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import { FacilityOnboardingContext } from '@/utils/facilityOnboardingContext';
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber';
@@ -60,65 +61,67 @@ export default function Onboarding() {
   };
 
   return (
-    <Background>
-      <InlineContainer>
-        <BackButton onClick={handleBack}>
-          <Image src={Back} alt="Back icon" />
-        </BackButton>
-        <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-        <ProgressBar from={0} to={33} />
-        <Container>
-          <InputContainer>
-            <Label>
-              First Name <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="firstName"
-              placeholder="Jane"
-              value={generalInfo.firstName}
-              onChange={handleChange}
-            />
-          </InputContainer>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <BackButton onClick={handleBack}>
+            <Image src={Back} alt="Back icon" />
+          </BackButton>
+          <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
+          <ProgressBar from={0} to={33} />
+          <Container>
+            <InputContainer>
+              <Label>
+                First Name <RedAsterisk>*</RedAsterisk>
+              </Label>
+              <Input
+                name="firstName"
+                placeholder="Jane"
+                value={generalInfo.firstName}
+                onChange={handleChange}
+              />
+            </InputContainer>
 
-          <InputContainer>
-            <Label>
-              Last Name <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="lastName"
-              placeholder="Doe"
-              value={generalInfo.lastName}
-              onChange={handleChange}
-            />
-          </InputContainer>
+            <InputContainer>
+              <Label>
+                Last Name <RedAsterisk>*</RedAsterisk>
+              </Label>
+              <Input
+                name="lastName"
+                placeholder="Doe"
+                value={generalInfo.lastName}
+                onChange={handleChange}
+              />
+            </InputContainer>
 
-          <InputContainer>
-            <Label>
-              Phone Number <RedAsterisk>*</RedAsterisk>
-            </Label>
-            <Input
-              name="phoneNumber"
-              placeholder="(987) 654-3210"
-              value={generalInfo.phoneNumber}
-              onChange={handleChange}
-            />
-          </InputContainer>
-        </Container>
+            <InputContainer>
+              <Label>
+                Phone Number <RedAsterisk>*</RedAsterisk>
+              </Label>
+              <Input
+                name="phoneNumber"
+                placeholder="(987) 654-3210"
+                value={generalInfo.phoneNumber}
+                onChange={handleChange}
+              />
+            </InputContainer>
+          </Container>
 
-        <ButtonContainer>
-          <Button
-            position="fixed"
-            onClick={handleSubmit}
-            disabled={
-              !generalInfo.firstName ||
-              !generalInfo.lastName ||
-              !/^\d{10}$/.test(generalInfo.phoneNumber.replace(/\D/g, '')) //user not allowed to continue unless a full phone number is input
-            }
-          >
-            <ContinueText>Continue</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </InlineContainer>
-    </Background>
+          <ButtonContainer>
+            <Button
+              position="fixed"
+              onClick={handleSubmit}
+              disabled={
+                !generalInfo.firstName ||
+                !generalInfo.lastName ||
+                !/^\d{10}$/.test(generalInfo.phoneNumber.replace(/\D/g, '')) //user not allowed to continue unless a full phone number is input
+              }
+            >
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }
