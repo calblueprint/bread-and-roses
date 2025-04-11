@@ -37,6 +37,21 @@ export default function SettingsPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [userPreferences, setUserPreferences] =
     useState<UserPreferences | null>(null);
+  const [editedUserInfo, setEditedUserInfo] = useState<UserInfo | null>(
+    userInfo,
+  );
+  const [editedUserPrefs, setEditedUserPrefs] =
+    useState<UserPreferences | null>(userPreferences);
+
+  const updateField = <K extends keyof UserInfo>(
+    field: K,
+    value: UserInfo[K],
+  ) => {
+    setEditedUserInfo(editedUserInfo => ({
+      ...editedUserInfo!,
+      [field]: value,
+    }));
+  };
 
   useEffect(() => {
     const getUserData = async () => {
@@ -75,6 +90,7 @@ export default function SettingsPage() {
             first_name={userInfo.first_name}
             last_name={userInfo.last_name}
             phone={userInfo.phone_number}
+            edit_info={editedUserInfo}
           />
           <SettingsCardNotifications />
           <SettingsCardShowPreferences
