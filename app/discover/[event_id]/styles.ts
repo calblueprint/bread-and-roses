@@ -227,7 +227,7 @@ export const Asterisk = styled(P)`
 `;
 
 export const ShowInterest = styled(H5)`
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   font-weight: 500;
 `;
 

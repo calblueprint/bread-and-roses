@@ -247,7 +247,7 @@ export default function EventPage({
   );
 
   const signedUpText =
-    'Looks like you’re one step ahead! You’ve already signed up for this event.';
+    "Looks like you’re one step ahead! You’ve already signed up for this event. Check out your Upcoming Events to see if you've been approved!";
 
   return (
     <Page>
