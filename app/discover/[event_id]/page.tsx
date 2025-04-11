@@ -304,17 +304,6 @@ export default function EventPage({
                   ))}
                 </TagDiv>
               )}
-              <TimeRow text={time} src={Calendar} alt="Calendar" />
-              <Location>
-                <LocationIcon src={LocationPin} alt="Location" />
-                <div>
-                  {facility.name}
-                  <SMALL $fontWeight="400" $color={COLORS.gray10}>
-                    {facility.street_address_1}, {facility.city}, CA,{' '}
-                    {facility.zip}
-                  </SMALL>
-                </div>
-              </Location>
               <FacilityNotes> Facility Notes </FacilityNotes>
               <Divider />
               <FacilityName> {facility?.name} </FacilityName>
