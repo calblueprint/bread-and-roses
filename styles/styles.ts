@@ -65,7 +65,7 @@ export const ReviewContainer = styled.main`
   gap: 1.25rem;
   border-radius: 16px;
   background: var(--bread-1, #fefdfc);
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
 `;
 
 export const ContinueButton = styled.button`

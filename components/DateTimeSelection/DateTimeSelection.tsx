@@ -20,7 +20,6 @@ export default function DateTimeSelection({ date }: { date: string }) {
   if (!availabilityContext) return null;
 
   const { times, setTimes } = availabilityContext;
-  console.log(times);
   const addTimeRange = () => {
     /* Assign a unique ID to each time slot to ensure correct deletion*/
     setTimes({

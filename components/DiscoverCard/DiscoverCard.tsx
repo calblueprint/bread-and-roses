@@ -75,28 +75,29 @@ export default function DiscoverCard({
 
   useEffect(() => {
     const tags: JSX.Element[] = [];
-
+    if (facility?.type) {
+      tags.push(
+        <IndividualTag $bgColor={COLORS.bread6}>
+          {facility?.type}
+        </IndividualTag>,
+      );
+    }
     if (event?.needs_host) {
       tags.push(
         <IndividualTag $bgColor={COLORS.rose6}>Host Needed</IndividualTag>,
       );
     }
-    if (event?.performance_type) {
-      tags.push(
-        <IndividualTag $bgColor={COLORS.bread6}>
-          {event?.performance_type}
-        </IndividualTag>,
-      );
-    }
-    if (event?.genre) {
-      tags.push(
-        <IndividualTag $bgColor={COLORS.lilac3}>{event?.genre}</IndividualTag>,
-      );
+    if (facility?.audience) {
+      for (const audience of facility?.audience) {
+        tags.push(
+          <IndividualTag $bgColor={COLORS.lilac3}>{audience}</IndividualTag>,
+        );
+      }
     }
 
     setTagsToShow(tags);
     setHiddenTagCount(0);
-  }, [event]);
+  }, [event, facility]);
 
   /* Iteratively remove IndividualTags until all fit in EventTag container. */
   useLayoutEffect(() => {
@@ -118,13 +119,23 @@ export default function DiscoverCard({
           },
         );
 
-        let totalWidth = tagWidths.reduce((a, b) => a + b, 0);
+        let totalWidth = 0;
+        let visibleCount = tagWidths.length;
 
-        while (totalWidth > containerWidth) {
-          const newTags = tagsToShow.slice(0, -1);
-          setHiddenTagCount(prev => prev + 1);
+        for (let i = 0; i < tagWidths.length; i++) {
+          totalWidth += tagWidths[i];
+          if (totalWidth > containerWidth) {
+            visibleCount = i;
+            break;
+          }
+        }
+
+        const newTags = tagsToShow.slice(0, visibleCount);
+        const hiddenCount = tagsToShow.length - visibleCount;
+
+        if (newTags.length !== tagsToShow.length) {
           setTagsToShow(newTags);
-          totalWidth -= tagWidths.pop() ?? 0;
+          setHiddenTagCount(hiddenCount);
         }
       }
     };

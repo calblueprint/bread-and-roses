@@ -4,12 +4,19 @@ import COLORS from '../../styles/colors';
 import { Sans } from '../../styles/fonts';
 import { H4, P } from '../../styles/text';
 
+export const AvailabilityDiv = styled.div`
+  margin-top: 4rem;
+`;
+
 export const ProgressBarContainer = styled.div`
   width: 100%;
 `;
 export const EventName = styled(P)`
   margin-left: 10%;
   margin-bottom: 0.75rem;
+  @media (min-width: 1024px) {
+    display: none;
+  }
 `;
 export const Rectangle = styled.div<{
   variant: 'light' | 'dark';
@@ -22,7 +29,6 @@ export const Rectangle = styled.div<{
     variant === 'light' ? COLORS.gray4 : COLORS.gray12};
 `;
 export const SplitText = styled.div`
-  margin-top: 3rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -42,14 +48,31 @@ export const QuestionsContainer = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `;
-export const Title = styled(H4)`
-  margin-bottom: 0.5rem;
+
+export const AnswerContainer = styled.div`
+  @media (max-width: 1024px) {
+    margin-top: 2rem;
+  }
+  @media (min-width: 1024px) {
+    width: 100%;
+    background-color: ${COLORS.bread1};
+    border-radius: 8px;
+    padding: 2rem;
+    gap: 1.75rem;
+    box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
+    margin: 2rem 0;
+  }
 `;
+
+export const Title = styled(H4)``;
+
 export const Container = styled.div`
   display: flex;
   overflow-x: hidden;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0 auto;
+  max-width: 35rem;
   justify-content: space-between;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -68,22 +91,24 @@ export const Divider = styled.hr`
   margin-bottom: 1rem;
   width: 100vw;
   margin-left: -2rem;
+  @media (min-width: 1024px) {
+    height: 0rem;
+  }
 `;
 export const Image = styled(NextImage)`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   margin-bottom: 16px;
 `;
 export const Button = styled.button<{ disabled?: boolean }>`
   bottom: 4.375rem;
-  margin-left: 10%;
   margin-bottom: 2rem;
-  width: 80%;
+  width: 100%;
   height: 2.75rem;
   background-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-color: ${({ disabled }) =>
-    disabled ? COLORS.pomegranate12 : COLORS.pomegranate10};
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
@@ -93,8 +118,8 @@ export const Button = styled.button<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   text-decoration: none;
   transition: all 0.3s ease;
-  @media (max-width: 768px) {
-    width: 85%;
+  @media (max-width: 1024px) {
+    width: 100%;
     bottom: 2.5rem;
   }
 `;

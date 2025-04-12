@@ -7,6 +7,7 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import {
+  AnswerContainer,
   BackButton,
   Button,
   ButtonContainer,
@@ -46,9 +47,11 @@ export default function Page() {
         </BackButton>
         <Title $fontWeight={500}> What time&apos;s work best? </Title>
         <ProgressBar from={50} to={75} />
-        {days.map((day, index) => (
-          <DateTimeSelection date={day} key={index} />
-        ))}
+        <AnswerContainer>
+          {days.map((day, index) => (
+            <DateTimeSelection date={day} key={index} />
+          ))}
+        </AnswerContainer>
       </TimeContainer>
       <ButtonContainer>
         <SplitText>

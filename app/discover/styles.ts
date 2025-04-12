@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
-import { H3, H6, P, SMALLER } from '@/styles/text';
+import { H3, H6, P } from '@/styles/text';
 
 export const SearchBar = styled.div`
   display: flex;
@@ -11,9 +11,9 @@ export const SearchBar = styled.div`
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  border-radius: 0.5rem;
+  border-radius: 100rem;
   background-color: ${COLORS.bread2};
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
   margin-top: 1.25rem;
 `;
 
@@ -68,7 +68,7 @@ export const Discover = styled(H3)`
 export const DiscoverContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 2rem;
 `;
 
 export const DiscoverCardContainer = styled.div<{ $search: boolean }>`
@@ -94,6 +94,12 @@ export const Icon = styled(NextImage)`
   height: 20px;
 `;
 
+export const SearchXIcon = styled(NextImage)`
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%) invert(0%) sepia(3%) saturate(6166%)
+    hue-rotate(346deg) brightness(96%) contrast(75%);
+`;
 export const Button = styled.button`
   display: flex;
   border: none;
@@ -168,7 +174,7 @@ export const NoMatchText = styled(P)`
   font-weight: 500;
 `;
 
-export const ShowAllText = styled(SMALLER)`
+export const ShowAllText = styled(P)`
   display: flex;
   font-weight: 500;
   color: #755392;

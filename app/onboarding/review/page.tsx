@@ -5,18 +5,27 @@ import { useRouter } from 'next/navigation';
 import { submitOnboardingData } from '@/api/supabase/queries/onboarding';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
-import { SMALL } from '@/styles/text';
+import COLORS from '@/styles/colors';
+import { H5, P, SMALL } from '@/styles/text';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   Background,
   Image,
   InlineContainer,
-  Label,
   StyledLink,
   SubmitButton,
   Title,
 } from '../styles';
-import { BackButton, Line, ReviewContainer, SmallText } from './styles';
+import {
+  BackButton,
+  InfoSection,
+  InfoSectionLine,
+  InfoSectionTitle,
+  Line,
+  ReviewContainer,
+  SmallText,
+  SubSection,
+} from './styles';
 
 export default function Review() {
   const router = useRouter();
@@ -57,35 +66,138 @@ export default function Review() {
           <ProgressBar from={75} to={100} />
         )}
         <ReviewContainer>
-          <Label>First Name</Label>
-          <SmallText>{displayValue(generalInfo.firstName)}</SmallText>
-          <Label>Last Name</Label>
-          <SmallText>{displayValue(generalInfo.lastName)}</SmallText>
-          <Label>Phone Number</Label>
-          <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
+          <InfoSection>
+            <SubSection>
+              <InfoSectionTitle>
+                <div>
+                  <H5 $fontWeight={500}>About</H5>
+                </div>
+
+                <div>
+                  <StyledLink href="/onboarding/basic-information">
+                    <P $fontWeight={400} $color={COLORS.lilac9}>
+                      edit
+                    </P>
+                  </StyledLink>
+                </div>
+              </InfoSectionTitle>
+              <InfoSectionLine />
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>First Name</P>
+              <SmallText>{displayValue(generalInfo.firstName)}</SmallText>
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Last Name</P>
+              <SmallText>{displayValue(generalInfo.lastName)}</SmallText>
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Phone Number</P>
+              <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
+            </SubSection>
+          </InfoSection>
+
+          <InfoSection>
+            <SubSection>
+              <InfoSectionTitle>
+                <div>
+                  <H5 $fontWeight={500}>Show Preferences</H5>
+                </div>
+
+                <div>
+                  <StyledLink href="/onboarding/show-preference">
+                    <P $fontWeight={400} $color={COLORS.lilac9}>
+                      edit
+                    </P>
+                  </StyledLink>
+                </div>
+              </InfoSectionTitle>
+              <InfoSectionLine />
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Facility Type</P>
+              <SmallText>{displayValue(preferences.facilityType)}</SmallText>
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Location Preferences</P>
+              <SmallText>{displayValue(preferences.location)}</SmallText>
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Audience</P>
+              <SmallText>{displayValue(preferences.audience)}</SmallText>
+            </SubSection>
+          </InfoSection>
+
+          {role.isPerformer && (
+            <InfoSection>
+              <SubSection>
+                <InfoSectionTitle>
+                  <div>
+                    <H5 $fontWeight={500}>Performance Interest</H5>
+                  </div>
+
+                  <div>
+                    <StyledLink href="/onboarding/performance">
+                      <P $fontWeight={400} $color={COLORS.lilac9}>
+                        edit
+                      </P>
+                    </StyledLink>
+                  </div>
+                </InfoSectionTitle>
+                <InfoSectionLine />
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>Type of Act</P>
+                <SmallText>
+                  {displayValue(preferences.performanceType)}
+                </SmallText>
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>Genre</P>
+                <SmallText>{displayValue(preferences.genre)}</SmallText>
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>Group Size</P>
+                <SmallText>{displayValue(preferences.performerType)}</SmallText>
+              </SubSection>
+            </InfoSection>
+          )}
+
+          <InfoSection>
+            <SubSection>
+              <InfoSectionTitle>
+                <div>
+                  <H5 $fontWeight={500}>Accomodations</H5>
+                </div>
+
+                <div>
+                  <StyledLink href="/onboarding/additional-info">
+                    <P $fontWeight={400} $color={COLORS.lilac9}>
+                      edit
+                    </P>
+                  </StyledLink>
+                </div>
+              </InfoSectionTitle>
+              <InfoSectionLine />
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Additional Information</P>
+              <SmallText>{displayValue(preferences.additionalInfo)}</SmallText>
+            </SubSection>
+          </InfoSection>
 
           <Line />
-
-          <Label>Facility Type</Label>
-          <SmallText>{displayValue(preferences.facilityType)}</SmallText>
-          <Label>Preferred Location</Label>
-          <SmallText>{displayValue(preferences.location)}</SmallText>
-          <Label>Audience</Label>
-          <SmallText>{displayValue(preferences.audience)}</SmallText>
-
-          <Line />
-
-          <Label>Performance Type</Label>
-          <SmallText>{displayValue(preferences.performanceType)}</SmallText>
-          <Label>Genre</Label>
-          <SmallText>{displayValue(preferences.genre)}</SmallText>
-          <Label>Group Size</Label>
-          <SmallText>{displayValue(preferences.performerType)}</SmallText>
-
-          <Line />
-
-          <Label>Additional Information</Label>
-          <SmallText>{displayValue(preferences.additionalInfo)}</SmallText>
+          <SmallText>* Everything can be modified later in settings</SmallText>
         </ReviewContainer>
 
         <StyledLink href="/onboarding/finalize">

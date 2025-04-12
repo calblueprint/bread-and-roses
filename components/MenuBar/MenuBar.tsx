@@ -99,7 +99,7 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
           >
             <Icon src={Events} alt="Events icon" />
             <MenuLabel $expanded={expanded} $active={activeItem === 'events'}>
-              My Events
+              Upcoming Events
             </MenuLabel>
           </MenuItem>
           <MenuItem

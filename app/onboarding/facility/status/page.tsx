@@ -155,7 +155,6 @@ export default function Status() {
               <span style={{ color: COLORS.gray10 }}>{email}.</span>
             </SMALL>
           </Email>
-          {/* how are we handling logout? has it been implemented yet? */}
           <SMALL
             $fontWeight={400}
             $color={COLORS.rose11}

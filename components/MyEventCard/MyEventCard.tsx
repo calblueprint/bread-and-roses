@@ -27,8 +27,12 @@ export default function MyEventCard(eventData: Event) {
     <styles.EventContainer>
       <styles.EventCardContainer>
         <styles.EventImage src={BPLogo} alt="Event Image" />
-        <div>
-          <styles.TimeText $fontWeight="400" $color="#000" $align="left">
+        <styles.EventInfoContainer>
+          <styles.TimeText
+            $fontWeight="400"
+            $color={COLORS.gray11}
+            $align="left"
+          >
             {formattedTime}
           </styles.TimeText>
           <styles.EventDescriptionText
@@ -48,7 +52,7 @@ export default function MyEventCard(eventData: Event) {
               ? `${facility.street_address_1}, ${facility.city}`
               : 'Fetching location...'}
           </styles.LocationText>
-        </div>
+        </styles.EventInfoContainer>
       </styles.EventCardContainer>
     </styles.EventContainer>
   );

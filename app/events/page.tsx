@@ -83,7 +83,7 @@ export default function EventPage() {
       <styles.Page $menuExpanded={menuExpanded}>
         <styles.AllEventsHolder>
           <styles.Title $fontWeight="500" $color="#000" $align="left">
-            My Events
+            Upcoming Events
           </styles.Title>
           {sortedEntries.map(([month, events]) => (
             <div key={month}>

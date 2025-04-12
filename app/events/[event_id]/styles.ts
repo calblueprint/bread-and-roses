@@ -5,11 +5,18 @@ import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { H4, H5, P, SMALL } from '@/styles/text';
 
+interface TagProps {
+  $bgColor?: string;
+}
+
 export const BackImage = styled(NextImage)`
   width: 1.5rem;
   height: 1.5rem;
   z-index: 3;
   margin-top: 1.5rem;
+  @media (min-width: 1024px) {
+    margin-top: 4rem;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -52,6 +59,12 @@ export const Page = styled.div`
   @media (max-width: 768px) {
     margin-bottom: 3.75rem;
   }
+`;
+
+export const Bullet = styled(P)`
+  display: list-item;
+  margin-top: 0.375rem;
+  margin-left: 1.5rem;
 `;
 
 export const LeftWrapper = styled.div`
@@ -130,9 +143,23 @@ export const LocationDetails = styled.div`
   display: flex;
   flex-direction: column;
 `;
+export const IndividualTag = styled.span<TagProps>`
+  background-color: ${({ $bgColor }) => $bgColor || 'gray'};
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+`;
+
+export const TagDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  gap: 0.25rem;
+`;
 
 export const SubHeadingText = styled(H5)`
-  margin-top: 3rem;
+  margin-top: 4.5rem;
   border-bottom: 1px solid ${COLORS.gray6};
   margin-bottom: 0.25rem;
 `;

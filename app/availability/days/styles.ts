@@ -2,11 +2,26 @@ import styled from 'styled-components';
 import COLORS from '../../../styles/colors';
 
 export const CalendarContainer = styled.div`
-  margin-top: 5rem;
-  margin-left: 2rem;
-  width: 31.25rem;
-  height: 31.25rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+export const Calendar = styled.div`
+  margin-top: 2.5rem;
+  width: 20rem;
+  height: 20rem;
   cursor: default;
+  @media(min-width: 1024px) {
+    width: 30rem;
+    height: 30rem;
+    background-color: ${COLORS.bread1};
+    border-radius: 8px;
+    padding: 2rem;
+    gap: 1.75rem;
+    box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
+    margin: 2.625rem 0;
+    }
   .fc-prev-button,
   .fc-next-button {
     background: none;
@@ -34,10 +49,17 @@ export const CalendarContainer = styled.div`
   .selected-date::after {   
     content: '';
     position: absolute;
-    width: 45px;
-    height: 45px;
-    bottom: 5.5px;
-    transform: translateX(11px);
+    width: 28px;
+    height: 28px;
+    bottom: 4px;
+    transform: translateX(6px);
+    @media(min-width: 1024px) {
+      width: 36px;
+      height: 36px;
+      bottom: 5px;
+      transform: translateX(10px);
+      
+    }
     border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -58,8 +80,12 @@ export const CalendarContainer = styled.div`
   .fc-day-today::after {
     content: '';
     position: absolute;
-    transform: translateX(31px);
-    bottom: 125px;
+    transform: translateX(18px);
+    bottom: 142px;
+    @media(min-width: 1024px) {
+      bottom: 193px;
+      transform: translateX(25px);
+    }
     width: 4px; /* Diameter of the dot */
     height: 4px; /* Diameter of the dot */
     background-color: ${COLORS.rose11}; /* Color of the dot */

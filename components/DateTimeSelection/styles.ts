@@ -35,8 +35,10 @@ export const TimeList = styled.div`
 `;
 
 export const Image = styled(NextImage)`
-  width: 7px;
-  height: 7px;
+  width: 14px;
+  height: 14px;
+  margin-left: 0.5rem;
+  margin-top: 0.25rem;
 `;
 
 export const DeleteButton = styled.button`

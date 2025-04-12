@@ -10,6 +10,12 @@ export const EventImage = styled(NextImage)`
   height: auto;
 `;
 
+export const EventInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
+
 export const EventContainer = styled.main`
   margin: auto;
   width: 100%;

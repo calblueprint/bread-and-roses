@@ -147,6 +147,7 @@ export interface Facilities {
   volunteer_notes?: string;
   directions: string;
   capacity: string;
+  admin_added_notes: string;
 }
 
 export interface Volunteers {

@@ -6,6 +6,7 @@ import { H4, P, SMALL } from '@/styles/text';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   padding: 5rem 2rem 0;
 `;
 
@@ -23,6 +24,7 @@ export const EditIcon = styled(NextImage)`
 
 export const TextContainer = styled.div`
   display: flex;
+  color: ${COLORS.gray12};
   flex-direction: column;
   gap: 1.5rem;
 `;
@@ -31,6 +33,13 @@ export const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5 rem;
+
+  @media (min-width: 1024px) {
+    width: 30rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  margin-bottom: 5rem;
 `;
 
 export const Divider = styled.hr`

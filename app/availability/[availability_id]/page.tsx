@@ -9,6 +9,7 @@ import {
 } from '@/api/supabase/queries/availability';
 import Back from '@/public/images/back.svg';
 import Edit from '@/public/images/edit_availability.svg';
+import COLORS from '@/styles/colors';
 import { P } from '@/styles/text';
 import { Availabilities, AvailableDates } from '@/types/schema';
 import {
@@ -17,7 +18,7 @@ import {
   TimeRange,
 } from '@/utils/availabilityContext';
 import formatTime from '@/utils/formatTime';
-import { BackButton, Image, SplitText } from '../styles';
+import { AvailabilityDiv, BackButton, Image, SplitText } from '../styles';
 import {
   AvailabilityContainer,
   AvailabilityRow,
@@ -185,7 +186,7 @@ export default function AvailabilityInfoPage({
             <Image src={Back} alt="Back icon" />
           </BackButton>
           <SplitText>
-            <Title> {generalInfo.eventName} </Title>
+            <Title $color={COLORS.gray12}> {generalInfo.eventName} </Title>
             <EditButton onClick={handleDetails}>
               <EditIcon src={Edit} alt="Edit icon" />
             </EditButton>
@@ -194,9 +195,11 @@ export default function AvailabilityInfoPage({
           <TextContainer>
             <P $fontWeight={400}>{generalInfo.additionalInfo || '(blank)'}</P>
           </TextContainer>
-          <SplitText>
-            <Title> Availabilities </Title>
-          </SplitText>
+          <AvailabilityDiv>
+            <SplitText>
+              <Title $color={COLORS.gray12}> Availabilities </Title>
+            </SplitText>
+          </AvailabilityDiv>
           <Divider />
           <AvailabilityContainer>{availabilities}</AvailabilityContainer>
         </ReviewContainer>

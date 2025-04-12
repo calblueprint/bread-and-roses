@@ -23,7 +23,7 @@ import {
   Image,
   Title,
 } from '../styles';
-import { CalendarContainer } from './styles';
+import { Calendar, CalendarContainer } from './styles';
 
 type Info = {
   start: Date;
@@ -138,22 +138,25 @@ export default function Page() {
       <Title $fontWeight={500}> What day&apos;s work best? </Title>
       <ProgressBar from={25} to={50} />
       <CalendarContainer>
-        <FullCalendar
-          plugins={[interactionPlugin, dayGridPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: 'title',
-            center: '',
-            right: 'prev next',
-          }}
-          dayCellContent={arg => arg.date.getDate()}
-          editable={true}
-          selectable={true}
-          dayCellClassNames={dayCellClassNames}
-          selectOverlap={false}
-          select={handleSelect}
-          datesSet={updateMonth}
-        />
+        <Calendar>
+          <FullCalendar
+            plugins={[interactionPlugin, dayGridPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: 'title',
+              center: '',
+              right: 'prev next',
+            }}
+            dayCellContent={arg => arg.date.getDate()}
+            editable={true}
+            selectable={true}
+            dayCellClassNames={dayCellClassNames}
+            selectOverlap={false}
+            select={handleSelect}
+            datesSet={updateMonth}
+            longPressDelay={1}
+          />
+        </Calendar>
       </CalendarContainer>
       <ButtonContainer>
         <EventName $fontWeight={500}> {generalInfo.eventName} </EventName>

@@ -106,8 +106,20 @@ export default function EventDisplay({
             <styles.BackImage src={Back} alt="Back icon" />
           </Link>
           <styles.EventText $fontWeight="500" $color="#000" $align="left">
-            {event.name}
+            {facility?.name}
           </styles.EventText>
+          {event && (
+            <styles.TagDiv>
+              <styles.IndividualTag $bgColor={COLORS.bread6}>
+                {facility?.type}
+              </styles.IndividualTag>
+              {facility?.audience.map(audience => (
+                <styles.IndividualTag key={audience} $bgColor={COLORS.lilac3}>
+                  {audience}
+                </styles.IndividualTag>
+              ))}
+            </styles.TagDiv>
+          )}
           <styles.DateLocation>
             <styles.CalLocPin src={Calendar} alt="Calendar" />
             <styles.ParaText
@@ -133,7 +145,14 @@ export default function EventDisplay({
                 $color={COLORS.gray10}
                 $align="left"
               >
-                {facility.street_address_1}, {facility.city}, CA {facility.zip}
+                {facility.street_address_1}
+              </styles.ParaText>
+              <styles.ParaText
+                $fontWeight="400"
+                $color={COLORS.gray10}
+                $align="left"
+              >
+                {facility.city}, CA {facility.zip}
               </styles.ParaText>
             </styles.LocationDetails>
           </styles.DateLocation>
@@ -154,7 +173,9 @@ export default function EventDisplay({
                 $color={COLORS.gray11}
                 $align="left"
               >
-                {facility.volunteer_notes}
+                <styles.Bullet $fontWeight="400">
+                  {facility?.volunteer_notes || '(blank)'}
+                </styles.Bullet>
               </styles.ParaText>
             </div>
             <div>
@@ -170,7 +191,14 @@ export default function EventDisplay({
                 $color={COLORS.gray11}
                 $align="left"
               >
-                {event.notes}
+                <styles.Bullet $fontWeight="400">
+                  {facility?.admin_added_notes || '(blank)'}
+                </styles.Bullet>
+                {event?.notes && (
+                  <styles.Bullet $fontWeight="400">
+                    {event?.notes}
+                  </styles.Bullet>
+                )}
               </styles.ParaText>
             </div>
           </styles.AllNotesAndContactsContainer>
@@ -295,7 +323,7 @@ export default function EventDisplay({
                   $color={COLORS.gray12}
                   $align="left"
                 >
-                  Producer Name
+                  {event?.producer_name || 'Producer Not Found'}
                 </styles.ParaText>
                 <styles.ContactTypeText
                   $fontWeight="400"
@@ -309,14 +337,14 @@ export default function EventDisplay({
                   $color={COLORS.rose11}
                   $align="left"
                 >
-                  producer@email.com
+                  {event?.producer_email || 'Producer Not Found'}
                 </styles.EmailText>
                 <styles.PhoneNumberText
                   $fontWeight="400"
                   $color={COLORS.rose11}
                   $align="left"
                 >
-                  800-867-5309
+                  {event?.producer_email || 'Producer Not Found'}
                 </styles.PhoneNumberText>
               </styles.ContactDetails>
             </styles.ContactContainer>
