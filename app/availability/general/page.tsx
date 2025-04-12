@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   fetchAvailabilitiesByFacilityId,
-  fetchDatesByAvailabilityID,
+  fetchFacilityIdByUserId,
 } from '@/api/supabase/queries/availability';
 import AvailabilityCard from '@/components/AvailabilityCard/AvailabilityCard';
 import MenuBar from '@/components/MenuBar/MenuBar';
@@ -13,9 +13,9 @@ import Add from '@/public/images/add.svg';
 import COLORS from '@/styles/colors';
 import { H3 } from '@/styles/text';
 import { Availabilities, AvailableDates } from '@/types/schema';
+import { useSession } from '@/utils/AuthProvider';
 import { AvailabilityContext } from '@/utils/availabilityContext';
 import * as styles from './styles';
-import { useSession } from '@/utils/AuthProvider';
 
 type AvailabilitiesByYear = {
   [year: string]: {
@@ -37,45 +37,58 @@ export default function AvailabilityPage() {
   useEffect(() => {
     async function fetchAndGroupData() {
       try {
-        const facility_id = session?.user.id;
-        console.log('[DEBUG] Facility ID:', facility_id);
-        if (!facility_id) {
+        const user_id = session?.user.id;
+        //console.log('[DEBUG] Facility ID:', facility_id);
+        if (!user_id) {
           setIsLoading(false);
           return;
         }
-  
-        const availabilities = await fetchAvailabilitiesByFacilityId(facility_id);
+
+        const facility_id = await fetchFacilityIdByUserId(user_id);
+        if (!facility_id) {
+          console.warn('No facility found for user:', user_id);
+          setIsLoading(false);
+          return;
+        }
+
+        const availabilities = await fetchAvailabilitiesByFacilityId(user_id);
         if (!availabilities) {
           setIsLoading(false);
           return;
         }
-  
+
         const grouped: AvailabilitiesByYear = {};
         for (const availability of availabilities) {
           const availableDates = availability.available_dates ?? [];
-  
+
           const year = availableDates[0]?.start_date_time
-            ? new Date(availableDates[0].start_date_time).getFullYear().toString()
+            ? new Date(availableDates[0].start_date_time)
+                .getFullYear()
+                .toString()
             : null;
-  
+
           if (!year) continue;
-  
+
           if (!grouped[year]) grouped[year] = [];
-  
+
           grouped[year].push({
             availability,
             available_dates: availableDates,
           });
         }
-  
+
         for (const year in grouped) {
           grouped[year].sort((a, b) => {
-            const firstDateA = new Date(a.available_dates[0]?.start_date_time ?? 0).getTime();
-            const firstDateB = new Date(b.available_dates[0]?.start_date_time ?? 0).getTime();
+            const firstDateA = new Date(
+              a.available_dates[0]?.start_date_time ?? 0,
+            ).getTime();
+            const firstDateB = new Date(
+              b.available_dates[0]?.start_date_time ?? 0,
+            ).getTime();
             return firstDateA - firstDateB;
           });
         }
-  
+
         setGroupedByYear(grouped);
         setIsLoading(false);
       } catch (error) {
@@ -83,7 +96,7 @@ export default function AvailabilityPage() {
         setIsLoading(false);
       }
     }
-  
+
     fetchAndGroupData();
   }, [session?.user.id]);
 
