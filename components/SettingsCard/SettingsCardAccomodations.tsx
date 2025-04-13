@@ -1,16 +1,50 @@
 import React, { useEffect, useState } from 'react';
+import { updateVolunteerPreferences } from '@/api/supabase/queries/volunteers';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
+import { UserPreferences } from '@/utils/settingsInfo';
 import * as styles from './styles';
 import { Input, InputContainer, Label, RedAsterisk } from './styles';
 
 export default function SettingCardAccomodations({
   accomodations,
+  userPrefs,
+  editPrefs,
+  setEditPrefs,
+  setUserPrefs,
+  userId,
 }: {
   accomodations: string;
+  userPrefs: UserPreferences;
+  editPrefs: UserPreferences;
+  setUserPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  setEditPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  userId: string;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
+
+  const updateAccomodations = (value: string) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      additional_info: value,
+    }));
+  };
+
+  const handleCancel = () => {
+    updateAccomodations(accomodations);
+    setIsEditable(!isEditable);
+  };
+
+  const handleSave = async () => {
+    const updatedData = await updateVolunteerPreferences(
+      userId,
+      userPrefs,
+      editPrefs,
+    );
+    setUserPrefs(editPrefs);
+    setIsEditable(!isEditable);
+  };
 
   return (
     <styles.AvailabilityContainer>
@@ -36,8 +70,8 @@ export default function SettingCardAccomodations({
                   <Input
                     name="accomodations"
                     placeholder="I need help carrying equipment."
-                    //value={generalInfo.firstName}
-                    //onChange={handleChange}
+                    value={editPrefs.additional_info}
+                    onChange={e => updateAccomodations(e.target.value)}
                   />
                 </InputContainer>
               ) : (
@@ -54,6 +88,16 @@ export default function SettingCardAccomodations({
               )}
             </styles.SettingDetail>
           </styles.SubHeader>
+          {isEditable ? (
+            <styles.ButtonContainer>
+              <styles.CancelButton onClick={handleCancel}>
+                Cancel
+              </styles.CancelButton>
+              <styles.SaveButton onClick={handleSave}>Save</styles.SaveButton>
+            </styles.ButtonContainer>
+          ) : (
+            <div></div>
+          )}
         </div>
       </styles.Content>
     </styles.AvailabilityContainer>

@@ -53,73 +53,84 @@ export default function SettingsPage() {
   const [editedUserPrefs, setEditedUserPrefs] =
     useState<UserPreferences>(userPreferences);
 
-  const updateField = <K extends keyof UserInfo>(
-    field: K,
-    value: UserInfo[K],
-  ) => {
-    setEditedUserInfo(editedUserInfo => ({
-      ...editedUserInfo!,
-      [field]: value,
-    }));
-  };
-
   useEffect(() => {
     const getUserData = async () => {
-      const fetchedUserInfo = await fetchVolunteerInfo(session?.user.id);
-      setUserInfo(fetchedUserInfo);
+      if (session) {
+        const fetchedUserInfo = await fetchVolunteerInfo(session.user.id);
+        setUserInfo(fetchedUserInfo);
+        setEditedUserInfo(fetchedUserInfo);
 
-      const fetchedUserPreferences = await fetchVolunteerPreferences(
-        session?.user.id,
-      );
-      setUserPreferences(fetchedUserPreferences);
+        const fetchedUserPreferences = await fetchVolunteerPreferences(
+          session.user.id,
+        );
+        setUserPreferences(fetchedUserPreferences);
+        setEditedUserPrefs(fetchedUserPreferences);
+      }
     };
 
     getUserData();
-  }, [session?.user.id]);
+  }, [session]);
 
   if (!userInfo || !userPreferences) {
     return <div>Loading...</div>;
   }
 
   return (
-    <styles.All>
-      <MenuBar setMenuExpanded={setMenuExpanded} />
-      <styles.Page $menuExpanded={menuExpanded}>
-        <styles.SettingDiv>
-          <styles.ProfileName>
-            {' '}
-            {userInfo.first_name} {userInfo.last_name}{' '}
-          </styles.ProfileName>
-          <styles.Email> {userInfo.email} </styles.Email>
-          <styles.SignOutButton>
-            <styles.SignOut src={SignOut} alt="SignOut" />
-            <styles.ButtonText> Sign Out </styles.ButtonText>
-          </styles.SignOutButton>
-          <SettingsCardPersonalDetails
-            first_name={userInfo.first_name}
-            last_name={userInfo.last_name}
-            phone={userInfo.phone_number}
-            userInfo={userInfo}
-            editInfo={editedUserInfo}
-            setEditInfo={setEditedUserInfo}
-            setUserInfo={setUserInfo}
-            sessionId={session?.user.id}
-          />
-          <SettingsCardNotifications />
-          <SettingsCardShowPreferences
-            facility_preferences={userPreferences.facility_type}
-            locations={userPreferences.locations}
-            audience_preferences={userPreferences.audience_type}
-          />
-          <SettingsCardPerformanceInterest
-            performance_types={userPreferences.performance_type}
-            genres={userPreferences.genre}
-          />
-          <SettingsCardAccomodations
-            accomodations={userPreferences.additional_info}
-          />
-        </styles.SettingDiv>
-      </styles.Page>
-    </styles.All>
+    session && (
+      <styles.All>
+        <MenuBar setMenuExpanded={setMenuExpanded} />
+        <styles.Page $menuExpanded={menuExpanded}>
+          <styles.SettingDiv>
+            <styles.ProfileName>
+              {' '}
+              {userInfo.first_name} {userInfo.last_name}{' '}
+            </styles.ProfileName>
+            <styles.Email> {userInfo.email} </styles.Email>
+            <styles.SignOutButton>
+              <styles.SignOut src={SignOut} alt="SignOut" />
+              <styles.ButtonText> Sign Out </styles.ButtonText>
+            </styles.SignOutButton>
+            <SettingsCardPersonalDetails
+              first_name={userInfo.first_name}
+              last_name={userInfo.last_name}
+              phone={userInfo.phone_number}
+              userInfo={userInfo}
+              editInfo={editedUserInfo}
+              setEditInfo={setEditedUserInfo}
+              setUserInfo={setUserInfo}
+              userId={session.user.id}
+            />
+            <SettingsCardNotifications />
+            <SettingsCardShowPreferences
+              facility_preferences={userPreferences.facility_type}
+              locations={userPreferences.locations}
+              audience_preferences={userPreferences.audience_type}
+              userPrefs={userPreferences}
+              editPrefs={editedUserPrefs}
+              setEditPrefs={setEditedUserPrefs}
+              setUserPrefs={setUserPreferences}
+              userId={session.user.id}
+            />
+            <SettingsCardPerformanceInterest
+              performance_types={userPreferences.performance_type}
+              genres={userPreferences.genre}
+              userPrefs={userPreferences}
+              editPrefs={editedUserPrefs}
+              setEditPrefs={setEditedUserPrefs}
+              setUserPrefs={setUserPreferences}
+              userId={session.user.id}
+            />
+            <SettingsCardAccomodations
+              accomodations={userPreferences.additional_info}
+              userPrefs={userPreferences}
+              editPrefs={editedUserPrefs}
+              setEditPrefs={setEditedUserPrefs}
+              setUserPrefs={setUserPreferences}
+              userId={session.user.id}
+            />
+          </styles.SettingDiv>
+        </styles.Page>
+      </styles.All>
+    )
   );
 }

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { updateVolunteerPreferences } from '@/api/supabase/queries/volunteers';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
+import { UserPreferences } from '@/utils/settingsInfo';
 import * as styles from './styles';
 
 const facilityTypeOptions = new Set([
@@ -38,29 +40,58 @@ export default function SettingCardShowPreferences({
   facility_preferences,
   locations,
   audience_preferences,
+  userPrefs,
+  editPrefs,
+  setEditPrefs,
+  setUserPrefs,
+  userId,
 }: {
   facility_preferences: string[];
   locations: string[];
   audience_preferences: string[];
+  userPrefs: UserPreferences;
+  editPrefs: UserPreferences;
+  setUserPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  setEditPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  userId: string;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [facilitiesArray, setFacilitiesArray] =
-    useState<string[]>(facility_preferences);
-  const [audienceArray, setAudienceArray] =
-    useState<string[]>(audience_preferences);
-  const [locationsArray, setLocationsArray] = useState<string[]>(locations);
+
+  const updateFacilities = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      facility_type: value,
+    }));
+  };
+
+  const updateLocations = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      locations: value,
+    }));
+  };
+
+  const updateAudiences = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      audience_type: value,
+    }));
+  };
 
   const handleCancel = () => {
-    setLocationsArray(locations);
-    setFacilitiesArray(facility_preferences);
-    setAudienceArray(audience_preferences);
+    updateLocations(locations);
+    updateFacilities(facility_preferences);
+    updateAudiences(audience_preferences);
     setIsEditable(!isEditable);
   };
 
-  const handleSave = () => {
-    locations = locationsArray;
-    facility_preferences = facilitiesArray;
-    audience_preferences = audienceArray;
+  const handleSave = async () => {
+    const updatedData = await updateVolunteerPreferences(
+      userId,
+      userPrefs,
+      editPrefs,
+    );
+    setUserPrefs(editPrefs);
     setIsEditable(!isEditable);
   };
 
@@ -89,9 +120,9 @@ export default function SettingCardShowPreferences({
                     placeholder="Select performance type"
                     multi
                     options={facilityTypeOptions}
-                    value={new Set(facilitiesArray)}
+                    value={new Set(editPrefs.facility_type)}
                     onChange={selected =>
-                      setFacilitiesArray(Array.from(selected))
+                      updateFacilities(Array.from(selected))
                     }
                   />
                 ) : (
@@ -121,10 +152,8 @@ export default function SettingCardShowPreferences({
                     placeholder="Select performance type"
                     multi
                     options={locationOptions}
-                    value={new Set(locationsArray)}
-                    onChange={selected =>
-                      setLocationsArray(Array.from(selected))
-                    }
+                    value={new Set(editPrefs.locations)}
+                    onChange={selected => updateLocations(Array.from(selected))}
                   />
                 ) : (
                   locations.map(location => {
@@ -153,10 +182,8 @@ export default function SettingCardShowPreferences({
                     placeholder="Select performance type"
                     multi
                     options={audienceOptions}
-                    value={new Set(audienceArray)}
-                    onChange={selected =>
-                      setAudienceArray(Array.from(selected))
-                    }
+                    value={new Set(editPrefs.audience_type)}
+                    onChange={selected => updateAudiences(Array.from(selected))}
                   />
                 ) : (
                   audience_preferences.map(audience => {
@@ -177,10 +204,12 @@ export default function SettingCardShowPreferences({
             </styles.SettingDetail>
           </styles.SubHeader>
           {isEditable ? (
-            <div>
-              <button onClick={handleSave}>save</button>
-              <button onClick={handleCancel}>cancel</button>
-            </div>
+            <styles.ButtonContainer>
+              <styles.CancelButton onClick={handleCancel}>
+                Cancel
+              </styles.CancelButton>
+              <styles.SaveButton onClick={handleSave}>Save</styles.SaveButton>
+            </styles.ButtonContainer>
           ) : (
             <div></div>
           )}
