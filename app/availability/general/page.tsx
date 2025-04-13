@@ -38,22 +38,18 @@ export default function AvailabilityPage() {
     async function fetchAndGroupData() {
       try {
         const user_id = session?.user.id;
-        //console.log('[DEBUG] Facility ID:', facility_id);
         if (!user_id) {
-          setIsLoading(false);
           return;
         }
 
         const facility_id = await fetchFacilityIdByUserId(user_id);
         if (!facility_id) {
           console.warn('No facility found for user:', user_id);
-          setIsLoading(false);
           return;
         }
 
         const availabilities = await fetchAvailabilitiesByFacilityId(user_id);
         if (!availabilities) {
-          setIsLoading(false);
           return;
         }
 
@@ -98,7 +94,7 @@ export default function AvailabilityPage() {
     }
 
     fetchAndGroupData();
-  }, [session?.user.id]);
+  }, [session]);
 
   // ✅ Handle success or failure popup notification
   useEffect(() => {
