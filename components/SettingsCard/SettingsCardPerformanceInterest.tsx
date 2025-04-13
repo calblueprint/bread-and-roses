@@ -37,9 +37,19 @@ const genreOptions = new Set([
   'Other',
 ]);
 
+const performerTypeOptions = new Set([
+  'Solo',
+  'Duo',
+  'Trio',
+  'Quartet',
+  'Five or more',
+  'Other',
+]);
+
 export default function SettingCardPerformanceInterest({
   genres,
   performance_types,
+  group_size,
   userPrefs,
   editPrefs,
   setEditPrefs,
@@ -48,6 +58,7 @@ export default function SettingCardPerformanceInterest({
 }: {
   genres: string[];
   performance_types: string[];
+  group_size: string[];
   userPrefs: UserPreferences;
   editPrefs: UserPreferences;
   setUserPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
@@ -70,11 +81,19 @@ export default function SettingCardPerformanceInterest({
     }));
   };
 
+  const updateGroupSize = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      performer_type: value,
+    }));
+  };
+
   const handleCancel = () => {
     //setGenresArray(genres);
     //setPerformanceTypesArray(performance_types);
     updateGenres(genres);
     updatePerformanceTypes(performance_types);
+    updateGroupSize(group_size);
     setIsEditable(!isEditable);
   };
 
@@ -144,7 +163,6 @@ export default function SettingCardPerformanceInterest({
                   <InputDropdown
                     placeholder="Select genre"
                     multi
-                    //onChange={handlePerformanceTypeChange}
                     options={genreOptions}
                     value={new Set(editPrefs.genre)}
                     onChange={selected => updateGenres(Array.from(selected))}
@@ -170,13 +188,31 @@ export default function SettingCardPerformanceInterest({
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
                 Group Size
               </P>
-              <styles.TruncatedText
-                $fontWeight="400"
-                $color={COLORS.gray11}
-                $align="left"
-              >
-                2
-              </styles.TruncatedText>
+              <styles.SettingListedItems>
+                {isEditable ? (
+                  <InputDropdown
+                    placeholder="Select group size"
+                    multi
+                    options={performerTypeOptions}
+                    value={new Set(editPrefs.performer_type)}
+                    onChange={selected => updateGroupSize(Array.from(selected))}
+                  />
+                ) : (
+                  group_size.map(size => {
+                    return (
+                      <li key={size}>
+                        <styles.TruncatedText
+                          $fontWeight="400"
+                          $color={COLORS.gray11}
+                          $align="left"
+                        >
+                          {size}
+                        </styles.TruncatedText>
+                      </li>
+                    );
+                  })
+                )}
+              </styles.SettingListedItems>
             </styles.SettingDetail>
           </styles.SubHeader>
           {isEditable ? (

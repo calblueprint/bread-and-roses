@@ -44,6 +44,7 @@ export default function SettingsPage() {
   const [userPreferences, setUserPreferences] = useState<UserPreferences>({
     facility_type: [],
     audience_type: [],
+    performer_type: [],
     genre: [],
     performance_type: [],
     locations: [],
@@ -114,6 +115,7 @@ export default function SettingsPage() {
             <SettingsCardPerformanceInterest
               performance_types={userPreferences.performance_type}
               genres={userPreferences.genre}
+              group_size={userPreferences.performer_type}
               userPrefs={userPreferences}
               editPrefs={editedUserPrefs}
               setEditPrefs={setEditedUserPrefs}
