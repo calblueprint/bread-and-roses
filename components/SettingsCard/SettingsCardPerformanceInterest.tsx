@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { updateVolunteerPreferences } from '@/api/supabase/queries/volunteers';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
+import { UserPreferences } from '@/utils/settingsInfo';
 import * as styles from './styles';
 
 const performanceTypeOptions = new Set([
@@ -38,18 +40,51 @@ const genreOptions = new Set([
 export default function SettingCardPerformanceInterest({
   genres,
   performance_types,
+  userPrefs,
+  editPrefs,
+  setEditPrefs,
+  setUserPrefs,
+  userId,
 }: {
   genres: string[];
   performance_types: string[];
+  userPrefs: UserPreferences;
+  editPrefs: UserPreferences;
+  setUserPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  setEditPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  userId: string;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [genresArray, setGenresArray] = useState<string[]>(genres);
-  const [performanceTypeArray, setPerformanceTypesArray] =
-    useState<string[]>(performance_types);
+
+  const updateGenres = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      genre: value,
+    }));
+  };
+
+  const updatePerformanceTypes = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      performance_type: value,
+    }));
+  };
 
   const handleCancel = () => {
-    setGenresArray(genres);
-    setPerformanceTypesArray(performance_types);
+    //setGenresArray(genres);
+    //setPerformanceTypesArray(performance_types);
+    updateGenres(genres);
+    updatePerformanceTypes(performance_types);
+    setIsEditable(!isEditable);
+  };
+
+  const handleSave = async () => {
+    const updatedData = await updateVolunteerPreferences(
+      userId,
+      userPrefs,
+      editPrefs,
+    );
+    setUserPrefs(editPrefs);
     setIsEditable(!isEditable);
   };
 
@@ -78,9 +113,9 @@ export default function SettingCardPerformanceInterest({
                     placeholder="Select performance type"
                     multi
                     options={performanceTypeOptions}
-                    value={new Set(performanceTypeArray)}
+                    value={new Set(editPrefs.performance_type)}
                     onChange={selected =>
-                      setPerformanceTypesArray(Array.from(selected))
+                      updatePerformanceTypes(Array.from(selected))
                     }
                   />
                 ) : (
@@ -111,8 +146,8 @@ export default function SettingCardPerformanceInterest({
                     multi
                     //onChange={handlePerformanceTypeChange}
                     options={genreOptions}
-                    value={new Set(genresArray)}
-                    onChange={selected => setGenresArray(Array.from(selected))}
+                    value={new Set(editPrefs.genre)}
+                    onChange={selected => updateGenres(Array.from(selected))}
                   />
                 ) : (
                   genres.map(genre => {
@@ -145,10 +180,12 @@ export default function SettingCardPerformanceInterest({
             </styles.SettingDetail>
           </styles.SubHeader>
           {isEditable ? (
-            <div>
-              <button>save</button>
-              <button>cancel</button>
-            </div>
+            <styles.ButtonContainer>
+              <styles.CancelButton onClick={handleCancel}>
+                Cancel
+              </styles.CancelButton>
+              <styles.SaveButton onClick={handleSave}>Save</styles.SaveButton>
+            </styles.ButtonContainer>
           ) : (
             <div></div>
           )}

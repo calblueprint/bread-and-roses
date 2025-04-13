@@ -119,3 +119,38 @@ export const TruncatedText = styled(SMALL)`
   text-overflow: ellipsis;
   white-space: normal;
 `;
+
+export const SaveButton = styled.button`
+  background-color: ${COLORS.pomegranate12};
+  color: ${COLORS.gray1};
+  padding: 0.5rem 0.75rem;
+  margin-left: auto;
+  width: 5rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  ${Sans.style}
+`;
+
+export const CancelButton = styled.button`
+  background-color: white;
+  color: ${COLORS.pomegranate12};
+  padding: 0.5rem 0.75rem;
+  margin-left: auto;
+  width: 5rem;
+  height: 2.25rem;
+  border-color: ${COLORS.pomegranate12};
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  ${Sans.style}
+`;
+
+export const ButtonContainer = styled.main`
+  display: flex;
+  padding-left: 15rem;
+`;

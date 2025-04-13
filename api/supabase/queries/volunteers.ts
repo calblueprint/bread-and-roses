@@ -1,5 +1,5 @@
 import { UUID } from 'crypto';
-import { UserInfo } from '@/utils/settingsInfo';
+import { UserInfo, UserPreferences } from '@/utils/settingsInfo';
 import supabase from '../createClient';
 
 export async function fetchVolunteerInfo(user_id: string) {
@@ -78,6 +78,52 @@ export async function updateVolunteerInfo(
     const { data, error } = await supabase
       .from('volunteers')
       .update(updatedKeys)
+      .eq('user_id', id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
+}
+
+export async function updateVolunteerPreferences(
+  id: string,
+  user_prefs: UserPreferences,
+  edited_prefs: UserPreferences,
+) {
+  const updatedKeys: { [key: string]: string } = {};
+  const updatedKeys2: { [key: string]: string[] } = {};
+  if (user_prefs.additional_info != edited_prefs.additional_info) {
+    updatedKeys['additional_info'] = edited_prefs.additional_info;
+  }
+
+  if (user_prefs.genre != edited_prefs.genre) {
+    updatedKeys2['genre'] = edited_prefs.genre;
+  }
+
+  if (user_prefs.performance_type != edited_prefs.performance_type) {
+    updatedKeys2['performance_type'] = edited_prefs.performance_type;
+  }
+
+  if (user_prefs.locations != edited_prefs.locations) {
+    updatedKeys2['locations'] = edited_prefs.locations;
+  }
+
+  if (user_prefs.facility_type != edited_prefs.facility_type) {
+    updatedKeys2['facility_type'] = edited_prefs.facility_type;
+  }
+
+  if (user_prefs.audience_type != edited_prefs.audience_type) {
+    updatedKeys2['audience_type'] = edited_prefs.audience_type;
+  }
+
+  const allUpdates = { ...updatedKeys, ...updatedKeys2 };
+
+  if (Object.keys(allUpdates).length > 0) {
+    const { data, error } = await supabase
+      .from('volunteer_preferences')
+      .update(allUpdates)
       .eq('user_id', id);
 
     if (error) {

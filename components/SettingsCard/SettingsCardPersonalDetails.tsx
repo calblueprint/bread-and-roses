@@ -16,7 +16,7 @@ export default function SettingCardPersonalDetails({
   editInfo,
   setEditInfo,
   setUserInfo,
-  sessionId,
+  userId,
 }: {
   first_name: string;
   last_name: string;
@@ -25,7 +25,7 @@ export default function SettingCardPersonalDetails({
   userInfo: UserInfo;
   setEditInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
   setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
-  sessionId: string;
+  userId: string;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
@@ -58,30 +58,10 @@ export default function SettingCardPersonalDetails({
   };
 
   const handleSave = async () => {
-    const updatedData = await updateVolunteerInfo(
-      sessionId,
-      userInfo,
-      editInfo,
-    );
+    const updatedData = await updateVolunteerInfo(userId, userInfo, editInfo);
     setUserInfo(editInfo);
     setIsEditable(!isEditable);
   };
-
-  /*const handleSave = async () => {
-    try {
-      // Update the data in the database
-      const updatedData = await updateVolunteerInfo(sessionId, userInfo, editInfo);
-      
-      if (updatedData) {
-        // Update the parent state (userInfo) with the edited data
-        setUserInfo(editInfo); // This updates the userInfo in the parent state
-      }
-
-      setIsEditable(!isEditable); // Exit edit mode
-    } catch (error) {
-      console.error('Failed to save info:', error);
-    }
-  };*/
 
   return (
     <styles.AvailabilityContainer>
@@ -178,12 +158,12 @@ export default function SettingCardPersonalDetails({
             </styles.SettingDetail>
           </styles.SubHeader>
           {isEditable ? (
-            <div>
-              <RoundedCornerButton onClick={handleSave}>
-                save
-              </RoundedCornerButton>
-              <button onClick={handleCancel}>cancel</button>
-            </div>
+            <styles.ButtonContainer>
+              <styles.CancelButton onClick={handleCancel}>
+                Cancel
+              </styles.CancelButton>
+              <styles.SaveButton onClick={handleSave}>Save</styles.SaveButton>
+            </styles.ButtonContainer>
           ) : (
             <div></div>
           )}
