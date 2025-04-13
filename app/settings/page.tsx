@@ -16,22 +16,6 @@ import { useSession } from '@/utils/AuthProvider';
 import { UserInfo, UserPreferences } from '@/utils/settingsInfo';
 import * as styles from './styles';
 
-/*interface UserInfo {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string;
-}
-
-interface UserPreferences {
-  facility_type: string[];
-  audience_type: string[];
-  genre: string[];
-  performance_type: string[];
-  locations: string[];
-  additional_info: string;
-}*/
-
 export default function SettingsPage() {
   const [menuExpanded, setMenuExpanded] = useState<boolean>(false); // Track the expanded state of the menu
   const { session } = useSession();
@@ -115,7 +99,7 @@ export default function SettingsPage() {
             <SettingsCardPerformanceInterest
               performance_types={userPreferences.performance_type}
               genres={userPreferences.genre}
-              group_size={userPreferences.performer_type}
+              group_size={userPreferences.performance_type}
               userPrefs={userPreferences}
               editPrefs={editedUserPrefs}
               setEditPrefs={setEditedUserPrefs}
