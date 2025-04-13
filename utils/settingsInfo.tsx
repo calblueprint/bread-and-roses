@@ -9,6 +9,7 @@ export interface UserPreferences {
   facility_type: string[];
   audience_type: string[];
   genre: string[];
+  performer_type: string[];
   performance_type: string[];
   locations: string[];
   additional_info: string;

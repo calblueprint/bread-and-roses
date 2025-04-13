@@ -20,7 +20,7 @@ export async function fetchVolunteerPreferences(user_id: string) {
   const { data, error } = await supabase
     .from('volunteer_preferences')
     .select(
-      'facility_type, audience_type, genre, performance_type, locations, additional_info ',
+      'facility_type, audience_type, genre, performance_type, locations, additional_info, performer_type ',
     )
     .eq('user_id', user_id)
     .single();
@@ -116,6 +116,10 @@ export async function updateVolunteerPreferences(
 
   if (user_prefs.audience_type != edited_prefs.audience_type) {
     updatedKeys2['audience_type'] = edited_prefs.audience_type;
+  }
+
+  if (user_prefs.performer_type != edited_prefs.performer_type) {
+    updatedKeys2['performer_type'] = edited_prefs.performer_type;
   }
 
   const allUpdates = { ...updatedKeys, ...updatedKeys2 };
