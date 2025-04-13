@@ -37,30 +37,6 @@ export async function updateVolunteerInfo(
   user_info: UserInfo,
   edit_info: UserInfo,
 ) {
-  /*const updatedFields: Partial<UserInfo> = {};
-
-  //check which fields need to be updated
-  Object.keys(user_info).forEach((key) => {
-    if (user_info[key] !== edit_info[key]) {
-      updatedFields[key] = edit_info[key];
-    }
-  });
-
-  //update the data
-  if (Object.keys(updatedFields).length > 0) {
-    const {data, error} = await supabase
-      .from('volunteers')
-      .update(updatedFields)
-      .eq('user_id', id);
-     
-    if (error) {
-      throw new Error(error.message);
-    } 
-
-    return data;
-
-    }
-  */
   const updatedKeys: { [key: string]: string } = {};
   if (user_info.first_name != edit_info.first_name) {
     updatedKeys['first_name'] = edit_info.first_name;
