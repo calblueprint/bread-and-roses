@@ -15,7 +15,7 @@ export const BoxContainer = styled.div<{ $isSelected: boolean }>`
   border: 1px solid
     ${({ $isSelected }) => ($isSelected ? COLORS.rose10 : COLORS.gray6)};
   background: ${({ $isSelected }) =>
-    $isSelected ? COLORS['bread1.5'] : COLORS.bread2};
+    $isSelected ? COLORS.bread2 : COLORS['bread1.5']};
   transition: all 0.3s ease;
 
   ${({ $isSelected }) =>
