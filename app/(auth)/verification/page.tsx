@@ -90,26 +90,26 @@ export default function Verification() {
       <Image src={Bud} alt="Bud" />
       <InlineContainer>
         <ReviewContainer>
-          <Title>Verification Needed</Title>
+          <Title $color={COLORS.gray12}>Verification Needed</Title>
           <P $fontWeight={400} $color={COLORS.gray12}>
             Thanks for signing up!
           </P>
           <P $fontWeight={400} $color={COLORS.gray12}>
-            A verification link has been sent to your email. Please check your
-            inbox.
+            A verification link has been sent to the email you specified, please
+            check your inbox.
           </P>
           <EmailContainer>
             <EmailIconStyled src={EmailIcon} alt="Email Icon" />
             <EmailText>{email || 'Email address not found'}</EmailText>
           </EmailContainer>
 
-          <RoundedCornerButton onClick={handleUseAnotherAccount} width="70%">
+          <RoundedCornerButton onClick={handleUseAnotherAccount} width="65%">
             Use another account
           </RoundedCornerButton>
 
           <Footer>
             Didn’t receive it?{' '}
-            <Link href="#" onClick={handleResendLink}>
+            <Link $fontWeight="500" href="#" onClick={handleResendLink}>
               Resend link
             </Link>
           </Footer>

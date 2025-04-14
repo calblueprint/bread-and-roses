@@ -79,3 +79,12 @@ export const BackButton = styled.button`
   border: none;
   cursor: pointer;
 `;
+
+export const StyledList = styled.ul`
+  padding-left: 1rem;
+  margin: 0;
+
+  li::marker {
+    font-size: 0.6em; /* Smaller bullet */
+  }
+`;

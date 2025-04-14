@@ -156,7 +156,7 @@ export default function Onboarding() {
 
           <InputDropdown
             label="Type of Facility"
-            placeholder="Type to filter"
+            placeholder="Type to filter..."
             multi={false}
             onChange={handleFacilityChange}
             options={facilityTypeOptions}
@@ -166,7 +166,7 @@ export default function Onboarding() {
 
           <InputDropdown
             label="Audience"
-            placeholder="Type to filter"
+            placeholder="Type to filter..."
             multi
             onChange={handleAudienceChange}
             options={audienceTypeOptions}

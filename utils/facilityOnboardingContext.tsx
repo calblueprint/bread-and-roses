@@ -11,6 +11,8 @@ export interface FacilityGeneralInfo {
   directions: string;
   capacity: string;
   audience: string[];
+  has_host: boolean | null;
+  changing_facility_contact: boolean | null;
 }
 
 export interface Location {
@@ -57,6 +59,8 @@ export const FacilityOnboardingProvider = ({
     directions: '',
     capacity: '',
     audience: [],
+    has_host: null,
+    changing_facility_contact: null,
   });
 
   const [location, setLocation] = useState<Location>({

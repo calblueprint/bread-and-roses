@@ -46,9 +46,10 @@ export const RowContainer = styled.main`
 `;
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  position: relative;
   width: 20px;
   height: 20px;
-  border: 2px solid ${COLORS.rose10};
+  border: 2px solid ${COLORS.gray10};
   border-radius: 4px;
   appearance: none;
   outline: none;
@@ -57,6 +58,25 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   &:checked {
     background-color: ${COLORS.rose10};
     border-color: ${COLORS.rose10};
+
+    &::before {
+      display: inline-block;
+    }
+  }
+
+  &::before {
+    content: '';
+    display: none;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('/images/whitecheck.svg');
+    background-position: center;
   }
 `;
 
@@ -85,7 +105,7 @@ export const RoleContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin: 2.625rem 0px;
+  margin: 1rem 0 2.625rem 0px;
   justify-content: space-between;
   border-radius: 8px;
   gap: 1rem;
@@ -101,6 +121,10 @@ export const Input = styled.input`
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
+
+  &::placeholder {
+    color: ${COLORS.gray6};
+  }
 `;
 
 export const InputContainer = styled.div`
@@ -121,14 +145,19 @@ export const Label = styled(P)`
 `;
 
 export const SkipButton = styled.button`
-  position: fixed;
-  bottom: 8.75rem;
   background: transparent;
   border: none;
   cursor: pointer;
 
   @media (max-width: 768px) {
+    position: fixed;
     bottom: 6.25rem;
+  }
+
+  @media (min-width: 768px) {
+    position: relative;
+    align-self: flex-end;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -140,11 +169,15 @@ export const SkipText = styled(P)`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
   height: 80%;
   width: 100%;
+
   @media (max-width: 768px) {
-    margin-top: 6rem;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 7.5rem;
   }
 `;
 
@@ -152,7 +185,7 @@ export const Button = styled.button<{
   disabled?: boolean;
   position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
 }>`
-  position: sticky;
+  position: static;
   bottom: 4.375rem;
   width: 100%;
   height: 2.75rem;
@@ -189,7 +222,7 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   border-style: solid;
   border-radius: 8px;
   display: inline-flex;
-  padding: 0.5rem 1rem;
+  padding: 0.5;
   justify-content: center;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};

@@ -15,15 +15,15 @@ export const Background = styled.main`
   overflow: hidden;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1<{ $color?: string }>`
   font-size: 1.5rem;
   text-align: start;
-  color: ${COLORS.gray11};
+  color: ${({ $color }) => $color || COLORS.gray11};
   font-weight: 500;
 `;
 
 export const InlineContainer = styled.main`
-  width: 25%;
+  width: 25.39%;
   flex-direction: column;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -58,7 +58,8 @@ export const Circle = styled.main`
 export const ReviewContainer = styled.main`
   position: relative; /* This makes the Circle position relative to this container */
   display: flex;
-  padding: 3.75rem 2rem 2rem 2rem;
+  padding: 3.25rem 2rem 2rem 2rem;
+  margin-bottom: 2rem;
   flex-direction: column;
   justify-content: center;
   align-items: start;
@@ -71,11 +72,11 @@ export const ReviewContainer = styled.main`
 export const ContinueButton = styled.button`
   display: flex;
   margin-top: 0.75rem;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   justify-content: center;
   align-items: center;
   align-self: stretch;
-  border-radius: 99999px;
+  border-radius: 0.5rem;
   background: ${COLORS.pomegranate12};
   border-style: solid;
   border-color: ${COLORS.gray12};
@@ -93,8 +94,7 @@ export const RoundedCornerButton = styled.button<RoundedCornerButtonProps>`
   background-color: ${({ $bgColor }) => $bgColor || COLORS.pomegranate12};
   color: ${({ $textColor }) => $textColor || 'white'};
   font-size: 1rem;
-  padding: 0.55rem;
-  border: 1.5px solid black;
+  padding: 0.5rem 0.75rem;
   border-radius: 8px;
   cursor: pointer;
   margin-top: 0.5rem;
@@ -102,6 +102,7 @@ export const RoundedCornerButton = styled.button<RoundedCornerButtonProps>`
   margin-left: auto;
   margin-right: auto;
   transition: background-color 0.3s ease;
+  border: none;
 `;
 
 export const Footer = styled.div`
@@ -112,9 +113,10 @@ export const Footer = styled.div`
   padding: 0.5rem;
 `;
 
-export const Link = styled.a`
+export const Link = styled.a<{ $fontWeight?: string }>`
   color: ${COLORS.lilac9};
   text-decoration: none;
+  font-weight: ${({ $fontWeight }) => $fontWeight || '400'};
 
   &:hover {
     text-decoration: underline;

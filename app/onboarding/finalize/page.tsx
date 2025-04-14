@@ -9,7 +9,7 @@ import {
   InlineContainer,
   ReviewContainer,
 } from '@/styles/styles';
-import { H3, P, SMALL } from '@/styles/text';
+import { H5, P } from '@/styles/text';
 import { Background } from '../styles';
 
 export default function Onboarding() {
@@ -24,17 +24,17 @@ export default function Onboarding() {
       <Image src={Rose} alt="Rose" />
       <InlineContainer>
         <ReviewContainer>
-          <H3 $color={COLORS.gray12} $fontWeight="400">
+          <H5 $color={COLORS.gray12} $fontWeight="500">
             You&apos;re all set!
-          </H3>
+          </H5>
           <P $fontWeight={400} $color={COLORS.gray12}>
             We recommend checking out some upcoming events in the Discover page.
             If you&apos;re interested in participating, please sign up!
           </P>
           <ContinueButton onClick={handleContinue}>
-            <SMALL $fontWeight="400" $color="white">
+            <P $fontWeight="400" $color="white">
               Continue
-            </SMALL>
+            </P>
           </ContinueButton>
         </ReviewContainer>
       </InlineContainer>

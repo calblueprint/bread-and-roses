@@ -6,7 +6,9 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import RoleSelector from '@/components/RoleSelector/RoleSelector';
 import Back from '@/public/images/back.svg';
 import Help from '@/public/images/help.svg';
+import HelpRed from '@/public/images/helpred.svg';
 import Star from '@/public/images/star.svg';
+import StarRed from '@/public/images/starred.svg';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   BackButton,
@@ -20,7 +22,7 @@ import {
   RoleContainer,
   Title,
 } from '../styles';
-import { ChooseBothText } from './styles';
+import { SelectAll } from './styles';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -61,13 +63,14 @@ export default function Onboarding() {
           your role?
         </Title>
         <ProgressBar from={0} to={0} />
+        <SelectAll>Please select all that apply.</SelectAll>
         <RoleContainer>
           <RoleSelector
             isSelected={role.isPerformer}
             name="performer"
             title="Performer"
             description="The star of the show"
-            iconSrc={Star}
+            iconSrc={role.isPerformer ? StarRed : Star}
             onChange={handleChange}
           />
           <RoleSelector
@@ -75,10 +78,9 @@ export default function Onboarding() {
             name="host"
             title="Host"
             description="The organizer of the event"
-            iconSrc={Help}
+            iconSrc={role.isHost ? HelpRed : Help}
             onChange={handleChange}
           />
-          <ChooseBothText>* feel free to choose both!</ChooseBothText>
         </RoleContainer>
         <ButtonContainer>
           <FixedFooter />

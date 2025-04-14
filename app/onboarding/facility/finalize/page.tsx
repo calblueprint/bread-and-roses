@@ -10,7 +10,7 @@ import {
   InlineContainer,
   ReviewContainer,
 } from '@/styles/styles';
-import { H3, P, SMALL } from '@/styles/text';
+import { H5, P } from '@/styles/text';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -24,17 +24,17 @@ export default function Onboarding() {
       <Image src={Bread} alt="Bread" />
       <InlineContainer>
         <ReviewContainer>
-          <H3 $color={COLORS.gray12} $fontWeight="400">
+          <H5 $color={COLORS.gray12} $fontWeight="500">
             We&apos;ll be in touch!
-          </H3>
+          </H5>
           <P $fontWeight={400} $color={COLORS.gray12}>
             We&apos;ve received your application. A member of Bread & Roses will
             review it and contact you soon.
           </P>
           <ContinueButton onClick={handleContinue}>
-            <SMALL $fontWeight="400" $color="white">
-              Continue
-            </SMALL>
+            <P $fontWeight="400" $color="white">
+              Sounds Good
+            </P>
           </ContinueButton>
         </ReviewContainer>
       </InlineContainer>

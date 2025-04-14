@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import COLORS from '@/styles/colors';
 
 export const BoxContainer = styled.div<{ $isSelected: boolean }>`
@@ -61,7 +61,19 @@ interface CheckboxProps {
   shape?: 'circle' | 'square';
 }
 
+const checkmarkStyles = css`
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+`;
+
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
+  position: relative;
   width: 20px;
   height: 20px;
   border: 2px solid ${COLORS.gray10};
@@ -70,8 +82,46 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
   outline: none;
   cursor: pointer;
 
-  &:checked {
-    background-color: ${COLORS.rose10};
-    border-color: ${COLORS.rose10};
+  ${({ shape }) =>
+    shape === 'circle'
+      ? css`
+          &:checked {
+            border: 0.125rem solid ${COLORS.rose10};
+          }
+
+          &:checked::after {
+            ${checkmarkStyles};
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: ${COLORS.rose10};
+            border-radius: 50%;
+          }
+        `
+      : css`
+          &:checked {
+            background-color: ${COLORS.rose10};
+            border-color: ${COLORS.rose10};
+
+            &::before {
+              display: inline-block;
+            }
+          }
+
+          &::before {
+            content: '';
+            display: none;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url('/images/whitecheck.svg');
+            background-position: center;
+          }
+        `}
+  
   }
 `;

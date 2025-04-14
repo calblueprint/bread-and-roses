@@ -38,10 +38,10 @@ export default function Success() {
       <Image src={Rose} alt="Rose" />
       <InlineContainer>
         <ReviewContainer>
-          <Title>Successfully verified!</Title>
+          <Title $color={COLORS.gray12}>Successfully verified!</Title>
           <P $fontWeight={400} $color={COLORS.gray12}>
-            Your email has been verified. Please use this email address to login
-            in the future.
+            Your email has been verified, please use this email to login in the
+            future.
           </P>
           <RoundedCornerButton
             $bgColor={COLORS.pomegranate12}

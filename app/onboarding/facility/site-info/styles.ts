@@ -17,7 +17,7 @@ export const GrayInput = styled.div<GrayInputProps>`
   font-family: ${Sans.style.fontFamily};
   font-size: 1rem;
   color: ${COLORS.gray10};
-  background: ${COLORS.gray1};
+  background: ${COLORS.bread2};
   margin-top: 0.1875rem;
   border-radius: 0.5rem;
   width: 100%;

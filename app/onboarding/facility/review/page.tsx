@@ -67,47 +67,6 @@ export default function Review() {
             <SubSection>
               <InfoSectionTitle>
                 <div>
-                  <H5 $fontWeight={500}>Facility Location</H5>
-                </div>
-
-                <div>
-                  <StyledLink href="/onboarding/facility/location">
-                    <P $fontWeight={400} $color={COLORS.lilac9}>
-                      edit
-                    </P>
-                  </StyledLink>
-                </div>
-              </InfoSectionTitle>
-              <InfoSectionLine />
-            </SubSection>
-
-            <SubSection>
-              <P $fontWeight={500}>Street Address</P>
-              <SmallText>{displayValue(location.address)}</SmallText>
-            </SubSection>
-
-            <RowContainer>
-              <SubSection>
-                <P $fontWeight={500}>City</P>
-                <SmallText>{displayValue(location.city)}</SmallText>
-              </SubSection>
-
-              <SubSection>
-                <P $fontWeight={500}>County</P>
-                <SmallText>{displayValue(location.county)}</SmallText>
-              </SubSection>
-            </RowContainer>
-
-            <SubSection>
-              <P $fontWeight={500}>Zip Code</P>
-              <SmallText>{displayValue(location.zipCode)}</SmallText>
-            </SubSection>
-          </InfoSection>
-
-          <InfoSection>
-            <SubSection>
-              <InfoSectionTitle>
-                <div>
                   <H5 $fontWeight={500}>About</H5>
                 </div>
 
@@ -135,6 +94,52 @@ export default function Review() {
             <SubSection>
               <P $fontWeight={500}>Phone Number</P>
               <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
+            </SubSection>
+          </InfoSection>
+
+          <InfoSection>
+            <SubSection>
+              <InfoSectionTitle>
+                <div>
+                  <H5 $fontWeight={500}>Facility Location</H5>
+                </div>
+
+                <div>
+                  <StyledLink href="/onboarding/facility/location">
+                    <P $fontWeight={400} $color={COLORS.lilac9}>
+                      edit
+                    </P>
+                  </StyledLink>
+                </div>
+              </InfoSectionTitle>
+              <InfoSectionLine />
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Facility Name</P>
+              <SmallText>{displayValue(generalInfo.facilityName)}</SmallText>
+            </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Street Address</P>
+              <SmallText>{displayValue(location.address)}</SmallText>
+            </SubSection>
+
+            <RowContainer>
+              <SubSection>
+                <P $fontWeight={500}>City</P>
+                <SmallText>{displayValue(location.city)}</SmallText>
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>County</P>
+                <SmallText>{displayValue(location.county)}</SmallText>
+              </SubSection>
+            </RowContainer>
+
+            <SubSection>
+              <P $fontWeight={500}>Zip Code</P>
+              <SmallText>{displayValue(location.zipCode)}</SmallText>
             </SubSection>
           </InfoSection>
 

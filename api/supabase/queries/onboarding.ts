@@ -92,7 +92,7 @@ export async function submitFacilityOnboardingData(
     const email = sessionData.session.user.email;
 
     const facilityPayload = {
-      name: '',
+      name: facilityGeneralInfo.facilityName,
       county: location.county,
       city: location.city,
       street_address_1: location.address,
@@ -103,6 +103,15 @@ export async function submitFacilityOnboardingData(
       info: '',
       zip: location.zipCode,
       is_finalized: false,
+      has_host: facilityGeneralInfo.has_host,
+      is_changing_facility_contact:
+        facilityGeneralInfo.changing_facility_contact,
+      ...(facilityGeneralInfo.has_host && {
+        host_name:
+          facilityGeneralInfo.firstName + ' ' + facilityGeneralInfo.lastName,
+        host_phone_number: facilityGeneralInfo.phoneNumber,
+        host_email: email,
+      }),
     };
 
     const { data: facilityData, error: facilityError } = await supabase

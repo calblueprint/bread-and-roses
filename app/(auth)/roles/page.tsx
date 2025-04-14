@@ -13,8 +13,10 @@ import {
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import RoleSelector from '@/components/RoleSelector/RoleSelector';
+import FacilityRed from '@/public/images/facility_contact_red.svg';
 import Facility from '@/public/images/facility_contact.svg';
 import Star from '@/public/images/star.svg';
+import StarRed from '@/public/images/starred.svg';
 import { SelectOneText, Title } from './styles';
 
 export interface Role {
@@ -67,7 +69,7 @@ export default function OnboardingPage() {
               title="Facility Contact"
               description="Represent your facility"
               shape="circle"
-              iconSrc={Facility}
+              iconSrc={role.isFacility ? FacilityRed : Facility}
               onChange={handleChange}
             />
           </label>
@@ -81,7 +83,7 @@ export default function OnboardingPage() {
               title="Event Volunteer"
               description="Host or Perform"
               shape="circle"
-              iconSrc={Star}
+              iconSrc={role.isVolunteer ? StarRed : Star}
               onChange={handleChange}
             />
           </label>

@@ -198,7 +198,8 @@ export const DropdownStyles = (
 });
 
 export const InputLabel = styled(H6)`
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   margin-bottom: 0.2rem;
 `;
