@@ -70,16 +70,6 @@ export async function updateVolunteerPreferences(
 ) {
   const updatedKeys: { [key: string]: string | string[] } = {};
 
-  const keys = [
-    'additional_info',
-    'genre',
-    'performance_type',
-    'locations',
-    'facility_type',
-    'audience_type',
-    'performer_type',
-  ];
-
   if (user_prefs.additional_info != edited_prefs.additional_info) {
     updatedKeys['additional_info'] = edited_prefs.additional_info;
   }
