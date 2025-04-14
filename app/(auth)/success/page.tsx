@@ -20,6 +20,8 @@ export default function Success() {
   const router = useRouter();
   const { session, userRole } = useSession();
 
+  console.log(session);
+
   useEffect(() => {
     if (session && userRole) {
       if (userRole === 'volunteer') {

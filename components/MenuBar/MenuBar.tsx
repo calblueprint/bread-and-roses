@@ -23,8 +23,7 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
   const [expanded, setExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const router = useRouter();
-  const { userRole } = useSession();
-  const { signOut } = useSession();
+  const { userRole, signOut } = useSession();
 
   const toggleMenu = () => {
     const newExpanded = !expanded;

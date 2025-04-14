@@ -143,7 +143,7 @@ export default function DiscoverCard({
     if (tagsToShow.length > 0) {
       checkOverflow();
     }
-  });
+  }, [tagsToShow]);
 
   if (!facility || !eventDate) {
     return null;
