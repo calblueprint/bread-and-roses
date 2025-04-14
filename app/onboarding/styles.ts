@@ -127,6 +127,33 @@ export const Input = styled.input`
   }
 `;
 
+export const TextArea = styled.textarea`
+  font-family: ${Sans.style.fontFamily};
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin-top: 0.1875rem;
+  border: 1px solid ${COLORS.gray6};
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+
+  &::placeholder {
+    color: ${COLORS.gray6};
+  }
+`;
+
+export const StyledTextarea = styled.textarea`
+  width: 100%;
+  padding: 0.5rem;
+  font-family: ${Sans.style.fontFamily};
+  font-size: 1rem;
+  border: 0.0625rem solid ${COLORS.gray6};
+  border-radius: 0.25rem;
+  resize: none;
+  min-height: 6.25rem;
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -246,17 +273,6 @@ export const ContinueText = styled(SMALL)`
 export const StyledLink = styled(Link)`
   text-decoration: none;
   width: 100%;
-`;
-
-export const StyledTextarea = styled.textarea`
-  width: 100%;
-  padding: 0.5rem;
-  font-family: ${Sans.style.fontFamily};
-  font-size: 1rem;
-  border: 0.0625rem solid ${COLORS.gray6};
-  border-radius: 0.25rem;
-  resize: none;
-  min-height: 6.25rem;
 `;
 
 export const FixedFooter = styled.div`

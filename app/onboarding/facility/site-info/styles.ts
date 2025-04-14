@@ -17,7 +17,7 @@ export const GrayInput = styled.div<GrayInputProps>`
   font-family: ${Sans.style.fontFamily};
   font-size: 1rem;
   color: ${COLORS.gray10};
-  background: ${COLORS.bread2};
+  background-color: ${COLORS.bread2};
   margin-top: 0.1875rem;
   border-radius: 0.5rem;
   width: 100%;
@@ -38,7 +38,6 @@ export const RadioContainer = styled.label`
   flex-direction: column;
   width: 100%;
   gap: 0.5rem;
-
   input {
     appearance: none;
     width: 1.25rem;
@@ -60,7 +59,7 @@ export const RadioContainer = styled.label`
     left: 50%;
     width: 0.75rem;
     height: 0.75rem;
-    background-color: ${COLORS.rose10}; /* Red inner circle */
+    background-color: ${COLORS.rose12}; /* Red inner circle */
     border-radius: 50%;
     transform: translate(-50%, -50%); /* Center the circle */
   }

@@ -167,7 +167,7 @@ export async function fetchCurrentUserFacility(user_id?: string) {
 
   const { data: facility, error: facility_error } = await supabase
     .from('facilities')
-    .select('is_approved, street_address_1, city, zip, county')
+    .select('name, is_approved, street_address_1, city, zip, county')
     .eq('user_id', user_id)
     .single();
 

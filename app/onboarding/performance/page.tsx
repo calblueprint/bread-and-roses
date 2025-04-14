@@ -112,14 +112,6 @@ export default function Onboarding() {
             options={performanceTypeOptions}
             value={new Set(preferences.performanceType)}
           />
-          <InputDropdown
-            label="Group Size"
-            placeholder="Type to filter..."
-            multi
-            onChange={handlePerformerTypeChange}
-            options={performerTypeOptions}
-            value={new Set(preferences.performerType)}
-          />
           {preferences.performanceType.includes('Music') && (
             <InputDropdown
               label="Performance Genre"
@@ -131,6 +123,14 @@ export default function Onboarding() {
               note="Note: Only for musical performances"
             />
           )}
+          <InputDropdown
+            label="Group Size"
+            placeholder="Type to filter..."
+            multi
+            onChange={handlePerformerTypeChange}
+            options={performerTypeOptions}
+            value={new Set(preferences.performerType)}
+          />
         </Container>
 
         <ButtonContainer>

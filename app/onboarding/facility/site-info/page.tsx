@@ -15,7 +15,7 @@ import {
   InlineContainer,
   InputContainer,
   Label,
-  StyledTextarea,
+  TextArea,
   Title,
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
@@ -205,11 +205,12 @@ export default function Onboarding() {
 
           <InputContainer>
             <Label>Notes for Volunteers</Label>
-            <StyledTextarea
+            <TextArea
               name="volunteer_notes"
               placeholder="There are speakers, microphones, etc."
               value={facilitySpecificInfo.volunteer_notes}
               onChange={handleChange}
+              rows={4}
             />
           </InputContainer>
         </Container>

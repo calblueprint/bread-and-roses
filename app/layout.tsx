@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={Sans.className} style={{ background: COLORS.gray1 }}>
+      <body className={Sans.className} style={{ background: COLORS.bread2 }}>
         <StyledComponentsRegistry>
           <AuthContextProvider>{children}</AuthContextProvider>
         </StyledComponentsRegistry>
