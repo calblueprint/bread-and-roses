@@ -94,7 +94,9 @@ export default function Onboarding() {
   const { facilityGeneralInfo: generalInfo, setGeneralInfo } =
     facilityOnboardingContext;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setGeneralInfo({
       ...generalInfo,
