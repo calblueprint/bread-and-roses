@@ -44,6 +44,18 @@ export const Content = styled.main`
 
 export const Input = styled.input`
   font-family: ${Sans.style.fontFamily};
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin-top: 0.1875rem;
+  border: 1px solid ${COLORS.gray6};
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+export const TextArea = styled.textarea`
+  font-family: ${Sans.style.fontFamily};
+  font-size: 1rem;
   padding: 0.5rem;
   margin-top: 0.1875rem;
   border: 1px solid ${COLORS.gray6};
@@ -97,9 +109,12 @@ export const SettingDetail = styled.main`
 `;
 
 export const SettingListedItems = styled.ul`
-  padding-left: 1.5rem;
   list-style-type: disc;
   list-style-position: outside;
+`;
+
+export const NonEditableDisplay = styled.div`
+  padding-left: 1.5rem;
 `;
 
 export const EditIcon = styled(NextImage)`
@@ -121,6 +136,9 @@ export const TruncatedText = styled(SMALL)`
 `;
 
 export const SaveButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: ${COLORS.pomegranate12};
   color: ${COLORS.gray1};
   padding: 0.5rem 0.75rem;
@@ -129,28 +147,34 @@ export const SaveButton = styled.button`
   height: 2.25rem;
   border: 0;
   border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
   margin-top: 1.5rem;
+  margin-left: 1rem;
   cursor: pointer;
+  font-size: 1rem;
   ${Sans.style}
 `;
 
 export const CancelButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   color: ${COLORS.pomegranate12};
   padding: 0.5rem 0.75rem;
   margin-left: auto;
   width: 5rem;
   height: 2.25rem;
-  border-color: ${COLORS.pomegranate12};
+  border: 1px solid ${COLORS.pomegranate12};
   border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
   margin-top: 1.5rem;
   cursor: pointer;
+  font-size: 1rem;
   ${Sans.style}
 `;
 
 export const ButtonContainer = styled.main`
   display: flex;
+  justify-content: center;
+  align-items: center;
   padding-left: 15rem;
 `;

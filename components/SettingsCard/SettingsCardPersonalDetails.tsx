@@ -72,7 +72,7 @@ export default function SettingCardPersonalDetails({
           </H5>
         </styles.AvailabilityTitle>
         <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
-          <styles.EditIcon src={Edit} />
+          <styles.EditIcon src={Edit} alt="Edit" />
         </styles.EditButton>
       </styles.AvailabilityHeader>
       <styles.Content>
