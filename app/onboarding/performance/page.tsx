@@ -84,7 +84,7 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    router.push('/onboarding/additional-info');
+    router.push('/onboarding/equipment');
   };
 
   const handleBack = () => {
@@ -102,7 +102,7 @@ export default function Onboarding() {
           <br />
           perform?
         </Title>
-        <ProgressBar from={40} to={60} />
+        <ProgressBar from={40} to={50} />
         <Container>
           <InputDropdown
             label="Type of Performance"

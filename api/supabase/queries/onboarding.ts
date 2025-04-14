@@ -30,6 +30,7 @@ export async function submitOnboardingData(
       last_name: generalInfo.lastName,
       phone_number: generalInfo.phoneNumber,
       notifications_opt_in: generalInfo.notifications,
+      social_media: generalInfo.socialMedia,
     };
 
     const { data: volunteerData, error: volunteerError } = await supabase
@@ -54,6 +55,7 @@ export async function submitOnboardingData(
       performance_type: preferences.performanceType,
       genre: preferences.genre,
       additional_info: preferences.additionalInfo,
+      info: preferences.info,
     };
 
     const { data: preferencesData, error: preferencesError } = await supabase

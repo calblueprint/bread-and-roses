@@ -103,6 +103,17 @@ export default function Onboarding() {
               onChange={handleChange}
             />
           </InputContainer>
+
+          <InputContainer>
+            <Label>Social Media</Label>
+            <Input
+              name="socialMedia"
+              placeholder="Instagram: @janedoe"
+              value={generalInfo.socialMedia}
+              onChange={handleChange}
+            />
+          </InputContainer>
+
           <UpdateContainer>
             <Checkbox
               name="notifications"

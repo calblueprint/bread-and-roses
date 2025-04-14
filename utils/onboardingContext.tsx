@@ -7,10 +7,17 @@ export interface Role {
   isPerformer: boolean;
 }
 
+export interface Info {
+  hasSoundEquipment: string;
+  needsPiano: string;
+  canHost: string;
+}
+
 export interface GeneralInfo {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  socialMedia: string;
   notifications: boolean;
 }
 
@@ -22,6 +29,7 @@ export interface Preferences {
   performerType: string[];
   genre: string[];
   additionalInfo: string;
+  info: Info;
 }
 
 interface OnboardingContextType {
@@ -42,6 +50,7 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     firstName: '',
     lastName: '',
     phoneNumber: '',
+    socialMedia: '',
     notifications: true,
   });
 
@@ -53,6 +62,11 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     genre: [],
     performerType: [],
     additionalInfo: '',
+    info: {
+      hasSoundEquipment: '',
+      needsPiano: '',
+      canHost: '',
+    },
   });
 
   const [role, setRole] = useState<Role>({

@@ -98,6 +98,11 @@ export default function Review() {
               <P $fontWeight={500}>Phone Number</P>
               <SmallText>{displayValue(generalInfo.phoneNumber)}</SmallText>
             </SubSection>
+
+            <SubSection>
+              <P $fontWeight={500}>Social Media</P>
+              <SmallText>{displayValue(generalInfo.socialMedia)}</SmallText>
+            </SubSection>
           </InfoSection>
 
           <InfoSection>
@@ -135,41 +140,84 @@ export default function Review() {
           </InfoSection>
 
           {role.isPerformer && (
-            <InfoSection>
-              <SubSection>
-                <InfoSectionTitle>
-                  <div>
-                    <H5 $fontWeight={500}>Performance Interest</H5>
-                  </div>
+            <>
+              <InfoSection>
+                <SubSection>
+                  <InfoSectionTitle>
+                    <div>
+                      <H5 $fontWeight={500}>Performance Interest</H5>
+                    </div>
 
-                  <div>
-                    <StyledLink href="/onboarding/performance">
-                      <P $fontWeight={400} $color={COLORS.lilac9}>
-                        edit
-                      </P>
-                    </StyledLink>
-                  </div>
-                </InfoSectionTitle>
-                <InfoSectionLine />
-              </SubSection>
+                    <div>
+                      <StyledLink href="/onboarding/performance">
+                        <P $fontWeight={400} $color={COLORS.lilac9}>
+                          edit
+                        </P>
+                      </StyledLink>
+                    </div>
+                  </InfoSectionTitle>
+                  <InfoSectionLine />
+                </SubSection>
 
-              <SubSection>
-                <P $fontWeight={500}>Type of Act</P>
-                <SmallText>
-                  {displayValue(preferences.performanceType)}
-                </SmallText>
-              </SubSection>
+                <SubSection>
+                  <P $fontWeight={500}>Type of Act</P>
+                  <SmallText>
+                    {displayValue(preferences.performanceType)}
+                  </SmallText>
+                </SubSection>
 
-              <SubSection>
-                <P $fontWeight={500}>Genre</P>
-                <SmallText>{displayValue(preferences.genre)}</SmallText>
-              </SubSection>
+                <SubSection>
+                  <P $fontWeight={500}>Genre</P>
+                  <SmallText>{displayValue(preferences.genre)}</SmallText>
+                </SubSection>
 
-              <SubSection>
-                <P $fontWeight={500}>Group Size</P>
-                <SmallText>{displayValue(preferences.performerType)}</SmallText>
-              </SubSection>
-            </InfoSection>
+                <SubSection>
+                  <P $fontWeight={500}>Group Size</P>
+                  <SmallText>
+                    {displayValue(preferences.performerType)}
+                  </SmallText>
+                </SubSection>
+              </InfoSection>
+              <InfoSection>
+                <SubSection>
+                  <InfoSectionTitle>
+                    <div>
+                      <H5 $fontWeight={500}>Logistics</H5>
+                    </div>
+
+                    <div>
+                      <StyledLink href="/onboarding/equipment">
+                        <P $fontWeight={400} $color={COLORS.lilac9}>
+                          edit
+                        </P>
+                      </StyledLink>
+                    </div>
+                  </InfoSectionTitle>
+                  <InfoSectionLine />
+                </SubSection>
+
+                <SubSection>
+                  <P $fontWeight={500}>Own sound equipment?</P>
+                  <SmallText>
+                    {displayValue(preferences.info.hasSoundEquipment)}
+                  </SmallText>
+                </SubSection>
+
+                <SubSection>
+                  <P $fontWeight={500}>Need piano?</P>
+                  <SmallText>
+                    {displayValue(preferences.info.needsPiano)}
+                  </SmallText>
+                </SubSection>
+
+                <SubSection>
+                  <P $fontWeight={500}>Host own show?</P>
+                  <SmallText>
+                    {displayValue(preferences.info.canHost)}
+                  </SmallText>
+                </SubSection>
+              </InfoSection>
+            </>
           )}
 
           <InfoSection>

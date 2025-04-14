@@ -44,7 +44,7 @@ export default function Onboarding() {
 
   const handleBack = () => {
     if (role.isPerformer) {
-      router.push('/onboarding/performance');
+      router.push('/onboarding/equipment');
     } else {
       router.push('/onboarding/show-preference');
     }
