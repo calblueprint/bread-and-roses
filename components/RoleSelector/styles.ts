@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import COLORS from '@/styles/colors';
 
 export const BoxContainer = styled.div<{ $isSelected: boolean }>`
+  cursor: pointer;
   display: flex;
   padding: 0.75rem 1rem;
   align-items: center;

@@ -146,7 +146,7 @@ export default function Onboarding() {
 
           <InputDropdown
             label="Does this facility have a host?"
-            placeholder="Type to filter..."
+            placeholder="No"
             multi={false}
             onChange={value => handleDropdownChange('has_host', value)}
             options={new Set(['Yes', 'No'])}
@@ -162,7 +162,7 @@ export default function Onboarding() {
 
           <InputDropdown
             label="Has this facility signed up before?"
-            placeholder="Type to filter..."
+            placeholder="No"
             multi={false}
             onChange={value =>
               handleDropdownChange('changing_facility_contact', value)

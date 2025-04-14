@@ -27,7 +27,7 @@ export const Container = styled.div<{ $search: boolean }>`
           display: inline-block;
           height: 17.5rem;
           width: 13.875rem;
-          box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+          box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
         `}
   background-color: ${COLORS.bread1};
   border: none;

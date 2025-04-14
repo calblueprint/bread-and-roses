@@ -96,7 +96,7 @@ export const Container = styled.main`
 
   @media (min-width: 768px) {
     background-color: ${COLORS.bread1};
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
     padding: 2rem;
   }
 `;
