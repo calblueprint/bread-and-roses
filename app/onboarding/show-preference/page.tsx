@@ -105,7 +105,7 @@ export default function Onboarding() {
         <Container>
           <InputDropdown
             label="Facility Types"
-            placeholder="Type to filter"
+            placeholder="Type to filter..."
             multi
             onChange={handleFacilityChange}
             options={facilityTypeOptions}
@@ -113,7 +113,7 @@ export default function Onboarding() {
           />
           <InputDropdown
             label="Location Preferences"
-            placeholder="Type to filter"
+            placeholder="Type to filter..."
             multi
             onChange={handleLocationChange}
             options={locationOptions}
@@ -121,7 +121,7 @@ export default function Onboarding() {
           />
           <InputDropdown
             label="Preferred Audience"
-            placeholder="Type to filter"
+            placeholder="Type to filter..."
             multi
             onChange={handleAudienceChange}
             options={audienceOptions}
@@ -138,8 +138,8 @@ export default function Onboarding() {
             onClick={handleSubmit}
             position="fixed"
             disabled={
-              !preferences.facilityType.length ||
-              !preferences.location.length ||
+              !preferences.facilityType.length &&
+              !preferences.location.length &&
               !preferences.audience.length
             }
           >

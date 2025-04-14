@@ -103,13 +103,21 @@ export default function SignUp() {
               />
             </div>
           </Fields>
-          <Button type="button" onClick={handleSignUp}>
+          <Button
+            type="button"
+            onClick={handleSignUp}
+            disabled={
+              email.length === 0 ||
+              password.length === 0 ||
+              confirmedPassword.length === 0
+            }
+          >
             Create account
           </Button>
         </Form>
       </Card>
       <Footer>
-        Already have an account? <Link href="/signin">Sign in!</Link>
+        Already have an account? <Link href="/signin">Log in!</Link>
       </Footer>
     </Container>
   );

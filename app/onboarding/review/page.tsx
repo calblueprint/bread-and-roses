@@ -24,6 +24,7 @@ import {
   Line,
   ReviewContainer,
   SmallText,
+  StyledList,
   SubSection,
 } from './styles';
 
@@ -37,9 +38,19 @@ export default function Review() {
   const { role } = onboardingContext;
   const { preferences, generalInfo } = onboardingContext;
 
-  const displayValue = (value: string | string[] | undefined): string => {
+  const displayValue = (
+    value: string | string[] | undefined,
+  ): JSX.Element | string => {
     if (Array.isArray(value)) {
-      return value.length > 0 ? value.join(', ') : 'N/A';
+      return value.length > 0 ? (
+        <StyledList>
+          {value.map((item, idx) => (
+            <li key={idx}>{item}</li>
+          ))}
+        </StyledList>
+      ) : (
+        'N/A'
+      );
     }
     return value || 'N/A';
   };
@@ -134,7 +145,7 @@ export default function Review() {
             </SubSection>
 
             <SubSection>
-              <P $fontWeight={500}>Audience</P>
+              <P $fontWeight={500}>Preferred Audience</P>
               <SmallText>{displayValue(preferences.audience)}</SmallText>
             </SubSection>
           </InfoSection>

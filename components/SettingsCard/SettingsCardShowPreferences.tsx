@@ -1,18 +1,96 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { updateVolunteerPreferences } from '@/api/supabase/queries/volunteers';
+import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
+import { UserPreferences } from '@/utils/settingsInfo';
 import * as styles from './styles';
+
+const facilityTypeOptions = new Set([
+  'Assisted Living',
+  "Children's Day Care",
+  'Detention Center',
+  'Developmentally Disabled',
+  'Food Bank',
+  'Homeless Services',
+  'Hospital',
+  'Mental Health Services',
+  'Recovery Center',
+  'Senior Day Program',
+  'Skilled Nursing Care',
+  'Special Needs School',
+  'Visually Impaired',
+]);
+
+const locationOptions = new Set([
+  'Alameda',
+  'Contra Costa',
+  'Marin',
+  'Napa',
+  'San Francisco',
+  'San Mateo',
+  'Santa Clara',
+  'Sonoma',
+]);
+
+const audienceOptions = new Set(['Youth', 'Adults', 'Senior ']);
 
 export default function SettingCardShowPreferences({
   facility_preferences,
   locations,
   audience_preferences,
+  userPrefs,
+  editPrefs,
+  setEditPrefs,
+  setUserPrefs,
+  userId,
 }: {
   facility_preferences: string[];
   locations: string[];
   audience_preferences: string[];
+  userPrefs: UserPreferences;
+  editPrefs: UserPreferences;
+  setUserPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  setEditPrefs: React.Dispatch<React.SetStateAction<UserPreferences>>;
+  userId: string;
 }) {
+  const [isEditable, setIsEditable] = useState<boolean>(false);
+
+  const updateFacilities = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      facility_type: value,
+    }));
+  };
+
+  const updateLocations = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      locations: value,
+    }));
+  };
+
+  const updateAudiences = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      audience_type: value,
+    }));
+  };
+
+  const handleCancel = () => {
+    updateLocations(locations);
+    updateFacilities(facility_preferences);
+    updateAudiences(audience_preferences);
+    setIsEditable(!isEditable);
+  };
+
+  const handleSave = async () => {
+    await updateVolunteerPreferences(userId, userPrefs, editPrefs);
+    setUserPrefs(editPrefs);
+    setIsEditable(!isEditable);
+  };
+
   return (
     <styles.AvailabilityContainer>
       <styles.AvailabilityHeader>
@@ -21,7 +99,9 @@ export default function SettingCardShowPreferences({
             Show Preferences
           </H5>
         </styles.AvailabilityTitle>
-        <styles.Edit src={Edit} alt="Edit" />
+        <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
+          <styles.EditIcon src={Edit} alt="Edit" />
+        </styles.EditButton>
       </styles.AvailabilityHeader>
       <styles.Content>
         <div>
@@ -31,19 +111,34 @@ export default function SettingCardShowPreferences({
                 Facility Type
               </P>
               <styles.SettingListedItems>
-                {facility_preferences.map(facility => {
-                  return (
-                    <li key={facility}>
-                      <styles.TruncatedText
-                        $fontWeight="400"
-                        $color={COLORS.gray11}
-                        $align="left"
-                      >
-                        {facility}
-                      </styles.TruncatedText>
-                    </li>
-                  );
-                })}
+                {isEditable ? (
+                  <InputDropdown
+                    label=""
+                    placeholder="Select performance type"
+                    multi
+                    options={facilityTypeOptions}
+                    value={new Set(editPrefs.facility_type)}
+                    onChange={selected =>
+                      updateFacilities(Array.from(selected))
+                    }
+                  />
+                ) : (
+                  <styles.NonEditableDisplay>
+                    {facility_preferences.map(facility => {
+                      return (
+                        <li key={facility}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {facility}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
+                )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
             <styles.SettingDetail>
@@ -51,19 +146,32 @@ export default function SettingCardShowPreferences({
                 Location Preferences
               </P>
               <styles.SettingListedItems>
-                {locations.map(location => {
-                  return (
-                    <li key={location}>
-                      <styles.TruncatedText
-                        $fontWeight="400"
-                        $color={COLORS.gray11}
-                        $align="left"
-                      >
-                        {location}
-                      </styles.TruncatedText>
-                    </li>
-                  );
-                })}
+                {isEditable ? (
+                  <InputDropdown
+                    label=""
+                    placeholder="Select performance type"
+                    multi
+                    options={locationOptions}
+                    value={new Set(editPrefs.locations)}
+                    onChange={selected => updateLocations(Array.from(selected))}
+                  />
+                ) : (
+                  <styles.NonEditableDisplay>
+                    {locations.map(location => {
+                      return (
+                        <li key={location}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {location}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
+                )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
             <styles.SettingDetail>
@@ -71,22 +179,45 @@ export default function SettingCardShowPreferences({
                 Preferred Audience
               </P>
               <styles.SettingListedItems>
-                {audience_preferences.map(audience => {
-                  return (
-                    <li key={audience}>
-                      <styles.TruncatedText
-                        $fontWeight="400"
-                        $color={COLORS.gray11}
-                        $align="left"
-                      >
-                        {audience}
-                      </styles.TruncatedText>
-                    </li>
-                  );
-                })}
+                {isEditable ? (
+                  <InputDropdown
+                    label=""
+                    placeholder="Select performance type"
+                    multi
+                    options={audienceOptions}
+                    value={new Set(editPrefs.audience_type)}
+                    onChange={selected => updateAudiences(Array.from(selected))}
+                  />
+                ) : (
+                  <styles.NonEditableDisplay>
+                    {audience_preferences.map(audience => {
+                      return (
+                        <li key={audience}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {audience}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
+                )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
           </styles.SubHeader>
+          {isEditable ? (
+            <styles.ButtonContainer>
+              <styles.CancelButton onClick={handleCancel}>
+                Cancel
+              </styles.CancelButton>
+              <styles.SaveButton onClick={handleSave}>Save</styles.SaveButton>
+            </styles.ButtonContainer>
+          ) : (
+            <div></div>
+          )}
         </div>
       </styles.Content>
     </styles.AvailabilityContainer>

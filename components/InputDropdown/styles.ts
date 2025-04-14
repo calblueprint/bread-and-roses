@@ -44,7 +44,7 @@ const getControlBorderColor = (
 ) => {
   if (error) return COLORS.rose10;
   if (inFocus) return COLORS.gray11;
-  return hasValue ? COLORS.gray9 : COLORS.gray6;
+  return COLORS.gray6;
 };
 
 export const DropdownStyles = (
@@ -198,7 +198,8 @@ export const DropdownStyles = (
 });
 
 export const InputLabel = styled(H6)`
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   margin-bottom: 0.2rem;
 `;

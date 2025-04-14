@@ -142,11 +142,16 @@ export default function SignIn() {
 
           <AuthSpacer>
             <SMALL $fontWeight={400} $align="right">
-              <Link href="/forgotpassword">Forgot Password?</Link>
+              <Link href="/forgotpassword">Forgot Password</Link>
             </SMALL>
           </AuthSpacer>
 
-          <Button type="submit" disabled={isLoggingIn}>
+          <Button
+            type="submit"
+            disabled={
+              isLoggingIn || email.length === 0 || password.length === 0
+            }
+          >
             {isLoggingIn ? 'Logging In...' : 'Login'}
           </Button>
         </Form>

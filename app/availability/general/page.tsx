@@ -45,11 +45,13 @@ export default function AvailabilityPage() {
         const facility_id = await fetchFacilityIdByUserId(user_id);
         if (!facility_id) {
           console.warn('No facility found for user:', user_id);
+          setIsLoading(false);
           return;
         }
 
         const availabilities = await fetchAvailabilitiesByFacilityId(user_id);
         if (!availabilities) {
+          setIsLoading(false);
           return;
         }
 

@@ -29,25 +29,27 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
   shape = 'square',
 }) => {
   return (
-    <BoxContainer $isSelected={isSelected}>
-      <RoleContainer>
-        <Checkbox
-          name={name}
-          checked={isSelected}
-          onChange={onChange}
-          shape={shape}
-        />
-        <TextContainer>
-          <P $color={COLORS.gray11} $fontWeight={500}>
-            {title}
-          </P>
-          <P $color={COLORS.gray10} $fontWeight={400}>
-            {description}
-          </P>
-        </TextContainer>
-      </RoleContainer>
-      <Icon src={iconSrc} alt={name} />
-    </BoxContainer>
+    <label style={{ display: 'block', width: '100%' }}>
+      <BoxContainer $isSelected={isSelected}>
+        <RoleContainer>
+          <Checkbox
+            name={name}
+            checked={isSelected}
+            onChange={onChange}
+            shape={shape}
+          />
+          <TextContainer>
+            <P $color={COLORS.gray11} $fontWeight={500}>
+              {title}
+            </P>
+            <P $color={COLORS.gray10} $fontWeight={400}>
+              {description}
+            </P>
+          </TextContainer>
+        </RoleContainer>
+        <Icon src={iconSrc} alt={name} />
+      </BoxContainer>
+    </label>
   );
 };
 

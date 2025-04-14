@@ -56,11 +56,7 @@ export default function Onboarding() {
         <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
         </BackButton>
-        <Title $fontWeight={500}>
-          Do you have anything
-          <br />
-          you&apos;d like to add?
-        </Title>
+        <Title $fontWeight={500}>Do you require any accomodations?</Title>
         {role.isPerformer ? (
           <ProgressBar from={60} to={80} />
         ) : (
@@ -71,7 +67,7 @@ export default function Onboarding() {
             <Label>Additional Information</Label>
             <TextArea
               name="additional information"
-              placeholder="i.e. I need help carrying my equipments."
+              placeholder=""
               value={preferences.additionalInfo}
               onChange={handleChange}
             />

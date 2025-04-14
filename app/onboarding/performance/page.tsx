@@ -106,20 +106,23 @@ export default function Onboarding() {
         <Container>
           <InputDropdown
             label="Type of Performance"
-            placeholder="Select performance type"
+            placeholder="Type to filter..."
             multi
             onChange={handlePerformanceTypeChange}
             options={performanceTypeOptions}
             value={new Set(preferences.performanceType)}
           />
-          <InputDropdown
-            label="Performance Genre"
-            placeholder="Select genres"
-            multi
-            onChange={handleGenreChange}
-            options={genreOptions}
-            value={new Set(preferences.genre)}
-          />
+          {preferences.performanceType.includes('Music') && (
+            <InputDropdown
+              label="Performance Genre"
+              placeholder="Type to filter..."
+              multi
+              onChange={handleGenreChange}
+              options={genreOptions}
+              value={new Set(preferences.genre)}
+              note="Note: Only for musical performances"
+            />
+          )}
           <InputDropdown
             label="Group Size"
             placeholder="Type to filter..."
@@ -137,10 +140,10 @@ export default function Onboarding() {
           <FixedFooter />
           <Button
             onClick={handleSubmit}
-            position="fixed"
+            position="sticky"
             disabled={
-              !preferences.performanceType.length ||
-              !preferences.genre.length ||
+              !preferences.performanceType.length &&
+              !preferences.genre.length &&
               !preferences.performerType.length
             }
           >

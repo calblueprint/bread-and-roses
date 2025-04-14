@@ -1,4 +1,5 @@
 import { UUID } from 'crypto';
+import { UserInfo, UserPreferences } from '@/utils/settingsInfo';
 import supabase from '../createClient';
 
 export async function fetchVolunteerInfo(user_id: string) {
@@ -19,7 +20,7 @@ export async function fetchVolunteerPreferences(user_id: string) {
   const { data, error } = await supabase
     .from('volunteer_preferences')
     .select(
-      'facility_type, audience_type, genre, performance_type, locations, additional_info ',
+      'facility_type, audience_type, genre, performance_type, locations, additional_info, performer_type ',
     )
     .eq('user_id', user_id)
     .single();
@@ -29,6 +30,85 @@ export async function fetchVolunteerPreferences(user_id: string) {
   }
 
   return data;
+}
+
+export async function updateVolunteerInfo(
+  id: string,
+  user_info: UserInfo,
+  edit_info: UserInfo,
+) {
+  const updatedKeys: { [key: string]: string } = {};
+  if (user_info.first_name != edit_info.first_name) {
+    updatedKeys['first_name'] = edit_info.first_name;
+  }
+
+  if (user_info.last_name != edit_info.last_name) {
+    updatedKeys['last_name'] = edit_info.last_name;
+  }
+
+  if (user_info.phone_number != edit_info.phone_number) {
+    updatedKeys['phone_number'] = edit_info.phone_number;
+  }
+
+  if (Object.keys(updatedKeys).length > 0) {
+    const { data, error } = await supabase
+      .from('volunteers')
+      .update(updatedKeys)
+      .eq('user_id', id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
+}
+
+export async function updateVolunteerPreferences(
+  id: string,
+  user_prefs: UserPreferences,
+  edited_prefs: UserPreferences,
+) {
+  const updatedKeys: { [key: string]: string | string[] } = {};
+
+  if (user_prefs.additional_info != edited_prefs.additional_info) {
+    updatedKeys['additional_info'] = edited_prefs.additional_info;
+  }
+
+  if (user_prefs.genre != edited_prefs.genre) {
+    updatedKeys['genre'] = edited_prefs.genre;
+  }
+
+  if (user_prefs.performance_type != edited_prefs.performance_type) {
+    updatedKeys['performance_type'] = edited_prefs.performance_type;
+  }
+
+  if (user_prefs.locations != edited_prefs.locations) {
+    updatedKeys['locations'] = edited_prefs.locations;
+  }
+
+  if (user_prefs.facility_type != edited_prefs.facility_type) {
+    updatedKeys['facility_type'] = edited_prefs.facility_type;
+  }
+
+  if (user_prefs.audience_type != edited_prefs.audience_type) {
+    updatedKeys['audience_type'] = edited_prefs.audience_type;
+  }
+
+  if (user_prefs.performer_type != edited_prefs.performer_type) {
+    updatedKeys['performer_type'] = edited_prefs.performer_type;
+  }
+
+  if (Object.keys(updatedKeys).length > 0) {
+    const { data, error } = await supabase
+      .from('volunteer_preferences')
+      .update(updatedKeys)
+      .eq('user_id', id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
 }
 
 export async function fetchPerformer(event_id: UUID) {

@@ -10,7 +10,7 @@ import {
   InlineContainer,
   ReviewContainer,
 } from '@/styles/styles';
-import { H3, P, SMALL } from '@/styles/text';
+import { H3, P } from '@/styles/text';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -32,9 +32,9 @@ export default function Onboarding() {
             and our producers will curate an event that matches!
           </P>
           <ContinueButton onClick={handleContinue}>
-            <SMALL $fontWeight="400" $color="white">
+            <P $fontWeight="400" $color="white">
               Okay!
-            </SMALL>
+            </P>
           </ContinueButton>
         </ReviewContainer>
       </InlineContainer>

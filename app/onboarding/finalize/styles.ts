@@ -45,9 +45,9 @@ export const Circle = styled.main`
 `;
 
 export const ReviewContainer = styled.main`
-  position: relative; /* This makes the Circle position relative to this container */
+  position: relative;
   display: flex;
-  padding: 3.75rem 2rem 2rem 2rem;
+  padding: 3.25rem 2rem 2rem 2rem;
   flex-direction: column;
   justify-content: center;
   align-items: start;

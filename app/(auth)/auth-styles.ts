@@ -22,10 +22,11 @@ export const Container = styled.div`
 `;
 
 export const TitleUnderline = styled.div<TitleUnderlineProps>`
-  margin-bottom: 1.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 2rem;
   width: ${props => props.width || '4.25rem'};
   height: 0.25rem;
-  background-color: ${COLORS.rose8};
+  background-color: ${COLORS.rose9};
 `;
 
 export const Logo = styled(Image)`
@@ -73,6 +74,7 @@ export const InputGroup = styled.div`
 
 export const Label = styled.label<{ required?: boolean }>`
   font-weight: 500;
+  color: ${COLORS.gray11};
 
   &::after {
     content: ${({ required }) => (required ? "' *'" : "''")};
@@ -82,24 +84,33 @@ export const Label = styled.label<{ required?: boolean }>`
 
 export const Input = styled.input`
   font-family: ${Sans.style.fontFamily};
-  padding: 0.7rem;
+  font-size: 1rem;
+  padding: 0.5rem;
   border: 1px solid ${COLORS.gray4};
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
+  margin-top: 0.25rem;
+
+  &::placeholder {
+    color: ${COLORS.gray6};
+  }
 `;
 
 export const Button = styled.button`
   font-family: ${Sans.style.fontFamily};
-  background-color: ${COLORS.pomegranate10};
+  background-color: ${({ disabled }) =>
+    disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
   color: white;
   font-size: 1rem;
-  padding: 0.75rem;
+  padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   margin-top: 2rem;
   width: 100%;
+  transition: background-color 0.5s ease;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
 export const ForgotPassword = styled(SMALL)`
@@ -141,7 +152,15 @@ export const LoginMessage = styled(SMALL)<{ $isError: boolean }>`
 export const Footer = styled.div`
   font-family: ${Sans.style.fontFamily};
   text-align: center;
-  margin-top: 1rem;
+
+  @media (min-width: 768px) {
+    margin-top: 2.625rem;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+  }
+
   width: 100%;
   padding: 0.5rem;
 `;

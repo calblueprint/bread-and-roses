@@ -25,6 +25,7 @@ interface CommonProps {
   error?: string;
   disabled?: boolean;
   required?: boolean;
+  note?: string;
 }
 
 interface MultiSelectProps extends CommonProps {
@@ -60,6 +61,7 @@ export default function InputDropdown({
   error = '',
   disabled,
   required,
+  note,
   onChange,
   multi,
   value,
@@ -114,8 +116,13 @@ export default function InputDropdown({
       <InputLabel>
         <P $color={COLORS.gray11} $fontWeight={500}>
           {label}
+          {required && <span style={{ color: COLORS.rose10 }}>{' *'}</span>}
         </P>
-        {required && <SMALL $color={COLORS.rose10}>&nbsp;{'*'}</SMALL>}
+        {note && (
+          <SMALL $color={COLORS.rose11} $fontWeight={400}>
+            {note}
+          </SMALL>
+        )}
       </InputLabel>
       <Select
         components={{ Menu: AnimatedMenu }}

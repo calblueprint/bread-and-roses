@@ -19,6 +19,7 @@ import {
   RowContainer,
   Title,
 } from '@/app/onboarding/styles';
+import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
 import { FacilityOnboardingContext } from '@/utils/facilityOnboardingContext';
@@ -31,12 +32,27 @@ export default function Onboarding() {
   if (!facilityOnboardingContext) return null;
 
   const { location, setLocation } = facilityOnboardingContext;
+  const { facilityGeneralInfo, setGeneralInfo } = facilityOnboardingContext;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLocation({
       ...location,
       [name]: value,
+    });
+    setGeneralInfo({
+      ...facilityGeneralInfo,
+      [name]: value,
+    });
+  };
+
+  const handleDropdownChange = (
+    field: 'has_host' | 'changing_facility_contact',
+    value: string | null,
+  ) => {
+    setGeneralInfo({
+      ...facilityGeneralInfo,
+      [field]: value === 'Yes',
     });
   };
 
@@ -45,7 +61,8 @@ export default function Onboarding() {
       !location.address ||
       !location.city ||
       !location.county ||
-      !location.zipCode
+      !location.zipCode ||
+      !facilityGeneralInfo.facilityName
     ) {
       return;
     }
@@ -65,6 +82,18 @@ export default function Onboarding() {
         <Title $fontWeight={500}>Where is the facility located?</Title>
         <ProgressBar from={33} to={66} />
         <Container>
+          <InputContainer>
+            <Label>
+              Facility Name <RedAsterisk>*</RedAsterisk>
+            </Label>
+            <Input
+              name="facilityName"
+              placeholder="Highland Hospital"
+              value={facilityGeneralInfo.facilityName}
+              onChange={handleChange}
+            />
+          </InputContainer>
+
           <InputContainer>
             <Label>
               Street Address <RedAsterisk>*</RedAsterisk>
@@ -114,6 +143,40 @@ export default function Onboarding() {
               onChange={handleChange}
             />
           </InputContainer>
+
+          <InputDropdown
+            label="Does this facility have a host?"
+            placeholder="No"
+            multi={false}
+            onChange={value => handleDropdownChange('has_host', value)}
+            options={new Set(['Yes', 'No'])}
+            value={
+              facilityGeneralInfo.has_host === true
+                ? 'Yes'
+                : facilityGeneralInfo.has_host === false
+                  ? 'No'
+                  : null
+            }
+            required={true}
+          />
+
+          <InputDropdown
+            label="Has this facility signed up before?"
+            placeholder="No"
+            multi={false}
+            onChange={value =>
+              handleDropdownChange('changing_facility_contact', value)
+            }
+            options={new Set(['Yes', 'No'])}
+            value={
+              facilityGeneralInfo.changing_facility_contact === true
+                ? 'Yes'
+                : facilityGeneralInfo.changing_facility_contact === false
+                  ? 'No'
+                  : null
+            }
+            required={true}
+          />
         </Container>
 
         <ButtonContainer>
@@ -125,7 +188,9 @@ export default function Onboarding() {
               !location.address ||
               !location.city ||
               !location.county ||
-              !location.zipCode
+              !location.zipCode ||
+              facilityGeneralInfo.has_host === null ||
+              facilityGeneralInfo.changing_facility_contact === null
             }
           >
             <ContinueText>Continue</ContinueText>
