@@ -6,6 +6,7 @@ import { fetchVolunteerPreferences } from '@/api/supabase/queries/volunteers';
 import DiscoverCard from '@/components/DiscoverCard/DiscoverCard';
 import FilterMenu from '@/components/FilterMenu/FilterMenu';
 import MenuBar from '@/components/MenuBar/MenuBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import Cancel from '@/public/images/cancel.svg';
 import Filter from '@/public/images/filter.svg';
@@ -305,115 +306,151 @@ export default function ActiveEventsPage() {
   ]);
 
   return (
-    <div>
-      <MenuBar setMenuExpanded={setMenuExpanded} />
-      <Page $menuExpanded={menuExpanded}>
-        <DiscoverHolder>
-          <Discover $fontWeight="500"> Discover </Discover>
-          <SearchBar>
-            <Icon src={SearchIcon} alt="Search icon" />
-            <SearchInput
-              placeholder="Click here to search..."
-              value={searchInput}
-              onChange={handleChange}
-              onKeyDown={handleEnter}
-            />
-            <Button onClick={handleClear}>
-              <SearchXIcon src={X} alt="X" />
-            </Button>
-          </SearchBar>
-          <FilterWrapper>
-            {filterMenuExpanded ? (
-              <FilterRow>
-                <Button onClick={handleFilterClick}>
-                  <Icon src={Back} alt="Back icon" />
-                </Button>
-                <FilterMenuContainer>
-                  <FilterMenu
-                    filters={[
-                      {
-                        placeholder: 'Facility Type',
-                        options: facilityTypeOptions,
-                        value: facilityFilters,
-                        onChange: newValue => setFacilityFilters(newValue),
-                      },
-                      {
-                        placeholder: 'County',
-                        options: locationOptions,
-                        value: countyFilters,
-                        onChange: newValue => setCountyFilters(newValue),
-                      },
-                      {
-                        placeholder: 'Host Status',
-                        options: new Set(hostOptions.keys()),
-                        value: hostFilters,
-                        onChange: newValue => setHostFilters(newValue),
-                      },
-                    ]}
-                    onClear={handleClearFilters}
-                    onApply={handleApplyClick}
-                  />
-                </FilterMenuContainer>
-              </FilterRow>
-            ) : (
-              <FilterRow>
-                <Button onClick={handleFilterClick}>
-                  <Icon src={Filter} alt="Filter icon" />
-                </Button>
-                <FilterTagContainer>
-                  {[...allFilters].map((filter, index) => (
-                    <FilterTag key={index}>
-                      {filter}
-                      <Button onClick={() => handleRemoveFilter(filter)}>
-                        <XIcon src={Cancel} alt="Cancel icon" />
-                      </Button>
-                    </FilterTag>
-                  ))}
-                </FilterTagContainer>
-              </FilterRow>
-            )}
-          </FilterWrapper>
-          {noMatches && (
-            <NoMatchContainer>
-              <NoMatchText>No matches</NoMatchText>
-              <Icon src={SadIcon} alt="Sad face icon" />
-            </NoMatchContainer>
-          )}
-          {showDefault && (
-            <DiscoverContainer>
-              <RowContainer>
-                <TitleBar>
-                  <Label>Based on your location preferences...</Label>
-                  <Button onClick={handleShowAllNearby}>
-                    <ShowAllText> show all </ShowAllText>
+    <ProtectedRoute requiredRole="volunteer">
+      <div>
+        <MenuBar setMenuExpanded={setMenuExpanded} />
+        <Page $menuExpanded={menuExpanded}>
+          <DiscoverHolder>
+            <Discover $fontWeight="500"> Discover </Discover>
+            <SearchBar>
+              <Icon src={SearchIcon} alt="Search icon" />
+              <SearchInput
+                placeholder="Click here to search..."
+                value={searchInput}
+                onChange={handleChange}
+                onKeyDown={handleEnter}
+              />
+              <Button onClick={handleClear}>
+                <SearchXIcon src={X} alt="X" />
+              </Button>
+            </SearchBar>
+            <FilterWrapper>
+              {filterMenuExpanded ? (
+                <FilterRow>
+                  <Button onClick={handleFilterClick}>
+                    <Icon src={Back} alt="Back icon" />
                   </Button>
-                </TitleBar>
-                <DiscoverCardContainer $search={isSearchActive}>
-                  {nearYouEvents.length > 0 ? (
-                    nearYouEvents.map(event => (
+                  <FilterMenuContainer>
+                    <FilterMenu
+                      filters={[
+                        {
+                          placeholder: 'Facility Type',
+                          options: facilityTypeOptions,
+                          value: facilityFilters,
+                          onChange: newValue => setFacilityFilters(newValue),
+                        },
+                        {
+                          placeholder: 'County',
+                          options: locationOptions,
+                          value: countyFilters,
+                          onChange: newValue => setCountyFilters(newValue),
+                        },
+                        {
+                          placeholder: 'Host Status',
+                          options: new Set(hostOptions.keys()),
+                          value: hostFilters,
+                          onChange: newValue => setHostFilters(newValue),
+                        },
+                      ]}
+                      onClear={handleClearFilters}
+                      onApply={handleApplyClick}
+                    />
+                  </FilterMenuContainer>
+                </FilterRow>
+              ) : (
+                <FilterRow>
+                  <Button onClick={handleFilterClick}>
+                    <Icon src={Filter} alt="Filter icon" />
+                  </Button>
+                  <FilterTagContainer>
+                    {[...allFilters].map((filter, index) => (
+                      <FilterTag key={index}>
+                        {filter}
+                        <Button onClick={() => handleRemoveFilter(filter)}>
+                          <XIcon src={Cancel} alt="Cancel icon" />
+                        </Button>
+                      </FilterTag>
+                    ))}
+                  </FilterTagContainer>
+                </FilterRow>
+              )}
+            </FilterWrapper>
+            {noMatches && (
+              <NoMatchContainer>
+                <NoMatchText>No matches</NoMatchText>
+                <Icon src={SadIcon} alt="Sad face icon" />
+              </NoMatchContainer>
+            )}
+            {showDefault && (
+              <DiscoverContainer>
+                <RowContainer>
+                  <TitleBar>
+                    <Label>Based on your location preferences...</Label>
+                    <Button onClick={handleShowAllNearby}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
+                  </TitleBar>
+                  <DiscoverCardContainer $search={isSearchActive}>
+                    {nearYouEvents.length > 0 ? (
+                      nearYouEvents.map(event => (
+                        <DiscoverCard
+                          search={isSearchActive}
+                          key={event.event_id}
+                          event={event}
+                        />
+                      ))
+                    ) : (
+                      <NoMatchContainer>
+                        <NoMatchText>No matches</NoMatchText>
+                        <Icon src={SadIcon} alt="Sad face icon" />
+                      </NoMatchContainer>
+                    )}
+                  </DiscoverCardContainer>
+                </RowContainer>
+                <RowContainer>
+                  <TitleBar>
+                    <Label>Based on your interests...</Label>
+                    <Button onClick={handleShowAllInterests}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
+                  </TitleBar>
+                  <DiscoverCardContainer $search={isSearchActive}>
+                    {interestBasedEvents.map(event => (
                       <DiscoverCard
                         search={isSearchActive}
                         key={event.event_id}
                         event={event}
                       />
-                    ))
-                  ) : (
-                    <NoMatchContainer>
-                      <NoMatchText>No matches</NoMatchText>
-                      <Icon src={SadIcon} alt="Sad face icon" />
-                    </NoMatchContainer>
-                  )}
-                </DiscoverCardContainer>
-              </RowContainer>
+                    ))}
+                  </DiscoverCardContainer>
+                </RowContainer>
+                <RowContainer>
+                  <TitleBar>
+                    <Label>Upcoming Events...</Label>
+                    <Button onClick={handleShowAllInterests}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
+                  </TitleBar>
+                  <DiscoverCardContainer $search={isSearchActive}>
+                    {upcomingEvents.map(event => (
+                      <DiscoverCard
+                        search={isSearchActive}
+                        key={event.event_id}
+                        event={event}
+                      />
+                    ))}
+                  </DiscoverCardContainer>
+                </RowContainer>
+              </DiscoverContainer>
+            )}
+            {/* Filtered Events View */}
+            {showFiltered && (
               <RowContainer>
                 <TitleBar>
-                  <Label>Based on your interests...</Label>
-                  <Button onClick={handleShowAllInterests}>
-                    <ShowAllText> show all </ShowAllText>
-                  </Button>
+                  <Found>Found {filteredEvents.length} matches</Found>
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
-                  {interestBasedEvents.map(event => (
+                  {filteredEvents.map(event => (
                     <DiscoverCard
                       search={isSearchActive}
                       key={event.event_id}
@@ -422,44 +459,10 @@ export default function ActiveEventsPage() {
                   ))}
                 </DiscoverCardContainer>
               </RowContainer>
-              <RowContainer>
-                <TitleBar>
-                  <Label>Upcoming Events...</Label>
-                  <Button onClick={handleShowAllInterests}>
-                    <ShowAllText> show all </ShowAllText>
-                  </Button>
-                </TitleBar>
-                <DiscoverCardContainer $search={isSearchActive}>
-                  {upcomingEvents.map(event => (
-                    <DiscoverCard
-                      search={isSearchActive}
-                      key={event.event_id}
-                      event={event}
-                    />
-                  ))}
-                </DiscoverCardContainer>
-              </RowContainer>
-            </DiscoverContainer>
-          )}
-          {/* Filtered Events View */}
-          {showFiltered && (
-            <RowContainer>
-              <TitleBar>
-                <Found>Found {filteredEvents.length} matches</Found>
-              </TitleBar>
-              <DiscoverCardContainer $search={isSearchActive}>
-                {filteredEvents.map(event => (
-                  <DiscoverCard
-                    search={isSearchActive}
-                    key={event.event_id}
-                    event={event}
-                  />
-                ))}
-              </DiscoverCardContainer>
-            </RowContainer>
-          )}
-        </DiscoverHolder>
-      </Page>
-    </div>
+            )}
+          </DiscoverHolder>
+        </Page>
+      </div>
+    </ProtectedRoute>
   );
 }

@@ -7,6 +7,7 @@ import {
   fetchVolunteerPreferences,
 } from '@/api/supabase/queries/volunteers';
 import MenuBar from '@/components/MenuBar/MenuBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import SettingsCardAccomodations from '@/components/SettingsCard/SettingsCardAccomodations';
 import SettingsCardNotifications from '@/components/SettingsCard/SettingsCardNotifications';
 import SettingsCardPerformanceInterest from '@/components/SettingsCard/SettingsCardPerformanceInterest';
@@ -69,61 +70,63 @@ export default function SettingsPage() {
 
   return (
     session && (
-      <styles.All>
-        <MenuBar setMenuExpanded={setMenuExpanded} />
-        <styles.Page $menuExpanded={menuExpanded}>
-          <styles.SettingDiv>
-            <styles.ProfileName>
-              {' '}
-              {userInfo.first_name} {userInfo.last_name}{' '}
-            </styles.ProfileName>
-            <styles.Email> {userInfo.email} </styles.Email>
-            <styles.SignOutButton onClick={() => handleSignOut()}>
-              <styles.SignOut src={SignOut} alt="SignOut" />
-              <styles.ButtonText> Sign Out </styles.ButtonText>
-            </styles.SignOutButton>
-            <SettingsCardPersonalDetails
-              first_name={userInfo.first_name}
-              last_name={userInfo.last_name}
-              phone={userInfo.phone_number}
-              userInfo={userInfo}
-              editInfo={editedUserInfo}
-              setEditInfo={setEditedUserInfo}
-              setUserInfo={setUserInfo}
-              userId={session.user.id}
-            />
-            <SettingsCardNotifications />
-            <SettingsCardShowPreferences
-              facility_preferences={userPreferences.facility_type}
-              locations={userPreferences.locations}
-              audience_preferences={userPreferences.audience_type}
-              userPrefs={userPreferences}
-              editPrefs={editedUserPrefs}
-              setEditPrefs={setEditedUserPrefs}
-              setUserPrefs={setUserPreferences}
-              userId={session.user.id}
-            />
-            <SettingsCardPerformanceInterest
-              performance_types={userPreferences.performance_type}
-              genres={userPreferences.genre}
-              group_size={userPreferences.performer_type}
-              userPrefs={userPreferences}
-              editPrefs={editedUserPrefs}
-              setEditPrefs={setEditedUserPrefs}
-              setUserPrefs={setUserPreferences}
-              userId={session.user.id}
-            />
-            <SettingsCardAccomodations
-              accomodations={userPreferences.additional_info}
-              userPrefs={userPreferences}
-              editPrefs={editedUserPrefs}
-              setEditPrefs={setEditedUserPrefs}
-              setUserPrefs={setUserPreferences}
-              userId={session.user.id}
-            />
-          </styles.SettingDiv>
-        </styles.Page>
-      </styles.All>
+      <ProtectedRoute allowAnyRole>
+        <styles.All>
+          <MenuBar setMenuExpanded={setMenuExpanded} />
+          <styles.Page $menuExpanded={menuExpanded}>
+            <styles.SettingDiv>
+              <styles.ProfileName>
+                {' '}
+                {userInfo.first_name} {userInfo.last_name}{' '}
+              </styles.ProfileName>
+              <styles.Email> {userInfo.email} </styles.Email>
+              <styles.SignOutButton onClick={() => handleSignOut()}>
+                <styles.SignOut src={SignOut} alt="SignOut" />
+                <styles.ButtonText> Sign Out </styles.ButtonText>
+              </styles.SignOutButton>
+              <SettingsCardPersonalDetails
+                first_name={userInfo.first_name}
+                last_name={userInfo.last_name}
+                phone={userInfo.phone_number}
+                userInfo={userInfo}
+                editInfo={editedUserInfo}
+                setEditInfo={setEditedUserInfo}
+                setUserInfo={setUserInfo}
+                userId={session.user.id}
+              />
+              <SettingsCardNotifications />
+              <SettingsCardShowPreferences
+                facility_preferences={userPreferences.facility_type}
+                locations={userPreferences.locations}
+                audience_preferences={userPreferences.audience_type}
+                userPrefs={userPreferences}
+                editPrefs={editedUserPrefs}
+                setEditPrefs={setEditedUserPrefs}
+                setUserPrefs={setUserPreferences}
+                userId={session.user.id}
+              />
+              <SettingsCardPerformanceInterest
+                performance_types={userPreferences.performance_type}
+                genres={userPreferences.genre}
+                group_size={userPreferences.performer_type}
+                userPrefs={userPreferences}
+                editPrefs={editedUserPrefs}
+                setEditPrefs={setEditedUserPrefs}
+                setUserPrefs={setUserPreferences}
+                userId={session.user.id}
+              />
+              <SettingsCardAccomodations
+                accomodations={userPreferences.additional_info}
+                userPrefs={userPreferences}
+                editPrefs={editedUserPrefs}
+                setEditPrefs={setEditedUserPrefs}
+                setUserPrefs={setUserPreferences}
+                userId={session.user.id}
+              />
+            </styles.SettingDiv>
+          </styles.Page>
+        </styles.All>
+      </ProtectedRoute>
     )
   );
 }
