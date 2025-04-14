@@ -104,7 +104,7 @@ export default function SettingCardShowPreferences({
           </H5>
         </styles.AvailabilityTitle>
         <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
-          <styles.EditIcon src={Edit} />
+          <styles.EditIcon src={Edit} alt="Edit" />
         </styles.EditButton>
       </styles.AvailabilityHeader>
       <styles.Content>
@@ -117,6 +117,7 @@ export default function SettingCardShowPreferences({
               <styles.SettingListedItems>
                 {isEditable ? (
                   <InputDropdown
+                    label=""
                     placeholder="Select performance type"
                     multi
                     options={facilityTypeOptions}
@@ -126,19 +127,21 @@ export default function SettingCardShowPreferences({
                     }
                   />
                 ) : (
-                  facility_preferences.map(facility => {
-                    return (
-                      <li key={facility}>
-                        <styles.TruncatedText
-                          $fontWeight="400"
-                          $color={COLORS.gray11}
-                          $align="left"
-                        >
-                          {facility}
-                        </styles.TruncatedText>
-                      </li>
-                    );
-                  })
+                  <styles.NonEditableDisplay>
+                    {facility_preferences.map(facility => {
+                      return (
+                        <li key={facility}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {facility}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
                 )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
@@ -149,6 +152,7 @@ export default function SettingCardShowPreferences({
               <styles.SettingListedItems>
                 {isEditable ? (
                   <InputDropdown
+                    label=""
                     placeholder="Select performance type"
                     multi
                     options={locationOptions}
@@ -156,19 +160,21 @@ export default function SettingCardShowPreferences({
                     onChange={selected => updateLocations(Array.from(selected))}
                   />
                 ) : (
-                  locations.map(location => {
-                    return (
-                      <li key={location}>
-                        <styles.TruncatedText
-                          $fontWeight="400"
-                          $color={COLORS.gray11}
-                          $align="left"
-                        >
-                          {location}
-                        </styles.TruncatedText>
-                      </li>
-                    );
-                  })
+                  <styles.NonEditableDisplay>
+                    {locations.map(location => {
+                      return (
+                        <li key={location}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {location}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
                 )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
@@ -179,6 +185,7 @@ export default function SettingCardShowPreferences({
               <styles.SettingListedItems>
                 {isEditable ? (
                   <InputDropdown
+                    label=""
                     placeholder="Select performance type"
                     multi
                     options={audienceOptions}
@@ -186,19 +193,21 @@ export default function SettingCardShowPreferences({
                     onChange={selected => updateAudiences(Array.from(selected))}
                   />
                 ) : (
-                  audience_preferences.map(audience => {
-                    return (
-                      <li key={audience}>
-                        <styles.TruncatedText
-                          $fontWeight="400"
-                          $color={COLORS.gray11}
-                          $align="left"
-                        >
-                          {audience}
-                        </styles.TruncatedText>
-                      </li>
-                    );
-                  })
+                  <styles.NonEditableDisplay>
+                    {audience_preferences.map(audience => {
+                      return (
+                        <li key={audience}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {audience}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
                 )}
               </styles.SettingListedItems>
             </styles.SettingDetail>

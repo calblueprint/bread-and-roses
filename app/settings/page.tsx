@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   fetchVolunteerInfo,
   fetchVolunteerPreferences,
@@ -19,6 +20,8 @@ import * as styles from './styles';
 export default function SettingsPage() {
   const [menuExpanded, setMenuExpanded] = useState<boolean>(false); // Track the expanded state of the menu
   const { session } = useSession();
+  const { signOut } = useSession();
+  const router = useRouter();
   const [userInfo, setUserInfo] = useState<UserInfo>({
     first_name: '',
     last_name: '',
@@ -37,6 +40,11 @@ export default function SettingsPage() {
   const [editedUserInfo, setEditedUserInfo] = useState<UserInfo>(userInfo);
   const [editedUserPrefs, setEditedUserPrefs] =
     useState<UserPreferences>(userPreferences);
+
+  const handleSignOut = () => {
+    signOut();
+    router.push('/');
+  };
 
   useEffect(() => {
     const getUserData = async () => {
@@ -71,7 +79,7 @@ export default function SettingsPage() {
               {userInfo.first_name} {userInfo.last_name}{' '}
             </styles.ProfileName>
             <styles.Email> {userInfo.email} </styles.Email>
-            <styles.SignOutButton>
+            <styles.SignOutButton onClick={() => handleSignOut()}>
               <styles.SignOut src={SignOut} alt="SignOut" />
               <styles.ButtonText> Sign Out </styles.ButtonText>
             </styles.SignOutButton>
@@ -99,7 +107,7 @@ export default function SettingsPage() {
             <SettingsCardPerformanceInterest
               performance_types={userPreferences.performance_type}
               genres={userPreferences.genre}
-              group_size={userPreferences.performance_type}
+              group_size={userPreferences.performer_type}
               userPrefs={userPreferences}
               editPrefs={editedUserPrefs}
               setEditPrefs={setEditedUserPrefs}

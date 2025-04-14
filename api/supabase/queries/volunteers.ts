@@ -68,42 +68,50 @@ export async function updateVolunteerPreferences(
   user_prefs: UserPreferences,
   edited_prefs: UserPreferences,
 ) {
-  const updatedKeys: { [key: string]: string } = {};
-  const updatedKeys2: { [key: string]: string[] } = {};
+  const updatedKeys: { [key: string]: string | string[] } = {};
+
+  const keys = [
+    'additional_info',
+    'genre',
+    'performance_type',
+    'locations',
+    'facility_type',
+    'audience_type',
+    'performer_type',
+  ];
+
   if (user_prefs.additional_info != edited_prefs.additional_info) {
     updatedKeys['additional_info'] = edited_prefs.additional_info;
   }
 
   if (user_prefs.genre != edited_prefs.genre) {
-    updatedKeys2['genre'] = edited_prefs.genre;
+    updatedKeys['genre'] = edited_prefs.genre;
   }
 
   if (user_prefs.performance_type != edited_prefs.performance_type) {
-    updatedKeys2['performance_type'] = edited_prefs.performance_type;
+    updatedKeys['performance_type'] = edited_prefs.performance_type;
   }
 
   if (user_prefs.locations != edited_prefs.locations) {
-    updatedKeys2['locations'] = edited_prefs.locations;
+    updatedKeys['locations'] = edited_prefs.locations;
   }
 
   if (user_prefs.facility_type != edited_prefs.facility_type) {
-    updatedKeys2['facility_type'] = edited_prefs.facility_type;
+    updatedKeys['facility_type'] = edited_prefs.facility_type;
   }
 
   if (user_prefs.audience_type != edited_prefs.audience_type) {
-    updatedKeys2['audience_type'] = edited_prefs.audience_type;
+    updatedKeys['audience_type'] = edited_prefs.audience_type;
   }
 
   if (user_prefs.performer_type != edited_prefs.performer_type) {
-    updatedKeys2['performer_type'] = edited_prefs.performer_type;
+    updatedKeys['performer_type'] = edited_prefs.performer_type;
   }
 
-  const allUpdates = { ...updatedKeys, ...updatedKeys2 };
-
-  if (Object.keys(allUpdates).length > 0) {
+  if (Object.keys(updatedKeys).length > 0) {
     const { data, error } = await supabase
       .from('volunteer_preferences')
-      .update(allUpdates)
+      .update(updatedKeys)
       .eq('user_id', id);
 
     if (error) {

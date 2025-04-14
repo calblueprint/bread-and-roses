@@ -55,7 +55,7 @@ export default function SettingCardAccomodations({
           </H5>
         </styles.AvailabilityTitle>
         <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
-          <styles.EditIcon src={Edit} />
+          <styles.EditIcon src={Edit} alt="Edit" />
         </styles.EditButton>
       </styles.AvailabilityHeader>
       <styles.Content>
@@ -67,11 +67,12 @@ export default function SettingCardAccomodations({
                   <Label>
                     Accomodations <RedAsterisk>*</RedAsterisk>
                   </Label>
-                  <Input
+                  <styles.TextArea
                     name="accomodations"
                     placeholder="I need help carrying equipment."
                     value={editPrefs.additional_info}
                     onChange={e => updateAccomodations(e.target.value)}
+                    rows={4}
                   />
                 </InputContainer>
               ) : (

@@ -116,7 +116,7 @@ export default function SettingCardPerformanceInterest({
           </H5>
         </styles.AvailabilityTitle>
         <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
-          <styles.EditIcon src={Edit} />
+          <styles.EditIcon src={Edit} alt="Edit" />
         </styles.EditButton>
       </styles.AvailabilityHeader>
       <styles.Content>
@@ -129,6 +129,7 @@ export default function SettingCardPerformanceInterest({
               <styles.SettingListedItems>
                 {isEditable ? (
                   <InputDropdown
+                    label=""
                     placeholder="Select performance type"
                     multi
                     options={performanceTypeOptions}
@@ -138,19 +139,21 @@ export default function SettingCardPerformanceInterest({
                     }
                   />
                 ) : (
-                  performance_types.map(performance_type => {
-                    return (
-                      <li key={performance_type}>
-                        <styles.TruncatedText
-                          $fontWeight="400"
-                          $color={COLORS.gray11}
-                          $align="left"
-                        >
-                          {performance_type}
-                        </styles.TruncatedText>
-                      </li>
-                    );
-                  })
+                  <styles.NonEditableDisplay>
+                    {performance_types.map(performance_type => {
+                      return (
+                        <li key={performance_type}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {performance_type}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
                 )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
@@ -161,6 +164,7 @@ export default function SettingCardPerformanceInterest({
               <styles.SettingListedItems>
                 {isEditable ? (
                   <InputDropdown
+                    label=""
                     placeholder="Select genre"
                     multi
                     options={genreOptions}
@@ -168,19 +172,21 @@ export default function SettingCardPerformanceInterest({
                     onChange={selected => updateGenres(Array.from(selected))}
                   />
                 ) : (
-                  genres.map(genre => {
-                    return (
-                      <li key={genre}>
-                        <styles.TruncatedText
-                          $fontWeight="400"
-                          $color={COLORS.gray11}
-                          $align="left"
-                        >
-                          {genre}
-                        </styles.TruncatedText>
-                      </li>
-                    );
-                  })
+                  <styles.NonEditableDisplay>
+                    {genres.map(genre => {
+                      return (
+                        <li key={genre}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {genre}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
                 )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
@@ -191,6 +197,7 @@ export default function SettingCardPerformanceInterest({
               <styles.SettingListedItems>
                 {isEditable ? (
                   <InputDropdown
+                    label=""
                     placeholder="Select group size"
                     multi
                     options={performerTypeOptions}
@@ -198,19 +205,21 @@ export default function SettingCardPerformanceInterest({
                     onChange={selected => updateGroupSize(Array.from(selected))}
                   />
                 ) : (
-                  group_size.map(size => {
-                    return (
-                      <li key={size}>
-                        <styles.TruncatedText
-                          $fontWeight="400"
-                          $color={COLORS.gray11}
-                          $align="left"
-                        >
-                          {size}
-                        </styles.TruncatedText>
-                      </li>
-                    );
-                  })
+                  <styles.NonEditableDisplay>
+                    {group_size.map(size => {
+                      return (
+                        <li key={size}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {size}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
                 )}
               </styles.SettingListedItems>
             </styles.SettingDetail>
