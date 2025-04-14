@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { updateVolunteerPreferences } from '@/api/supabase/queries/volunteers';
 import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import Edit from '@/public/images/edit.svg';
@@ -86,11 +86,7 @@ export default function SettingCardShowPreferences({
   };
 
   const handleSave = async () => {
-    const updatedData = await updateVolunteerPreferences(
-      userId,
-      userPrefs,
-      editPrefs,
-    );
+    await updateVolunteerPreferences(userId, userPrefs, editPrefs);
     setUserPrefs(editPrefs);
     setIsEditable(!isEditable);
   };

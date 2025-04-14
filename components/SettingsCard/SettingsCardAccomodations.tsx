@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { updateVolunteerPreferences } from '@/api/supabase/queries/volunteers';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
-import { H5, P } from '@/styles/text';
+import { H5 } from '@/styles/text';
 import { UserPreferences } from '@/utils/settingsInfo';
 import * as styles from './styles';
-import { Input, InputContainer, Label, RedAsterisk } from './styles';
+import { InputContainer, Label, RedAsterisk } from './styles';
 
 export default function SettingCardAccomodations({
   accomodations,
@@ -37,11 +37,7 @@ export default function SettingCardAccomodations({
   };
 
   const handleSave = async () => {
-    const updatedData = await updateVolunteerPreferences(
-      userId,
-      userPrefs,
-      editPrefs,
-    );
+    await updateVolunteerPreferences(userId, userPrefs, editPrefs);
     setUserPrefs(editPrefs);
     setIsEditable(!isEditable);
   };

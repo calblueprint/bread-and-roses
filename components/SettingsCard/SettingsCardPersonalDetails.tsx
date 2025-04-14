@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { updateVolunteerInfo } from '@/api/supabase/queries/volunteers';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
-import { RoundedCornerButton } from '@/styles/styles';
-import { H5, P } from '@/styles/text';
+import { H5 } from '@/styles/text';
 import { UserInfo } from '@/utils/settingsInfo';
 import * as styles from './styles';
 import { Input, InputContainer, Label, RedAsterisk } from './styles';
@@ -58,7 +57,7 @@ export default function SettingCardPersonalDetails({
   };
 
   const handleSave = async () => {
-    const updatedData = await updateVolunteerInfo(userId, userInfo, editInfo);
+    await updateVolunteerInfo(userId, userInfo, editInfo);
     setUserInfo(editInfo);
     setIsEditable(!isEditable);
   };
