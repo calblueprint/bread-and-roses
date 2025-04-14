@@ -13,7 +13,7 @@ export default function SettingCardNotifications() {
             Notifications
           </H5>
         </styles.AvailabilityTitle>
-        <styles.Edit src={Edit} alt="Edit" />
+        <styles.EditIcon src={Edit} alt="Edit" />
       </styles.AvailabilityHeader>
       <styles.Content>
         <div>
