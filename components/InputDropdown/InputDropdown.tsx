@@ -127,7 +127,7 @@ export default function InputDropdown({
       <Select
         components={{ Menu: AnimatedMenu }}
         isClearable
-        closeMenuOnSelect={false}
+        closeMenuOnSelect={!multi}
         tabSelectsValue={false}
         hideSelectedOptions={false}
         noOptionsMessage={NoOptionsMessage}

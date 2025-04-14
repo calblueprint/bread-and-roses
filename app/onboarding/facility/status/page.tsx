@@ -68,9 +68,9 @@ export default function Status() {
       setCity(facility?.city);
       setZip(facility?.zip);
       setEmail(sessionData.session.user.email ?? null);
+      setLoading(false);
     }
     setFacilityDetails();
-    setLoading(false);
   }, []);
 
   interface Step {

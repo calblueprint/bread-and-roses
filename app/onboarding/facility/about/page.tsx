@@ -115,7 +115,6 @@ export default function Onboarding() {
     setGeneralInfo({ ...generalInfo, audience: selectedArray });
   };
 
-  //CHANGE CHANGE CHANGE CHANGE
   const handleSubmit = async () => {
     router.push('/onboarding/facility/site-info');
   };
@@ -208,7 +207,6 @@ export default function Onboarding() {
             position="sticky"
             onClick={handleSubmit}
             disabled={
-              !generalInfo.facilityName ||
               !generalInfo.facilityType ||
               generalInfo.audience.length === 0 ||
               generalInfo.directions === '' ||
