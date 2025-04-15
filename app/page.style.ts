@@ -14,7 +14,7 @@ const fadeOut = keyframes`
   100% { opacity: 0; transform: scale(1.05); }
 `;
 
-export const Container = styled.main<{ animateOut?: boolean }>`
+export const Container = styled.main<{ $animateOut?: boolean }>`
   width: 100%;
   height: 100svh;
   display: flex;
@@ -24,8 +24,8 @@ export const Container = styled.main<{ animateOut?: boolean }>`
   background: ${COLORS.bread2};
   animation: ${fadeIn} 0.3s ease-out;
 
-  ${({ animateOut }) =>
-    animateOut &&
+  ${({ $animateOut }) =>
+    $animateOut &&
     css`
       animation: ${fadeOut} 0.6s ease-in 0.3s forwards;
     `};
@@ -36,7 +36,6 @@ export const Container = styled.main<{ animateOut?: boolean }>`
 export const Image = styled(NextImage).attrs({
   width: 240,
   height: 240,
-  layout: 'intrinsic',
 })`
   margin-bottom: 2.5rem;
   object-fit: contain;

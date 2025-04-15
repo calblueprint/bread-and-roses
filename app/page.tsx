@@ -36,7 +36,7 @@ export default function Home() {
   }, [sessionChecked, session, userRole, router]);
 
   return (
-    <Container animateOut={fadeOut}>
+    <Container $animateOut={fadeOut}>
       <Image src={BRLogo} alt="Bread & Roses logo" />
       <Spinner />
     </Container>
