@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { fetchFacilityById } from '@/api/supabase/queries/facilities';
-import BPLogo from '@/public/images/bp-logo.png';
 import LocPin from '@/public/images/gray_loc_pin.svg';
 import COLORS from '@/styles/colors';
 import { Event, Facilities } from '@/types/schema';
