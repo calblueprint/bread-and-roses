@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import isEmail from 'validator/lib/isEmail';
 import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
 import { H5, SMALL } from '@/styles/text';
-import { useSession } from '@/utils/AuthProvider';
 import {
   AuthSpacer,
   Button,
@@ -35,20 +34,6 @@ export default function SignIn() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const validEmail = (e: string) => e !== '' && isEmail(e);
-
-  const { session, userRole, sessionChecked } = useSession();
-
-  useEffect(() => {
-    if (!sessionChecked || !session) return;
-
-    if (!userRole) {
-      router.replace('/roles');
-    } else if (userRole === 'volunteer') {
-      router.replace('/discover');
-    } else if (userRole === 'facility') {
-      router.replace('/availability/general');
-    }
-  }, [sessionChecked, session, userRole, router]);
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -157,15 +142,23 @@ export default function SignIn() {
 
           <AuthSpacer>
             <SMALL $fontWeight={400} $align="right">
-              <Link href="/forgotpassword">Forgot Password</Link>
+              <Link href="/forgotpassword">Forgot Password?</Link>
             </SMALL>
           </AuthSpacer>
 
           <Button
             type="submit"
-            disabled={
+            $disabled={
               isLoggingIn || email.length === 0 || password.length === 0
             }
+            onClick={e => {
+              const blocked =
+                isLoggingIn || email.length === 0 || password.length === 0;
+              if (blocked) {
+                e.preventDefault();
+                return;
+              }
+            }}
           >
             {isLoggingIn ? 'Logging In...' : 'Login'}
           </Button>

@@ -97,7 +97,7 @@ export const Input = styled.input`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{ $disabled?: boolean }>`
   font-family: ${Sans.style.fontFamily};
   background-color: ${({ disabled }) =>
     disabled ? COLORS.pomegranate10 : COLORS.pomegranate12};
@@ -106,11 +106,11 @@ export const Button = styled.button`
   padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   margin-top: 2rem;
   width: 100%;
   transition: background-color 0.5s ease;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
 `;
 
 export const ForgotPassword = styled(SMALL)`
@@ -171,4 +171,10 @@ export const Instructions = styled(P)`
 
 export const AuthSpacer = styled.div`
   margin-top: 0.5rem;
+`;
+
+export const FieldError = styled(SMALL)`
+  color: ${COLORS.rose11};
+  font-weight: 400;
+  margin-top: 0.25rem;
 `;

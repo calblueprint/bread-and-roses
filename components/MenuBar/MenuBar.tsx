@@ -38,7 +38,8 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
 
   const handleSignOut = async () => {
     await signOut();
-    router.push('/');
+    // TODO: this is brute forcing a solution to an issue with clicking signOut button, router.push won't redirect here idk why
+    window.location.href = '/';
   };
 
   return (

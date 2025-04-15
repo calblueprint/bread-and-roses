@@ -35,7 +35,8 @@ export default function Status() {
 
   const handleSignOut = () => {
     signOut();
-    router.push('/');
+    // TODO
+    window.location.href = '/';
   };
 
   const handleForward = () => {

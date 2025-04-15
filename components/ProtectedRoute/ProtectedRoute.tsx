@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { fetchFacilityApprovalStatus } from '@/api/supabase/queries/permissions';
 import { useSession } from '@/utils/AuthProvider';
 
 interface Props {
@@ -22,6 +23,17 @@ const publicUnauthenticatedRoutes = [
   '/permissions-error',
 ];
 
+const onboardingExceptions = [
+  '/onboarding/finalize',
+  '/onboarding/facility/finalize',
+  '/onboarding/facility/status',
+  '/onboarding/facility/about',
+  '/onboarding/facility/details',
+  '/onboarding/facility/final-finalize',
+  '/onboarding/facility/final-review',
+  '/onboarding/facility/site-info',
+];
+
 export default function ProtectedRoute({
   requiredRole,
   allowWithoutRole = false,
@@ -32,10 +44,30 @@ export default function ProtectedRoute({
   const router = useRouter();
   const path = usePathname();
 
+  const [hydrated, setHydrated] = useState(false);
   const [ready, setReady] = useState(false);
 
+  const [isApproved, setIsApproved] = useState<boolean | null>(null);
+
   useEffect(() => {
-    if (!sessionChecked) return;
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    async function getApprovalStatus() {
+      if (userRole === 'facility' && session?.user?.id) {
+        const approved = await fetchFacilityApprovalStatus(session.user.id);
+        setIsApproved(approved);
+      } else {
+        setIsApproved(false);
+      }
+    }
+
+    getApprovalStatus();
+  }, [userRole, session]);
+
+  useEffect(() => {
+    if (!hydrated || !sessionChecked) return;
 
     // always allow public unauthenticated pages
     if (publicUnauthenticatedRoutes.includes(path)) {
@@ -43,17 +75,30 @@ export default function ProtectedRoute({
       return;
     }
 
-    // Block protected pages for logged out users
+    // block protected pages for logged out users
     if (!session) {
       console.log('[ProtectedRoute] No session → /access-error');
       router.replace('/access-error');
       return;
     }
 
-    // block access to onboarding or roles if already has a role
+    // prevent approved facilities from accessing onboardingExceptions
+    if (
+      userRole === 'facility' &&
+      isApproved &&
+      onboardingExceptions.some(p => path.startsWith(p))
+    ) {
+      console.log(
+        '[ProtectedRoute] Approved facility tried to access onboarding → /availability/general',
+      );
+      router.replace('/availability/general');
+      return;
+    }
+
+    // block access to onboarding or roles if already has role
     if (
       ((path.startsWith('/onboarding') &&
-        !path.startsWith('/onboarding/finalize')) ||
+        !onboardingExceptions.some(p => path.startsWith(p))) ||
         path.startsWith('/roles')) &&
       userRole
     ) {
@@ -76,31 +121,29 @@ export default function ProtectedRoute({
       return;
     }
 
-    // Must have some role if allowAnyRole
+    // Must have some role if allowAnyRole is true
     if (allowAnyRole && !userRole) {
       console.log('[ProtectedRoute] allowAnyRole true but no role → /roles');
       router.replace('/roles');
       return;
     }
 
-    if (session && userRole) {
-      router.replace(
-        userRole === 'volunteer' ? '/discover' : '/availability/general',
+    // block facility users from protected routes if not approved
+    if (
+      userRole === 'facility' &&
+      !isApproved &&
+      !path.startsWith('/onboarding')
+    ) {
+      console.log(
+        '[ProtectedRoute] Facility not approved → /onboarding/facility/status',
       );
-
-      console.log('[ProtectedRoute]', {
-        session,
-        userRole,
-        sessionChecked,
-        path,
-        requiredRole,
-        allowWithoutRole,
-        allowAnyRole,
-      });
+      router.replace('/onboarding/facility/status');
+      return;
     }
 
     setReady(true);
   }, [
+    hydrated,
     sessionChecked,
     session,
     userRole,
@@ -111,7 +154,7 @@ export default function ProtectedRoute({
     allowAnyRole,
   ]);
 
-  if (!ready) return null;
+  if (!hydrated || !sessionChecked || !ready) return null;
 
   return <>{children}</>;
 }

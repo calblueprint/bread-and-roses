@@ -44,7 +44,8 @@ export default function SettingsPage() {
 
   const handleSignOut = () => {
     signOut();
-    router.push('/');
+    // TODO
+    window.location.href = '/';
   };
 
   useEffect(() => {
