@@ -26,8 +26,8 @@ import {
   FacilityContacts,
   Volunteers,
 } from '@/types/schema';
+import facilityTypeToPhoto from '@/utils/facilityTypeToPhoto';
 import formatTime from '@/utils/formatTime';
-import performanceToPhotoMap from '@/utils/performanceToPhoto';
 import * as styles from './styles';
 
 export default function EventDisplay({
@@ -93,10 +93,7 @@ export default function EventDisplay({
   return (
     <styles.Page>
       <styles.ImageWrapper>
-        {performanceToPhotoMap(
-          event.performance_type,
-          event.genre?.toString() ?? null,
-        )}
+        {facilityTypeToPhoto(facility.type)}
         <styles.GradientOverlay />
       </styles.ImageWrapper>
       <styles.Curve />

@@ -3,7 +3,7 @@ import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import LocationPin from '@/public/images/location_pin.svg';
 import COLORS from '@/styles/colors';
 import { Event, Facilities } from '@/types/schema';
-import performanceToPhotoMap from '@/utils/performanceToPhoto';
+import facilityTypeToPhoto from '@/utils/facilityTypeToPhoto';
 import {
   Container,
   EventLabel,
@@ -153,10 +153,7 @@ export default function DiscoverCard({
     <StyledLink href={`/discover/${event.event_id}`}>
       <Container $search={search}>
         <ImageContainer $search={search}>
-          {performanceToPhotoMap(
-            event.performance_type,
-            event.genre?.toString() ?? null,
-          )}
+          {facilityTypeToPhoto(facility.type)}
         </ImageContainer>
         <TextContainer>
           <EventLabel>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {
   fetchAcceptedEventsByFacility,
   fetchAcceptedEventsByVolunteer,
+  fetchAllEvents,
 } from '@/api/supabase/queries/events';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
@@ -32,6 +33,7 @@ export default function EventPage() {
           } else if (userRole === 'facility') {
             eventsData = await fetchAcceptedEventsByFacility(session.user.id);
           }
+          eventsData = await fetchAllEvents();
           setData(eventsData ?? []);
         } catch (error) {
           console.error('Error fetching events:', error);

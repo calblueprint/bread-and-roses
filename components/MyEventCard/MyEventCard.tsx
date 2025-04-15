@@ -4,6 +4,7 @@ import BPLogo from '@/public/images/bp-logo.png';
 import LocPin from '@/public/images/gray_loc_pin.svg';
 import COLORS from '@/styles/colors';
 import { Event, Facilities } from '@/types/schema';
+import facilityTypeToPhoto from '@/utils/facilityTypeToPhoto';
 import formatTime from '@/utils/formatTime';
 import * as styles from './styles';
 
@@ -23,10 +24,14 @@ export default function MyEventCard(eventData: Event) {
     true,
   );
 
+  if (!facility) return null;
+
   return (
     <styles.EventContainer>
       <styles.EventCardContainer>
-        <styles.EventImage src={BPLogo} alt="Event Image" />
+        <styles.EventImage>
+          {facilityTypeToPhoto(facility.type)}
+        </styles.EventImage>
         <styles.EventInfoContainer>
           <styles.TimeText
             $fontWeight="400"

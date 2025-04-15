@@ -5,9 +5,13 @@ import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { P, SMALLER } from '@/styles/text';
 
-export const EventImage = styled(NextImage)`
-  width: 20%;
-  height: auto;
+export const EventImage = styled.div`
+  position: relative;
+  overflow: hidden;
+  background-color: ${COLORS.gray12};
+  height: 7.5rem;
+  width: 7rem;
+  border-radius: 0.5rem 0 0 0.5rem;
 `;
 
 export const EventInfoContainer = styled.div`
@@ -23,7 +27,7 @@ export const EventContainer = styled.main`
 `;
 export const EventCardContainer = styled.main`
   width: 100%;
-  padding: 1rem;
+  padding-right: 1rem;
   background: ${COLORS.bread1};
   border-radius: 8px;
   display: flex;

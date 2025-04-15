@@ -287,7 +287,7 @@ export default function ActiveEventsPage() {
     if (events.length > 0 && volunteerPreferences) {
       filterVolunteerPreferences();
     }
-  }, [events, volunteerPreferences, filterVolunteerPreferences]);
+  }, [events, volunteerPreferences]);
 
   const noMatches = isSearchActive && filteredEvents.length === 0;
   const showFiltered =

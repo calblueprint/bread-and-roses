@@ -19,7 +19,7 @@ import COLORS from '@/styles/colors';
 import { H5, P, SMALL } from '@/styles/text';
 import { Event, Facilities } from '@/types/schema';
 import { useSession } from '@/utils/AuthProvider';
-import performanceToPhotoMap from '@/utils/performanceToPhoto';
+import facilityTypeToPhoto from '@/utils/facilityTypeToPhoto';
 import {
   Acknowledgement,
   AcknowledgementText,
@@ -167,6 +167,12 @@ export default function EventPage({
     return <p />;
   }
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Updates the state for the additional info text area.
+   * @param {React.ChangeEvent<HTMLTextAreaElement>} e - The change event.
+   */
+  /*******  0e8f0938-dab5-4e5b-853c-7bc2a95b6a97  *******/
   const handleInfoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setAdditionalInfo(value);
@@ -256,12 +262,7 @@ export default function EventPage({
 
   return (
     <Page>
-      <ImageWrapper>
-        {performanceToPhotoMap(
-          event.performance_type,
-          event.genre?.toString() ?? null,
-        )}
-      </ImageWrapper>
+      <ImageWrapper>{facilityTypeToPhoto(facility.type)}</ImageWrapper>
       <Curve />
       <Container $column={isSubmitted}>
         {isSubmitted ? (
