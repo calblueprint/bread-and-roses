@@ -222,8 +222,8 @@ export default function Onboarding() {
             onClick={handleSubmit}
             disabled={
               facilitySpecificInfo.has_piano === null ||
-              !facilitySpecificInfo.has_sound_equipment === null ||
-              !facilitySpecificInfo.parking === null
+              facilitySpecificInfo.has_sound_equipment === null ||
+              facilitySpecificInfo.parking === null
             }
           >
             <ContinueText>Continue</ContinueText>

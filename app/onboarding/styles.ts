@@ -44,7 +44,6 @@ export const RowContainer = styled.main`
   width: 100%;
   gap: 6%;
 `;
-
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   position: relative;
   width: 20px;
@@ -54,6 +53,9 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   appearance: none;
   outline: none;
   cursor: pointer;
+  transition:
+    border 0.3s ease,
+    background-color 0.3s ease;
 
   &:checked {
     background-color: ${COLORS.rose10};
@@ -61,6 +63,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 
     &::before {
       display: inline-block;
+      transition: transform 0.3s ease;
     }
   }
 
@@ -77,6 +80,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
     background-repeat: no-repeat;
     background-image: url('/images/whitecheck.svg');
     background-position: center;
+    transition: transform 0.3s ease;
   }
 `;
 
@@ -125,6 +129,12 @@ export const Input = styled.input`
   &::placeholder {
     color: ${COLORS.gray6};
   }
+`;
+
+export const InputNote = styled(SMALL)`
+  color: ${COLORS.rose11};
+  font-weight: 400;
+  margin-top: 0.125rem;
 `;
 
 export const TextArea = styled.textarea`

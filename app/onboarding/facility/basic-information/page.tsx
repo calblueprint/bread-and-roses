@@ -15,6 +15,7 @@ import {
   InlineContainer,
   Input,
   InputContainer,
+  InputNote,
   Label,
   Title,
 } from '@/app/onboarding/styles';
@@ -94,9 +95,12 @@ export default function Onboarding() {
           </InputContainer>
 
           <InputContainer>
-            <Label>
-              Phone Number <RedAsterisk>*</RedAsterisk>
-            </Label>
+            <div>
+              <Label>
+                Phone Number <RedAsterisk>*</RedAsterisk>
+              </Label>
+              <InputNote>Please enter a valid 10 digit phone number.</InputNote>
+            </div>
             <Input
               name="phoneNumber"
               placeholder="(987) 654-3210"

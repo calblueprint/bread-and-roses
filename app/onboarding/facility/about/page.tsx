@@ -55,23 +55,32 @@ export default function Onboarding() {
     if (!facilityOnboardingContext) return;
 
     const { location, setLocation } = facilityOnboardingContext;
+    const { facilityGeneralInfo: generalInfo, setGeneralInfo } =
+      facilityOnboardingContext;
 
-    if (!location.address || !generalInfo.facilityName) {
-      // Only fetch if address isn't set
-      async function fetchLocation() {
+    const isLocationMissing = !location.address;
+    const isFacilityNameMissing = !generalInfo.facilityName;
+
+    if (isLocationMissing || isFacilityNameMissing) {
+      async function fetchLocationAndName() {
         try {
           const data = await fetchCurrentUserFacility();
           if (data) {
-            setLocation({
-              address: data.street_address_1,
-              city: data.city,
-              county: data.county || '',
-              zipCode: data.zip,
-            });
-            setGeneralInfo({
-              ...generalInfo,
-              ['facilityName']: data.name,
-            });
+            if (isLocationMissing) {
+              setLocation({
+                address: data.street_address_1,
+                city: data.city,
+                county: data.county || '',
+                zipCode: data.zip,
+              });
+            }
+
+            if (isFacilityNameMissing) {
+              setGeneralInfo({
+                ...generalInfo,
+                facilityName: data.name,
+              });
+            }
           }
         } catch (error) {
           console.error('Error fetching facility:', error);
@@ -79,7 +88,8 @@ export default function Onboarding() {
           setLoading(false);
         }
       }
-      fetchLocation();
+
+      fetchLocationAndName();
     } else {
       setLoading(false);
     }
