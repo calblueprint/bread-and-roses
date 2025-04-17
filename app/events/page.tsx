@@ -8,6 +8,7 @@ import {
 } from '@/api/supabase/queries/events';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import { Event } from '@/types/schema';
 import { useSession } from '@/utils/AuthProvider';
 import * as styles from './styles';
@@ -78,31 +79,33 @@ export default function EventPage() {
   });
 
   return (
-    <div>
-      <MenuBar setMenuExpanded={setMenuExpanded} />
-      <styles.Page $menuExpanded={menuExpanded}>
-        <styles.AllEventsHolder>
-          <styles.Title $fontWeight="500" $color="#000" $align="left">
-            Upcoming Events
-          </styles.Title>
-          {sortedEntries.map(([month, events]) => (
-            <div key={month}>
-              <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
-                {month}
-              </styles.MonthYear>
-              {events.map(event => (
-                <Link
-                  key={event.event_id}
-                  href={`/events/${event.event_id}`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <MyEventCard key={event.event_id} {...event} />
-                </Link>
-              ))}
-            </div>
-          ))}
-        </styles.AllEventsHolder>
-      </styles.Page>
-    </div>
+    <ProtectedRoute allowAnyRole>
+      <div>
+        <MenuBar setMenuExpanded={setMenuExpanded} />
+        <styles.Page $menuExpanded={menuExpanded}>
+          <styles.AllEventsHolder>
+            <styles.Title $fontWeight="500" $color="#000" $align="left">
+              Upcoming Events
+            </styles.Title>
+            {sortedEntries.map(([month, events]) => (
+              <div key={month}>
+                <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
+                  {month}
+                </styles.MonthYear>
+                {events.map(event => (
+                  <Link
+                    key={event.event_id}
+                    href={`/events/${event.event_id}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <MyEventCard key={event.event_id} {...event} />
+                  </Link>
+                ))}
+              </div>
+            ))}
+          </styles.AllEventsHolder>
+        </styles.Page>
+      </div>
+    </ProtectedRoute>
   );
 }

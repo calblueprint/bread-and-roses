@@ -10,6 +10,7 @@ import {
   Button,
   Card,
   Container,
+  FieldError,
   Fields,
   Footer,
   Form,
@@ -26,15 +27,22 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
-  const [message, setMessage] = useState('');
+
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [fallbackError, setFallbackError] = useState('');
   const [isError, setIsError] = useState(false);
 
   const handleSignUp = async () => {
-    setMessage('');
+    setEmailError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+    setFallbackError('');
     setIsError(false);
 
     if (password !== confirmedPassword) {
-      setMessage('Sign-up failed: Passwords do not match');
+      setConfirmPasswordError('Passwords do not match');
       setIsError(true);
       return;
     }
@@ -42,28 +50,36 @@ export default function SignUp() {
     const token = await encryptEmail(email);
     const { success, message } = await signUpUser(email, password);
 
-    setIsError(!success);
-    setMessage(message);
-
-    if (success) {
-      setTimeout(() => {
-        router.push(`/verification?token=${encodeURIComponent(token)}`);
-      }, 1000);
+    if (!success) {
+      setIsError(true);
+      if (
+        message.includes('Unable to validate email address') ||
+        message.includes('An account with this email already exists')
+      ) {
+        setEmailError(message);
+      } else if (message.includes('Password should be at least')) {
+        setPasswordError('Password should be at least 6 characters');
+      } else if (message.includes('Passwords do not match')) {
+        setConfirmPasswordError('Passwords do not match');
+      } else {
+        setFallbackError(message);
+      }
+      return;
     }
+
+    router.push(`/verification?token=${encodeURIComponent(token)}`);
   };
 
-  // Front-end interface
   return (
     <Container>
-      <Logo src={BRLogo} alt="An example image" />
+      <Logo src={BRLogo} alt="Bread & Roses logo" />
       <Card>
         <Form>
           <H5>Sign Up</H5>
           <TitleUnderline width="5.625rem" />
-          {message && (
-            <StyledErrorMessage $isError={isError}>
-              {message}
-            </StyledErrorMessage>
+
+          {fallbackError && (
+            <StyledErrorMessage $isError>{fallbackError}</StyledErrorMessage>
           )}
 
           <Fields>
@@ -77,7 +93,9 @@ export default function SignUp() {
                 onChange={e => setEmail(e.target.value)}
                 value={email}
               />
+              {emailError && <FieldError>{emailError}</FieldError>}
             </div>
+
             <div>
               <Label>
                 Password <span style={{ color: 'red' }}>*</span>
@@ -89,7 +107,9 @@ export default function SignUp() {
                 onChange={e => setPassword(e.target.value)}
                 value={password}
               />
+              {passwordError && <FieldError>{passwordError}</FieldError>}
             </div>
+
             <div>
               <Label>
                 Confirm Password <span style={{ color: 'red' }}>*</span>
@@ -101,8 +121,12 @@ export default function SignUp() {
                 onChange={e => setConfirmedPassword(e.target.value)}
                 value={confirmedPassword}
               />
+              {confirmPasswordError && (
+                <FieldError>{confirmPasswordError}</FieldError>
+              )}
             </div>
           </Fields>
+
           <Button
             type="button"
             onClick={handleSignUp}
@@ -116,6 +140,7 @@ export default function SignUp() {
           </Button>
         </Form>
       </Card>
+
       <Footer>
         Already have an account? <Link href="/signin">Log in!</Link>
       </Footer>

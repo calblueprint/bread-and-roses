@@ -9,6 +9,7 @@ import {
   checkUserSignedupEvent,
   eventSignUp,
 } from '@/api/supabase/queries/volunteers';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Back from '@/public/images/back.svg';
 import Bread from '@/public/images/bread.png';
 import Calendar from '@/public/images/calendar_icon.svg';
@@ -255,213 +256,221 @@ export default function EventPage({
     "Looks like you’re one step ahead! You’ve already signed up for this event. Check out your Upcoming Events to see if you've been approved!";
 
   return (
-    <Page>
-      <ImageWrapper>
-        {performanceToPhotoMap(
-          event.performance_type,
-          event.genre?.toString() ?? null,
-        )}
-      </ImageWrapper>
-      <Curve />
-      <Container $column={isSubmitted}>
-        {isSubmitted ? (
-          confirmation
-        ) : (
-          <>
-            <LeftWrapper>
-              <BackButton type="button" onClick={() => router.back()}>
-                <Image src={Back} alt="Back icon" />
-              </BackButton>
-              <Title> {facility.name} </Title>
-              <Divider />
-              <TimeRow text={time} src={Calendar} alt="Calendar" />
-              <Location $fontWeight="400" $color={COLORS.gray12}>
-                {' '}
-                <LocationIcon src={LocationPin} alt="Location" />
-                <div>
+    <ProtectedRoute requiredRole="volunteer">
+      <Page>
+        <ImageWrapper>
+          {performanceToPhotoMap(
+            event.performance_type,
+            event.genre?.toString() ?? null,
+          )}
+        </ImageWrapper>
+        <Curve />
+        <Container $column={isSubmitted}>
+          {isSubmitted ? (
+            confirmation
+          ) : (
+            <>
+              <LeftWrapper>
+                <BackButton type="button" onClick={() => router.back()}>
+                  <Image src={Back} alt="Back icon" />
+                </BackButton>
+                <Title> {facility.name} </Title>
+                <Divider />
+                <TimeRow text={time} src={Calendar} alt="Calendar" />
+                <Location $fontWeight="400" $color={COLORS.gray12}>
                   {' '}
-                  {facility.name}
-                  <SMALL $fontWeight="400" $color={COLORS.gray10}>
-                    {facility.street_address_1}, {facility.city}, CA,
-                    {facility.zip}
-                  </SMALL>
-                </div>
-              </Location>
-              {event && (
-                <TagDiv>
-                  {event?.needs_host && (
-                    <IndividualTag $bgColor={COLORS.rose6}>
-                      Host Needed
-                    </IndividualTag>
-                  )}
-                  <IndividualTag $bgColor={COLORS.bread6}>
-                    {facility?.type}
-                  </IndividualTag>
-                  {facility?.audience.map(audience => (
-                    <IndividualTag key={audience} $bgColor={COLORS.lilac3}>
-                      {audience}
-                    </IndividualTag>
-                  ))}
-                </TagDiv>
-              )}
-              <FacilityNotes> Facility Notes </FacilityNotes>
-              <Divider />
-              <FacilityName> {facility?.name} </FacilityName>
-              <Bullet $fontWeight="400">
-                {facility?.volunteer_notes || '(blank)'}
-              </Bullet>
-              <div>
-                <HostWarningTitle> Bread & Roses Presents </HostWarningTitle>
-                {event?.needs_host && (
-                  <Bullet $fontWeight="400">
-                    Host should be able to carry 15lbs of equipment
-                  </Bullet>
-                )}
-                <Bullet $fontWeight="400">
-                  {facility?.admin_added_notes || '(blank)'}
-                </Bullet>
-                {event?.notes && (
-                  <Bullet $fontWeight="400">{event?.notes}</Bullet>
-                )}
-              </div>
-            </LeftWrapper>
-            <RightWrapper>
-              <ShowInterest> Show Interest </ShowInterest>
-              <Divider />
-              {signedUp ? (
-                <Asterisk>{signedUpText}</Asterisk>
-              ) : (
-                <>
-                  <SelectAllText>Select all that apply.</SelectAllText>
-                  {InterestBlockGen(
-                    'To Perform',
-                    'Be the star of the show!',
-                    '/images/star.svg',
-                    performChecked,
-                    () => setPerformChecked(!performChecked),
-                  )}
-                  {event?.needs_host == true &&
-                    InterestBlockGen(
-                      'To Host',
-                      'Help setup the show!',
-                      '/images/help.svg',
-                      hostChecked,
-                      () => setHostChecked(!hostChecked),
-                    )}
-                  {hostChecked && (
-                    <div>
-                      <HostInfo>
-                        <Icon src={InfoIcon} alt="InfoIcon"></Icon>
-                        <P $fontWeight="500" $color={COLORS.gray11}>
-                          {' '}
-                          Responsibilities of a Host
-                        </P>
-                      </HostInfo>
-                      <HostList>
-                        <li> Track audience demographic statistics </li>
-                        <li> If needed, help performer carry equipment </li>
-                        <li> Manage show logistics </li>
-                      </HostList>
-                    </div>
-                  )}
-                  {performChecked && (
-                    <div>
-                      <GroupSizeText>
-                        <P $fontWeight="500" $color={COLORS.gray11}>
-                          Group Size &nbsp;
-                        </P>
-                        <Asterisk> *</Asterisk>
-                      </GroupSizeText>
-                      {groupSizeError && <Asterisk>{groupSizeError}</Asterisk>}
-                      <GroupSizeInput
-                        name="sizeInfo"
-                        onChange={handleGroupSizeChange}
-                      />
-                    </div>
-                  )}
-                  <AdditionalInfoText>
+                  <LocationIcon src={LocationPin} alt="Location" />
+                  <div>
                     {' '}
-                    Additional Information{' '}
-                  </AdditionalInfoText>
-                  <AdditionalInfoInput
-                    name="additionalInfo"
-                    onChange={handleInfoChange}
-                  />
-                  <Acknowledgement>
-                    <Checkbox
-                      type="checkbox"
-                      $checked={acknowledgeChecked}
-                      onChange={() =>
-                        setAcknowledgeChecked(!acknowledgeChecked)
-                      }
+                    {facility.name}
+                    <SMALL $fontWeight="400" $color={COLORS.gray10}>
+                      {facility.street_address_1}, {facility.city}, CA,
+                      {facility.zip}
+                    </SMALL>
+                  </div>
+                </Location>
+                {event && (
+                  <TagDiv>
+                    {event?.needs_host && (
+                      <IndividualTag $bgColor={COLORS.rose6}>
+                        Host Needed
+                      </IndividualTag>
+                    )}
+                    <IndividualTag $bgColor={COLORS.bread6}>
+                      {facility?.type}
+                    </IndividualTag>
+                    {facility?.audience.map(audience => (
+                      <IndividualTag key={audience} $bgColor={COLORS.lilac3}>
+                        {audience}
+                      </IndividualTag>
+                    ))}
+                  </TagDiv>
+                )}
+                <FacilityNotes> Facility Notes </FacilityNotes>
+                <Divider />
+                <FacilityName> {facility?.name} </FacilityName>
+                <Bullet $fontWeight="400">
+                  {facility?.volunteer_notes || '(blank)'}
+                </Bullet>
+                <div>
+                  <HostWarningTitle> Bread & Roses Presents </HostWarningTitle>
+                  {event?.needs_host && (
+                    <Bullet $fontWeight="400">
+                      Host should be able to carry 15lbs of equipment
+                    </Bullet>
+                  )}
+                  <Bullet $fontWeight="400">
+                    {facility?.admin_added_notes || '(blank)'}
+                  </Bullet>
+                  {event?.notes && (
+                    <Bullet $fontWeight="400">{event?.notes}</Bullet>
+                  )}
+                </div>
+              </LeftWrapper>
+              <RightWrapper>
+                <ShowInterest> Show Interest </ShowInterest>
+                <Divider />
+                {signedUp ? (
+                  <Asterisk>{signedUpText}</Asterisk>
+                ) : (
+                  <>
+                    <SelectAllText>Select all that apply.</SelectAllText>
+                    {InterestBlockGen(
+                      'To Perform',
+                      'Be the star of the show!',
+                      '/images/star.svg',
+                      performChecked,
+                      () => setPerformChecked(!performChecked),
+                    )}
+                    {event?.needs_host == true &&
+                      InterestBlockGen(
+                        'To Host',
+                        'Help setup the show!',
+                        '/images/help.svg',
+                        hostChecked,
+                        () => setHostChecked(!hostChecked),
+                      )}
+                    {hostChecked && (
+                      <div>
+                        <HostInfo>
+                          <Icon src={InfoIcon} alt="InfoIcon"></Icon>
+                          <P $fontWeight="500" $color={COLORS.gray11}>
+                            {' '}
+                            Responsibilities of a Host
+                          </P>
+                        </HostInfo>
+                        <HostList>
+                          <li> Track audience demographic statistics </li>
+                          <li> If needed, help performer carry equipment </li>
+                          <li> Manage show logistics </li>
+                        </HostList>
+                      </div>
+                    )}
+                    {performChecked && (
+                      <div>
+                        <GroupSizeText>
+                          <P $fontWeight="500" $color={COLORS.gray11}>
+                            Group Size &nbsp;
+                          </P>
+                          <Asterisk> *</Asterisk>
+                        </GroupSizeText>
+                        {groupSizeError && (
+                          <Asterisk>{groupSizeError}</Asterisk>
+                        )}
+                        <GroupSizeInput
+                          name="sizeInfo"
+                          onChange={handleGroupSizeChange}
+                        />
+                      </div>
+                    )}
+                    <AdditionalInfoText>
+                      {' '}
+                      Additional Information{' '}
+                    </AdditionalInfoText>
+                    <AdditionalInfoInput
+                      name="additionalInfo"
+                      onChange={handleInfoChange}
                     />
-                    <AcknowledgementText>
-                      I’ve read and understood the requirements to be a
-                      volunteer &nbsp;
-                      <Asterisk> * </Asterisk>
-                    </AcknowledgementText>
-                  </Acknowledgement>
-                  {errorMessage && <Asterisk>{errorMessage}</Asterisk>}
-                  <SignUpContainer>
-                    <SignUp
-                      type="button"
-                      onClick={() => {
-                        if (session?.user?.id && event?.event_id) {
-                          if (!performChecked && !hostChecked) {
-                            console.error('No preference selected.');
-                            setErrorMessage('Please select a role preference.');
-                          } else {
-                            if (
-                              performChecked &&
-                              groupSize > 0 &&
-                              acknowledgeChecked
-                            ) {
-                              eventSignUp({
-                                id: session.user.id as UUID,
-                                event_id: event.event_id as UUID,
-                                role: 'PERFORMER',
-                                group_size: groupSize,
-                                additional_info: additionalInfo,
-                              });
-                              setIsSubmitted(true);
-                            }
-                            if (hostChecked && acknowledgeChecked) {
-                              eventSignUp({
-                                id: session.user.id as UUID,
-                                event_id: event.event_id as UUID,
-                                role: 'HOST',
-                                group_size: 0,
-                                additional_info: additionalInfo,
-                              });
-                              setIsSubmitted(true);
-                            }
-                            if (!acknowledgeChecked) {
-                              setIsSubmitted(false);
-                              setErrorMessage(
-                                'Please acknowledge that you understand the requirements.',
-                              );
-                            }
-                            if (performChecked && groupSize === 0) {
-                              setIsSubmitted(false);
-                              setErrorMessage('Please indicate a group size.');
-                            }
-                          }
-                        } else {
-                          console.error('Missing user ID or event ID');
+                    <Acknowledgement>
+                      <Checkbox
+                        type="checkbox"
+                        $checked={acknowledgeChecked}
+                        onChange={() =>
+                          setAcknowledgeChecked(!acknowledgeChecked)
                         }
-                      }}
-                    >
-                      <P $fontWeight="400" $color={COLORS.gray1}>
-                        Sign up
-                      </P>
-                    </SignUp>
-                  </SignUpContainer>
-                </>
-              )}
-            </RightWrapper>
-          </>
-        )}
-      </Container>
-    </Page>
+                      />
+                      <AcknowledgementText>
+                        I’ve read and understood the requirements to be a
+                        volunteer &nbsp;
+                        <Asterisk> * </Asterisk>
+                      </AcknowledgementText>
+                    </Acknowledgement>
+                    {errorMessage && <Asterisk>{errorMessage}</Asterisk>}
+                    <SignUpContainer>
+                      <SignUp
+                        type="button"
+                        onClick={() => {
+                          if (session?.user?.id && event?.event_id) {
+                            if (!performChecked && !hostChecked) {
+                              console.error('No preference selected.');
+                              setErrorMessage(
+                                'Please select a role preference.',
+                              );
+                            } else {
+                              if (
+                                performChecked &&
+                                groupSize > 0 &&
+                                acknowledgeChecked
+                              ) {
+                                eventSignUp({
+                                  id: session.user.id as UUID,
+                                  event_id: event.event_id as UUID,
+                                  role: 'PERFORMER',
+                                  group_size: groupSize,
+                                  additional_info: additionalInfo,
+                                });
+                                setIsSubmitted(true);
+                              }
+                              if (hostChecked && acknowledgeChecked) {
+                                eventSignUp({
+                                  id: session.user.id as UUID,
+                                  event_id: event.event_id as UUID,
+                                  role: 'HOST',
+                                  group_size: 0,
+                                  additional_info: additionalInfo,
+                                });
+                                setIsSubmitted(true);
+                              }
+                              if (!acknowledgeChecked) {
+                                setIsSubmitted(false);
+                                setErrorMessage(
+                                  'Please acknowledge that you understand the requirements.',
+                                );
+                              }
+                              if (performChecked && groupSize === 0) {
+                                setIsSubmitted(false);
+                                setErrorMessage(
+                                  'Please indicate a group size.',
+                                );
+                              }
+                            }
+                          } else {
+                            console.error('Missing user ID or event ID');
+                          }
+                        }}
+                      >
+                        <P $fontWeight="400" $color={COLORS.gray1}>
+                          Sign up
+                        </P>
+                      </SignUp>
+                    </SignUpContainer>
+                  </>
+                )}
+              </RightWrapper>
+            </>
+          )}
+        </Container>
+      </Page>
+    </ProtectedRoute>
   );
 }
