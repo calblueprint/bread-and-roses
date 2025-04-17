@@ -282,14 +282,6 @@ export default function ActiveEventsPage() {
         }
       }
     };
-    const saved = sessionStorage.getItem(FILTERS_KEY);
-    if (saved) {
-      try {
-        setFilters(JSON.parse(saved));
-      } catch {
-        console.warn('Invalid saved filters in sessionStorage');
-      }
-    }
     getAllActiveEvents();
   }, [session]);
 
