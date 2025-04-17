@@ -10,7 +10,7 @@ export const EventImage = styled.div`
   overflow: hidden;
   background-color: ${COLORS.gray12};
   height: 7.5rem;
-  width: 7rem;
+  min-width: 7.5rem;
   border-radius: 0.5rem 0 0 0.5rem;
 `;
 
