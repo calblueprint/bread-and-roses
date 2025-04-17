@@ -16,7 +16,7 @@ export const ImageWrapper = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 0.5rem 0.5rem 0 0;
+  border-radius: 0 0 0 0;
   background-color: ${COLORS.gray12};
 `;
 
@@ -46,7 +46,7 @@ export const Curve = styled.div`
   @media (max-width: 768px) {
     border-radius: 20px 20px 0 0;
   }
-  background: ${COLORS.gray1};
+  background: ${COLORS.bread2};
 `;
 
 export const LeftWrapper = styled.div`
@@ -82,16 +82,17 @@ export const Container = styled.div<{ $column?: boolean }>`
   flex: 1;
   display: grid;
   padding-top: 3.875rem;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     margin-left: 1.75rem;
     margin-right: 1.75rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     display: grid;
     grid-template-columns: ${({ $column }) => ($column ? '1fr' : '3fr 2fr')};
     margin-left: 5.1875rem;
     margin-right: 5.1875rem;
+    margin-bottom: 2rem;
   }
   justify-content: space-between;
 `;

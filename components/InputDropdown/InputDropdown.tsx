@@ -66,7 +66,6 @@ export default function InputDropdown({
   multi,
   value,
 }: InputDropdownProps) {
-  console.log(value);
   const optionsArray = useMemo(
     () =>
       options instanceof Set

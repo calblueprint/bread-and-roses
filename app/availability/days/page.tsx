@@ -113,7 +113,6 @@ export default function Page() {
       return;
     }
     setDays(days.sort((a, b) => a.localeCompare(b)));
-    console.log(times);
     const initTimes: { [date: string]: TimeRange[] } = {};
     for (const day of days) {
       if (day in times) {

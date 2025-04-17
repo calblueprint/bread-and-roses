@@ -103,7 +103,7 @@ export async function handleSignIn(
 
     const { data: facilityData } = await supabase
       .from('facilities')
-      .select('user_id, is_finalized')
+      .select('*')
       .eq('user_id', sessionData.session.user.id)
       .maybeSingle();
 

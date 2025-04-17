@@ -103,7 +103,13 @@ export default function ActiveEventsPage() {
   const [hostFilters, setHostFilters] = useState(new Set<string>());
   const [volunteerPreferences, setVolunteerPreferences] =
     useState<VolunteerPreferences>();
-
+  const FILTERS_KEY = 'my-filters';
+  const [filters, setFilters] = useState({
+    facilityFilters: facilityFilters,
+    countyFilters: countyFilters,
+    hostFilters,
+    hostFilters,
+  });
   const getSearchEvents = async () => {
     setIsFiltering(true);
     const filtered: EventWithFacility[] =
@@ -185,7 +191,9 @@ export default function ActiveEventsPage() {
     setSearchInput('');
     setSearchActive(false);
     setFilteredEvents(events);
+    handleClearFilters();
   };
+
   const handleClearFilters = () => {
     setFacilityFilters(new Set());
     setCountyFilters(new Set());
@@ -202,7 +210,8 @@ export default function ActiveEventsPage() {
       !!(
         newFacilityFilters.size ||
         newCountyFilters.size ||
-        newHostFilters.size
+        newHostFilters.size ||
+        isFiltering
       ),
     );
     setIsFiltering(true);
@@ -280,6 +289,14 @@ export default function ActiveEventsPage() {
         }
       }
     };
+    const saved = sessionStorage.getItem(FILTERS_KEY);
+    if (saved) {
+      try {
+        setFilters(JSON.parse(saved));
+      } catch {
+        console.warn('Invalid saved filters in sessionStorage');
+      }
+    }
     getAllActiveEvents();
   }, [session]);
 

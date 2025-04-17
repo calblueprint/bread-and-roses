@@ -71,7 +71,6 @@ export default function SignIn() {
       return;
     }
 
-    console.log(redirectTo);
     router.push('/' + redirectTo);
 
     setErrorMessage('');

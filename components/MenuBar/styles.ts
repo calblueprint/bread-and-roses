@@ -78,6 +78,9 @@ export const MenuLabel = styled(P)<{ $expanded: boolean; $active: boolean }>`
   display: ${({ $expanded }) => ($expanded ? 'flex' : 'none')};
   font-weight: ${({ $active }) => ($active ? '600' : '400')};
   transition: font-weight 0.03s ease-in-out;
+  &&:hover {
+    font-weight: 600;
+  }
 `;
 
 export const SignOutLabel = styled(P)<{ $expanded: boolean; $active: boolean }>`
