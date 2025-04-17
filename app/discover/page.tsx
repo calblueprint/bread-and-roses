@@ -415,13 +415,20 @@ export default function ActiveEventsPage() {
                   </Button>
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
-                  {interestBasedEvents.map(event => (
-                    <DiscoverCard
-                      search={isSearchActive}
-                      key={event.event_id}
-                      event={event}
-                    />
-                  ))}
+                  {interestBasedEvents.length > 0 ? (
+                    interestBasedEvents.map(event => (
+                      <DiscoverCard
+                        search={isSearchActive}
+                        key={event.event_id}
+                        event={event}
+                      />
+                    ))
+                  ) : (
+                    <NoMatchContainer>
+                      <NoMatchText>No matches</NoMatchText>
+                      <Icon src={SadIcon} alt="Sad face icon" />
+                    </NoMatchContainer>
+                  )}
                 </DiscoverCardContainer>
               </RowContainer>
               <RowContainer>
@@ -432,13 +439,20 @@ export default function ActiveEventsPage() {
                   </Button>
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
-                  {upcomingEvents.map(event => (
-                    <DiscoverCard
-                      search={isSearchActive}
-                      key={event.event_id}
-                      event={event}
-                    />
-                  ))}
+                  {upcomingEvents.length > 0 ? (
+                    upcomingEvents.map(event => (
+                      <DiscoverCard
+                        search={isSearchActive}
+                        key={event.event_id}
+                        event={event}
+                      />
+                    ))
+                  ) : (
+                    <NoMatchContainer>
+                      <NoMatchText>No matches</NoMatchText>
+                      <Icon src={SadIcon} alt="Sad face icon" />
+                    </NoMatchContainer>
+                  )}
                 </DiscoverCardContainer>
               </RowContainer>
             </DiscoverContainer>
