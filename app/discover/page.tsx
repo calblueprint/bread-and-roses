@@ -103,13 +103,6 @@ export default function ActiveEventsPage() {
   const [hostFilters, setHostFilters] = useState(new Set<string>());
   const [volunteerPreferences, setVolunteerPreferences] =
     useState<VolunteerPreferences>();
-  const FILTERS_KEY = 'my-filters';
-  const [filters, setFilters] = useState({
-    facilityFilters: facilityFilters,
-    countyFilters: countyFilters,
-    hostFilters,
-    hostFilters,
-  });
   const getSearchEvents = async () => {
     setIsFiltering(true);
     const filtered: EventWithFacility[] =
