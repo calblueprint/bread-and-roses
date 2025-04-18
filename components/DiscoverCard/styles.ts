@@ -32,6 +32,12 @@ export const Container = styled.div<{ $search: boolean }>`
   background-color: ${COLORS.bread1};
   border: none;
   border-radius: 0.5rem;
+  @media (max-width: 1024px) {
+    display: flex;
+    height: 7.5rem;
+    margin-right: 0;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.06);
+  }
 `;
 
 export const ImageContainer = styled.div<{ $search: boolean }>`
@@ -47,6 +53,13 @@ export const ImageContainer = styled.div<{ $search: boolean }>`
           width: 100%;
           border-radius: 0.5rem 0.5rem 0 0;
         `}
+
+  @media (max-width: 1024px) {
+    height: 100%;
+    min-width: 5rem;
+    max-width: 5rem;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
   position: relative;
   overflow: hidden;
   background-color: ${COLORS.gray12};
@@ -85,7 +98,7 @@ export const EventTag = styled.div`
   overflow: hidden;
 `;
 
-export const Subtitle = styled(P)`
+export const Subtitle = styled.div`
   display: flex;
   align-items: center;
   align-self: stretch;

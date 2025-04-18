@@ -77,20 +77,24 @@ export default function DiscoverCard({
     const tags: JSX.Element[] = [];
     if (facility?.type) {
       tags.push(
-        <IndividualTag $bgColor={COLORS.bread6}>
+        <IndividualTag $bgColor={COLORS.bread6} key="bgColor">
           {facility?.type}
         </IndividualTag>,
       );
     }
     if (event?.needs_host) {
       tags.push(
-        <IndividualTag $bgColor={COLORS.rose6}>Host Needed</IndividualTag>,
+        <IndividualTag $bgColor={COLORS.rose6} key="host">
+          Host Needed
+        </IndividualTag>,
       );
     }
     if (facility?.audience) {
       for (const audience of facility?.audience) {
         tags.push(
-          <IndividualTag $bgColor={COLORS.lilac3}>{audience}</IndividualTag>,
+          <IndividualTag $bgColor={COLORS.lilac3} key={audience}>
+            {audience}
+          </IndividualTag>,
         );
       }
     }

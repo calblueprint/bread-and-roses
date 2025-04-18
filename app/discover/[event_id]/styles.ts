@@ -147,6 +147,7 @@ export const LocationIcon = styled(NextImage)`
 
 export const IndividualTag = styled.span<TagProps>`
   background-color: ${({ $bgColor }) => $bgColor || 'gray'};
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
@@ -160,6 +161,7 @@ export const TagDiv = styled.div`
   flex-direction: row;
   margin: 1rem 0;
   gap: 0.25rem;
+  flex-wrap: wrap;
 `;
 
 export const GroupSizeText = styled.div`
