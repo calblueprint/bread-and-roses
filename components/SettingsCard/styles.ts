@@ -176,5 +176,4 @@ export const ButtonContainer = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 15rem;
 `;

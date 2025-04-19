@@ -19,8 +19,9 @@ import * as styles from './styles';
 
 export default function SettingsPage() {
   const [menuExpanded, setMenuExpanded] = useState<boolean>(false); // Track the expanded state of the menu
-  const { session } = useSession();
-  const { signOut } = useSession();
+  //const { session } = useSession();
+  //const { userRole } = useSession();
+  const { session, signOut, userRole } = useSession();
   const router = useRouter();
   const [userInfo, setUserInfo] = useState<UserInfo>({
     first_name: '',
@@ -37,9 +38,19 @@ export default function SettingsPage() {
     locations: [],
     additional_info: '',
   });
+  const [facilityInfo, setFacilityInfo] = useState<UserInfo>({});
+  const [facilityContactInfo, setFacilityContactInfo] = useState<UserInfo>({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone_number: '',
+  });
   const [editedUserInfo, setEditedUserInfo] = useState<UserInfo>(userInfo);
   const [editedUserPrefs, setEditedUserPrefs] =
     useState<UserPreferences>(userPreferences);
+
+  const [editedFacilityInfo, setEditedFacilityInfo] =
+    useState<UserInfo>(facilityInfo);
 
   const handleSignOut = () => {
     signOut();
@@ -47,9 +58,12 @@ export default function SettingsPage() {
   };
 
   useEffect(() => {
+    console.log('userRole:' + userRole);
+    console.log('session' + session);
     const getUserData = async () => {
-      if (session) {
+      if (session && userRole == 'volunteer') {
         const fetchedUserInfo = await fetchVolunteerInfo(session.user.id);
+        console.log('Fetched user info:', fetchedUserInfo);
         setUserInfo(fetchedUserInfo);
         setEditedUserInfo(fetchedUserInfo);
 
@@ -59,9 +73,11 @@ export default function SettingsPage() {
         setUserPreferences(fetchedUserPreferences);
         setEditedUserPrefs(fetchedUserPreferences);
       }
+      if (session && userRole == 'facility') {
+      }
     };
     getUserData();
-  }, [session]);
+  }, [session, userRole]);
 
   if (!session || !session.user || !userInfo || !userPreferences) {
     return <div>Loading...</div>;
@@ -70,59 +86,88 @@ export default function SettingsPage() {
   return (
     session && (
       <styles.All>
-        <MenuBar setMenuExpanded={setMenuExpanded} />
-        <styles.Page $menuExpanded={menuExpanded}>
-          <styles.SettingDiv>
-            <styles.ProfileName>
-              {' '}
-              {userInfo.first_name} {userInfo.last_name}{' '}
-            </styles.ProfileName>
-            <styles.Email> {userInfo.email} </styles.Email>
-            <styles.SignOutButton onClick={() => handleSignOut()}>
-              <styles.SignOut src={SignOut} alt="SignOut" />
-              <styles.ButtonText> Sign Out </styles.ButtonText>
-            </styles.SignOutButton>
-            <SettingsCardPersonalDetails
-              first_name={userInfo.first_name}
-              last_name={userInfo.last_name}
-              phone={userInfo.phone_number}
-              userInfo={userInfo}
-              editInfo={editedUserInfo}
-              setEditInfo={setEditedUserInfo}
-              setUserInfo={setUserInfo}
-              userId={session.user.id}
-            />
-            <SettingsCardNotifications />
-            <SettingsCardShowPreferences
-              facility_preferences={userPreferences.facility_type}
-              locations={userPreferences.locations}
-              audience_preferences={userPreferences.audience_type}
-              userPrefs={userPreferences}
-              editPrefs={editedUserPrefs}
-              setEditPrefs={setEditedUserPrefs}
-              setUserPrefs={setUserPreferences}
-              userId={session.user.id}
-            />
-            <SettingsCardPerformanceInterest
-              performance_types={userPreferences.performance_type}
-              genres={userPreferences.genre}
-              group_size={userPreferences.performer_type}
-              userPrefs={userPreferences}
-              editPrefs={editedUserPrefs}
-              setEditPrefs={setEditedUserPrefs}
-              setUserPrefs={setUserPreferences}
-              userId={session.user.id}
-            />
-            <SettingsCardAccomodations
-              accomodations={userPreferences.additional_info}
-              userPrefs={userPreferences}
-              editPrefs={editedUserPrefs}
-              setEditPrefs={setEditedUserPrefs}
-              setUserPrefs={setUserPreferences}
-              userId={session.user.id}
-            />
-          </styles.SettingDiv>
-        </styles.Page>
+        {userRole == 'volunteer' && (
+          <div>
+            <MenuBar setMenuExpanded={setMenuExpanded} />
+            <styles.Page $menuExpanded={menuExpanded}>
+              <styles.SettingDiv>
+                <styles.ProfileName>
+                  {' '}
+                  {userInfo.first_name} {userInfo.last_name}{' '}
+                </styles.ProfileName>
+                <styles.Email> {userInfo.email} </styles.Email>
+                <styles.SignOutButton onClick={() => handleSignOut()}>
+                  <styles.SignOut src={SignOut} alt="SignOut" />
+                  <styles.ButtonText> Sign Out </styles.ButtonText>
+                </styles.SignOutButton>
+                <SettingsCardPersonalDetails
+                  first_name={userInfo.first_name}
+                  last_name={userInfo.last_name}
+                  phone={userInfo.phone_number}
+                  userInfo={userInfo}
+                  editInfo={editedUserInfo}
+                  setEditInfo={setEditedUserInfo}
+                  setUserInfo={setUserInfo}
+                  userId={session.user.id}
+                />
+                <SettingsCardNotifications />
+                <SettingsCardShowPreferences
+                  facility_preferences={userPreferences.facility_type}
+                  locations={userPreferences.locations}
+                  audience_preferences={userPreferences.audience_type}
+                  userPrefs={userPreferences}
+                  editPrefs={editedUserPrefs}
+                  setEditPrefs={setEditedUserPrefs}
+                  setUserPrefs={setUserPreferences}
+                  userId={session.user.id}
+                />
+                <SettingsCardPerformanceInterest
+                  performance_types={userPreferences.performance_type}
+                  genres={userPreferences.genre}
+                  group_size={userPreferences.performer_type}
+                  userPrefs={userPreferences}
+                  editPrefs={editedUserPrefs}
+                  setEditPrefs={setEditedUserPrefs}
+                  setUserPrefs={setUserPreferences}
+                  userId={session.user.id}
+                />
+                <SettingsCardAccomodations
+                  accomodations={userPreferences.additional_info}
+                  userPrefs={userPreferences}
+                  editPrefs={editedUserPrefs}
+                  setEditPrefs={setEditedUserPrefs}
+                  setUserPrefs={setUserPreferences}
+                  userId={session.user.id}
+                />
+              </styles.SettingDiv>
+            </styles.Page>
+          </div>
+        )}
+        {userRole == 'facility' && (
+          <div>
+            <MenuBar setMenuExpanded={setMenuExpanded} />
+            <styles.Page $menuExpanded={menuExpanded}>
+              <styles.SettingDiv>
+                <styles.ProfileName>Jane Doe</styles.ProfileName>
+                <styles.Email> jane.doe@email.com </styles.Email>
+                <styles.SignOutButton onClick={() => handleSignOut()}>
+                  <styles.SignOut src={SignOut} alt="SignOut" />
+                  <styles.ButtonText> Sign Out </styles.ButtonText>
+                </styles.SignOutButton>
+                <SettingsCardPersonalDetails
+                  first_name="jane"
+                  last_name="doe"
+                  phone="1234567890"
+                  userInfo={userInfo}
+                  editInfo={editedUserInfo}
+                  setEditInfo={setEditedUserInfo}
+                  setUserInfo={setUserInfo}
+                  userId={session.user.id}
+                />
+              </styles.SettingDiv>
+            </styles.Page>
+          </div>
+        )}
       </styles.All>
     )
   );
