@@ -39,6 +39,7 @@ export default function EventPage() {
   const [selectedView, setSelectedView] = useState<
     'scheduled' | 'applied' | 'proposed'
   >('scheduled');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (session?.user) {
@@ -50,10 +51,11 @@ export default function EventPage() {
           } else if (userRole === 'facility') {
             eventsData = await fetchAcceptedEventsByFacility(session.user.id);
           }
-          // eventsData = await fetchAllEvents();
           setData(eventsData ?? []);
         } catch (error) {
           console.error('Error fetching events:', error);
+        } finally {
+          setLoading(false);
         }
       };
 
@@ -129,6 +131,10 @@ export default function EventPage() {
       );
     });
   });
+
+  if (loading || !userRole) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>

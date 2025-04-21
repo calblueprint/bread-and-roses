@@ -56,7 +56,7 @@ export const ToggleWrapper = styled.div`
   flex-wrap: wrap;
   gap: 0.5rem;
   background-color: #e9ecf1;
-  border-radius: 14.76px;
+  border-radius: 0.9225rem;
   padding: 0.25rem;
   width: 100%;
   justify-content: center;
@@ -67,14 +67,14 @@ export const ToggleButton = styled.button<{ $active: boolean }>`
   background-color: ${({ $active }) => ($active ? '#ffffff' : 'transparent')};
   color: ${({ $active }) => ($active ? '#1c1c1c' : '#7d7d7d')};
   border: none;
-  border-radius: 12.3px;
+  border-radius: 0.76875rem;
   padding: 0.5rem 1rem; // less rigid padding
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
   box-shadow: ${({ $active }) =>
-    $active ? '0px 0.41px 1.025px 0.41px #C6C6C6;' : 'none'};
+    $active ? '0rem 0.41px 1.025px 0.41px #C6C6C6;' : 'none'};
   flex: 1 1 auto;
   text-align: center;
 `;
