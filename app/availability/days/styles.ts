@@ -78,16 +78,16 @@ export const Calendar = styled.div`
     background-color: transparent !important;
   }
   .fc-day-today::after {
-    transform: translateX(18px);
-    bottom: 142px;
-    @media(min-width: 1024px) {
-      bottom: 147px;
-      transform: translateX(25px);
-    }
-    width: 4px; /* Diameter of the dot */
-    height: 4px; /* Diameter of the dot */
-    background-color: ${COLORS.rose11}; /* Color of the dot */
-    border-radius: 50%; /* Makes the element a circle */
+    // transform: translateX(18px);
+    // bottom: 142px;
+    // @media(min-width: 1024px) {
+    //   bottom: 147px;
+    //   transform: translateX(25px);
+    // }
+    // width: 4px; /* Diameter of the dot */
+    // height: 4px; /* Diameter of the dot */
+    // background-color: ${COLORS.rose11}; /* Color of the dot */
+    // border-radius: 50%; /* Makes the element a circle */
   }
   .fc-daygrid-day-frame {
     display: flex;

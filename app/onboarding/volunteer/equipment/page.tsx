@@ -17,7 +17,7 @@ import {
   Image,
   InlineContainer,
   Title,
-} from '../styles';
+} from '../../styles';
 
 const Options = new Set(['Yes', 'No']);
 
@@ -27,7 +27,15 @@ export default function Onboarding() {
 
   if (!onboardingContext) return null;
 
-  const { preferences, setPreferences } = onboardingContext;
+  const { preferences, setPreferences, role } = onboardingContext;
+
+  let progress = 0;
+  // number of steps in each onboarding
+  if (role.isHost && role.isPerformer) {
+    progress = (4 * 100) / 7;
+  } else {
+    progress = (4 * 100) / 6;
+  }
 
   const handleInfoChange = (field: string, value: string | null) => {
     if (value) {
@@ -42,11 +50,11 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    router.push('/onboarding/additional-info');
+    router.push('/onboarding/volunteer/additional-info');
   };
 
   const handleBack = () => {
-    router.push('/onboarding/performance');
+    router.push('/onboarding/volunteer/performance');
   };
 
   return (
@@ -56,7 +64,7 @@ export default function Onboarding() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>What should we know?</Title>
-        <ProgressBar from={50} to={60} />
+        <ProgressBar from={progress} to={progress} />
         <Container>
           <InputDropdown
             label="Do you have your own sound equipment?"

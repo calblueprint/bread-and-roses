@@ -320,7 +320,7 @@ export default function EventDisplay({
                   $color={COLORS.gray12}
                   $align="left"
                 >
-                  {event?.producer_name || 'Producer Not Found'}
+                  {event?.producer_name || 'Producer Name Not Found'}
                 </styles.ParaText>
                 <styles.ContactTypeText
                   $fontWeight="400"
@@ -334,14 +334,15 @@ export default function EventDisplay({
                   $color={COLORS.rose11}
                   $align="left"
                 >
-                  {event?.producer_email || 'Producer Not Found'}
+                  {event?.producer_email || 'Producer Email Not Found'}
                 </styles.EmailText>
                 <styles.PhoneNumberText
                   $fontWeight="400"
                   $color={COLORS.rose11}
                   $align="left"
                 >
-                  {event?.producer_email || 'Producer Not Found'}
+                  {event?.producer_phone_number ||
+                    'Producer Phone Number Not Found'}
                 </styles.PhoneNumberText>
               </styles.ContactDetails>
             </styles.ContactContainer>
