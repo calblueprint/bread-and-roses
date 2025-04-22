@@ -23,7 +23,7 @@ import {
   InputNote,
   Label,
   Title,
-} from '../styles';
+} from '../../styles';
 import { RedAsterisk, UpdateContainer, UpdateText } from './styles';
 
 export default function Onboarding() {
@@ -32,8 +32,17 @@ export default function Onboarding() {
 
   if (!onboardingContext) return null;
 
-  const { generalInfo, setGeneralInfo } = onboardingContext;
+  const { generalInfo, setGeneralInfo, role } = onboardingContext;
 
+  let progress = 0;
+  // number of steps in each onboarding
+  if (role.isHost && role.isPerformer) {
+    progress = 100 / 7;
+  } else if (role.isHost) {
+    progress = 100 / 5;
+  } else {
+    progress = 100 / 6;
+  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, checked, value } = e.target;
     setGeneralInfo({
@@ -53,11 +62,11 @@ export default function Onboarding() {
     }
 
     setGeneralInfo({ ...generalInfo, phoneNumber: formattedPhoneNumber });
-    router.push('/onboarding/show-preference');
+    router.push('/onboarding/volunteer/show-preference');
   };
 
   const handleBack = () => {
-    router.push('/onboarding/role-selection');
+    router.push('/onboarding/volunteer/role-selection');
   };
 
   return (
@@ -67,7 +76,7 @@ export default function Onboarding() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Can you tell us a bit about yourself?</Title>
-        <ProgressBar from={0} to={20} />
+        <ProgressBar from={progress} to={progress} />
         <Container>
           <InputContainer>
             <Label>
@@ -109,7 +118,7 @@ export default function Onboarding() {
           </InputContainer>
 
           <InputContainer>
-            <Label>Social Media</Label>
+            <Label>Social Media / Demo Link</Label>
             <Input
               name="socialMedia"
               placeholder="Instagram: @janedoe"

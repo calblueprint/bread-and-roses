@@ -99,6 +99,7 @@ export async function handleSignIn(
       .from('volunteers')
       .select('user_id')
       .eq('email', email)
+      .neq('is_temporary', true)
       .maybeSingle();
 
     const { data: facilityData } = await supabase
