@@ -90,6 +90,7 @@ export const Container = styled.div<{ $column?: boolean }>`
   @media (min-width: 1024px) {
     display: grid;
     grid-template-columns: ${({ $column }) => ($column ? '1fr' : '3fr 2fr')};
+    place-items: ${({ $column }) => ($column ? 'center' : 'initial')};
     margin-left: 5.1875rem;
     margin-right: 5.1875rem;
     margin-bottom: 2rem;
@@ -409,4 +410,30 @@ export const IconContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0rem;
+`;
+
+export const CancelButton = styled.button`
+  display: flex;
+  padding: 0.5rem 0.75rem;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${COLORS.pomegranate10};
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  align-self: flex-start;
+  border: 0;
+  cursor: pointer;
+  margin-left: auto;
+  max-width: 28rem;
+  `;
+
+export const RemoveConfirmation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  line-height: normal;
+  margin-left: auto;
 `;
