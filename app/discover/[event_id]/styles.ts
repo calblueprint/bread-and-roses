@@ -27,7 +27,7 @@ export const Page = styled.div`
   min-height: 100vh;
   overflow: hidden;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-bottom: 3.75rem;
   }
 
@@ -60,7 +60,7 @@ export const LeftWrapper = styled.div`
       position: absolute;
       top: -4.125rem;
       right: 0;
-      height: calc(100% + 4.125rem);
+      height: calc(100% + 8rem);
       width: 1px;
       background-color: ${COLORS.gray6};
       z-index: 100;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { fetchAllActiveEventsByFilter } from '@/api/supabase/queries/events';
 import { fetchVolunteerPreferences } from '@/api/supabase/queries/volunteers';
 import DiscoverCard from '@/components/DiscoverCard/DiscoverCard';
@@ -14,6 +14,7 @@ import SearchIcon from '@/public/images/search_icon.svg';
 import X from '@/public/images/x.svg';
 import { Event } from '@/types/schema';
 import { useSession } from '@/utils/AuthProvider';
+import { FilterContext } from '@/utils/filterContext';
 import {
   Button,
   Discover,
@@ -39,6 +40,8 @@ import {
   TitleBar,
   XIcon,
 } from './styles';
+
+const audienceOptions = new Set(['Youth', 'Adult', 'Senior']);
 
 const facilityTypeOptions = new Set([
   'Assisted Living',
@@ -67,15 +70,15 @@ const locationOptions = new Set([
   'Sonoma',
 ]);
 
-const hostOptions = new Map<string, boolean>([
-  ['Has Host', false],
-  ['No Host', true],
-]);
+const hostOptions = new Map<string, boolean>([['Looking for Hosts', false]]);
+
+const sortOptions = new Set(['Upcoming events']);
 
 interface EventWithFacility extends Event {
   facilities: {
     county: string;
     type: string;
+    audience: string[];
   };
 }
 
@@ -87,22 +90,20 @@ interface VolunteerPreferences {
 export default function ActiveEventsPage() {
   const { session } = useSession();
   const [events, setEvents] = useState<EventWithFacility[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<EventWithFacility[]>([]);
   const [nearYouEvents, setNearYouEvents] = useState<EventWithFacility[]>([]);
   const [interestBasedEvents, setInterestBasedEvents] = useState<
     EventWithFacility[]
   >([]);
   const [upcomingEvents, setUpcomingEvents] = useState<EventWithFacility[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [isSearchActive, setSearchActive] = useState<boolean>(false);
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
   const [menuExpanded, setMenuExpanded] = useState(false); // Track the expanded state of the menu
   const [filterMenuExpanded, setFilterMenuExpanded] = useState(false);
-  const [facilityFilters, setFacilityFilters] = useState(new Set<string>());
-  const [countyFilters, setCountyFilters] = useState(new Set<string>());
-  const [hostFilters, setHostFilters] = useState(new Set<string>());
   const [volunteerPreferences, setVolunteerPreferences] =
     useState<VolunteerPreferences>();
+  const [isEventsLoaded, setEventsLoaded] = useState(false);
+  const filterContext = useContext(FilterContext);
+
   const getSearchEvents = async () => {
     setIsFiltering(true);
     const filtered: EventWithFacility[] =
@@ -118,7 +119,9 @@ export default function ActiveEventsPage() {
   const handleShowAllNearby = () => {
     /* Show volunteers' county filter tags*/
     volunteerPreferences?.locations.forEach(location => {
-      setCountyFilters(prevFilters => new Set(prevFilters).add(location));
+      const newSet = new Set(countyFilters);
+      newSet.add(location);
+      setCountyFilters(newSet);
     });
 
     /* Show column-filtered events view */
@@ -129,7 +132,9 @@ export default function ActiveEventsPage() {
   const handleShowAllInterests = () => {
     /* Show volunteers' facility_type filter tags*/
     volunteerPreferences?.facility_type.forEach(facility => {
-      setFacilityFilters(prevFilters => new Set(prevFilters).add(facility));
+      const newSet = new Set(facilityFilters);
+      newSet.add(facility);
+      setFacilityFilters(newSet);
     });
 
     /* Show column-filered events view */
@@ -151,20 +156,22 @@ export default function ActiveEventsPage() {
     setInterestBasedEvents(interests);
   };
 
+  const sortByDate = (a: EventWithFacility, b: EventWithFacility): number => {
+    const dateA = new Date(a.start_date_time).getTime();
+    const dateB = new Date(b.start_date_time).getTime();
+    return dateA - dateB;
+  };
+
   const filterUpcoming = () => {
-    const upcoming = [...events].sort((a, b) => {
-      const dateA = new Date(a.start_date_time);
-      const dateB = new Date(b.start_date_time);
-      return dateA.getTime() - dateB.getTime();
-    });
+    const upcoming = [...events].sort(sortByDate);
     setUpcomingEvents(upcoming.slice(0, 10));
   };
 
   const filterVolunteerPreferences = () => {
-    handleClearFilters();
     filterNearby();
     filterFacilityInterest();
     filterUpcoming();
+    setEventsLoaded(true);
   };
 
   /* Only make additional fetchAllActiveEvents calls when filtering is needed */
@@ -191,30 +198,41 @@ export default function ActiveEventsPage() {
     setFacilityFilters(new Set());
     setCountyFilters(new Set());
     setHostFilters(new Set());
-    applyFilters(new Set(), new Set(), new Set());
+    setAudienceFilters(new Set());
+    setSortBy(new Set());
+    applyFilters(new Set(), new Set(), new Set(), new Set(), new Set());
   };
 
   const applyFilters = (
     newFacilityFilters: Set<string>,
     newCountyFilters: Set<string>,
     newHostFilters: Set<string>,
+    newAudienceFilters: Set<string>,
+    newSortByFilters: Set<string>,
   ) => {
     setSearchActive(
       !!(
         newFacilityFilters.size ||
         newCountyFilters.size ||
         newHostFilters.size ||
+        newAudienceFilters.size ||
+        newSortByFilters.size ||
         isFiltering
       ),
     );
     setIsFiltering(true);
 
-    /* Check if the filter has any match in its category */
-    const checkMatch = (value: string, filters: Set<string>) => {
-      if (filters.size > 0) {
-        return filters.has(value);
+    const checkMatch = (
+      value: string | string[],
+      filters: Set<string>,
+    ): boolean => {
+      if (filters.size === 0 || value.length == 0) return true;
+
+      if (Array.isArray(value)) {
+        return value.some(v => filters.has(v));
       }
-      return true;
+
+      return filters.has(value);
     };
 
     const filtered = events.filter(event => {
@@ -224,18 +242,31 @@ export default function ActiveEventsPage() {
       );
       const countyMatch = checkMatch(event.facilities.county, newCountyFilters);
       const hostMatch = checkMatch(
-        event.needs_host ? 'Has Host' : 'No Host',
+        event.needs_host ? 'Looking for Hosts' : 'No Host',
         newHostFilters,
       );
-      return facilityTypeMatch && countyMatch && hostMatch;
+      const audienceMatch = checkMatch(
+        event.facilities.audience,
+        newAudienceFilters,
+      );
+      return facilityTypeMatch && countyMatch && hostMatch && audienceMatch;
     });
 
+    if (newSortByFilters.has('Upcoming events')) {
+      filtered.sort(sortByDate);
+    }
     setFilteredEvents(filtered);
     setIsFiltering(false);
   };
 
   const handleApplyClick = () => {
-    applyFilters(facilityFilters, countyFilters, hostFilters);
+    applyFilters(
+      facilityFilters,
+      countyFilters,
+      hostFilters,
+      audienceFilters,
+      sortBy,
+    );
     setFilterMenuExpanded(false);
   };
 
@@ -248,18 +279,30 @@ export default function ActiveEventsPage() {
     const newFacilityFilters = new Set(facilityFilters);
     const newCountyFilters = new Set(countyFilters);
     const newHostFilters = new Set(hostFilters);
+    const newAudienceFilters = new Set(audienceFilters);
+    const newSortBy = new Set(sortBy);
 
     if (facilityFilters.has(filter)) newFacilityFilters.delete(filter);
     if (countyFilters.has(filter)) newCountyFilters.delete(filter);
     if (hostFilters.has(filter)) newHostFilters.delete(filter);
+    if (audienceFilters.has(filter)) newAudienceFilters.delete(filter);
+    if (sortBy.has(filter)) newSortBy.delete(filter);
 
     /* Update the filters */
     setFacilityFilters(newFacilityFilters);
     setCountyFilters(newCountyFilters);
     setHostFilters(newHostFilters);
+    setAudienceFilters(newAudienceFilters);
+    setSortBy(newSortBy);
 
     /* Reapply new filters */
-    applyFilters(newFacilityFilters, newCountyFilters, newHostFilters);
+    applyFilters(
+      newFacilityFilters,
+      newCountyFilters,
+      newHostFilters,
+      newAudienceFilters,
+      newSortBy,
+    );
   };
 
   /* Render all events on page mount */
@@ -268,7 +311,6 @@ export default function ActiveEventsPage() {
       const fetchedActiveEvents: EventWithFacility[] =
         await fetchAllActiveEventsByFilter('');
       setEvents(fetchedActiveEvents);
-      setFilteredEvents(fetchedActiveEvents);
 
       /* Get volunteer preferences from session data */
       if (session?.user?.id) {
@@ -291,6 +333,33 @@ export default function ActiveEventsPage() {
     }
   }, [events, volunteerPreferences]);
 
+  if (!filterContext) return null;
+
+  const {
+    facilityFilters,
+    setFacilityFilters,
+    countyFilters,
+    setCountyFilters,
+    hostFilters,
+    setHostFilters,
+    audienceFilters,
+    setAudienceFilters,
+    sortBy,
+    setSortBy,
+    filteredEvents,
+    setFilteredEvents,
+    isSearchActive,
+    setSearchActive,
+  } = filterContext;
+
+  const allFilters = new Set([
+    ...facilityFilters,
+    ...countyFilters,
+    ...hostFilters,
+    ...audienceFilters,
+    ...sortBy,
+  ]);
+
   const noMatches = isSearchActive && filteredEvents.length === 0;
   const showFiltered =
     isSearchActive && !isFiltering && filteredEvents.length > 0;
@@ -298,13 +367,8 @@ export default function ActiveEventsPage() {
     !isSearchActive &&
     !isFiltering &&
     !filterMenuExpanded &&
-    filteredEvents.length > 0 &&
+    isEventsLoaded &&
     !noMatches;
-  const allFilters = new Set([
-    ...facilityFilters,
-    ...countyFilters,
-    ...hostFilters,
-  ]);
 
   return (
     <div>
@@ -350,6 +414,18 @@ export default function ActiveEventsPage() {
                         options: new Set(hostOptions.keys()),
                         value: hostFilters,
                         onChange: newValue => setHostFilters(newValue),
+                      },
+                      {
+                        placeholder: 'Sort by',
+                        options: new Set(sortOptions),
+                        value: sortBy,
+                        onChange: newValue => setSortBy(newValue),
+                      },
+                      {
+                        placeholder: 'Audience',
+                        options: audienceOptions,
+                        value: audienceFilters,
+                        onChange: newValue => setAudienceFilters(newValue),
                       },
                     ]}
                     onClear={handleClearFilters}
@@ -458,7 +534,7 @@ export default function ActiveEventsPage() {
             </DiscoverContainer>
           )}
           {/* Filtered Events View */}
-          {showFiltered && (
+          {showFiltered && !filterMenuExpanded && (
             <RowContainer>
               <TitleBar>
                 <Found>Found {filteredEvents.length} matches</Found>
