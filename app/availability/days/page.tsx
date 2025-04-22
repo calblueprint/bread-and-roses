@@ -82,6 +82,7 @@ export default function Page() {
       }
       start.setDate(start.getDate() + 1); // Move to the next day
     }
+    console.log(days);
   };
 
   const updateMonth = (info: Info) => {

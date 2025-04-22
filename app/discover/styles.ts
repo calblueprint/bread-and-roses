@@ -155,7 +155,7 @@ export const FilterMenuContainer = styled.div`
   width: 100%;
   padding: 0.875rem;
   z-index: 999;
-  background-color: ${COLORS.gray1};
+  background-color: ${COLORS.bread2};
   overflow-y: auto;
 `;
 

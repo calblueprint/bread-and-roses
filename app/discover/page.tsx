@@ -70,10 +70,7 @@ const locationOptions = new Set([
   'Sonoma',
 ]);
 
-const hostOptions = new Map<string, boolean>([
-  ['Has Host', false],
-  ['No Host', true],
-]);
+const hostOptions = new Map<string, boolean>([['Looking for Hosts', false]]);
 
 const sortOptions = new Set(['Upcoming events']);
 
@@ -245,7 +242,7 @@ export default function ActiveEventsPage() {
       );
       const countyMatch = checkMatch(event.facilities.county, newCountyFilters);
       const hostMatch = checkMatch(
-        event.needs_host ? 'Has Host' : 'No Host',
+        event.needs_host ? 'Looking for Hosts' : 'No Host',
         newHostFilters,
       );
       const audienceMatch = checkMatch(
@@ -537,7 +534,7 @@ export default function ActiveEventsPage() {
             </DiscoverContainer>
           )}
           {/* Filtered Events View */}
-          {showFiltered && (
+          {showFiltered && !filterMenuExpanded && (
             <RowContainer>
               <TitleBar>
                 <Found>Found {filteredEvents.length} matches</Found>
