@@ -8,7 +8,7 @@ import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import {
   checkUserSignedupEvent,
   eventSignUp,
-  removeVolunteerSignUp
+  removeVolunteerSignUp,
 } from '@/api/supabase/queries/volunteers';
 import Back from '@/public/images/back.svg';
 import Bread from '@/public/images/bread.png';
@@ -264,13 +264,13 @@ export default function EventPage({
   const finalRemoveConfirmation = (
     <ConfirmationWrapper>
       <ConfirmationContainer>
-      <BreadImage src={Bread} alt="Bread Icon" />
-      <H5 $fontWeight="500">You&apos;re all set!</H5>
-      <ConfirmationBodyText>
-        We removed you from the following event:
-      </ConfirmationBodyText>
+        <BreadImage src={Bread} alt="Bread Icon" />
+        <H5 $fontWeight="500">You&apos;re all set!</H5>
+        <ConfirmationBodyText>
+          We removed you from the following event:
+        </ConfirmationBodyText>
 
-      <IconContainer>
+        <IconContainer>
           <TimeRow text="Event Details" src={Clock} alt="Clock" />
           <TimeRow
             text={`${facility.street_address_1}, ${facility.city}, CA`}
@@ -280,11 +280,11 @@ export default function EventPage({
           <TimeRow text={time} src={Calendar} alt="Calendar" />
         </IconContainer>
 
-      <ConfirmationBodyText>
-        Thanks for letting us know &mdash; we hope to see you at a future
-        show! If you canceled by mistake, you can always sign up again.
-      </ConfirmationBodyText>
-      <ConfirmationButton onClick={onConfirmationClick}>
+        <ConfirmationBodyText>
+          Thanks for letting us know &mdash; we hope to see you at a future
+          show! If you canceled by mistake, you can always sign up again.
+        </ConfirmationBodyText>
+        <ConfirmationButton onClick={onConfirmationClick}>
           <ConfirmationButtonText>Sounds good</ConfirmationButtonText>
         </ConfirmationButton>
       </ConfirmationContainer>
@@ -292,33 +292,32 @@ export default function EventPage({
   );
   const removeConfirmation = (
     <RemoveConfirmation>
-    You&apos;re about to remove yourself from the following event:
-    <IconContainer>
-      <TimeRow text={time} src={Calendar} alt="Calendar" />
-      <Location $fontWeight="400" $color={COLORS.gray12}>
-                {' '}
-                <LocationIcon src={LocationPin} alt="Location" />
-                <div>
-                  {' '}
-                  {facility.name}
-                  <SMALL $fontWeight="400" $color={COLORS.gray10}>
-                    {facility.street_address_1}, {facility.city}, CA,
-                    {facility.zip}
-                  </SMALL>
-                </div>
-              </Location>
-    </IconContainer>
-
-    If you&apos;re unable to attend, we understand &mdash; just confirm below.
+      You&apos;re about to remove yourself from the following event:
+      <IconContainer>
+        <TimeRow text={time} src={Calendar} alt="Calendar" />
+        <Location $fontWeight="400" $color={COLORS.gray12}>
+          {' '}
+          <LocationIcon src={LocationPin} alt="Location" />
+          <div>
+            {' '}
+            {facility.name}
+            <SMALL $fontWeight="400" $color={COLORS.gray10}>
+              {facility.street_address_1}, {facility.city}, CA,
+              {facility.zip}
+            </SMALL>
+          </div>
+        </Location>
+      </IconContainer>
+      If you&apos;re unable to attend, we understand &mdash; just confirm below.
     </RemoveConfirmation>
   );
   const signedUpText =
-    "Looks like you’re one step ahead! You’ve already signed up for this event.";
+    'Looks like you’re one step ahead! You’ve already signed up for this event.';
   return (
     <Page>
       {!isSubmitted && !cancelConfirmed && (
-      <ImageWrapper>{facilityTypeToPhoto(facility.type)}</ImageWrapper>
-       )}
+        <ImageWrapper>{facilityTypeToPhoto(facility.type)}</ImageWrapper>
+      )}
       <Curve />
       <Container $column={isSubmitted || cancelConfirmed}>
         {isSubmitted ? (
@@ -385,37 +384,46 @@ export default function EventPage({
               </div>
             </LeftWrapper>
             <RightWrapper>
-              <ShowInterest> {cancelClicked ? 'Are you sure?' : 'Show Interest'} </ShowInterest>
+              <ShowInterest>
+                {' '}
+                {cancelClicked ? 'Are you sure?' : 'Show Interest'}{' '}
+              </ShowInterest>
               <Divider />
               {signedUp ? (
-                <div style={{marginTop: '2rem'}}>
+                <div style={{ marginTop: '2rem' }}>
                   {cancelClicked ? (
                     removeConfirmation
                   ) : (
-                  <Asterisk>{signedUpText}</Asterisk>
+                    <Asterisk>{signedUpText}</Asterisk>
                   )}
-                  
-                  <CancelButton onClick={async () => {
-                    if (!cancelClicked) {
-                      setCancelClicked(true);
-                    } else {
-                      if (!session?.user?.id) return;
-                      const success = await removeVolunteerSignUp(session.user.id, event.event_id);
-                      if (success) {
-                        setCancelConfirmed(true);
-                        setSignedUp(false);
+
+                  <CancelButton
+                    onClick={async () => {
+                      if (!cancelClicked) {
+                        setCancelClicked(true);
+                      } else {
+                        if (!session?.user?.id) return;
+                        const success = await removeVolunteerSignUp(
+                          session.user.id,
+                          event.event_id,
+                        );
+                        if (success) {
+                          setCancelConfirmed(true);
+                          setSignedUp(false);
+                        }
                       }
-                    }
-                  }}
-                  style={{
+                    }}
+                    style={{
                       backgroundColor: cancelClicked
                         ? COLORS.pomegranate12
                         : COLORS.pomegranate10,
-                    }}>
-                    <ConfirmationButtonText>Click to cancel</ConfirmationButtonText>
+                    }}
+                  >
+                    <ConfirmationButtonText>
+                      Click to cancel
+                    </ConfirmationButtonText>
                   </CancelButton>
                 </div>
-                
               ) : (
                 <>
                   <SelectAllText>Select all that apply.</SelectAllText>

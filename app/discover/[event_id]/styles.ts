@@ -426,7 +426,7 @@ export const CancelButton = styled.button`
   cursor: pointer;
   margin-left: auto;
   max-width: 28rem;
-  `;
+`;
 
 export const RemoveConfirmation = styled.div`
   display: flex;
