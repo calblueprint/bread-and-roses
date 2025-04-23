@@ -51,7 +51,7 @@ export const InputContainer = styled.div`
   margin-top: 0.25rem;
   color: ${COLORS.gray10};
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   }
 `;

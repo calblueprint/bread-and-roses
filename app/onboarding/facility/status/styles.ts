@@ -15,7 +15,7 @@ export const BNRLogo = styled(Image)`
 export const InlineContainer = styled.main`
   flex-direction: column;
   width: 31.25%;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 85%;
   }
 `;
@@ -83,11 +83,11 @@ export const StyledLI = styled.li<{ $completed: string }>`
 `;
 
 export const UserDetails = styled.main`
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     margin-top: 2.625rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-top: 5rem;
   }
 

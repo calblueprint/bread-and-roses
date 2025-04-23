@@ -56,7 +56,7 @@ export const Page = styled.div`
   min-height: 100svh;
   overflow: hidden;
   margin-bottom: 2rem;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-bottom: 3.75rem;
   }
 `;
@@ -68,13 +68,13 @@ export const Bullet = styled(P)`
 `;
 
 export const LeftWrapper = styled.div`
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     width: 50%;
   }
 `;
 
 export const RightWrapper = styled.div`
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     padding-left: 3.875rem;
     display: flex;
     flex-direction: column;
@@ -85,12 +85,12 @@ export const RightWrapper = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     flex-direction: column;
     margin-left: 1.75rem;
     margin-right: 1.75rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     margin-left: 9.1875rem;
     margin-right: 5.1875rem;
   }
@@ -104,7 +104,7 @@ export const Curve = styled.div`
   padding: 0.75rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: column;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     border-radius: 20px 20px 0 0;
   }
   background: ${COLORS.gray1};
@@ -165,7 +165,7 @@ export const SubHeadingText = styled(H5)`
 `;
 
 export const ContactsSubHeadingText = styled(SubHeadingText)`
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     padding-right: 13rem;
     margin-top: 5rem;
   }

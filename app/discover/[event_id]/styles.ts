@@ -23,10 +23,8 @@ export const ImageWrapper = styled.div`
 export const Page = styled.div`
   flex-direction: column;
   display: flex;
-  min-width: 100%;
-  min-height: 100vh;
   overflow: hidden;
-
+  height: 100%;
   @media (max-width: 1024px) {
     margin-bottom: 3.75rem;
   }
@@ -43,7 +41,7 @@ export const Curve = styled.div`
   padding: 0.75rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: column;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     border-radius: 20px 20px 0 0;
   }
   background: ${COLORS.bread2};
@@ -51,7 +49,7 @@ export const Curve = styled.div`
 
 export const LeftWrapper = styled.div`
   position: relative;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     padding-right: 3.875rem;
 
     // Vertical divider
@@ -70,7 +68,7 @@ export const LeftWrapper = styled.div`
 
 export const RightWrapper = styled.div`
   margin-top: 1.188rem;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     padding-left: 3.875rem;
     display: flex;
     flex-direction: column;
@@ -109,6 +107,7 @@ export const Image = styled(NextImage)<{ $checked?: boolean }>`
 `;
 
 export const BackButton = styled.button`
+  position: relative;
   background-color: transparent;
   border: none;
   outline: none;
@@ -356,7 +355,7 @@ export const ConfirmationWrapper = styled.div`
   justify-content: center;
   position: relative;
   margin: 4rem auto;
-  max-width: 35rem;
+  max-width: 30rem;
 `;
 
 export const BreadImage = styled(Image)`

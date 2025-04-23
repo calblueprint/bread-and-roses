@@ -172,12 +172,6 @@ export default function EventPage({
     return <p />;
   }
 
-  /*************  ✨ Windsurf Command ⭐  *************/
-  /**
-   * Updates the state for the additional info text area.
-   * @param {React.ChangeEvent<HTMLTextAreaElement>} e - The change event.
-   */
-  /*******  0e8f0938-dab5-4e5b-853c-7bc2a95b6a97  *******/
   const handleInfoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setAdditionalInfo(value);

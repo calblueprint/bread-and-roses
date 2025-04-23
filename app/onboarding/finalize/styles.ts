@@ -19,7 +19,7 @@ export const InlineContainer = styled.main`
   @media (max-width: 1200px) {
     width: 30%;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 80%;
   }
 `;

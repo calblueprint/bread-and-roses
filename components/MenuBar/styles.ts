@@ -18,7 +18,7 @@ export const MenuContainer = styled.div<{ $expanded: boolean }>`
     background-color 0.3s ease;
   position: fixed;
   width: ${({ $expanded }) => ($expanded ? '20%' : '0')};
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: ${({ $expanded }) => ($expanded ? '75%' : '0')};
   }
 `;
