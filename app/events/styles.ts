@@ -75,7 +75,7 @@ export const ToggleButton = styled.button<{ $active: boolean }>`
   white-space: nowrap;
   box-shadow: ${({ $active }) =>
     $active ? '0rem 0.41px 1.025px 0.41px #C6C6C6;' : 'none'};
-  flex: 1 1 auto;
+  flex: 1 0 0;
   text-align: center;
 `;
 

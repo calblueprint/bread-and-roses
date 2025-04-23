@@ -97,6 +97,16 @@ export default function EventPage() {
     return false;
   });
 
+  const uniqueEventsMap = new Map<string, Event>();
+  filteredEvents.forEach(event => {
+    if (!uniqueEventsMap.has(event.event_id)) {
+      uniqueEventsMap.set(event.event_id, event);
+    }
+  });
+
+  // Convert the Map back to an array
+  const uniqueEvents = Array.from(uniqueEventsMap.values());
+
   const groupEventsByMonth = (events: Event[]) => {
     return events.reduce((acc: GroupedEvents, event) => {
       const eventDate = new Date(event.start_date_time);
@@ -113,7 +123,7 @@ export default function EventPage() {
     }, {} as GroupedEvents);
   };
 
-  const eventsByMonth = groupEventsByMonth(filteredEvents);
+  const eventsByMonth = groupEventsByMonth(uniqueEvents);
 
   // Sort the events by month
   const sortedEntries = Object.entries(eventsByMonth).sort((a, b) => {
