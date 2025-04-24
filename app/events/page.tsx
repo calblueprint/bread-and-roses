@@ -217,7 +217,8 @@ export default function EventPage() {
                 Nothing to see here. Yet.
               </styles.SubHeaderText>
               <styles.SmallText>
-                Want to change that? <br /> Click the button to create an event.
+                Want to change that? <br /> Click the button to create an
+                availability.
               </styles.SmallText>
               <styles.SignUpButton onClick={handleProposedContinue}>
                 Create here

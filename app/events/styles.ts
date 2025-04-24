@@ -18,7 +18,7 @@ export const Page = styled.main<{ $menuExpanded: boolean }>`
   min-height: 100vh;
   justify-content: center;
   overflow: hidden;
-
+  margin-bottom: 3rem;
   @media (min-width: 1024px) {
     margin-left: ${({ $menuExpanded }) =>
       $menuExpanded ? '10%' : '0'}; /* Fixed margin for the expanded menu */
