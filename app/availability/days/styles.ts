@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import COLORS from '../../../styles/colors';
+import { P } from '@/styles/text';
 
 export const CalendarContainer = styled.div`
   width: 100%;
@@ -101,4 +102,30 @@ export const Calendar = styled.div`
   .fc th {
     border-style: none !important;
   }
+`;
+
+export const NoDaysContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 4.31rem;
+`;
+
+export const NoDaysText = styled(P)`
+  color: ${COLORS.gray11};
+  font-style: italic;
+`;
+
+export const SelectedDaysContainer = styled.div`
+  padding: 2rem;
+`;
+
+export const SelectedList = styled.ul`
+  padding-left: 1.5rem;
+  margin: 0;
+`;
+
+export const SelectedTitle = styled.p`
+  font-weight: 500;
+  padding-left: 0;
+  margin-bottom: 0.25rem;
 `;
