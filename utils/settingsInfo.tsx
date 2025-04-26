@@ -14,3 +14,18 @@ export interface UserPreferences {
   locations: string[];
   additional_info: string;
 }
+
+export interface FacilityInfo {
+  name: string;
+  county: string;
+  city: string;
+  street_address_1: string;
+  street_address_2: string;
+  audience: string[];
+  type: string[];
+  //additional_info: JSON;
+  has_host: boolean;
+  host_email: string;
+  host_name: string;
+  host_phone_number: string;
+}

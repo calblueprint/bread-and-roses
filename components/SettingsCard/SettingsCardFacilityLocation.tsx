@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { updateVolunteerInfo } from '@/api/supabase/queries/volunteers';
+import { updateFacilityInfo } from '@/api/supabase/queries/facilities';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5 } from '@/styles/text';
@@ -7,14 +7,14 @@ import { UserInfo } from '@/utils/settingsInfo';
 import * as styles from './styles';
 import { Input, InputContainer, Label, RedAsterisk } from './styles';
 
-export default function SettingCardFacilityInformation({
+export default function SettingCardFacilityContactDetails({
   first_name,
   last_name,
   phone,
   userInfo,
   editInfo,
   setEditInfo,
-  setUserInfo,
+  setFacilityInfo,
   userId,
 }: {
   first_name: string;
@@ -23,7 +23,7 @@ export default function SettingCardFacilityInformation({
   editInfo: UserInfo;
   userInfo: UserInfo;
   setEditInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
-  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+  setFacilityInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
   userId: string;
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
@@ -57,8 +57,8 @@ export default function SettingCardFacilityInformation({
   };
 
   const handleSave = async () => {
-    await updateVolunteerInfo(userId, userInfo, editInfo);
-    setUserInfo(editInfo);
+    await updateFacilityInfo(userId, userInfo, editInfo);
+    setFacilityInfo(editInfo);
     setIsEditable(!isEditable);
   };
 
@@ -67,7 +67,7 @@ export default function SettingCardFacilityInformation({
       <styles.AvailabilityHeader>
         <styles.AvailabilityTitle>
           <H5 $fontWeight="500" $color={COLORS.bread1} $align="left">
-            Personal Details
+            Facility Location
           </H5>
         </styles.AvailabilityTitle>
         <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
