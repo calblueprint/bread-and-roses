@@ -80,7 +80,7 @@ export default function Onboarding() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Where is the facility located?</Title>
-        <ProgressBar from={33} to={66} />
+        <ProgressBar from={66} to={66} />
         <Container>
           <InputContainer>
             <Label>

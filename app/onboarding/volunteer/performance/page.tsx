@@ -19,7 +19,7 @@ import {
   SkipButton,
   SkipText,
   Title,
-} from '../styles';
+} from '../../styles';
 
 const performanceTypeOptions = new Set([
   'Music',
@@ -66,7 +66,15 @@ export default function Onboarding() {
 
   if (!onboardingContext) return null;
 
-  const { preferences, setPreferences } = onboardingContext;
+  const { preferences, setPreferences, role } = onboardingContext;
+
+  let progress = 0;
+  // number of steps in each onboarding
+  if (role.isHost && role.isPerformer) {
+    progress = (3 * 100) / 7;
+  } else {
+    progress = (3 * 100) / 6;
+  }
 
   const handlePerformanceTypeChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
@@ -84,11 +92,11 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    router.push('/onboarding/equipment');
+    router.push('/onboarding/volunteer/equipment');
   };
 
   const handleBack = () => {
-    router.push('/onboarding/show-preference');
+    router.push('/onboarding/volunteer/show-preference');
   };
 
   return (
@@ -102,7 +110,7 @@ export default function Onboarding() {
           <br />
           perform?
         </Title>
-        <ProgressBar from={40} to={50} />
+        <ProgressBar from={progress} to={progress} />
         <Container>
           <InputDropdown
             label="Type of Performance"

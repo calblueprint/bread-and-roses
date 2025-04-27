@@ -183,6 +183,12 @@ export default function ActiveEventsPage() {
     setFilteredEvents(interestBasedEvents);
   };
 
+  const handleShowUpcoming = () => {
+    setSortBy(new Set(['Upcoming events']));
+    setSearchActive(upcomingEvents.length > 0);
+    setFilteredEvents(upcomingEvents);
+  };
+
   const filterNearby = () => {
     const nearby = events.filter(event =>
       volunteerPreferences?.locations.includes(event.facilities.county),
@@ -647,7 +653,7 @@ export default function ActiveEventsPage() {
                 <TitleBar>
                   <Label>Upcoming Events...</Label>
                   {!isMobile && (
-                    <Button onClick={handleShowAllInterests}>
+                    <Button onClick={handleShowUpcoming}>
                       <ShowAllText> show all </ShowAllText>
                     </Button>
                   )}

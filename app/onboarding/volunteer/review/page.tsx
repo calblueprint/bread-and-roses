@@ -15,7 +15,7 @@ import {
   StyledLink,
   SubmitButton,
   Title,
-} from '../styles';
+} from '../../styles';
 import {
   BackButton,
   InfoSection,
@@ -56,7 +56,7 @@ export default function Review() {
   };
 
   const handleBack = () => {
-    router.push('/onboarding/additional-info');
+    router.push('/onboarding/volunteer/additional-info');
   };
 
   const submitData = async () => {
@@ -71,11 +71,7 @@ export default function Review() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Did we get everything?</Title>
-        {role.isPerformer ? (
-          <ProgressBar from={80} to={100} />
-        ) : (
-          <ProgressBar from={75} to={100} />
-        )}
+        <ProgressBar from={100} to={100} />
         <ReviewContainer>
           <InfoSection>
             <SubSection>
@@ -85,7 +81,7 @@ export default function Review() {
                 </div>
 
                 <div>
-                  <StyledLink href="/onboarding/basic-information">
+                  <StyledLink href="/onboarding/volunteer/basic-information">
                     <P $fontWeight={400} $color={COLORS.lilac9}>
                       edit
                     </P>
@@ -124,7 +120,7 @@ export default function Review() {
                 </div>
 
                 <div>
-                  <StyledLink href="/onboarding/show-preference">
+                  <StyledLink href="/onboarding/volunteer/show-preference">
                     <P $fontWeight={400} $color={COLORS.lilac9}>
                       edit
                     </P>
@@ -160,7 +156,7 @@ export default function Review() {
                     </div>
 
                     <div>
-                      <StyledLink href="/onboarding/performance">
+                      <StyledLink href="/onboarding/volunteer/performance">
                         <P $fontWeight={400} $color={COLORS.lilac9}>
                           edit
                         </P>
@@ -197,7 +193,7 @@ export default function Review() {
                     </div>
 
                     <div>
-                      <StyledLink href="/onboarding/equipment">
+                      <StyledLink href="/onboarding/volunteer/equipment">
                         <P $fontWeight={400} $color={COLORS.lilac9}>
                           edit
                         </P>
@@ -239,7 +235,7 @@ export default function Review() {
                 </div>
 
                 <div>
-                  <StyledLink href="/onboarding/additional-info">
+                  <StyledLink href="/onboarding/volunteer/additional-info">
                     <P $fontWeight={400} $color={COLORS.lilac9}>
                       edit
                     </P>
@@ -259,7 +255,7 @@ export default function Review() {
           <SmallText>* Everything can be modified later in settings</SmallText>
         </ReviewContainer>
 
-        <StyledLink href="/onboarding/finalize">
+        <StyledLink href="/onboarding/volunteer/finalize">
           <SubmitButton onClick={submitData}>
             <SMALL $fontWeight="400" $color="white">
               Everything looks good!

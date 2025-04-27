@@ -24,7 +24,6 @@ export const Page = styled.div`
   flex-direction: column;
   display: flex;
   overflow: hidden;
-  height: 100%;
   @media (max-width: 1024px) {
     margin-bottom: 3.75rem;
   }

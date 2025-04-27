@@ -18,7 +18,7 @@ import {
   InputContainer,
   Label,
   Title,
-} from '../styles';
+} from '../../styles';
 import { TextArea } from './styles';
 
 export default function Onboarding() {
@@ -28,6 +28,16 @@ export default function Onboarding() {
 
   const { role } = onboardingContext;
   const { preferences, setPreferences } = onboardingContext;
+
+  let progress = 0;
+  // number of steps in each onboarding
+  if (role.isHost && role.isPerformer) {
+    progress = (6 * 100) / 7;
+  } else if (role.isHost) {
+    progress = (4 * 100) / 5;
+  } else {
+    progress = (5 * 100) / 6;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
@@ -39,14 +49,14 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    router.push('/onboarding/review');
+    router.push('/onboarding/volunteer/review');
   };
 
   const handleBack = () => {
     if (role.isPerformer) {
-      router.push('/onboarding/equipment');
+      router.push('/onboarding/volunteer/equipment');
     } else {
-      router.push('/onboarding/show-preference');
+      router.push('/onboarding/volunteer/show-preference');
     }
   };
 
@@ -57,11 +67,7 @@ export default function Onboarding() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Do you require any accomodations?</Title>
-        {role.isPerformer ? (
-          <ProgressBar from={60} to={80} />
-        ) : (
-          <ProgressBar from={50} to={75} />
-        )}
+        <ProgressBar from={progress} to={progress} />
         <Container>
           <InputContainer>
             <Label>Additional Information</Label>

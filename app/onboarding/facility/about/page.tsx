@@ -142,7 +142,7 @@ export default function Onboarding() {
         <Title $fontWeight={500}>
           Can you tell us a bit about the facility?
         </Title>
-        <ProgressBar from={0} to={25} />
+        <ProgressBar from={33} to={33} />
         <Container>
           <InputContainer>
             <Label>

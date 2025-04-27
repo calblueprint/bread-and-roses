@@ -19,7 +19,7 @@ import {
   SkipButton,
   SkipText,
   Title,
-} from '../styles';
+} from '../../styles';
 
 const facilityTypeOptions = new Set([
   'Assisted Living',
@@ -59,6 +59,16 @@ export default function Onboarding() {
   const { role } = onboardingContext;
   const { preferences, setPreferences } = onboardingContext;
 
+  let progress = 0;
+  // number of steps in each onboarding
+  if (role.isHost && role.isPerformer) {
+    progress = (2 * 100) / 7;
+  } else if (role.isHost) {
+    progress = (2 * 100) / 5;
+  } else {
+    progress = (2 * 100) / 6;
+  }
+
   const handleFacilityChange = (selectedOptions: Set<string>) => {
     const selectedArray = Array.from(selectedOptions);
     setPreferences({ ...preferences, facilityType: selectedArray });
@@ -76,14 +86,14 @@ export default function Onboarding() {
 
   const handleSubmit = async () => {
     if (role.isPerformer) {
-      router.push('/onboarding/performance');
+      router.push('/onboarding/volunteer/performance');
     } else {
-      router.push('/onboarding/additional-info');
+      router.push('/onboarding/volunteer/additional-info');
     }
   };
 
   const handleBack = () => {
-    router.push('/onboarding/basic-information');
+    router.push('/onboarding/volunteer/basic-information');
   };
 
   return (
@@ -97,11 +107,7 @@ export default function Onboarding() {
           <br />
           preferences?
         </Title>
-        {role.isPerformer ? (
-          <ProgressBar from={20} to={40} />
-        ) : (
-          <ProgressBar from={25} to={50} />
-        )}
+        <ProgressBar from={progress} to={progress} />
         <Container>
           <InputDropdown
             label="Facility Types"

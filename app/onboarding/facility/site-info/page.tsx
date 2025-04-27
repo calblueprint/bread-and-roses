@@ -69,10 +69,8 @@ export default function Onboarding() {
         <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
         </BackButton>
-        <Title $fontWeight={500}>
-          Can you tell us a bit about the facility?
-        </Title>
-        <ProgressBar from={25} to={50} />
+        <Title $fontWeight={500}>What should performers expect?</Title>
+        <ProgressBar from={50} to={50} />
         <Container>
           <QuestionContainer>
             <Label>

@@ -55,9 +55,10 @@ export const Page = styled.div`
   min-width: 100%;
   min-height: 100svh;
   overflow: hidden;
-  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+
   @media (max-width: 1024px) {
-    margin-bottom: 3.75rem;
+    padding-bottom: 3.75rem;
   }
 `;
 
@@ -68,18 +69,31 @@ export const Bullet = styled(P)`
 `;
 
 export const LeftWrapper = styled.div`
+  position: relative;
   @media (min-width: 1024px) {
-    width: 50%;
+    padding-right: 18rem;
+
+    // Vertical divider
+    &::after {
+      content: '';
+      position: absolute;
+      top: -0.25rem;
+      right: 0rem;
+      height: calc(100% + 10rem);
+      width: 1px;
+      background-color: ${COLORS.gray6};
+      z-index: 100;
+    }
   }
 `;
 
 export const RightWrapper = styled.div`
   @media (min-width: 1024px) {
+    margin-top: 2.5rem;
     padding-left: 3.875rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    border-left: 1px solid ${COLORS.gray6};
+    height: 100%;
   }
 `;
 
@@ -107,7 +121,7 @@ export const Curve = styled.div`
   @media (max-width: 1024px) {
     border-radius: 20px 20px 0 0;
   }
-  background: ${COLORS.gray1};
+  background: ${COLORS.bread2};
 `;
 
 export const EventText = styled(H4)`
