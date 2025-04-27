@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { resendVerificationEmail } from '@/api/supabase/queries/auth';
 import Bud from '@/public/images/bud.svg';
@@ -86,48 +86,50 @@ export default function Verification() {
   };
 
   return (
-    <Background>
-      <Image src={Bud} alt="Bud" />
-      <InlineContainer>
-        <ReviewContainer>
-          <Title $color={COLORS.gray12}>Verification Needed</Title>
-          <P $fontWeight={400} $color={COLORS.gray12}>
-            Thanks for signing up!
-          </P>
-          <P $fontWeight={400} $color={COLORS.gray12}>
-            A verification link has been sent to the email you specified, please
-            check your inbox.
-          </P>
-          <EmailContainer>
-            <EmailIconStyled src={EmailIcon} alt="Email Icon" />
-            <EmailText>{email || 'Email address not found'}</EmailText>
-          </EmailContainer>
+    <Suspense fallback={null}>
+      <Background>
+        <Image src={Bud} alt="Bud" />
+        <InlineContainer>
+          <ReviewContainer>
+            <Title $color={COLORS.gray12}>Verification Needed</Title>
+            <P $fontWeight={400} $color={COLORS.gray12}>
+              Thanks for signing up!
+            </P>
+            <P $fontWeight={400} $color={COLORS.gray12}>
+              A verification link has been sent to the email you specified,
+              please check your inbox.
+            </P>
+            <EmailContainer>
+              <EmailIconStyled src={EmailIcon} alt="Email Icon" />
+              <EmailText>{email || 'Email address not found'}</EmailText>
+            </EmailContainer>
 
-          <RoundedCornerButton onClick={handleUseAnotherAccount} width="65%">
-            Use another account
-          </RoundedCornerButton>
+            <RoundedCornerButton onClick={handleUseAnotherAccount} width="65%">
+              Use another account
+            </RoundedCornerButton>
 
-          <Footer>
-            Didn’t receive it?{' '}
-            <Link $fontWeight="500" href="#" onClick={handleResendLink}>
-              Resend link
-            </Link>
-          </Footer>
-
-          {!email && isError && (
-            <ResendMessage $isError={true}>
-              Email not found or invalid link.{' '}
-              <Link href="#" onClick={() => router.push('/signup')}>
-                Sign up again
+            <Footer>
+              Didn’t receive it?{' '}
+              <Link $fontWeight="500" href="#" onClick={handleResendLink}>
+                Resend link
               </Link>
-            </ResendMessage>
-          )}
+            </Footer>
 
-          {resendStatus && email && (
-            <ResendMessage $isError={isError}>{resendStatus}</ResendMessage>
-          )}
-        </ReviewContainer>
-      </InlineContainer>
-    </Background>
+            {!email && isError && (
+              <ResendMessage $isError={true}>
+                Email not found or invalid link.{' '}
+                <Link href="#" onClick={() => router.push('/signup')}>
+                  Sign up again
+                </Link>
+              </ResendMessage>
+            )}
+
+            {resendStatus && email && (
+              <ResendMessage $isError={isError}>{resendStatus}</ResendMessage>
+            )}
+          </ReviewContainer>
+        </InlineContainer>
+      </Background>
+    </Suspense>
   );
 }

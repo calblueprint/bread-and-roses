@@ -49,6 +49,7 @@ export default function ResetPasswordPage() {
 
     if (success) {
       localStorage.removeItem('passwordRecoveryMode');
+      router.push('/signin');
       await signOut();
       setTimeout(() => {
         router.push('/signin');
