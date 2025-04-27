@@ -7,6 +7,7 @@ import { handleSignIn as signInUser } from '@/api/supabase/queries/auth';
 import BRLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
 import { H5, SMALL } from '@/styles/text';
+import { encryptEmail } from '@/utils/emailTokenUtils';
 import {
   AuthSpacer,
   Button,
@@ -63,7 +64,8 @@ export default function SignIn() {
 
     if (!success) {
       if (redirectTo === 'verification') {
-        router.push('/verification');
+        const token = await encryptEmail(email);
+        +router.push(`/verification?token=${encodeURIComponent(token)}`);
       } else {
         setErrorMessage(message);
       }

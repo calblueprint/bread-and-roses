@@ -1,28 +1,44 @@
-import type { Metadata } from 'next';
-import StyledComponentsRegistry from '@/lib/registry';
-import COLORS from '@/styles/colors';
-import { Sans } from '../styles/fonts';
-import '../styles/global.css';
-import { AuthContextProvider } from '@/utils/AuthProvider';
+'use client';
 
-// site metadata - what shows up on embeds
-export const metadata: Metadata = {
-  title: 'Bread & Roses Presents',
-  description: 'Created by Blueprint',
-};
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import BRLogo from '@/public/images/b&r-logo.png';
+import { useSession } from '@/utils/AuthProvider';
+import { Container, Image, Spinner } from './page.style';
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Home() {
+  const router = useRouter();
+  const { session, userRole, sessionChecked } = useSession();
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    if (!sessionChecked) return;
+
+    setFadeOut(true);
+
+    const redirectTimeout = setTimeout(() => {
+      if (session) {
+        if (!userRole) {
+          router.replace('/roles');
+        } else if (userRole === 'volunteer') {
+          router.replace('/discover');
+        } else if (userRole === 'facility') {
+          router.replace('/availability/general');
+        } else {
+          router.replace('/');
+        }
+      } else {
+        router.replace('/signin');
+      }
+    }, 600);
+
+    return () => clearTimeout(redirectTimeout);
+  }, [sessionChecked, session, userRole, router]);
+
   return (
-    <html lang="en">
-      <body className={Sans.className} style={{ background: COLORS.bread2 }}>
-        <StyledComponentsRegistry>
-          <AuthContextProvider>{children}</AuthContextProvider>
-        </StyledComponentsRegistry>
-      </body>
-    </html>
+    <Container $animateOut={fadeOut}>
+      <Image src={BRLogo} alt="Bread & Roses logo" />
+      <Spinner />
+    </Container>
   );
 }

@@ -172,3 +172,9 @@ export const Instructions = styled(P)`
 export const AuthSpacer = styled.div`
   margin-top: 0.5rem;
 `;
+
+export const FieldError = styled(SMALL)`
+  color: ${COLORS.rose11};
+  font-weight: 400;
+  margin-top: 0.25rem;
+`;
