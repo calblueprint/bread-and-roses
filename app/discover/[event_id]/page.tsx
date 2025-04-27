@@ -127,6 +127,7 @@ export default function EventPage({
   const [errorMessage, setErrorMessage] = useState('');
   const [cancelClicked, setCancelClicked] = useState(false);
   const [cancelConfirmed, setCancelConfirmed] = useState(false);
+  const [performerEmails, setPerformerEmails] = useState<string[]>([]);
 
   useEffect(() => {
     const getEvent = async () => {
@@ -163,10 +164,50 @@ export default function EventPage({
       return;
     }
 
-    const size = value != '' ? parseInt(value) : 0;
+    let size = value !== '' ? parseInt(value) : 0; 
+
+    if (size > 10) {
+      size = 10; //capped group size
+      setGroupSizeError('Maximum group size is 10.');
+    } else {
+      setGroupSizeError('');
+    }
     setGroupSize(size);
-    setGroupSizeError('');
+    setPerformerEmails((prevEmails) => {
+      const newEmails = [...prevEmails];
+      if (size > newEmails.length) {
+        return newEmails.concat(Array(size - newEmails.length).fill(''));
+      } else {
+        return newEmails.slice(0, size);
+    }
+    });
   };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => {
+    const newEmails = [...performerEmails];
+    newEmails[index] = e.target.value;
+    setPerformerEmails(newEmails);
+  };
+
+  function isValidEmail(email: string) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  const emailNotif = (
+    <div>
+        <HostInfo>
+          <Icon src={InfoIcon} alt="InfoIcon"></Icon>
+          <P $fontWeight="500" $color={COLORS.gray11}>
+          {' '}
+          Email Notification
+          </P>
+          </HostInfo>
+          <HostList>
+          <li> Everyone who enters their email above will receive a show confirmation if you get selected to perform. </li>
+          </HostList>
+          </div>
+  );
 
   if (!event || !facility) {
     return <p />;
@@ -464,7 +505,25 @@ export default function EventPage({
                       <GroupSizeInput
                         name="sizeInfo"
                         onChange={handleGroupSizeChange}
+                        maxLength={2}
                       />
+                      {performerEmails.map((email, index) => (
+                      <div key={index}>
+                        <GroupSizeText>
+                          <P $fontWeight="500" $color={COLORS.gray11}>
+                            Performer Email {index + 1} &nbsp;
+                          </P>
+                          {index == 0 && <Asterisk>*</Asterisk> }
+                        </GroupSizeText>
+                        <GroupSizeInput
+                          name={`performerEmail-${index}`}
+                          value={email}
+                          onChange={(e) => handleEmailChange(e, index)}
+                          required={index === 0}
+                        />
+                      </div>
+                    ))}
+                    {performerEmails && emailNotif}
                     </div>
                   )}
                   <AdditionalInfoText>
@@ -510,6 +569,7 @@ export default function EventPage({
                                 role: 'PERFORMER',
                                 group_size: groupSize,
                                 additional_info: additionalInfo,
+                                performer_emails: performerEmails,
                               });
                               setIsSubmitted(true);
                             }
@@ -520,8 +580,13 @@ export default function EventPage({
                                 role: 'HOST',
                                 group_size: 0,
                                 additional_info: additionalInfo,
+                                performer_emails: performerEmails,
                               });
                               setIsSubmitted(true);
+                            }
+                            if (performChecked && groupSize === 0) {
+                              setIsSubmitted(false);
+                              setErrorMessage('Please indicate a group size.');
                             }
                             if (!acknowledgeChecked) {
                               setIsSubmitted(false);
@@ -529,13 +594,18 @@ export default function EventPage({
                                 'Please acknowledge that you understand the requirements.',
                               );
                             }
-                            if (performChecked && groupSize === 0) {
-                              setIsSubmitted(false);
-                              setErrorMessage('Please indicate a group size.');
-                            }
                           }
                         } else {
                           console.error('Missing user ID or event ID');
+                        }
+                        if (groupSize > 0 && !performerEmails[0] && acknowledgeChecked) {
+                          setIsSubmitted(false);
+                          setErrorMessage('Please enter an email.');
+                        }
+                        if (groupSize > 0 && !isValidEmail(performerEmails[0])) {
+                          setIsSubmitted(false);
+                          setErrorMessage('Please enter a valid email.');
+                          return;
                         }
                       }}
                     >

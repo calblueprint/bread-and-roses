@@ -148,6 +148,7 @@ export async function eventSignUp(user: {
   role: string;
   group_size: number;
   additional_info: string;
+  performer_emails: string[];
 }) {
   if (!user.id) {
     return {
@@ -155,7 +156,7 @@ export async function eventSignUp(user: {
       message: 'User data is missing. Cannot insert into volunteers table.',
     };
   }
-
+  console.log("Performers", user.performer_emails);
   const { error: insertError } = await supabase.from('event_signups').insert([
     {
       event_id: user.event_id,
@@ -164,6 +165,8 @@ export async function eventSignUp(user: {
       is_accepted: false,
       group_size: user.group_size,
       additional_info: user.additional_info,
+      performer_emails: user.performer_emails,
+    
     },
   ]);
 
