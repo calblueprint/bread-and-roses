@@ -24,7 +24,7 @@ const facilityTypeOptions = new Set([
   'Visually Impaired',
 ]);
 
-const audienceOptions = new Set(['Youth', 'Adults', 'Senior ']);
+const audienceOptions = new Set(['Youth', 'Adult', 'Senior']);
 
 export default function SettingCardShowPreferences({
   type,
