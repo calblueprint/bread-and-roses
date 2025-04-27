@@ -153,11 +153,11 @@ export const Footer = styled.div`
   font-family: ${Sans.style.fontFamily};
   text-align: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     margin-top: 2.625rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-top: 2rem;
   }
 

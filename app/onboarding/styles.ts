@@ -32,7 +32,7 @@ export const InlineContainer = styled.main`
   @media (max-width: 1200px) {
     width: 45%;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 85%;
     margin-top: 20%;
   }
@@ -98,7 +98,7 @@ export const Container = styled.main`
   gap: 1.75rem;
   margin: 2.625rem 0;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     background-color: ${COLORS.bread1};
     box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
     padding: 2rem;
@@ -186,12 +186,12 @@ export const SkipButton = styled.button`
   border: none;
   cursor: pointer;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: fixed;
     bottom: 6.25rem;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     position: relative;
     align-self: flex-end;
     margin-bottom: 1rem;
@@ -211,7 +211,7 @@ export const ButtonContainer = styled.div`
   height: 80%;
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     flex-direction: row;
     justify-content: flex-end;
     margin-top: 7.5rem;
@@ -241,7 +241,7 @@ export const Button = styled.button<{
   transition: all 0.3s ease;
   z-index: 2;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: fixed;
     width: 85%;
     bottom: 2rem;
@@ -266,7 +266,7 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   text-decoration: none;
   transition: all 0.3s ease;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-bottom: 2.5rem;
   }
 `;
@@ -286,7 +286,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const FixedFooter = styled.div`
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: fixed;
     bottom: 0;
     left: 0;

@@ -102,8 +102,9 @@ export async function fetchAllActiveEventsByFilter(search: string) {
 
   const { data, error } = await supabase
     .from('events')
-    .select('*, facilities!inner(name, county, city, type)')
+    .select('*, facilities!inner(name, county, city, type, audience)')
     .eq('event_status', 'Active')
+    .gt('end_date_time', new Date().toISOString())
     .or(`name.ilike.${pattern},city.ilike.${pattern},county.ilike.${pattern}`, {
       foreignTable: 'facilities',
     });
@@ -119,7 +120,8 @@ export async function fetchAllActiveEvents() {
   const { data, error } = await supabase
     .from('events')
     .select('*')
-    .eq('event_status', 'Active');
+    .eq('event_status', 'Active')
+    .gt('end_date_time', new Date().toISOString());
 
   if (error) {
     throw new Error(error.message);

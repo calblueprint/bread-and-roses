@@ -13,7 +13,7 @@ export const ReviewContainer = styled.main`
   justify-content: flex-start;
   border-radius: 16px;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     background: ${COLORS.bread1};
     box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
     padding: 2rem;

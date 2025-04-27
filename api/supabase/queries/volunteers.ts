@@ -196,3 +196,17 @@ export async function checkUserSignedupEvent(
 
   return data.length > 0;
 }
+
+export async function removeVolunteerSignUp(user_id: string, event_id: string) {
+  const { error } = await supabase
+    .from('event_signups')
+    .delete()
+    .match({ user_id, event_id });
+
+  if (error) {
+    console.error('Error removing signup:', error.message);
+    return false;
+  }
+
+  return true;
+}
