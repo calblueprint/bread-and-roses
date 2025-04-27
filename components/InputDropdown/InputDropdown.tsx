@@ -118,7 +118,10 @@ export default function InputDropdown({
           {required && <span style={{ color: COLORS.rose10 }}>{' *'}</span>}
         </P>
         {note && (
-          <SMALL $color={COLORS.rose11} $fontWeight={400}>
+          <SMALL
+            $color={required ? COLORS.rose11 : COLORS.gray11}
+            $fontWeight={400}
+          >
             {note}
           </SMALL>
         )}

@@ -53,10 +53,10 @@ export default function Onboarding() {
   };
 
   const handleBack = () => {
-    if (role.isPerformer) {
-      router.push('/onboarding/volunteer/equipment');
+    if (role.isHost) {
+      router.push('/onboarding/volunteer/host-show-preference');
     } else {
-      router.push('/onboarding/volunteer/show-preference');
+      router.push('/onboarding/volunteer/equipment');
     }
   };
 

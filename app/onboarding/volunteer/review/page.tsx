@@ -227,6 +227,48 @@ export default function Review() {
             </>
           )}
 
+          {role.isHost && (
+            <InfoSection>
+              <SubSection>
+                <InfoSectionTitle>
+                  <div>
+                    <H5 $fontWeight={500}>Host Show Preferences</H5>
+                  </div>
+
+                  <div>
+                    <StyledLink href="/onboarding/volunteer/host-show-preference">
+                      <P $fontWeight={400} $color={COLORS.lilac9}>
+                        edit
+                      </P>
+                    </StyledLink>
+                  </div>
+                </InfoSectionTitle>
+                <InfoSectionLine />
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>When are you availabile?</P>
+                <SmallText>
+                  {displayValue(preferences.info.availability)}
+                </SmallText>
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>Can you pick up sound equipment?</P>
+                <SmallText>
+                  {displayValue(preferences.info.soundEquipPickup)}
+                </SmallText>
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>Are you willing to use sound equipment?</P>
+                <SmallText>
+                  {displayValue(preferences.info.useSoundEquip)}
+                </SmallText>
+              </SubSection>
+            </InfoSection>
+          )}
+
           <InfoSection>
             <SubSection>
               <InfoSectionTitle>
