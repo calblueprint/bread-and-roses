@@ -13,7 +13,7 @@ const soundOptions = new Set(['Yes', 'No']);
 const parkingOptions = new Set([
   'Yes, parking lot',
   'Yes, street parking',
-  'None',
+  'No',
 ]);
 
 export default function SettingCardFacilityLogistics({
@@ -78,13 +78,31 @@ export default function SettingCardFacilityLogistics({
   };
 
   const updateParking = (value: string) => {
-    setEditInfo(prev => ({
-      ...prev,
-      info: {
-        ...prev.info,
-        parking: value,
-      },
-    }));
+    if (value == 'Yes, street parking') {
+      setEditInfo(prev => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          parking: 'Street',
+        },
+      }));
+    } else if (value == 'Yes, parking lot') {
+      setEditInfo(prev => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          parking: 'Parking Lot',
+        },
+      }));
+    } else {
+      setEditInfo(prev => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          parking: 'None',
+        },
+      }));
+    }
   };
 
   const handleCancel = () => {
@@ -186,7 +204,13 @@ export default function SettingCardFacilityLogistics({
                       placeholder="Select performance type"
                       multi={false}
                       options={parkingOptions}
-                      value={editInfo.info.parking}
+                      value={
+                        editInfo.info.parking === 'Parking Lot'
+                          ? 'Yes, parking lot'
+                          : info.parking === 'Street'
+                            ? 'Yes, street parking'
+                            : 'None'
+                      }
                       onChange={selected => updateParking(selected as string)}
                     />
                   </styles.SettingListedItems>
@@ -199,7 +223,11 @@ export default function SettingCardFacilityLogistics({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {info.parking}
+                    {info.parking === 'Parking Lot'
+                      ? 'Yes, parking lot'
+                      : info.parking === 'Street'
+                        ? 'Yes, street parking'
+                        : 'None'}
                   </styles.TruncatedText>
                 </div>
               )}
