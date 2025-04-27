@@ -76,7 +76,7 @@ export default function SettingCardShowPreferences({
       <styles.AvailabilityHeader>
         <styles.AvailabilityTitle>
           <H5 $fontWeight="500" $color={COLORS.bread1} $align="left">
-            Show Preferences
+            Facility Information
           </H5>
         </styles.AvailabilityTitle>
         <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
