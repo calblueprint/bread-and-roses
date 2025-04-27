@@ -12,6 +12,8 @@ import Filter from '@/public/images/filter.svg';
 import SadIcon from '@/public/images/sad.svg';
 import SearchIcon from '@/public/images/search_icon.svg';
 import X from '@/public/images/x.svg';
+import COLORS from '@/styles/colors';
+import { P } from '@/styles/text';
 import { Event } from '@/types/schema';
 import { useSession } from '@/utils/AuthProvider';
 import { FilterContext } from '@/utils/filterContext';
@@ -32,6 +34,7 @@ import {
   NoMatchContainer,
   NoMatchText,
   Page,
+  ResetButton,
   RowContainer,
   SearchBar,
   SearchInput,
@@ -106,10 +109,48 @@ export default function ActiveEventsPage() {
 
   const getSearchEvents = async () => {
     setIsFiltering(true);
-    const filtered: EventWithFacility[] =
+    const searchFiltered: EventWithFacility[] =
       await fetchAllActiveEventsByFilter(searchInput);
+
+    searchFiltered.sort(sortByDate);
+
+    // Apply any active filters to the search results
+    const filtered = searchFiltered.filter(event => {
+      const facilityTypeMatch = checkFilterMatch(
+        event.facilities.type,
+        facilityFilters,
+      );
+      const countyMatch = checkFilterMatch(
+        event.facilities.county,
+        countyFilters,
+      );
+      const hostMatch = checkFilterMatch(
+        event.needs_host ? 'Looking for Hosts' : 'No Host',
+        hostFilters,
+      );
+      const audienceMatch = checkFilterMatch(
+        event.facilities.audience,
+        audienceFilters,
+      );
+      return facilityTypeMatch && countyMatch && hostMatch && audienceMatch;
+    });
+
     setFilteredEvents(filtered);
     setIsFiltering(false);
+  };
+
+  // Helper function to check if a value matches any of the filters
+  const checkFilterMatch = (
+    value: string | string[],
+    filters: Set<string>,
+  ): boolean => {
+    if (filters.size === 0 || value.length == 0) return true;
+
+    if (Array.isArray(value)) {
+      return value.some(v => filters.has(v));
+    }
+
+    return filters.has(value);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,6 +187,7 @@ export default function ActiveEventsPage() {
     const nearby = events.filter(event =>
       volunteerPreferences?.locations.includes(event.facilities.county),
     );
+    nearby.sort(sortByDate);
     setNearYouEvents(nearby);
   };
 
@@ -153,6 +195,7 @@ export default function ActiveEventsPage() {
     const interests = events.filter(event =>
       volunteerPreferences?.facility_type.includes(event.facilities.type),
     );
+    interests.sort(sortByDate);
     setInterestBasedEvents(interests);
   };
 
@@ -187,11 +230,43 @@ export default function ActiveEventsPage() {
     }
   };
 
-  const handleClear = () => {
+  const handleSearchClear = () => {
     setSearchInput('');
-    setSearchActive(false);
-    setFilteredEvents(events);
-    handleClearFilters();
+
+    // Keep filters applied and show filtered results
+    if (allFilters.size > 0) {
+      // Re-apply the current filters without the search text
+      applyFilters(
+        facilityFilters,
+        countyFilters,
+        hostFilters,
+        audienceFilters,
+        sortBy,
+      );
+    } else {
+      // If no filters are applied, show all events
+      setSearchActive(false);
+      setFilteredEvents(events);
+    }
+  };
+
+  const handleFilterClear = () => {
+    // Clear all filters
+    setFacilityFilters(new Set());
+    setCountyFilters(new Set());
+    setHostFilters(new Set());
+    setAudienceFilters(new Set());
+    setSortBy(new Set());
+
+    // Keep search text and execute search if there's search input
+    if (searchInput) {
+      setSearchActive(true);
+      getSearchEvents();
+    } else {
+      // If no search input, show all events
+      setSearchActive(false);
+      setFilteredEvents(events);
+    }
   };
 
   const handleClearFilters = () => {
@@ -255,6 +330,8 @@ export default function ActiveEventsPage() {
     if (newSortByFilters.has('Upcoming events')) {
       filtered.sort(sortByDate);
     }
+    filtered.sort(sortByDate);
+
     setFilteredEvents(filtered);
     setIsFiltering(false);
   };
@@ -295,14 +372,31 @@ export default function ActiveEventsPage() {
     setAudienceFilters(newAudienceFilters);
     setSortBy(newSortBy);
 
+    /* Check if we still have any filters or search input */
+    const hasAnyFilter =
+      newFacilityFilters.size > 0 ||
+      newCountyFilters.size > 0 ||
+      newHostFilters.size > 0 ||
+      newAudienceFilters.size > 0 ||
+      newSortBy.size > 0;
+
+    /* Maintain search active state if we have search input or any filters left */
+    setSearchActive(searchInput.length > 0 || hasAnyFilter);
+
     /* Reapply new filters */
-    applyFilters(
-      newFacilityFilters,
-      newCountyFilters,
-      newHostFilters,
-      newAudienceFilters,
-      newSortBy,
-    );
+    if (searchInput.length > 0) {
+      // If we have search input, prioritize the search but keep filters
+      getSearchEvents();
+    } else {
+      // If no search input, just apply the filters
+      applyFilters(
+        newFacilityFilters,
+        newCountyFilters,
+        newHostFilters,
+        newAudienceFilters,
+        newSortBy,
+      );
+    }
   };
 
   /* Render all events on page mount */
@@ -310,6 +404,7 @@ export default function ActiveEventsPage() {
     const getAllActiveEvents = async () => {
       const fetchedActiveEvents: EventWithFacility[] =
         await fetchAllActiveEventsByFilter('');
+      fetchedActiveEvents.sort(sortByDate);
       setEvents(fetchedActiveEvents);
 
       /* Get volunteer preferences from session data */
@@ -332,6 +427,15 @@ export default function ActiveEventsPage() {
       filterVolunteerPreferences();
     }
   }, [events, volunteerPreferences]);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   if (!filterContext) return null;
 
@@ -384,9 +488,19 @@ export default function ActiveEventsPage() {
               onChange={handleChange}
               onKeyDown={handleEnter}
             />
-            <Button onClick={handleClear}>
-              <SearchXIcon src={X} alt="X" />
-            </Button>
+            {searchInput.length > 0 && (
+              <Button onClick={handleSearchClear}>
+                <SearchXIcon src={X} alt="X" />
+              </Button>
+            )}
+            {searchInput.length === 0 && (
+              <Button onClick={handleFilterClick}>
+                <P $fontWeight={400} $color={COLORS.rose9}>
+                  {' '}
+                  Filters{' '}
+                </P>
+              </Button>
+            )}
           </SearchBar>
           <FilterWrapper>
             {filterMenuExpanded ? (
@@ -448,6 +562,9 @@ export default function ActiveEventsPage() {
                     </FilterTag>
                   ))}
                 </FilterTagContainer>
+                {allFilters.size > 0 && (
+                  <ResetButton onClick={handleFilterClear}>Reset</ResetButton>
+                )}
               </FilterRow>
             )}
           </FilterWrapper>
@@ -462,37 +579,51 @@ export default function ActiveEventsPage() {
               <RowContainer>
                 <TitleBar>
                   <Label>Based on your location preferences...</Label>
-                  <Button onClick={handleShowAllNearby}>
-                    <ShowAllText> show all </ShowAllText>
-                  </Button>
+                  {!isMobile && (
+                    <Button onClick={handleShowAllNearby}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
+                  )}
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
                   {nearYouEvents.length > 0 ? (
-                    nearYouEvents.map(event => (
-                      <DiscoverCard
-                        search={isSearchActive}
-                        key={event.event_id}
-                        event={event}
-                      />
-                    ))
+                    (isMobile ? nearYouEvents.slice(0, 2) : nearYouEvents).map(
+                      event => (
+                        <DiscoverCard
+                          search={isSearchActive}
+                          key={event.event_id}
+                          event={event}
+                        />
+                      ),
+                    )
                   ) : (
                     <NoMatchContainer>
                       <NoMatchText>No matches</NoMatchText>
                       <Icon src={SadIcon} alt="Sad face icon" />
                     </NoMatchContainer>
+                  )}
+                  {isMobile && (
+                    <Button onClick={handleShowAllNearby}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
                   )}
                 </DiscoverCardContainer>
               </RowContainer>
               <RowContainer>
                 <TitleBar>
                   <Label>Based on your interests...</Label>
-                  <Button onClick={handleShowAllInterests}>
-                    <ShowAllText> show all </ShowAllText>
-                  </Button>
+                  {!isMobile && (
+                    <Button onClick={handleShowAllInterests}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
+                  )}
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
                   {interestBasedEvents.length > 0 ? (
-                    interestBasedEvents.map(event => (
+                    (isMobile
+                      ? interestBasedEvents.slice(0, 2)
+                      : interestBasedEvents
+                    ).map(event => (
                       <DiscoverCard
                         search={isSearchActive}
                         key={event.event_id}
@@ -505,18 +636,28 @@ export default function ActiveEventsPage() {
                       <Icon src={SadIcon} alt="Sad face icon" />
                     </NoMatchContainer>
                   )}
+                  {isMobile && (
+                    <Button onClick={handleShowAllInterests}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
+                  )}
                 </DiscoverCardContainer>
               </RowContainer>
               <RowContainer>
                 <TitleBar>
                   <Label>Upcoming Events...</Label>
-                  <Button onClick={handleShowAllInterests}>
-                    <ShowAllText> show all </ShowAllText>
-                  </Button>
+                  {!isMobile && (
+                    <Button onClick={handleShowAllInterests}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
+                  )}
                 </TitleBar>
                 <DiscoverCardContainer $search={isSearchActive}>
                   {upcomingEvents.length > 0 ? (
-                    upcomingEvents.map(event => (
+                    (isMobile
+                      ? upcomingEvents.slice(0, 2)
+                      : upcomingEvents
+                    ).map(event => (
                       <DiscoverCard
                         search={isSearchActive}
                         key={event.event_id}
@@ -528,6 +669,11 @@ export default function ActiveEventsPage() {
                       <NoMatchText>No matches</NoMatchText>
                       <Icon src={SadIcon} alt="Sad face icon" />
                     </NoMatchContainer>
+                  )}
+                  {isMobile && (
+                    <Button onClick={handleShowAllInterests}>
+                      <ShowAllText> show all </ShowAllText>
+                    </Button>
                   )}
                 </DiscoverCardContainer>
               </RowContainer>

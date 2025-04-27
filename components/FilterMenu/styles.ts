@@ -12,6 +12,9 @@ export const Container = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
   gap: 0.5rem;
 `;
 

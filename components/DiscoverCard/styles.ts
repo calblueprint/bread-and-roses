@@ -32,24 +32,41 @@ export const Container = styled.div<{ $search: boolean }>`
   background-color: ${COLORS.bread1};
   border: none;
   border-radius: 0.5rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+  }
 `;
 
 export const ImageContainer = styled.div<{ $search: boolean }>`
   ${({ $search }) =>
     $search
       ? `
-          height: 100%;
-          width: 8rem;
+          @media (min-width: 768px) {
+            height: 100%;
+            width: 8rem;
+          } 
           border-radius: 0.5rem 0 0 0.5rem;
         `
       : `
-          height: 9.375rem;
-          width: 100%;
+          @media (min-width: 768px) {
+            height: 9.375rem;
+            width: 100%;
+          } 
           border-radius: 0.5rem 0.5rem 0 0;
         `}
   position: relative;
   overflow: hidden;
   background-color: ${COLORS.gray12};
+
+  @media (max-width: 768px) {
+    min-width: 40%;
+    max-width: 40%;
+  }
 `;
 
 export const TextContainer = styled.div`
