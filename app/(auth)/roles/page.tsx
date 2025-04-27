@@ -12,6 +12,7 @@ import {
   RoleContainer,
 } from '@/app/onboarding/styles';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import RoleSelector from '@/components/RoleSelector/RoleSelector';
 import FacilityRed from '@/public/images/facility_contact_red.svg';
 import Facility from '@/public/images/facility_contact.svg';
@@ -49,55 +50,57 @@ export default function OnboardingPage() {
     }
   };
   return (
-    <Background>
-      <InlineContainer>
-        <Title $fontWeight={500}>
-          What describes
-          <br />
-          you best?
-        </Title>
-        <ProgressBar from={0} to={0} />
-        <RoleContainer>
-          <SelectOneText>Select one.</SelectOneText>
-          <label
-            onClick={() => setRole({ isFacility: true, isVolunteer: false })}
-            style={{ cursor: 'pointer', width: '100%' }}
-          >
-            <RoleSelector
-              isSelected={role.isFacility}
-              name="facility"
-              title="Facility Contact"
-              description="Represent your facility"
-              shape="circle"
-              iconSrc={role.isFacility ? FacilityRed : Facility}
-              onChange={handleChange}
-            />
-          </label>
-          <label
-            onClick={() => setRole({ isFacility: false, isVolunteer: true })}
-            style={{ cursor: 'pointer', width: '100%' }}
-          >
-            <RoleSelector
-              isSelected={role.isVolunteer}
-              name="volunteer"
-              title="Event Volunteer"
-              description="Host or Perform"
-              shape="circle"
-              iconSrc={role.isVolunteer ? StarRed : Star}
-              onChange={handleChange}
-            />
-          </label>
-        </RoleContainer>
-        <ButtonContainer>
-          <Button
-            position="fixed"
-            onClick={handleContinue}
-            disabled={!role.isFacility && !role.isVolunteer}
-          >
-            <ContinueText>Continue</ContinueText>
-          </Button>
-        </ButtonContainer>
-      </InlineContainer>
-    </Background>
+    <ProtectedRoute allowWithoutRole>
+      <Background>
+        <InlineContainer>
+          <Title $fontWeight={500}>
+            What describes
+            <br />
+            you best?
+          </Title>
+          <ProgressBar from={0} to={0} />
+          <RoleContainer>
+            <SelectOneText>Select one.</SelectOneText>
+            <label
+              onClick={() => setRole({ isFacility: true, isVolunteer: false })}
+              style={{ cursor: 'pointer', width: '100%' }}
+            >
+              <RoleSelector
+                isSelected={role.isFacility}
+                name="facility"
+                title="Facility Contact"
+                description="Represent your facility"
+                shape="circle"
+                iconSrc={role.isFacility ? FacilityRed : Facility}
+                onChange={handleChange}
+              />
+            </label>
+            <label
+              onClick={() => setRole({ isFacility: false, isVolunteer: true })}
+              style={{ cursor: 'pointer', width: '100%' }}
+            >
+              <RoleSelector
+                isSelected={role.isVolunteer}
+                name="volunteer"
+                title="Event Volunteer"
+                description="Host or Perform"
+                shape="circle"
+                iconSrc={role.isVolunteer ? StarRed : Star}
+                onChange={handleChange}
+              />
+            </label>
+          </RoleContainer>
+          <ButtonContainer>
+            <Button
+              position="fixed"
+              onClick={handleContinue}
+              disabled={!role.isFacility && !role.isVolunteer}
+            >
+              <ContinueText>Continue</ContinueText>
+            </Button>
+          </ButtonContainer>
+        </InlineContainer>
+      </Background>
+    </ProtectedRoute>
   );
 }

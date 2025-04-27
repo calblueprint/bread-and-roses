@@ -10,6 +10,7 @@ import React, {
 import { usePathname, useRouter } from 'next/navigation';
 import { AuthResponse, Session } from '@supabase/supabase-js';
 import supabase from '@/api/supabase/createClient';
+import { encryptEmail } from '@/utils/emailTokenUtils';
 
 export interface AuthState {
   session: Session | null;
@@ -76,9 +77,18 @@ export function AuthContextProvider({
         (event === 'SIGNED_IN' || event === 'USER_UPDATED') &&
         pathname === '/verification'
       ) {
+        const isInRecovery =
+          localStorage.getItem('passwordRecoveryMode') === 'true';
+        if (isInRecovery && pathname === '/verification') {
+          return;
+        }
+
         const confirmed = newSession?.user?.email_confirmed_at;
         if (confirmed && window.location.pathname === '/verification') {
           router.push('/success');
+        } else if (!confirmed && newSession?.user?.email) {
+          const token = await encryptEmail(newSession.user.email);
+          router.push(`/verification?token=${encodeURIComponent(token)}`);
         }
       }
 
@@ -164,6 +174,7 @@ export function AuthContextProvider({
   };
 
   const signOut = async () => {
+    router.push('/');
     await supabase.auth.signOut();
     localStorage.setItem('supabase.auth.token-signal', `${Date.now()}`);
     localStorage.removeItem('passwordRecoveryMode');

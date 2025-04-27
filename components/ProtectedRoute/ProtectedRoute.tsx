@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { fetchFacilityApprovalStatus } from '@/api/supabase/queries/permissions';
+import {
+  fetchFacilityApprovalStatus,
+  fetchFacilityFinalizationStatus,
+} from '@/api/supabase/queries/permissions';
 import { useSession } from '@/utils/AuthProvider';
 
 interface Props {
@@ -44,27 +47,47 @@ export default function ProtectedRoute({
   const router = useRouter();
   const path = usePathname();
 
-  const [hydrated, setHydrated] = useState(false);
+  const [hydrated, setHydrated] = useState<boolean>(false);
   const [ready, setReady] = useState(false);
 
   const [isApproved, setIsApproved] = useState<boolean | null>(null);
+  const [isFinalized, setIsFinalized] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    async function getApprovalStatus() {
+    async function getFacilityStatuses() {
       if (userRole === 'facility' && session?.user?.id) {
         const approved = await fetchFacilityApprovalStatus(session.user.id);
+        const finalized = await fetchFacilityFinalizationStatus(
+          session.user.id,
+        );
+
+        console.log('[ProtectedRoute] Fresh approval status:', approved);
+        console.log('[ProtectedRoute] Fresh finalization status:', finalized);
+
         setIsApproved(approved);
+        setIsFinalized(finalized);
+        setHydrated(true);
       } else {
         setIsApproved(false);
+        setIsFinalized(false);
+        setHydrated(true);
       }
     }
 
-    getApprovalStatus();
-  }, [userRole, session]);
+    getFacilityStatuses();
+  }, [userRole, session, path]);
+
+  useEffect(() => {
+    console.log('--- ProtectedRoute Debug ---');
+    console.log('hydrated:', hydrated);
+    console.log('sessionChecked:', sessionChecked);
+    console.log('session:', session);
+    console.log('userRole:', userRole);
+    console.log('isApproved:', isApproved);
+    console.log('path:', path);
+    console.log('-----------------------------');
+    setTimeout(() => {}, 100);
+  }, [hydrated, sessionChecked, session, userRole, isApproved, path]);
 
   useEffect(() => {
     if (!hydrated || !sessionChecked) return;
@@ -82,18 +105,31 @@ export default function ProtectedRoute({
       return;
     }
 
+    if (
+      userRole === 'facility' &&
+      (isApproved === null || isFinalized === null || !hydrated) &&
+      !publicUnauthenticatedRoutes.includes(path) &&
+      !onboardingExceptions.some(p => path.startsWith(p))
+    ) {
+      console.log(
+        '[ProtectedRoute] Waiting for approval/finalization status, temp loading...',
+      );
+      return;
+    }
+
+    /*
     // prevent approved facilities from accessing onboardingExceptions
     if (
       userRole === 'facility' &&
       isApproved &&
-      onboardingExceptions.some(p => path.startsWith(p))
+      !onboardingExceptions.some(p => path.startsWith(p))
     ) {
       console.log(
         '[ProtectedRoute] Approved facility tried to access onboarding → /availability/general',
       );
       router.replace('/availability/general');
       return;
-    }
+    } */
 
     // block access to onboarding or roles if already has role
     if (
@@ -131,13 +167,25 @@ export default function ProtectedRoute({
     // block facility users from protected routes if not approved
     if (
       userRole === 'facility' &&
-      !isApproved &&
-      !path.startsWith('/onboarding')
+      isApproved === false &&
+      !publicUnauthenticatedRoutes.includes(path)
     ) {
       console.log(
         '[ProtectedRoute] Facility not approved → /onboarding/facility/status',
       );
       router.replace('/onboarding/facility/status');
+      return;
+    }
+
+    if (
+      userRole === 'facility' &&
+      isFinalized === true &&
+      path.startsWith('/onboarding')
+    ) {
+      console.log(
+        '[ProtectedRoute] Finalized facility tried to access ANY onboarding → /availability/general',
+      );
+      router.replace('/availability/general');
       return;
     }
 

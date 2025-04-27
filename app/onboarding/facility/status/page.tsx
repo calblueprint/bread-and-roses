@@ -34,8 +34,9 @@ export default function Status() {
   const router = useRouter();
 
   const handleSignOut = () => {
-    signOut();
     router.push('/');
+    setTimeout(() => {}, 1000);
+    signOut();
   };
 
   const handleForward = () => {

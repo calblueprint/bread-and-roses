@@ -9,6 +9,7 @@ import {
 } from '@/api/supabase/queries/events';
 import MenuBar from '@/components/MenuBar/MenuBar';
 import MyEventCard from '@/components/MyEventCard/MyEventCard';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import { Event } from '@/types/schema';
 import { useSession } from '@/utils/AuthProvider';
 import * as styles from './styles';
@@ -129,104 +130,113 @@ export default function EventPage() {
   }
 
   return (
-    <div>
-      <MenuBar setMenuExpanded={setMenuExpanded} />
-      <styles.Page $menuExpanded={menuExpanded}>
-        <styles.AllEventsHolder>
-          <styles.Title $fontWeight="500" $color="#000" $align="left">
-            Upcoming Events
-          </styles.Title>
+    <ProtectedRoute allowAnyRole>
+      <div>
+        <MenuBar setMenuExpanded={setMenuExpanded} />
+        <styles.Page $menuExpanded={menuExpanded}>
+          <styles.AllEventsHolder>
+            <styles.Title $fontWeight="500" $color="#000" $align="left">
+              Upcoming Events
+            </styles.Title>
 
-          <styles.ToggleWrapper>
-            <styles.ToggleButton
-              $active={selectedView === 'scheduled'}
-              onClick={() => setSelectedView('scheduled')}
-            >
-              Scheduled
-            </styles.ToggleButton>
-
-            {userRole === 'volunteer' && (
+            <styles.ToggleWrapper>
               <styles.ToggleButton
-                $active={selectedView === 'applied'}
-                onClick={() => setSelectedView('applied')}
+                $active={selectedView === 'scheduled'}
+                onClick={() => setSelectedView('scheduled')}
               >
-                Applied
+                Scheduled
               </styles.ToggleButton>
-            )}
 
-            {userRole === 'facility' && (
-              <styles.ToggleButton
-                $active={selectedView === 'proposed'}
-                onClick={() => setSelectedView('proposed')}
-              >
-                Proposed
-              </styles.ToggleButton>
-            )}
-          </styles.ToggleWrapper>
+              {userRole === 'volunteer' && (
+                <styles.ToggleButton
+                  $active={selectedView === 'applied'}
+                  onClick={() => setSelectedView('applied')}
+                >
+                  Applied
+                </styles.ToggleButton>
+              )}
 
-          {sortedEntries.map(([monthKey, events]) => {
-            const [year, monthNum] = monthKey.split('-');
-            const monthDate = new Date(parseInt(year), parseInt(monthNum) - 1);
-            const displayMonth = monthDate.toLocaleString('default', {
-              month: 'long',
-              year: 'numeric',
-            });
+              {userRole === 'facility' && (
+                <styles.ToggleButton
+                  $active={selectedView === 'proposed'}
+                  onClick={() => setSelectedView('proposed')}
+                >
+                  Proposed
+                </styles.ToggleButton>
+              )}
+            </styles.ToggleWrapper>
 
-            return (
-              <div key={monthKey}>
-                <styles.MonthYear $fontWeight="500" $color="#000" $align="left">
-                  {displayMonth}
-                </styles.MonthYear>
-                {events.map(event => (
-                  <Link
-                    key={event.event_id}
-                    href={`/events/${event.event_id}`}
-                    style={{ textDecoration: 'none' }}
+            {sortedEntries.map(([monthKey, events]) => {
+              const [year, monthNum] = monthKey.split('-');
+              const monthDate = new Date(
+                parseInt(year),
+                parseInt(monthNum) - 1,
+              );
+              const displayMonth = monthDate.toLocaleString('default', {
+                month: 'long',
+                year: 'numeric',
+              });
+
+              return (
+                <div key={monthKey}>
+                  <styles.MonthYear
+                    $fontWeight="500"
+                    $color="#000"
+                    $align="left"
                   >
-                    <MyEventCard {...event} />
-                  </Link>
-                ))}
-              </div>
-            );
-          })}
+                    {displayMonth}
+                  </styles.MonthYear>
+                  {events.map(event => (
+                    <Link
+                      key={event.event_id}
+                      href={`/events/${event.event_id}`}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <MyEventCard {...event} />
+                    </Link>
+                  ))}
+                </div>
+              );
+            })}
 
-          {sortedEntries.length === 0 && (
-            <styles.EmptyStateWrapper>
-              <styles.SubHeaderText>
-                Nothing to see here. Yet.
-              </styles.SubHeaderText>
-              {selectedView === 'applied' && (
-                <>
+            {sortedEntries.length === 0 && (
+              <styles.EmptyStateWrapper>
+                <styles.SubHeaderText>
+                  Nothing to see here. Yet.
+                </styles.SubHeaderText>
+                {selectedView === 'applied' && (
+                  <>
+                    <styles.SmallText>
+                      Want to change that? <br /> Click the button to sign up
+                      for events.
+                    </styles.SmallText>
+                    <styles.SignUpButton onClick={handleAppliedContinue}>
+                      Sign up here
+                    </styles.SignUpButton>
+                  </>
+                )}
+                {selectedView === 'proposed' && (
+                  <>
+                    <styles.SmallText>
+                      Want to change that? <br /> Click the button to create an
+                      availability.
+                    </styles.SmallText>
+                    <styles.SignUpButton onClick={handleProposedContinue}>
+                      Create here
+                    </styles.SignUpButton>
+                  </>
+                )}
+                {selectedView === 'scheduled' && (
                   <styles.SmallText>
-                    Want to change that? <br /> Click the button to sign up for
-                    events.
+                    Hang tight! <br /> Bread & Roses is currently working on
+                    finalizing your events.
                   </styles.SmallText>
-                  <styles.SignUpButton onClick={handleAppliedContinue}>
-                    Sign up here
-                  </styles.SignUpButton>
-                </>
-              )}
-              {selectedView === 'proposed' && (
-                <>
-                  <styles.SmallText>
-                    Want to change that? <br /> Click the button to create an
-                    availability.
-                  </styles.SmallText>
-                  <styles.SignUpButton onClick={handleProposedContinue}>
-                    Create here
-                  </styles.SignUpButton>
-                </>
-              )}
-              {selectedView === 'scheduled' && (
-                <styles.SmallText>
-                  Hang tight! <br /> Bread & Roses is currently working on
-                  finalizing your events.
-                </styles.SmallText>
-              )}
-            </styles.EmptyStateWrapper>
-          )}
-        </styles.AllEventsHolder>
-      </styles.Page>
-    </div>
+                )}
+              </styles.EmptyStateWrapper>
+            )}
+          </styles.AllEventsHolder>
+        </styles.Page>
+      </div>
+    </ProtectedRoute>
   );
 }
