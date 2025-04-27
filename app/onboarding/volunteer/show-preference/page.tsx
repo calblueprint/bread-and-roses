@@ -87,8 +87,8 @@ export default function Onboarding() {
   const handleSubmit = async () => {
     if (role.isPerformer) {
       router.push('/onboarding/volunteer/performance');
-    } else {
-      router.push('/onboarding/volunteer/additional-info');
+    } else if (role.isHost) {
+      router.push('/onboarding/volunteer/host-show-preference');
     }
   };
 

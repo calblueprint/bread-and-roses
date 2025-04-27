@@ -11,6 +11,9 @@ export interface Info {
   hasSoundEquipment: string;
   needsPiano: string;
   canHost: string;
+  availability: string;
+  soundEquipPickup: string;
+  useSoundEquip: string;
 }
 
 export interface GeneralInfo {
@@ -66,6 +69,9 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
       hasSoundEquipment: '',
       needsPiano: '',
       canHost: '',
+      availability: '',
+      soundEquipPickup: '',
+      useSoundEquip: '',
     },
   });
 
