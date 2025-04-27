@@ -2,7 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { fetchFacilityContactInfo } from '@/api/supabase/queries/facilities';
+import {
+  fetchFacilityContactInfo,
+  fetchFacilityInfo,
+} from '@/api/supabase/queries/facilities';
 import {
   fetchVolunteerInfo,
   fetchVolunteerPreferences,
@@ -10,6 +13,10 @@ import {
 import MenuBar from '@/components/MenuBar/MenuBar';
 import SettingsCardAccomodations from '@/components/SettingsCard/SettingsCardAccomodations';
 import SettingsCardFacilityContactDetails from '@/components/SettingsCard/SettingsCardFacilityContactDetails';
+import SettingsCardFacilityLocation from '@/components/SettingsCard/SettingsCardFacilityLocation';
+import SettingsCardFacilityLogistics from '@/components/SettingsCard/SettingsCardFacilityLogistics';
+import SettingsCardFacilityPreferences from '@/components/SettingsCard/SettingsCardFacilityPreferences';
+import SettingsCardHostInfo from '@/components/SettingsCard/SettingsCardHostInfo';
 import SettingsCardNotifications from '@/components/SettingsCard/SettingsCardNotifications';
 import SettingsCardPerformanceInterest from '@/components/SettingsCard/SettingsCardPerformanceInterest';
 import SettingsCardPersonalDetails from '@/components/SettingsCard/SettingsCardPersonalDetails';
@@ -51,8 +58,12 @@ export default function SettingsPage() {
     street_address_1: '',
     street_address_2: '',
     audience: [],
-    type: [],
-    //additional_info: JSON;
+    type: '',
+    info: {
+      parking: '',
+      has_piano: false,
+      has_sound_equipment: false,
+    },
     has_host: false,
     host_email: '',
     host_name: '',
@@ -94,12 +105,23 @@ export default function SettingsPage() {
         );
         setFacilityContactInfo(fetchedFacilityContactInfo);
         setEditedFacilityContactInfo(fetchedFacilityContactInfo);
+
+        const fetchedFacilityInfo = await fetchFacilityInfo(session.user.id);
+        setFacilityInfo(fetchedFacilityInfo);
+        setEditedFacilityInfo(fetchedFacilityInfo);
       }
     };
     getUserData();
   }, [session, userRole]);
 
-  if (!session || !session.user || !userInfo || !userPreferences) {
+  if (
+    !session ||
+    !session.user ||
+    !userInfo ||
+    !userPreferences ||
+    !facilityContactInfo ||
+    !facilityInfo
+  ) {
     return <div>Loading...</div>;
   }
 
@@ -185,6 +207,46 @@ export default function SettingsPage() {
                   editInfo={editedFacilityContactInfo}
                   setEditInfo={setEditedFacilityContactInfo}
                   setFacilityContactInfo={setFacilityContactInfo}
+                  userId={session.user.id}
+                />
+                <SettingsCardFacilityLocation
+                  name={facilityInfo.name}
+                  city={facilityInfo.city}
+                  county={facilityInfo.county}
+                  street_address_1={facilityInfo.street_address_1}
+                  street_address_2={facilityInfo.street_address_2}
+                  facilityInfo={facilityInfo}
+                  editInfo={editedFacilityInfo}
+                  setEditInfo={setEditedFacilityInfo}
+                  setFacilityInfo={setFacilityInfo}
+                  userId={session.user.id}
+                />
+                <SettingsCardFacilityPreferences
+                  type={facilityInfo.type}
+                  audience_preferences={facilityInfo.audience}
+                  facilityInfo={facilityInfo}
+                  editInfo={editedFacilityInfo}
+                  setEditInfo={setEditedFacilityInfo}
+                  setFacilityInfo={setFacilityInfo}
+                  userId={session.user.id}
+                />
+                <SettingsCardFacilityLogistics
+                  info={facilityInfo.info}
+                  facilityInfo={facilityInfo}
+                  editInfo={editedFacilityInfo}
+                  setEditInfo={setEditedFacilityInfo}
+                  setFacilityInfo={setFacilityInfo}
+                  userId={session.user.id}
+                />
+                <SettingsCardHostInfo
+                  hasHost={facilityInfo.has_host}
+                  hostName={facilityInfo.host_name}
+                  hostEmail={facilityInfo.host_email}
+                  hostPhone={facilityInfo.host_phone_number}
+                  facilityInfo={facilityInfo}
+                  editInfo={editedFacilityInfo}
+                  setEditInfo={setEditedFacilityInfo}
+                  setFacilityInfo={setFacilityInfo}
                   userId={session.user.id}
                 />
               </styles.SettingDiv>

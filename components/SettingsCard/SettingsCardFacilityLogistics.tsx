@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { updateFacilityInfo } from '@/api/supabase/queries/facilities';
+import InputDropdown from '@/components/InputDropdown/InputDropdown';
 import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5 } from '@/styles/text';
@@ -7,23 +8,27 @@ import { FacilityInfo } from '@/utils/settingsInfo';
 import * as styles from './styles';
 import { Input, InputContainer, Label, RedAsterisk } from './styles';
 
-export default function SettingCardFacilityLocation({
-  name,
-  city,
-  county,
-  street_address_1,
-  street_address_2,
+const pianoOptions = new Set(['Yes', 'No']);
+const soundOptions = new Set(['Yes', 'No']);
+const parkingOptions = new Set([
+  'Yes, parking lot',
+  'Yes, street parking',
+  'None',
+]);
+
+export default function SettingCardFacilityLogistics({
+  info,
   facilityInfo,
   editInfo,
   setEditInfo,
   setFacilityInfo,
   userId,
 }: {
-  name: string;
-  city: string;
-  county: string;
-  street_address_1: string;
-  street_address_2: string;
+  info: {
+    parking: string;
+    has_piano: boolean;
+    has_sound_equipment: boolean;
+  };
   editInfo: FacilityInfo;
   facilityInfo: FacilityInfo;
   setEditInfo: React.Dispatch<React.SetStateAction<FacilityInfo>>;
@@ -32,47 +37,59 @@ export default function SettingCardFacilityLocation({
 }) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
-  const updateName = (value: string) => {
-    setEditInfo(prev => ({
-      ...prev,
-      name: value,
-    }));
+  const updateSound = (value: string) => {
+    if (value == 'Yes') {
+      setEditInfo(prev => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          has_sound_equipment: true,
+        },
+      }));
+    } else {
+      setEditInfo(prev => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          has_sound_equipment: false,
+        },
+      }));
+    }
   };
 
-  const updateCity = (value: string) => {
-    setEditInfo(prev => ({
-      ...prev,
-      city: value,
-    }));
+  const updatePiano = (value: string) => {
+    if (value == 'Yes') {
+      setEditInfo(prev => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          has_piano: true,
+        },
+      }));
+    } else {
+      setEditInfo(prev => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          has_piano: false,
+        },
+      }));
+    }
   };
 
-  const updateCounty = (value: string) => {
+  const updateParking = (value: string) => {
     setEditInfo(prev => ({
       ...prev,
-      county: value,
-    }));
-  };
-
-  const updateAddress1 = (value: string) => {
-    setEditInfo(prev => ({
-      ...prev,
-      street_address_1: value,
-    }));
-  };
-
-  const updateAddress2 = (value: string) => {
-    setEditInfo(prev => ({
-      ...prev,
-      street_address_2: value,
+      info: {
+        ...prev.info,
+        parking: value,
+      },
     }));
   };
 
   const handleCancel = () => {
-    updateName(name);
-    updateCity(city);
-    updateCounty(county);
-    updateAddress1(street_address_1);
-    updateAddress2(street_address_2);
+    updateSound(info.has_sound_equipment ? 'Yes' : 'No');
+    updatePiano(info.has_piano ? 'Yes' : 'No');
     setIsEditable(!isEditable);
   };
 
@@ -87,7 +104,7 @@ export default function SettingCardFacilityLocation({
       <styles.AvailabilityHeader>
         <styles.AvailabilityTitle>
           <H5 $fontWeight="500" $color={COLORS.bread1} $align="left">
-            Facility Location
+            Facility Logistics
           </H5>
         </styles.AvailabilityTitle>
         <styles.EditButton onClick={() => setIsEditable(!isEditable)}>
@@ -101,24 +118,28 @@ export default function SettingCardFacilityLocation({
               {isEditable ? (
                 <InputContainer>
                   <Label>
-                    Facility Name <RedAsterisk>*</RedAsterisk>
+                    Own sound equipment? <RedAsterisk>*</RedAsterisk>
                   </Label>
-                  <Input
-                    name="name"
-                    placeholder="Highland Hospital"
-                    value={editInfo.name}
-                    onChange={e => updateName(e.target.value)}
-                  />
+                  <styles.SettingListedItems>
+                    <InputDropdown
+                      label=""
+                      placeholder="Select performance type"
+                      multi={false}
+                      options={soundOptions}
+                      value={editInfo.info.has_sound_equipment ? 'Yes' : 'No'}
+                      onChange={selected => updateSound(selected as string)}
+                    />
+                  </styles.SettingListedItems>
                 </InputContainer>
               ) : (
                 <div>
-                  <Label>Facility Name</Label>
+                  <Label>Own sound equipment?</Label>
                   <styles.TruncatedText
                     $fontWeight="400"
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {facilityInfo.name}
+                    {info.has_sound_equipment ? 'Yes' : 'No'}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -127,24 +148,28 @@ export default function SettingCardFacilityLocation({
               {isEditable ? (
                 <InputContainer>
                   <Label>
-                    County <RedAsterisk>*</RedAsterisk>
+                    Has piano? <RedAsterisk>*</RedAsterisk>
                   </Label>
-                  <Input
-                    name="county"
-                    placeholder="Alameda"
-                    value={editInfo.county}
-                    onChange={e => updateCounty(e.target.value)}
-                  />
+                  <styles.SettingListedItems>
+                    <InputDropdown
+                      label=""
+                      placeholder="Select performance type"
+                      multi={false}
+                      options={pianoOptions}
+                      value={editInfo.info.has_piano ? 'Yes' : 'No'}
+                      onChange={selected => updatePiano(selected as string)}
+                    />
+                  </styles.SettingListedItems>
                 </InputContainer>
               ) : (
                 <div>
-                  <Label>County</Label>
+                  <Label>Has piano?</Label>
                   <styles.TruncatedText
                     $fontWeight="400"
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {facilityInfo.county}
+                    {info.has_piano ? 'Yes' : 'No'}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -153,60 +178,29 @@ export default function SettingCardFacilityLocation({
               {isEditable ? (
                 <InputContainer>
                   <Label>
-                    City <RedAsterisk>*</RedAsterisk>
+                    Has parking? <RedAsterisk>*</RedAsterisk>
                   </Label>
-                  <Input
-                    name="city"
-                    placeholder="Berkeley"
-                    value={editInfo.city}
-                    onChange={e => updateCity(e.target.value)}
-                  />
+                  <styles.SettingListedItems>
+                    <InputDropdown
+                      label=""
+                      placeholder="Select performance type"
+                      multi={false}
+                      options={parkingOptions}
+                      value={editInfo.info.parking}
+                      onChange={selected => updateParking(selected as string)}
+                    />
+                  </styles.SettingListedItems>
                 </InputContainer>
               ) : (
                 <div>
-                  <Label>City</Label>
+                  <Label>Has parking?</Label>
                   <styles.TruncatedText
                     $fontWeight="400"
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {facilityInfo.city}
+                    {info.parking}
                   </styles.TruncatedText>
-                </div>
-              )}
-            </styles.SettingDetail>
-            <styles.SettingDetail>
-              {isEditable ? (
-                <InputContainer>
-                  <Label>
-                    Address <RedAsterisk>*</RedAsterisk>
-                  </Label>
-                  <Input
-                    name="address"
-                    placeholder="2400 Durant Ave."
-                    value={editInfo.street_address_1}
-                    onChange={e => updateAddress1(e.target.value)}
-                  />
-                </InputContainer>
-              ) : (
-                <div>
-                  <Label>Address</Label>
-                  <styles.TruncatedText
-                    $fontWeight="400"
-                    $color={COLORS.gray11}
-                    $align="left"
-                  >
-                    {facilityInfo.street_address_1}
-                  </styles.TruncatedText>
-                  {facilityInfo.street_address_2 != null && (
-                    <styles.TruncatedText
-                      $fontWeight="400"
-                      $color={COLORS.gray11}
-                      $align="left"
-                    >
-                      {facilityInfo.street_address_2}
-                    </styles.TruncatedText>
-                  )}
                 </div>
               )}
             </styles.SettingDetail>
