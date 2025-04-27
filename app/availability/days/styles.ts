@@ -1,6 +1,6 @@
 import styled from 'styled-components';
+import { P, SMALL } from '@/styles/text';
 import COLORS from '../../../styles/colors';
-import { P } from '@/styles/text';
 
 export const CalendarContainer = styled.div`
   width: 100%;
@@ -21,7 +21,7 @@ export const Calendar = styled.div`
     padding: 2rem;
     gap: 1.75rem;
     box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
-    margin: 2.625rem 0;
+    margin-top: 2.625rem;
     }
   .fc-prev-button,
   .fc-next-button {
@@ -112,6 +112,7 @@ export const NoDaysContainer = styled.div`
 
 export const NoDaysText = styled(P)`
   color: ${COLORS.gray11};
+  font-weight: 400;
   font-style: italic;
 `;
 
@@ -124,8 +125,9 @@ export const SelectedList = styled.ul`
   margin: 0;
 `;
 
-export const SelectedTitle = styled.p`
-  font-weight: 500;
+export const SelectedTitle = styled(SMALL)`
+  color: ${COLORS.gray11};
+  font-weight: 400;
   padding-left: 0;
   margin-bottom: 0.25rem;
 `;

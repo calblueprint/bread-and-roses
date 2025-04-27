@@ -23,7 +23,15 @@ import {
   Image,
   Title,
 } from '../styles';
-import { Calendar, CalendarContainer, NoDaysText, NoDaysContainer, SelectedDaysContainer, SelectedList, SelectedTitle } from './styles';
+import {
+  Calendar,
+  CalendarContainer,
+  NoDaysContainer,
+  NoDaysText,
+  SelectedDaysContainer,
+  SelectedList,
+  SelectedTitle,
+} from './styles';
 
 type Info = {
   start: Date;
@@ -82,7 +90,7 @@ export default function Page() {
       }
       start.setDate(start.getDate() + 1); // Move to the next day
     }
-    console.log("days", days);
+    console.log('days', days);
   };
 
   const updateMonth = (info: Info) => {
@@ -136,31 +144,29 @@ export default function Page() {
         <NoDaysContainer>
           <NoDaysText>You haven&apos;t selected any days yet</NoDaysText>
         </NoDaysContainer>
-      )
+      );
     }
     const sortedDays = days.slice().sort((a, b) => {
       const dateA = new Date(a);
       const dateB = new Date(b);
       return dateA.getTime() - dateB.getTime();
     });
-    return(
-       <SelectedDaysContainer>
-      <SelectedTitle>
-        You selected...
-      </SelectedTitle>
-      <SelectedList>
-        {sortedDays.map((day, index) => (
-          <li key={index}>
-            {new Date(day).toLocaleDateString('en-US', {
-              weekday: 'short',
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            })}
-          </li>
-        ))}
-      </SelectedList>
-    </SelectedDaysContainer>
+    return (
+      <SelectedDaysContainer>
+        <SelectedTitle>You selected...</SelectedTitle>
+        <SelectedList>
+          {sortedDays.map((day, index) => (
+            <li key={index}>
+              {new Date(day).toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </li>
+          ))}
+        </SelectedList>
+      </SelectedDaysContainer>
     );
   }
 
