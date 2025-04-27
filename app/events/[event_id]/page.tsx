@@ -341,7 +341,8 @@ export default function EventDisplay({
                   $color={COLORS.rose11}
                   $align="left"
                 >
-                  {event?.producer_email || 'Producer Phone Number Not Found'}
+                  {event?.producer_phone_number ||
+                    'Producer Phone Number Not Found'}
                 </styles.PhoneNumberText>
               </styles.ContactDetails>
             </styles.ContactContainer>

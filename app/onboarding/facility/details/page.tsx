@@ -59,7 +59,7 @@ export default function Onboarding() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>We just need some final details!</Title>
-        <ProgressBar from={50} to={75} />
+        <ProgressBar from={75} to={75} />
         <Container>
           <InputContainer>
             <Label>Any notes for us at Bread & Roses?</Label>

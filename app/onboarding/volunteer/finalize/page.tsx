@@ -10,7 +10,7 @@ import {
   ReviewContainer,
 } from '@/styles/styles';
 import { H5, P } from '@/styles/text';
-import { Background } from '../styles';
+import { Background } from '../../styles';
 
 export default function Onboarding() {
   const router = useRouter(); // Initialize useRouter

@@ -21,13 +21,12 @@ import {
   InlineContainer,
   RoleContainer,
   Title,
-} from '../styles';
+} from '../../styles';
 import { SelectAll } from './styles';
 
 export default function Onboarding() {
   const router = useRouter();
 
-  // Access the onboarding context
   const onboardingContext = useContext(OnboardingContext);
 
   if (!onboardingContext) return null;
@@ -44,7 +43,7 @@ export default function Onboarding() {
   };
 
   const handleContinue = async () => {
-    router.push('/onboarding/basic-information');
+    router.push('/onboarding/volunteer/basic-information');
   };
 
   const handleBack = async () => {

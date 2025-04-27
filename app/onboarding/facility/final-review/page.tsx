@@ -64,7 +64,7 @@ export default function Review() {
           <Image src={Back} alt="Back icon" />
         </BackButton>
         <Title $fontWeight={500}>Does everything look right?</Title>
-        <ProgressBar from={75} to={100} />
+        <ProgressBar from={100} to={100} />
         <ReviewContainer>
           <InfoSection>
             <SubSection>
