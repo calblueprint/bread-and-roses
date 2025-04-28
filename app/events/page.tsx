@@ -180,7 +180,11 @@ export default function EventPage() {
                 {events.map(event => (
                   <Link
                     key={event.event_id}
-                    href={`/events/${event.event_id}`}
+                    href={
+                      selectedView == 'applied'
+                        ? `/discover/${event.event_id}`
+                        : `/events/${event.event_id}`
+                    }
                     style={{ textDecoration: 'none' }}
                   >
                     <MyEventCard {...event} />
