@@ -59,8 +59,6 @@ export default function AvailabilityInfoPage({
         if (!availabilities) return;
         const dates = await fetchDatesByAvailabilityID(params.availability_id);
         if (!dates) return;
-        /* Prevent setting AvailabilityContext in useEffect from infinitely rendering */
-        setIsAvailabilityLoaded(true);
 
         /* Add availability information to AvailabilityContext to prefill data on editing */
         const { availability_id, ...generalInfoData } = availabilities;
@@ -81,6 +79,9 @@ export default function AvailabilityInfoPage({
             ),
           ),
         ]);
+
+        /* Prevent setting AvailabilityContext in useEffect from infinitely rendering */
+        setIsAvailabilityLoaded(true);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -88,7 +89,9 @@ export default function AvailabilityInfoPage({
     fetchAvailabilityData();
   }, [params.availability_id, availabilityContext, isAvailabilityLoaded]);
 
-  if (!availabilityContext) return null;
+  if (!availabilityContext) {
+    return null;
+  }
 
   const { generalInfo } = availabilityContext;
 
@@ -178,32 +181,30 @@ export default function AvailabilityInfoPage({
     router.push('/availability/details');
   };
 
-  return (
-    <div>
-      <Container>
-        <ReviewContainer>
-          <BackButton onClick={handleBack}>
-            <Image src={Back} alt="Back icon" />
-          </BackButton>
+  return isAvailabilityLoaded ? (
+    <Container>
+      <ReviewContainer>
+        <BackButton onClick={handleBack}>
+          <Image src={Back} alt="Back icon" />
+        </BackButton>
+        <SplitText>
+          <Title $color={COLORS.gray12}> {generalInfo.eventName} </Title>
+          <EditButton onClick={handleDetails}>
+            <EditIcon src={Edit} alt="Edit icon" />
+          </EditButton>
+        </SplitText>
+        <Divider />
+        <TextContainer>
+          <P $fontWeight={400}>{generalInfo.additionalInfo || '(blank)'}</P>
+        </TextContainer>
+        <AvailabilityDiv>
           <SplitText>
-            <Title $color={COLORS.gray12}> {generalInfo.eventName} </Title>
-            <EditButton onClick={handleDetails}>
-              <EditIcon src={Edit} alt="Edit icon" />
-            </EditButton>
+            <Title $color={COLORS.gray12}> Availabilities </Title>
           </SplitText>
-          <Divider />
-          <TextContainer>
-            <P $fontWeight={400}>{generalInfo.additionalInfo || '(blank)'}</P>
-          </TextContainer>
-          <AvailabilityDiv>
-            <SplitText>
-              <Title $color={COLORS.gray12}> Availabilities </Title>
-            </SplitText>
-          </AvailabilityDiv>
-          <Divider />
-          <AvailabilityContainer>{availabilities}</AvailabilityContainer>
-        </ReviewContainer>
-      </Container>
-    </div>
-  );
+        </AvailabilityDiv>
+        <Divider />
+        <AvailabilityContainer>{availabilities}</AvailabilityContainer>
+      </ReviewContainer>
+    </Container>
+  ) : null;
 }
