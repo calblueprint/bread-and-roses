@@ -108,7 +108,7 @@ export default function SettingCardShowPreferences({
           <styles.SubHeader>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
-                Facility Type
+                Facility Types
               </P>
               <styles.SettingListedItems>
                 {isEditable ? (
@@ -176,7 +176,7 @@ export default function SettingCardShowPreferences({
             </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
-                Preferred Audience
+                Preferred Audiences
               </P>
               <styles.SettingListedItems>
                 {isEditable ? (

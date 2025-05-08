@@ -176,3 +176,25 @@ export const ButtonContainer = styled.main`
   justify-content: center;
   align-items: center;
 `;
+
+export const RemoveHostContainer = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const RemoveHostButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: ${COLORS.pomegranate12};
+  margin-left: auto;
+  width: 7rem;
+  height: 1.5rem;
+  font-size: 0.875rem;
+  border: 0.1rem solid ${COLORS.pomegranate12};
+  border-radius: 0.5rem;
+  cursor: pointer;
+  ${Sans.style}
+`;

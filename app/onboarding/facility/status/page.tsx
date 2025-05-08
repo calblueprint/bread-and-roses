@@ -89,7 +89,7 @@ export default function Status() {
   }
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <div></div>;
   }
 
   if (error) {

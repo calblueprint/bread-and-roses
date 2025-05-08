@@ -98,7 +98,7 @@ export default function Onboarding() {
   if (!facilityOnboardingContext) return null;
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <div></div>;
   }
 
   const { facilityGeneralInfo: generalInfo, setGeneralInfo } =
