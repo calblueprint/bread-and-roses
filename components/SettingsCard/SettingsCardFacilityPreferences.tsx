@@ -5,7 +5,6 @@ import Edit from '@/public/images/edit.svg';
 import COLORS from '@/styles/colors';
 import { H5, P } from '@/styles/text';
 import { FacilityInfo } from '@/utils/settingsInfo';
-import { Input, InputContainer, Label, RedAsterisk } from './styles';
 import * as styles from './styles';
 
 const facilityTypeOptions = new Set([
@@ -94,7 +93,7 @@ export default function SettingCardShowPreferences({
                 <styles.SettingListedItems>
                   <InputDropdown
                     label=""
-                    placeholder="Select performance type"
+                    placeholder="Select facility type"
                     multi={false}
                     options={facilityTypeOptions}
                     value={editInfo.type}

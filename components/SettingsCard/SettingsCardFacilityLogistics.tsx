@@ -6,7 +6,7 @@ import COLORS from '@/styles/colors';
 import { H5 } from '@/styles/text';
 import { FacilityInfo } from '@/utils/settingsInfo';
 import * as styles from './styles';
-import { Input, InputContainer, Label, RedAsterisk } from './styles';
+import { InputContainer, Label, RedAsterisk } from './styles';
 
 const pianoOptions = new Set(['Yes', 'No']);
 const soundOptions = new Set(['Yes', 'No']);

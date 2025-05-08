@@ -17,7 +17,6 @@ import SettingsCardFacilityLocation from '@/components/SettingsCard/SettingsCard
 import SettingsCardFacilityLogistics from '@/components/SettingsCard/SettingsCardFacilityLogistics';
 import SettingsCardFacilityPreferences from '@/components/SettingsCard/SettingsCardFacilityPreferences';
 import SettingsCardHostInfo from '@/components/SettingsCard/SettingsCardHostInfo';
-import SettingsCardNotifications from '@/components/SettingsCard/SettingsCardNotifications';
 import SettingsCardPerformanceInterest from '@/components/SettingsCard/SettingsCardPerformanceInterest';
 import SettingsCardPersonalDetails from '@/components/SettingsCard/SettingsCardPersonalDetails';
 import SettingsCardShowPreferences from '@/components/SettingsCard/SettingsCardShowPreferences';
@@ -152,7 +151,6 @@ export default function SettingsPage() {
                   setUserInfo={setUserInfo}
                   userId={session.user.id}
                 />
-                <SettingsCardNotifications />
                 <SettingsCardShowPreferences
                   facility_preferences={userPreferences.facility_type}
                   locations={userPreferences.locations}
@@ -239,7 +237,6 @@ export default function SettingsPage() {
                   userId={session.user.id}
                 />
                 <SettingsCardHostInfo
-                  hasHost={facilityInfo.has_host}
                   hostName={facilityInfo.host_name}
                   hostEmail={facilityInfo.host_email}
                   hostPhone={facilityInfo.host_phone_number}

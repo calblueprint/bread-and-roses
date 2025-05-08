@@ -155,7 +155,7 @@ export default function SettingCardPerformanceInterest({
             </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
-                Genre
+                Genre (if music)
               </P>
               <styles.SettingListedItems>
                 {isEditable ? (

@@ -11,7 +11,6 @@ import * as styles from './styles';
 import { Input, InputContainer, Label, RedAsterisk } from './styles';
 
 export default function SettingCardHostInfo({
-  hasHost,
   hostName,
   hostEmail,
   hostPhone,
@@ -21,7 +20,6 @@ export default function SettingCardHostInfo({
   setFacilityInfo,
   userId,
 }: {
-  hasHost: boolean;
   hostName: string;
   hostEmail: string;
   hostPhone: string;
