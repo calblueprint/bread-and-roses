@@ -21,7 +21,6 @@ export interface GeneralInfo {
   lastName: string;
   phoneNumber: string;
   socialMedia: string;
-  notifications: boolean;
 }
 
 export interface Preferences {
@@ -54,7 +53,6 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     lastName: '',
     phoneNumber: '',
     socialMedia: '',
-    notifications: true,
   });
 
   const [preferences, setPreferences] = useState<Preferences>({
