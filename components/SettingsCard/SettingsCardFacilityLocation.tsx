@@ -127,28 +127,50 @@ export default function SettingCardFacilityLocation({
               {isEditable ? (
                 <InputContainer>
                   <Label>
-                    County <RedAsterisk>*</RedAsterisk>
+                    Address <RedAsterisk>*</RedAsterisk>
                   </Label>
                   <Input
-                    name="county"
-                    placeholder="Alameda"
-                    value={editInfo.county}
-                    onChange={e => updateCounty(e.target.value)}
+                    name="address"
+                    placeholder="2400 Durant Ave."
+                    value={editInfo.street_address_1}
+                    onChange={e => updateAddress1(e.target.value)}
                   />
                 </InputContainer>
               ) : (
                 <div>
-                  <Label>County</Label>
+                  <Label>Address</Label>
                   <styles.TruncatedText
                     $fontWeight="400"
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {facilityInfo.county}
+                    {facilityInfo.street_address_1}
                   </styles.TruncatedText>
+                  {facilityInfo.street_address_2 != null && (
+                    <styles.TruncatedText
+                      $fontWeight="400"
+                      $color={COLORS.gray11}
+                      $align="left"
+                    >
+                      {facilityInfo.street_address_2}
+                    </styles.TruncatedText>
+                  )}
                 </div>
               )}
             </styles.SettingDetail>
+            {isEditable && (
+              <styles.SettingDetail>
+                <InputContainer>
+                  <Label>Apartment, suite, etc (optional)</Label>
+                  <Input
+                    name="address2"
+                    placeholder="Unit 208"
+                    value={editInfo.street_address_2}
+                    onChange={e => updateAddress2(e.target.value)}
+                  />
+                </InputContainer>
+              </styles.SettingDetail>
+            )}
             <styles.SettingDetail>
               {isEditable ? (
                 <InputContainer>
@@ -179,34 +201,25 @@ export default function SettingCardFacilityLocation({
               {isEditable ? (
                 <InputContainer>
                   <Label>
-                    Address <RedAsterisk>*</RedAsterisk>
+                    County <RedAsterisk>*</RedAsterisk>
                   </Label>
                   <Input
-                    name="address"
-                    placeholder="2400 Durant Ave."
-                    value={editInfo.street_address_1}
-                    onChange={e => updateAddress1(e.target.value)}
+                    name="county"
+                    placeholder="Alameda"
+                    value={editInfo.county}
+                    onChange={e => updateCounty(e.target.value)}
                   />
                 </InputContainer>
               ) : (
                 <div>
-                  <Label>Address</Label>
+                  <Label>County</Label>
                   <styles.TruncatedText
                     $fontWeight="400"
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {facilityInfo.street_address_1}
+                    {facilityInfo.county}
                   </styles.TruncatedText>
-                  {facilityInfo.street_address_2 != null && (
-                    <styles.TruncatedText
-                      $fontWeight="400"
-                      $color={COLORS.gray11}
-                      $align="left"
-                    >
-                      {facilityInfo.street_address_2}
-                    </styles.TruncatedText>
-                  )}
                 </div>
               )}
             </styles.SettingDetail>

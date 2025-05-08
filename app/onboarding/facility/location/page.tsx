@@ -161,7 +161,7 @@ export default function Onboarding() {
           />
 
           <InputDropdown
-            label="Has this facility signed up before?"
+            label="Has this facility signed up before? (Changing the facility contact?)"
             placeholder="No"
             multi={false}
             onChange={value =>

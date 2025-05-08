@@ -132,7 +132,7 @@ export default function SettingCardHostInfo({
                         </styles.TruncatedText>
                       </div>
                       <styles.RemoveHostButton onClick={handleRemoveHost}>
-                        Remove
+                        Remove Host
                       </styles.RemoveHostButton>
                     </styles.RemoveHostContainer>
                   ) : (

@@ -122,7 +122,7 @@ export default function SettingsPage() {
     !facilityContactInfo ||
     !facilityInfo
   ) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (

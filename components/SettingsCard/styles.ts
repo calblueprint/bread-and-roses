@@ -191,7 +191,7 @@ export const RemoveHostButton = styled.button`
   background-color: white;
   color: ${COLORS.pomegranate12};
   margin-left: auto;
-  width: 5rem;
+  width: 7rem;
   height: 1.5rem;
   font-size: 0.875rem;
   border: 0.1rem solid ${COLORS.pomegranate12};
