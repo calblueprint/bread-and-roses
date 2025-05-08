@@ -3,6 +3,7 @@
 import NextImage from 'next/image';
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
+import { Sans } from '@/styles/fonts';
 import { H3, H6, P } from '@/styles/text';
 
 export const SearchBar = styled.div`
@@ -58,6 +59,9 @@ export const DiscoverHolder = styled.main`
   flex-direction: column;
   width: 80%;
   padding: 2rem;
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
   box-sizing: border-box;
 `;
 
@@ -73,12 +77,11 @@ export const DiscoverContainer = styled.div`
 
 export const DiscoverCardContainer = styled.div<{ $search: boolean }>`
   display: flex;
-  flex-direction: row;
   flex-direction: ${({ $search }) => ($search ? 'column' : 'row')};
   gap: 1.688rem;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 1rem 0 1rem 0;
+  padding: 1rem 0;
   -ms-overflow-style: none;
   scrollbar-width: none;
 
@@ -87,6 +90,12 @@ export const DiscoverCardContainer = styled.div<{ $search: boolean }>`
   }
 
   white-space: normal;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 `;
 
 export const Icon = styled(NextImage)`
@@ -133,6 +142,7 @@ export const FilterTagContainer = styled.div`
   flex-wrap: wrap;
   padding-left: 1rem;
   gap: 0.5rem;
+  width: 100%;
 `;
 
 export const FilterTag = styled.div`
@@ -155,7 +165,7 @@ export const FilterMenuContainer = styled.div`
   width: 100%;
   padding: 0.875rem;
   z-index: 999;
-  background-color: ${COLORS.gray1};
+  background-color: ${COLORS.bread2};
   overflow-y: auto;
 `;
 
@@ -178,4 +188,22 @@ export const ShowAllText = styled(P)`
   display: flex;
   font-weight: 500;
   color: #755392;
+  justify-content: flex-end;
+  width: 100%;
+  font-weight: 400;
+`;
+
+export const ResetButton = styled.button`
+  display: flex;
+  width: 79px;
+  height: 23px;
+  padding: 8px 12px;
+  margin-right: 0.25rem;
+  justify-content: center;
+  align-items: center;
+  font-family: ${Sans.style.fontFamily};
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 8px;
+  border: 1px solid ${COLORS.pomegranate12};
 `;

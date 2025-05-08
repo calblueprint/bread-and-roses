@@ -128,14 +128,15 @@ export default function Status() {
           )}
           {isApproved && (
             <ContentAfterSteps>
-              <P $fontWeight={400} $color={COLORS.gray12}>
+              {/* NOT SURE WHY WE HAVE THIS
+                <P $fontWeight={400} $color={COLORS.gray12}>
                 We couldn’t find your facility records, please fill out your
                 facility information. If you think this is a mistake, please
                 contact{' '}
                 <span style={{ color: COLORS.rose11 }}>
                   info@breadandroses.org.
                 </span>
-              </P>
+              </P> */}
               <RoundedCornerButton
                 $bgColor={COLORS.pomegranate12}
                 width="100%"

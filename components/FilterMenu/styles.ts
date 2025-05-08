@@ -12,6 +12,9 @@ export const Container = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
   gap: 0.5rem;
 `;
 
@@ -36,9 +39,9 @@ export const Input = styled.div`
 
   &::after {
     content: attr(data-label);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: ${COLORS.gray12};
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     white-space: normal;
     flex: 1;
   }
@@ -51,7 +54,7 @@ export const InputContainer = styled.div`
   margin-top: 0.25rem;
   color: ${COLORS.gray10};
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   }
 `;
@@ -78,7 +81,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   }
 `;
 
-export const Button = styled.button`
+export const ApplyButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +93,24 @@ export const Button = styled.button`
   cursor: pointer;
 `;
 
-export const ButtonText = styled(P)`
+export const ClearButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.0625rem solid ${COLORS.pomegranate12};
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: ${COLORS.gray2};
+  cursor: pointer;
+`;
+
+export const ApplyButtonText = styled(P)`
   color: ${COLORS.gray1};
+  font-weight: 400;
+`;
+
+export const ClearButtonText = styled(P)`
+  color: ${COLORS.pomegranate12};
   font-weight: 400;
 `;

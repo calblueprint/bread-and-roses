@@ -26,8 +26,8 @@ import {
   FacilityContacts,
   Volunteers,
 } from '@/types/schema';
+import facilityTypeToPhoto from '@/utils/facilityTypeToPhoto';
 import formatTime from '@/utils/formatTime';
-import performanceToPhotoMap from '@/utils/performanceToPhoto';
 import * as styles from './styles';
 
 export default function EventDisplay({
@@ -93,10 +93,7 @@ export default function EventDisplay({
   return (
     <styles.Page>
       <styles.ImageWrapper>
-        {performanceToPhotoMap(
-          event.performance_type,
-          event.genre?.toString() ?? null,
-        )}
+        {facilityTypeToPhoto(facility.type)}
         <styles.GradientOverlay />
       </styles.ImageWrapper>
       <styles.Curve />
@@ -255,7 +252,7 @@ export default function EventDisplay({
                   $color={COLORS.gray12}
                   $align="left"
                 >
-                  {!event.needs_host || host ? host_name : 'Host Not Found'}
+                  {!event.needs_host || host ? host_name : 'No Host Yet'}
                 </styles.ParaText>
                 <styles.ContactTypeText
                   $fontWeight="400"
@@ -290,7 +287,7 @@ export default function EventDisplay({
                 >
                   {performer
                     ? `${performer.first_name} ${performer.last_name}`
-                    : 'Performer Not Found'}
+                    : 'No Performer Yet'}
                 </styles.ParaText>
                 <styles.ContactTypeText
                   $fontWeight="400"
@@ -323,7 +320,7 @@ export default function EventDisplay({
                   $color={COLORS.gray12}
                   $align="left"
                 >
-                  {event?.producer_name || 'Producer Not Found'}
+                  {event?.producer_name || 'Producer Name Not Found'}
                 </styles.ParaText>
                 <styles.ContactTypeText
                   $fontWeight="400"
@@ -337,14 +334,15 @@ export default function EventDisplay({
                   $color={COLORS.rose11}
                   $align="left"
                 >
-                  {event?.producer_email || 'Producer Not Found'}
+                  {event?.producer_email || 'Producer Email Not Found'}
                 </styles.EmailText>
                 <styles.PhoneNumberText
                   $fontWeight="400"
                   $color={COLORS.rose11}
                   $align="left"
                 >
-                  {event?.producer_email || 'Producer Not Found'}
+                  {event?.producer_phone_number ||
+                    'Producer Phone Number Not Found'}
                 </styles.PhoneNumberText>
               </styles.ContactDetails>
             </styles.ContactContainer>

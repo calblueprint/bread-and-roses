@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto';
+import { AvailableDates } from '@/types/schema';
 import supabase from '../createClient';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,7 +21,6 @@ export async function fetchFacilityIdByUserId(user_id: string) {
 export async function fetchAvailabilitiesByFacilityId(user_id: string) {
   try {
     const facility_id = await fetchFacilityIdByUserId(user_id);
-    console.log('faciility id:', facility_id);
     const { data, error } = await supabase
       .from('availabilities')
       .select('*, available_dates(*)')
@@ -36,11 +36,9 @@ export async function fetchAvailabilitiesByFacilityId(user_id: string) {
     // Only keep availabilities with at least one future end_date_time
     const futureAvailabilities = (data ?? []).filter(availability =>
       availability.available_dates?.some(
-        (date: typeof availability) => date.end_date_time > now,
+        (date: AvailableDates) => date.end_date_time > now,
       ),
     );
-
-    console.log('Filtered future availabilities:', futureAvailabilities);
 
     if (futureAvailabilities.length === 0) {
       console.log('No future availabilities for facility:', facility_id);

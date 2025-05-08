@@ -1,7 +1,7 @@
 // add schemas here!
 import type { UUID } from 'crypto';
 
-// used for events and volunteer_preference tables
+// used for volunteer_preference tables
 export type PerformanceType =
   | 'Music'
   | 'Dance'
@@ -38,7 +38,7 @@ export type Instruments = 'Guitar' | 'Violin' | 'Flute' | 'Trumpet' | 'Bass';
 // used for volunteers_preferences table
 export type Audience = 'Youth' | 'Adults' | 'Senior ';
 
-// used for events and volunteer_preference tables
+// used for volunteer_preference tables
 export type Genre =
   | 'A Cappella'
   | 'Bluegrass'
@@ -86,12 +86,9 @@ export interface Event {
   facility_id: UUID;
   start_date_time: string; //timestamptz
   end_date_time: string; //timestamptz
-  performance_type: PerformanceType;
   name: string;
-  genre?: Genre;
   needs_host: boolean;
   event_status: EventStatus;
-  performer_type: PerformerType;
   notes?: string;
   producer_name: string;
   producer_email: string;

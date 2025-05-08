@@ -40,6 +40,34 @@ export async function fetchAcceptedEventsByVolunteer(user_id: string) {
   return events;
 }
 
+export async function fetchSignedUpEventsByVolunteer(user_id: string) {
+  const { data, error } = await supabase
+    .from('event_signups')
+    .select(
+      `
+      is_accepted,
+      event:events (
+        *
+      )
+    `,
+    )
+    .eq('user_id', user_id)
+    .gt('events.start_date_time', new Date().toISOString());
+
+  if (error) {
+    throw error;
+  }
+
+  // Transform into a flat structure: merge `is_accepted` with event
+  const flattened =
+    data?.map(signup => ({
+      ...signup.event,
+      is_accepted: signup.is_accepted,
+    })) ?? [];
+
+  return flattened;
+}
+
 export async function fetchAcceptedEventsByFacility(user_id: string) {
   const { data, error } = await supabase
     .from('facility_contacts')
@@ -74,8 +102,9 @@ export async function fetchAllActiveEventsByFilter(search: string) {
 
   const { data, error } = await supabase
     .from('events')
-    .select('*, facilities!inner(name, county, city, type)')
+    .select('*, facilities!inner(name, county, city, type, audience)')
     .eq('event_status', 'Active')
+    .gt('end_date_time', new Date().toISOString())
     .or(`name.ilike.${pattern},city.ilike.${pattern},county.ilike.${pattern}`, {
       foreignTable: 'facilities',
     });
@@ -91,7 +120,8 @@ export async function fetchAllActiveEvents() {
   const { data, error } = await supabase
     .from('events')
     .select('*')
-    .eq('event_status', 'Active');
+    .eq('event_status', 'Active')
+    .gt('end_date_time', new Date().toISOString());
 
   if (error) {
     throw new Error(error.message);

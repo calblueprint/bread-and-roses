@@ -82,6 +82,9 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
   appearance: none;
   outline: none;
   cursor: pointer;
+  transition:
+    border 0.3s ease,
+    background-color 0.3s ease;
 
   ${({ shape }) =>
     shape === 'circle'
@@ -96,15 +99,32 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
             height: 0.75rem;
             background-color: ${COLORS.rose10};
             border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+          }
+
+          &::after {
+            ${checkmarkStyles};
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: transparent;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition:
+              background-color 0.3s ease,
+              transform 0.3s ease;
           }
         `
       : css`
           &:checked {
             background-color: ${COLORS.rose10};
             border-color: ${COLORS.rose10};
+            transition:
+              border 0.3s ease,
+              background-color 0.3s ease;
 
             &::before {
               display: inline-block;
+              transition: transform 0.3s ease;
             }
           }
 
@@ -121,8 +141,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
             background-repeat: no-repeat;
             background-image: url('/images/whitecheck.svg');
             background-position: center;
+            transition: transform 0.3s ease;
           }
         `}
-  
-  }
 `;

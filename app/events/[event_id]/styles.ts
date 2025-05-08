@@ -55,9 +55,10 @@ export const Page = styled.div`
   min-width: 100%;
   min-height: 100svh;
   overflow: hidden;
-  margin-bottom: 2rem;
-  @media (max-width: 768px) {
-    margin-bottom: 3.75rem;
+  padding-bottom: 2rem;
+
+  @media (max-width: 1024px) {
+    padding-bottom: 3.75rem;
   }
 `;
 
@@ -68,29 +69,42 @@ export const Bullet = styled(P)`
 `;
 
 export const LeftWrapper = styled.div`
-  @media (min-width: 768px) {
-    width: 50%;
+  position: relative;
+  @media (min-width: 1024px) {
+    padding-right: 18rem;
+
+    // Vertical divider
+    &::after {
+      content: '';
+      position: absolute;
+      top: -0.25rem;
+      right: 0rem;
+      height: calc(100% + 10rem);
+      width: 1px;
+      background-color: ${COLORS.gray6};
+      z-index: 100;
+    }
   }
 `;
 
 export const RightWrapper = styled.div`
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
+    margin-top: 2.5rem;
     padding-left: 3.875rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    border-left: 1px solid ${COLORS.gray6};
+    height: 100%;
   }
 `;
 
 export const Container = styled.div`
   display: flex;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     flex-direction: column;
     margin-left: 1.75rem;
     margin-right: 1.75rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     margin-left: 9.1875rem;
     margin-right: 5.1875rem;
   }
@@ -104,10 +118,10 @@ export const Curve = styled.div`
   padding: 0.75rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: column;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     border-radius: 20px 20px 0 0;
   }
-  background: ${COLORS.gray1};
+  background: ${COLORS.bread2};
 `;
 
 export const EventText = styled(H4)`
@@ -165,7 +179,7 @@ export const SubHeadingText = styled(H5)`
 `;
 
 export const ContactsSubHeadingText = styled(SubHeadingText)`
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     padding-right: 13rem;
     margin-top: 5rem;
   }

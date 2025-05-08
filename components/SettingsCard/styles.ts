@@ -142,7 +142,6 @@ export const SaveButton = styled.button`
   background-color: ${COLORS.pomegranate12};
   color: ${COLORS.gray1};
   padding: 0.5rem 0.75rem;
-  margin-left: auto;
   width: 5rem;
   height: 2.25rem;
   border: 0;

@@ -3,7 +3,7 @@ import { fetchFacilityById } from '@/api/supabase/queries/facilities';
 import LocationPin from '@/public/images/location_pin.svg';
 import COLORS from '@/styles/colors';
 import { Event, Facilities } from '@/types/schema';
-import performanceToPhotoMap from '@/utils/performanceToPhoto';
+import facilityTypeToPhoto from '@/utils/facilityTypeToPhoto';
 import {
   Container,
   EventLabel,
@@ -77,20 +77,24 @@ export default function DiscoverCard({
     const tags: JSX.Element[] = [];
     if (facility?.type) {
       tags.push(
-        <IndividualTag $bgColor={COLORS.bread6}>
+        <IndividualTag $bgColor={COLORS.bread6} key="bgColor">
           {facility?.type}
         </IndividualTag>,
       );
     }
     if (event?.needs_host) {
       tags.push(
-        <IndividualTag $bgColor={COLORS.rose6}>Host Needed</IndividualTag>,
+        <IndividualTag $bgColor={COLORS.rose6} key="host">
+          Host Needed
+        </IndividualTag>,
       );
     }
     if (facility?.audience) {
       for (const audience of facility?.audience) {
         tags.push(
-          <IndividualTag $bgColor={COLORS.lilac3}>{audience}</IndividualTag>,
+          <IndividualTag $bgColor={COLORS.lilac3} key={audience}>
+            {audience}
+          </IndividualTag>,
         );
       }
     }
@@ -153,10 +157,7 @@ export default function DiscoverCard({
     <StyledLink href={`/discover/${event.event_id}`}>
       <Container $search={search}>
         <ImageContainer $search={search}>
-          {performanceToPhotoMap(
-            event.performance_type,
-            event.genre?.toString() ?? null,
-          )}
+          {facilityTypeToPhoto(facility.type)}
         </ImageContainer>
         <TextContainer>
           <EventLabel>

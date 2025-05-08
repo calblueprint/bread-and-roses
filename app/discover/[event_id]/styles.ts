@@ -16,18 +16,15 @@ export const ImageWrapper = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 0.5rem 0.5rem 0 0;
+  border-radius: 0 0 0 0;
   background-color: ${COLORS.gray12};
 `;
 
 export const Page = styled.div`
   flex-direction: column;
   display: flex;
-  min-width: 100%;
-  min-height: 100vh;
   overflow: hidden;
-
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-bottom: 3.75rem;
   }
 
@@ -43,15 +40,15 @@ export const Curve = styled.div`
   padding: 0.75rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: column;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     border-radius: 20px 20px 0 0;
   }
-  background: ${COLORS.gray1};
+  background: ${COLORS.bread2};
 `;
 
 export const LeftWrapper = styled.div`
   position: relative;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     padding-right: 3.875rem;
 
     // Vertical divider
@@ -60,7 +57,7 @@ export const LeftWrapper = styled.div`
       position: absolute;
       top: -4.125rem;
       right: 0;
-      height: calc(100% + 4.125rem);
+      height: calc(100% + 8rem);
       width: 1px;
       background-color: ${COLORS.gray6};
       z-index: 100;
@@ -70,7 +67,7 @@ export const LeftWrapper = styled.div`
 
 export const RightWrapper = styled.div`
   margin-top: 1.188rem;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     padding-left: 3.875rem;
     display: flex;
     flex-direction: column;
@@ -82,16 +79,18 @@ export const Container = styled.div<{ $column?: boolean }>`
   flex: 1;
   display: grid;
   padding-top: 3.875rem;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     margin-left: 1.75rem;
     margin-right: 1.75rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     display: grid;
     grid-template-columns: ${({ $column }) => ($column ? '1fr' : '3fr 2fr')};
+    place-items: ${({ $column }) => ($column ? 'center' : 'initial')};
     margin-left: 5.1875rem;
     margin-right: 5.1875rem;
+    margin-bottom: 2rem;
   }
   justify-content: space-between;
 `;
@@ -107,6 +106,7 @@ export const Image = styled(NextImage)<{ $checked?: boolean }>`
 `;
 
 export const BackButton = styled.button`
+  position: relative;
   background-color: transparent;
   border: none;
   outline: none;
@@ -146,6 +146,7 @@ export const LocationIcon = styled(NextImage)`
 
 export const IndividualTag = styled.span<TagProps>`
   background-color: ${({ $bgColor }) => $bgColor || 'gray'};
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
@@ -159,6 +160,7 @@ export const TagDiv = styled.div`
   flex-direction: row;
   margin: 1rem 0;
   gap: 0.25rem;
+  flex-wrap: wrap;
 `;
 
 export const GroupSizeText = styled.div`
@@ -352,7 +354,7 @@ export const ConfirmationWrapper = styled.div`
   justify-content: center;
   position: relative;
   margin: 4rem auto;
-  max-width: 35rem;
+  max-width: 30rem;
 `;
 
 export const BreadImage = styled(Image)`
@@ -406,4 +408,30 @@ export const IconContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0rem;
+`;
+
+export const CancelButton = styled.button`
+  display: flex;
+  padding: 0.5rem 0.75rem;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${COLORS.pomegranate10};
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  align-self: flex-start;
+  border: 0;
+  cursor: pointer;
+  margin-left: auto;
+  max-width: 28rem;
+`;
+
+export const RemoveConfirmation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  line-height: normal;
+  margin-left: auto;
 `;

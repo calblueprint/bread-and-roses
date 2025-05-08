@@ -1,9 +1,11 @@
 import React from 'react';
 import {
-  Button,
+  ApplyButton,
+  ApplyButtonText,
   ButtonContainer,
-  ButtonText,
   Checkbox,
+  ClearButton,
+  ClearButtonText,
   Container,
   Divider,
   IndividualFilterContainer,
@@ -62,12 +64,12 @@ export default function FilterMenu({
         </IndividualFilterContainer>
       ))}
       <ButtonContainer>
-        <Button onClick={onApply}>
-          <ButtonText>Apply</ButtonText>
-        </Button>
-        <Button onClick={onClear}>
-          <ButtonText>Clear</ButtonText>
-        </Button>
+        <ApplyButton onClick={onApply}>
+          <ApplyButtonText>Apply</ApplyButtonText>
+        </ApplyButton>
+        <ClearButton onClick={onClear}>
+          <ClearButtonText>Clear</ClearButtonText>
+        </ClearButton>
       </ButtonContainer>
     </Container>
   );
