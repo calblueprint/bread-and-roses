@@ -12,7 +12,6 @@ import {
   Background,
   Button,
   ButtonContainer,
-  Checkbox,
   Container,
   ContinueText,
   FixedFooter,
@@ -24,7 +23,7 @@ import {
   Label,
   Title,
 } from '../../styles';
-import { RedAsterisk, UpdateContainer, UpdateText } from './styles';
+import { RedAsterisk } from './styles';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -126,15 +125,6 @@ export default function Onboarding() {
               onChange={handleChange}
             />
           </InputContainer>
-
-          <UpdateContainer>
-            <Checkbox
-              name="notifications"
-              checked={generalInfo.notifications}
-              onChange={handleChange}
-            />
-            <UpdateText>Notify me when an event matches my interest</UpdateText>
-          </UpdateContainer>
         </Container>
 
         <ButtonContainer>

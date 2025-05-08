@@ -1,5 +1,3 @@
-'use client';
-
 import styled from 'styled-components';
 import COLORS from '@/styles/colors';
 import { Sans } from '@/styles/fonts';

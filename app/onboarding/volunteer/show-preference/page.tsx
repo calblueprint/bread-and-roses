@@ -22,6 +22,7 @@ import {
 } from '../../styles';
 
 const facilityTypeOptions = new Set([
+  'Select All',
   'Assisted Living',
   "Children's Day Care",
   'Detention Center',
@@ -38,6 +39,7 @@ const facilityTypeOptions = new Set([
 ]);
 
 const locationOptions = new Set([
+  'Select All',
   'Alameda',
   'Contra Costa',
   'Marin',
@@ -48,7 +50,13 @@ const locationOptions = new Set([
   'Sonoma',
 ]);
 
-const audienceOptions = new Set(['Youth', 'Adults', 'Senior ']);
+const audienceOptions = new Set(['Select All', 'Youth', 'Adults', 'Senior']);
+
+type PreferencesType = {
+  facilityType: string[];
+  location: string[];
+  audience: string[];
+};
 
 export default function Onboarding() {
   const router = useRouter();
@@ -69,26 +77,57 @@ export default function Onboarding() {
     progress = (2 * 100) / 6;
   }
 
-  const handleFacilityChange = (selectedOptions: Set<string>) => {
-    const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, facilityType: selectedArray });
+  const handleSelectionChange = (
+    selectedOptions: Set<string>,
+    optionsSet: Set<string>,
+    key: keyof PreferencesType,
+  ) => {
+    const realOptions = Array.from(optionsSet).filter(
+      option => option !== 'Select All',
+    );
+
+    let updatedOptions = new Set(selectedOptions);
+
+    if (selectedOptions.has('Select All')) {
+      const isAllSelected = realOptions.every(option =>
+        selectedOptions.has(option),
+      );
+
+      if (isAllSelected) {
+        // If everything is already selected, clicking "Select All" should unselect everything
+        updatedOptions.clear();
+      } else {
+        // Otherwise, select all real options
+        updatedOptions = new Set(realOptions);
+      }
+    } else {
+      const isAllSelected = realOptions.every(option =>
+        selectedOptions.has(option),
+      );
+      if (isAllSelected) {
+        updatedOptions.add('Select All');
+      } else {
+        updatedOptions.delete('Select All');
+      }
+    }
+
+    setPreferences({ ...preferences, [key]: Array.from(updatedOptions) });
   };
 
-  const handleLocationChange = (selectedOptions: Set<string>) => {
-    const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, location: selectedArray });
-  };
+  const handleFacilityChange = (selectedOptions: Set<string>) =>
+    handleSelectionChange(selectedOptions, facilityTypeOptions, 'facilityType');
 
-  const handleAudienceChange = (selectedOptions: Set<string>) => {
-    const selectedArray = Array.from(selectedOptions);
-    setPreferences({ ...preferences, audience: selectedArray });
-  };
+  const handleLocationChange = (selectedOptions: Set<string>) =>
+    handleSelectionChange(selectedOptions, locationOptions, 'location');
+
+  const handleAudienceChange = (selectedOptions: Set<string>) =>
+    handleSelectionChange(selectedOptions, audienceOptions, 'audience');
 
   const handleSubmit = async () => {
     if (role.isPerformer) {
       router.push('/onboarding/volunteer/performance');
-    } else {
-      router.push('/onboarding/volunteer/additional-info');
+    } else if (role.isHost) {
+      router.push('/onboarding/volunteer/host-show-preference');
     }
   };
 

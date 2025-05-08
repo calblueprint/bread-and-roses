@@ -50,7 +50,11 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    router.push('/onboarding/volunteer/additional-info');
+    if (role.isHost) {
+      router.push('/onboarding/volunteer/host-show-preference');
+    } else {
+      router.push('/onboarding/volunteer/additional-info');
+    }
   };
 
   const handleBack = () => {
@@ -72,10 +76,13 @@ export default function Onboarding() {
             required
             multi={false}
             onChange={selectedOption =>
-              handleInfoChange('hasSoundEquipment', selectedOption)
+              handleInfoChange(
+                'performer_has_own_sound_equipment',
+                selectedOption,
+              )
             }
             options={Options}
-            value={preferences.info['hasSoundEquipment']}
+            value={preferences.info.performer_has_own_sound_equipment}
           />
           <InputDropdown
             label="Do you need a piano for your show? "
@@ -83,10 +90,10 @@ export default function Onboarding() {
             required
             multi={false}
             onChange={selectedOption =>
-              handleInfoChange('needsPiano', selectedOption)
+              handleInfoChange('performer_needs_piano', selectedOption)
             }
             options={Options}
-            value={preferences.info['needsPiano']}
+            value={preferences.info['performer_needs_piano']}
           />
           <InputDropdown
             label="Can you host your own show?"
@@ -94,10 +101,10 @@ export default function Onboarding() {
             required
             multi={false}
             onChange={selectedOption =>
-              handleInfoChange('canHost', selectedOption)
+              handleInfoChange('performer_can_host_self', selectedOption)
             }
             options={Options}
-            value={preferences.info['canHost']}
+            value={preferences.info['performer_can_host_self']}
           />
         </Container>
 
@@ -107,9 +114,9 @@ export default function Onboarding() {
             onClick={handleSubmit}
             position="fixed"
             disabled={
-              !preferences.info.hasSoundEquipment ||
-              !preferences.info.needsPiano ||
-              !preferences.info.canHost
+              !preferences.info.performer_has_own_sound_equipment ||
+              !preferences.info.performer_needs_piano ||
+              !preferences.info.performer_can_host_self
             }
           >
             <ContinueText>Continue</ContinueText>

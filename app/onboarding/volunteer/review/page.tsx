@@ -189,7 +189,7 @@ export default function Review() {
                 <SubSection>
                   <InfoSectionTitle>
                     <div>
-                      <H5 $fontWeight={500}>Logistics</H5>
+                      <H5 $fontWeight={500}>Performer Questions</H5>
                     </div>
 
                     <div>
@@ -206,25 +206,75 @@ export default function Review() {
                 <SubSection>
                   <P $fontWeight={500}>Own sound equipment?</P>
                   <SmallText>
-                    {displayValue(preferences.info.hasSoundEquipment)}
+                    {displayValue(
+                      preferences.info.performer_has_own_sound_equipment,
+                    )}
                   </SmallText>
                 </SubSection>
 
                 <SubSection>
                   <P $fontWeight={500}>Need piano?</P>
                   <SmallText>
-                    {displayValue(preferences.info.needsPiano)}
+                    {displayValue(preferences.info.performer_needs_piano)}
                   </SmallText>
                 </SubSection>
 
                 <SubSection>
                   <P $fontWeight={500}>Host own show?</P>
                   <SmallText>
-                    {displayValue(preferences.info.canHost)}
+                    {displayValue(preferences.info.performer_can_host_self)}
                   </SmallText>
                 </SubSection>
               </InfoSection>
             </>
+          )}
+
+          {role.isHost && (
+            <InfoSection>
+              <SubSection>
+                <InfoSectionTitle>
+                  <div>
+                    <H5 $fontWeight={500}>Host Questions</H5>
+                  </div>
+
+                  <div>
+                    <StyledLink href="/onboarding/volunteer/host-show-preference">
+                      <P $fontWeight={400} $color={COLORS.lilac9}>
+                        edit
+                      </P>
+                    </StyledLink>
+                  </div>
+                </InfoSectionTitle>
+                <InfoSectionLine />
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>
+                  When days/times are you usually availabile to host?
+                </P>
+                <SmallText>
+                  {displayValue(preferences.info.host_availability)}
+                </SmallText>
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>Can you pick up sound equipment?</P>
+                <SmallText>
+                  {displayValue(
+                    preferences.info.host_willing_to_pick_up_sound_equipment,
+                  )}
+                </SmallText>
+              </SubSection>
+
+              <SubSection>
+                <P $fontWeight={500}>Are you willing to use sound equipment?</P>
+                <SmallText>
+                  {displayValue(
+                    preferences.info.host_willing_to_use_sound_equip,
+                  )}
+                </SmallText>
+              </SubSection>
+            </InfoSection>
           )}
 
           <InfoSection>
