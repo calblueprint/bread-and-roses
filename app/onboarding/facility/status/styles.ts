@@ -106,6 +106,7 @@ export const ContentAfterSteps = styled.main`
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
+  width: 100%;
 `;
 
 export const Page = styled.main`

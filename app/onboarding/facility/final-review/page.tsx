@@ -98,6 +98,7 @@ export default function Review() {
                   {displayValue(location.city)}
                   {', '}CA{', '}
                   {displayValue(location.county)}
+                  {location.address2?.trim() && `, ${location.address2.trim()}`}
                 </SmallText>
               </SubSection>
             </RowContainer>

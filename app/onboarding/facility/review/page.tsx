@@ -125,6 +125,11 @@ export default function Review() {
               <SmallText>{displayValue(location.address)}</SmallText>
             </SubSection>
 
+            <SubSection>
+              <P $fontWeight={500}>Street Address 2</P>
+              <SmallText>{displayValue(location.address2)}</SmallText>
+            </SubSection>
+
             <RowContainer>
               <SubSection>
                 <P $fontWeight={500}>City</P>

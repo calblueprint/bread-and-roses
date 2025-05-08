@@ -106,6 +106,16 @@ export default function Onboarding() {
             />
           </InputContainer>
 
+          <InputContainer>
+            <Label>Street Address 2 (Apartment, suite, etc)</Label>
+            <Input
+              name="address2"
+              placeholder="Unit 310"
+              value={location.address2}
+              onChange={handleChange}
+            />
+          </InputContainer>
+
           <RowContainer>
             <InputContainer>
               <Label>

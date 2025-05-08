@@ -25,6 +25,7 @@ import {
 export default function Status() {
   const [isApproved, setIsApproved] = useState<boolean | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+  const [address2, setAddress2] = useState<string | null>(null);
   const [city, setCity] = useState<string | null>(null);
   const [zip, setZip] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
@@ -65,6 +66,7 @@ export default function Status() {
 
       setIsApproved(facility?.is_approved);
       setAddress(facility?.street_address_1);
+      setAddress2(facility?.street_address_2);
       setCity(facility?.city);
       setZip(facility?.zip);
       setEmail(sessionData.session.user.email ?? null);
@@ -106,8 +108,9 @@ export default function Status() {
             <P $fontWeight={500}>Facility Location</P>
             <P $fontWeight={400}>
               {address}
+              {address2?.trim() && `, ${address2.trim()}`}
               <br />
-              {city}, CA {zip}
+              {city}, CA, {zip}
             </P>
           </LocationDetails>
           <StyledUL>
