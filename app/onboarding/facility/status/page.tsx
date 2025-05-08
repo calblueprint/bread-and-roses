@@ -35,8 +35,9 @@ export default function Status() {
 
   const handleSignOut = () => {
     router.push('/');
-    setTimeout(() => {}, 1000);
-    signOut();
+    setTimeout(() => {
+      signOut();
+    }, 300);
   };
 
   const handleForward = () => {

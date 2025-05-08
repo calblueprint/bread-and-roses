@@ -77,17 +77,17 @@ export default function ProtectedRoute({
     getFacilityStatuses();
   }, [userRole, session, path]);
 
-  useEffect(() => {
-    console.log('--- ProtectedRoute Debug ---');
-    console.log('hydrated:', hydrated);
-    console.log('sessionChecked:', sessionChecked);
-    console.log('session:', session);
-    console.log('userRole:', userRole);
-    console.log('isApproved:', isApproved);
-    console.log('path:', path);
-    console.log('-----------------------------');
-    setTimeout(() => {}, 100);
-  }, [hydrated, sessionChecked, session, userRole, isApproved, path]);
+  // useEffect(() => {
+  //   console.log('--- ProtectedRoute Debug ---');
+  //   console.log('hydrated:', hydrated);
+  //   console.log('sessionChecked:', sessionChecked);
+  //   console.log('session:', session);
+  //   console.log('userRole:', userRole);
+  //   console.log('isApproved:', isApproved);
+  //   console.log('path:', path);
+  //   console.log('-----------------------------');
+  //   setTimeout(() => {}, 100);
+  // }, [hydrated, sessionChecked, session, userRole, isApproved, path]);
 
   useEffect(() => {
     if (!hydrated || !sessionChecked) return;

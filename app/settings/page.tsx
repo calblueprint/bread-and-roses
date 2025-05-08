@@ -44,8 +44,9 @@ export default function SettingsPage() {
 
   const handleSignOut = () => {
     router.push('/');
-    setTimeout(() => {}, 500);
-    signOut();
+    setTimeout(() => {
+      signOut();
+    }, 300);
   };
 
   useEffect(() => {

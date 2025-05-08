@@ -39,8 +39,9 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
 
   const handleSignOut = async () => {
     router.push('/');
-    setTimeout(() => {}, 500);
-    signOut();
+    setTimeout(() => {
+      signOut();
+    }, 300);
   };
 
   return (
