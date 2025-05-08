@@ -119,7 +119,6 @@ export default function AvailabilityPage() {
       setTimeout(() => {
         setPopupMessage(null);
         setPopupType('');
-        router.replace('/availability/general', undefined);
       }, 5000);
     }
   }, [router]);

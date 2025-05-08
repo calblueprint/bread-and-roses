@@ -32,7 +32,7 @@ export const InlineContainer = styled.main`
   @media (max-width: 1200px) {
     width: 45%;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 85%;
     margin-top: 20%;
   }
@@ -44,7 +44,6 @@ export const RowContainer = styled.main`
   width: 100%;
   gap: 6%;
 `;
-
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   position: relative;
   width: 20px;
@@ -54,6 +53,9 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   appearance: none;
   outline: none;
   cursor: pointer;
+  transition:
+    border 0.3s ease,
+    background-color 0.3s ease;
 
   &:checked {
     background-color: ${COLORS.rose10};
@@ -61,6 +63,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 
     &::before {
       display: inline-block;
+      transition: transform 0.3s ease;
     }
   }
 
@@ -77,6 +80,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
     background-repeat: no-repeat;
     background-image: url('/images/whitecheck.svg');
     background-position: center;
+    transition: transform 0.3s ease;
   }
 `;
 
@@ -94,7 +98,7 @@ export const Container = styled.main`
   gap: 1.75rem;
   margin: 2.625rem 0;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     background-color: ${COLORS.bread1};
     box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.08);
     padding: 2rem;
@@ -125,6 +129,12 @@ export const Input = styled.input`
   &::placeholder {
     color: ${COLORS.gray6};
   }
+`;
+
+export const InputNote = styled(SMALL)`
+  color: ${COLORS.rose11};
+  font-weight: 400;
+  margin-top: 0.125rem;
 `;
 
 export const TextArea = styled.textarea`
@@ -176,12 +186,12 @@ export const SkipButton = styled.button`
   border: none;
   cursor: pointer;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: fixed;
     bottom: 6.25rem;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     position: relative;
     align-self: flex-end;
     margin-bottom: 1rem;
@@ -201,7 +211,7 @@ export const ButtonContainer = styled.div`
   height: 80%;
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     flex-direction: row;
     justify-content: flex-end;
     margin-top: 7.5rem;
@@ -231,7 +241,7 @@ export const Button = styled.button<{
   transition: all 0.3s ease;
   z-index: 2;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: fixed;
     width: 85%;
     bottom: 2rem;
@@ -256,7 +266,7 @@ export const SubmitButton = styled.button<{ disabled?: boolean }>`
   text-decoration: none;
   transition: all 0.3s ease;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-bottom: 2.5rem;
   }
 `;
@@ -276,7 +286,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const FixedFooter = styled.div`
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: fixed;
     bottom: 0;
     left: 0;

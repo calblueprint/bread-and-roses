@@ -23,14 +23,18 @@ export const GrayInput = styled.div<GrayInputProps>`
   width: 100%;
   cursor: pointer;
   box-sizing: border-box;
-  padding: 12px 16px 12px 16px;
-  align-items: flex-center;
+  padding: 12px 16px;
+  align-items: center;
   justify-content: flex-start;
   gap: 12px;
   border: ${({ checked }) =>
     checked ? `1px solid ${COLORS.rose10}` : `1px solid ${COLORS.gray6}`};
   box-shadow: ${({ checked }) =>
-    checked ? '0rem 0rem 0.5rem 0rem rgba(227, 66, 66, 0.25)' : 'none'};
+    checked ? '0 0 0.5rem rgba(227, 66, 66, 0.25)' : 'none'};
+  transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
 `;
 
 export const RadioContainer = styled.label`
@@ -38,6 +42,7 @@ export const RadioContainer = styled.label`
   flex-direction: column;
   width: 100%;
   gap: 0.5rem;
+
   input {
     appearance: none;
     width: 1.25rem;
@@ -46,22 +51,31 @@ export const RadioContainer = styled.label`
     border-radius: 50%;
     position: relative;
     cursor: pointer;
+    transition: border 0.3s ease; /* Smooth border transition */
   }
 
   input:checked {
-    border: 0.125rem solid ${COLORS.rose10}; /* Custom color for checked */
+    border-color: ${COLORS.rose10};
   }
 
-  input:checked::after {
+  input::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     width: 0.75rem;
     height: 0.75rem;
-    background-color: ${COLORS.rose12}; /* Red inner circle */
+    background-color: transparent;
     border-radius: 50%;
-    transform: translate(-50%, -50%); /* Center the circle */
+    transform: translate(-50%, -50%) scale(0);
+    transition:
+      background-color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  input:checked::after {
+    background-color: ${COLORS.rose12};
+    transform: translate(-50%, -50%) scale(1);
   }
 `;
 

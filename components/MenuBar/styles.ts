@@ -18,7 +18,7 @@ export const MenuContainer = styled.div<{ $expanded: boolean }>`
     background-color 0.3s ease;
   position: fixed;
   width: ${({ $expanded }) => ($expanded ? '20%' : '0')};
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: ${({ $expanded }) => ($expanded ? '75%' : '0')};
   }
 `;
@@ -58,8 +58,23 @@ export const SignOutItem = styled.button<{ $expanded: boolean }>`
 `;
 
 export const MenuIconWrapper = styled.div<{ $expanded: boolean }>`
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: ${({ $expanded }) =>
+    $expanded ? 'transparent' : COLORS.bread1};
+  box-shadow: ${({ $expanded }) =>
+    $expanded ? 'none' : '0px 2px 4px rgba(0, 0, 0, 0.1)'};
+  aspect-ratio: 1/1;
+
+  & svg {
+    width: 24px;
+    height: 24px;
+  }
+
   & svg path {
     fill: ${({ $expanded }) =>
       $expanded ? COLORS.gray3 : COLORS.pomegranate12};
@@ -78,6 +93,9 @@ export const MenuLabel = styled(P)<{ $expanded: boolean; $active: boolean }>`
   display: ${({ $expanded }) => ($expanded ? 'flex' : 'none')};
   font-weight: ${({ $active }) => ($active ? '600' : '400')};
   transition: font-weight 0.03s ease-in-out;
+  &&:hover {
+    font-weight: 600;
+  }
 `;
 
 export const SignOutLabel = styled(P)<{ $expanded: boolean; $active: boolean }>`

@@ -69,10 +69,8 @@ export default function Onboarding() {
         <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
         </BackButton>
-        <Title $fontWeight={500}>
-          Can you tell us a bit about the facility?
-        </Title>
-        <ProgressBar from={25} to={50} />
+        <Title $fontWeight={500}>What should performers expect?</Title>
+        <ProgressBar from={50} to={50} />
         <Container>
           <QuestionContainer>
             <Label>
@@ -222,8 +220,8 @@ export default function Onboarding() {
             onClick={handleSubmit}
             disabled={
               facilitySpecificInfo.has_piano === null ||
-              !facilitySpecificInfo.has_sound_equipment === null ||
-              !facilitySpecificInfo.parking === null
+              facilitySpecificInfo.has_sound_equipment === null ||
+              facilitySpecificInfo.parking === null
             }
           >
             <ContinueText>Continue</ContinueText>

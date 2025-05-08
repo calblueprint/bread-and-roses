@@ -23,7 +23,15 @@ import {
   Image,
   Title,
 } from '../styles';
-import { Calendar, CalendarContainer } from './styles';
+import {
+  Calendar,
+  CalendarContainer,
+  NoDaysContainer,
+  NoDaysText,
+  SelectedDaysContainer,
+  SelectedList,
+  SelectedTitle,
+} from './styles';
 
 type Info = {
   start: Date;
@@ -82,6 +90,7 @@ export default function Page() {
       }
       start.setDate(start.getDate() + 1); // Move to the next day
     }
+    console.log('days', days);
   };
 
   const updateMonth = (info: Info) => {
@@ -113,7 +122,6 @@ export default function Page() {
       return;
     }
     setDays(days.sort((a, b) => a.localeCompare(b)));
-    console.log(times);
     const initTimes: { [date: string]: TimeRange[] } = {};
     for (const day of days) {
       if (day in times) {
@@ -129,6 +137,38 @@ export default function Page() {
   const handleBack = () => {
     router.push('/availability/details');
   };
+
+  function displaySelectedDays() {
+    if (days.length === 0) {
+      return (
+        <NoDaysContainer>
+          <NoDaysText>You haven&apos;t selected any days yet</NoDaysText>
+        </NoDaysContainer>
+      );
+    }
+    const sortedDays = days.slice().sort((a, b) => {
+      const dateA = new Date(a);
+      const dateB = new Date(b);
+      return dateA.getTime() - dateB.getTime();
+    });
+    return (
+      <SelectedDaysContainer>
+        <SelectedTitle>You selected...</SelectedTitle>
+        <SelectedList>
+          {sortedDays.map((day, index) => (
+            <li key={index}>
+              {new Date(day).toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </li>
+          ))}
+        </SelectedList>
+      </SelectedDaysContainer>
+    );
+  }
 
   return (
     <Container>
@@ -158,6 +198,7 @@ export default function Page() {
           />
         </Calendar>
       </CalendarContainer>
+      {displaySelectedDays()}
       <ButtonContainer>
         <EventName $fontWeight={500}> {generalInfo.eventName} </EventName>
         <Divider />

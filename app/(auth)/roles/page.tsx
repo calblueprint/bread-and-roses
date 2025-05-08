@@ -45,7 +45,7 @@ export default function OnboardingPage() {
     if (role.isFacility) {
       router.push('/onboarding/facility/basic-information');
     } else if (role.isVolunteer) {
-      router.push('/onboarding/role-selection');
+      router.push('/onboarding/volunteer/role-selection');
     }
   };
   return (

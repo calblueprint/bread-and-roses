@@ -99,10 +99,8 @@ export const AvailabilityProvider = ({ children }: { children: ReactNode }) => {
           ])
           .select('availability_id')
           .single();
-      console.log('PREERROR');
       if (availabilityError) throw availabilityError;
       const availabilityId = availabilityData.availability_id;
-      console.log(availabilityId);
       const availabilities = Object.entries(times).flatMap(
         ([date, timeRanges]) =>
           timeRanges.map(timeRange => {
