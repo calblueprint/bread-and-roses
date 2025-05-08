@@ -8,12 +8,12 @@ export interface Role {
 }
 
 export interface Info {
-  hasSoundEquipment: string;
-  needsPiano: string;
-  canHost: string;
-  availability: string;
-  soundEquipPickup: string;
-  useSoundEquip: string;
+  performer_has_own_sound_equipment: string;
+  performer_needs_piano: string;
+  performer_can_host_self: string;
+  host_availability: string;
+  host_willing_to_pick_up_sound_equipment: string;
+  host_willing_to_use_sound_equip: string;
 }
 
 export interface GeneralInfo {
@@ -66,12 +66,12 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     performerType: [],
     additionalInfo: '',
     info: {
-      hasSoundEquipment: '',
-      needsPiano: '',
-      canHost: '',
-      availability: '',
-      soundEquipPickup: '',
-      useSoundEquip: '',
+      performer_has_own_sound_equipment: '',
+      performer_needs_piano: '',
+      performer_can_host_self: '',
+      host_availability: '',
+      host_willing_to_pick_up_sound_equipment: '',
+      host_willing_to_use_sound_equip: '',
     },
   });
 

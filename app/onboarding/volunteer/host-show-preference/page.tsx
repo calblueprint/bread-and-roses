@@ -23,6 +23,7 @@ import {
   SkipText,
   Title,
 } from '../../styles';
+import { RedAsterisk } from './styles';
 
 const Options = new Set(['Yes', 'No']);
 
@@ -71,42 +72,51 @@ export default function Onboarding() {
         <BackButton onClick={handleBack}>
           <Image src={Back} alt="Back icon" />
         </BackButton>
-        <Title $fontWeight={500}>
-          Do you have any show
-          <br />
-          preferences?
-        </Title>
+        <Title $fontWeight={500}>Additional Host Questions</Title>
         <ProgressBar from={progress} to={progress} />
         <Container>
           <InputContainer>
-            <Label>What days/times are you available?</Label>
+            <Label>
+              What days/times are you usually available to host?{' '}
+              <RedAsterisk> *</RedAsterisk>
+            </Label>
             <Input
               name="availability"
               placeholder="Tues 5-9pm, Mon 1-3pm..."
-              value={preferences.info.availability}
-              onChange={e => handleInfoChange('availability', e.target.value)}
+              value={preferences.info.host_availability}
+              onChange={e =>
+                handleInfoChange('host_availability', e.target.value)
+              }
             />
           </InputContainer>
           <InputDropdown
             label="Are you willing to come to the Bread & Roses office to pick up sound equipment?"
             placeholder="No"
             multi={false}
+            required
             onChange={selectedOption =>
-              handleInfoChange('soundEquipPickup', selectedOption)
+              handleInfoChange(
+                'host_willing_to_pick_up_sound_equipment',
+                selectedOption,
+              )
             }
             options={Options}
-            value={preferences.info.soundEquipPickup}
+            value={preferences.info.host_willing_to_pick_up_sound_equipment}
           />
           <InputDropdown
             label="Are you willing to use sound equipment? "
             placeholder="No"
+            required
             multi={false}
             note="(training is provided)"
             onChange={selectedOption =>
-              handleInfoChange('useSoundEquip', selectedOption)
+              handleInfoChange(
+                'host_willing_to_use_sound_equip',
+                selectedOption,
+              )
             }
             options={Options}
-            value={preferences.info.useSoundEquip}
+            value={preferences.info.host_willing_to_use_sound_equip}
           />
         </Container>
 
@@ -119,9 +129,9 @@ export default function Onboarding() {
             onClick={handleSubmit}
             position="fixed"
             disabled={
-              !preferences.info.availability &&
-              !preferences.info.soundEquipPickup &&
-              !preferences.info.useSoundEquip
+              !preferences.info.host_availability ||
+              !preferences.info.host_willing_to_pick_up_sound_equipment ||
+              !preferences.info.host_willing_to_use_sound_equip
             }
           >
             <ContinueText>Continue</ContinueText>
