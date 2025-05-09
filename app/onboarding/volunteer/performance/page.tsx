@@ -118,6 +118,7 @@ export default function Onboarding() {
             multi
             onChange={handlePerformanceTypeChange}
             options={performanceTypeOptions}
+            required
             value={new Set(preferences.performanceType)}
           />
           {preferences.performanceType.includes('Music') && (
@@ -142,18 +143,11 @@ export default function Onboarding() {
         </Container>
 
         <ButtonContainer>
-          <SkipButton onClick={handleSubmit}>
-            <SkipText>skip</SkipText>
-          </SkipButton>
           <FixedFooter />
           <Button
             onClick={handleSubmit}
             position="sticky"
-            disabled={
-              !preferences.performanceType.length &&
-              !preferences.genre.length &&
-              !preferences.performerType.length
-            }
+            disabled={!preferences.performanceType.length}
           >
             <ContinueText>Continue</ContinueText>
           </Button>
