@@ -576,7 +576,9 @@ export default function EventPage({
                                 role: 'PERFORMER',
                                 group_size: groupSize,
                                 additional_info: additionalInfo,
-                                performer_emails: performerEmails,
+                                performer_emails: performerEmails.filter(
+                                  email => email !== '',
+                                ),
                               });
                               setIsSubmitted(true);
                             }
@@ -587,7 +589,7 @@ export default function EventPage({
                                 role: 'HOST',
                                 group_size: 0,
                                 additional_info: additionalInfo,
-                                performer_emails: performerEmails,
+                                performer_emails: [],
                               });
                               setIsSubmitted(true);
                             }
