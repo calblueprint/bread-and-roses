@@ -16,8 +16,6 @@ import {
   FixedFooter,
   Image,
   InlineContainer,
-  SkipButton,
-  SkipText,
   Title,
 } from '../../styles';
 
