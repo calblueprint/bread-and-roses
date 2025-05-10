@@ -106,6 +106,16 @@ export default function Onboarding() {
             />
           </InputContainer>
 
+          <InputContainer>
+            <Label>Apartment, suite, etc</Label>
+            <Input
+              name="address2"
+              placeholder="Suite 310"
+              value={location.address2}
+              onChange={handleChange}
+            />
+          </InputContainer>
+
           <RowContainer>
             <InputContainer>
               <Label>
@@ -161,7 +171,7 @@ export default function Onboarding() {
           />
 
           <InputDropdown
-            label="Has this facility signed up before? (Changing the facility contact?)"
+            label="Has this facility signed up before? (Are you changing the facility contact?)"
             placeholder="No"
             multi={false}
             onChange={value =>

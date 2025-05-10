@@ -94,6 +94,7 @@ export default function Review() {
                 <P $fontWeight={500}>Facility Address</P>
                 <SmallText>
                   {displayValue(location.address)}
+                  {location.address2?.trim() && ` ${location.address2.trim()}`}
                   {', '}
                   {displayValue(location.city)}
                   {', '}CA{', '}

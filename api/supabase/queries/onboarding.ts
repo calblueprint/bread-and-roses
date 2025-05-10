@@ -98,6 +98,7 @@ export async function submitFacilityOnboardingData(
       county: location.county,
       city: location.city,
       street_address_1: location.address,
+      street_address_2: location.address2,
       audience: [],
       type: '',
       user_id: user_id,
@@ -169,7 +170,9 @@ export async function fetchCurrentUserFacility(user_id?: string) {
 
   const { data: facility, error: facility_error } = await supabase
     .from('facilities')
-    .select('name, is_approved, street_address_1, city, zip, county')
+    .select(
+      'name, is_approved, street_address_1, street_address_2, city, zip, county',
+    )
     .eq('user_id', user_id)
     .single();
 

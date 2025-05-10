@@ -122,7 +122,9 @@ export default function Review() {
 
             <SubSection>
               <P $fontWeight={500}>Street Address</P>
-              <SmallText>{displayValue(location.address)}</SmallText>
+              <SmallText>
+                {displayValue(location.address)} {location.address2 || ''}
+              </SmallText>
             </SubSection>
 
             <RowContainer>

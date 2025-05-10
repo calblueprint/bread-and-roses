@@ -69,6 +69,7 @@ export default function Onboarding() {
             if (isLocationMissing) {
               setLocation({
                 address: data.street_address_1,
+                address2: data.street_address_2,
                 city: data.city,
                 county: data.county || '',
                 zipCode: data.zip,
@@ -156,8 +157,10 @@ export default function Onboarding() {
               Facility Address <RedAsterisk>*</RedAsterisk>
             </Label>
             <GrayInput>
-              {facilityOnboardingContext.location.address},{' '}
-              {facilityOnboardingContext.location.city}, CA,{' '}
+              {facilityOnboardingContext.location.address}
+              {facilityOnboardingContext.location.address2?.trim() &&
+                ` ${facilityOnboardingContext.location.address2.trim()}`}
+              , {facilityOnboardingContext.location.city}, CA,{' '}
               {facilityOnboardingContext.location.zipCode}
             </GrayInput>
             <P $fontWeight={400} $color={COLORS.gray10}>
