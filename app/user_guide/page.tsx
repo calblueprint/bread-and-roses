@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import MenuBar from '@/components/MenuBar/MenuBar';
-import { H4, H5 } from '@/styles/text';
 import { useSession } from '@/utils/AuthProvider';
 import * as styles from './styles';
 
@@ -28,8 +27,8 @@ export default function UserGuidePage() {
                 <styles.Header> Search </styles.Header>
                 <styles.Text>
                   Find different events by searching by County, City, and
-                  Facility Name. Enter any text and click 'Enter' to show the
-                  results.
+                  Facility Name. Enter any text and click the Enter / Return
+                  button on your keyboard to show the results.
                 </styles.Text>
                 <styles.Header> Filter </styles.Header>
                 <styles.Text>
@@ -39,7 +38,7 @@ export default function UserGuidePage() {
                   right of the search bar or the filter icon just below the
                   search bar to start. Once you select what filters you want
                   click the <b>Apply</b> button to see the results. Feel free to
-                  click the X's next to filters to clear them or click the{' '}
+                  click the X&apos;s next to filters to clear them or click the{' '}
                   <b>Reset</b> button to remove all filters.
                 </styles.Text>
                 <styles.Header> Signing Up For Events</styles.Header>
