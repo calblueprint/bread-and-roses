@@ -157,17 +157,14 @@ export default function Onboarding() {
               Facility Address <RedAsterisk>*</RedAsterisk>
             </Label>
             <GrayInput>
-              {facilityOnboardingContext.location.address},{' '}
-              {facilityOnboardingContext.location.city}, CA,{' '}
-              {facilityOnboardingContext.location.zipCode}
+              {facilityOnboardingContext.location.address}
               {facilityOnboardingContext.location.address2?.trim() &&
-                `, ${facilityOnboardingContext.location.address2.trim()}`}
+                ` ${facilityOnboardingContext.location.address2.trim()}`}
+              , {facilityOnboardingContext.location.city}, CA,{' '}
+              {facilityOnboardingContext.location.zipCode}
             </GrayInput>
             <P $fontWeight={400} $color={COLORS.gray10}>
-              (Street, City, State, Zip
-              {facilityOnboardingContext.location.address2?.trim()
-                ? `, Address 2)`
-                : `)`}
+              (Street, City, State, Zip)
             </P>
           </InputContainer>
 

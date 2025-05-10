@@ -108,7 +108,7 @@ export default function Status() {
             <P $fontWeight={500}>Facility Location</P>
             <P $fontWeight={400}>
               {address}
-              {address2?.trim() && `, ${address2.trim()}`}
+              {address2?.trim() && ` ${address2.trim()}`}
               <br />
               {city}, CA, {zip}
             </P>
