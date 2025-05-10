@@ -29,7 +29,6 @@ export async function submitOnboardingData(
       first_name: generalInfo.firstName,
       last_name: generalInfo.lastName,
       phone_number: generalInfo.phoneNumber,
-      notifications_opt_in: generalInfo.notifications,
       social_media: generalInfo.socialMedia,
     };
 

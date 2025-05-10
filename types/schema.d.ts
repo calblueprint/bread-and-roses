@@ -153,7 +153,6 @@ export interface Volunteers {
   last_name: string;
   email: string;
   phone_number: string;
-  notifications_opt_in: boolean;
 }
 
 export interface VolunteersPreferences {
