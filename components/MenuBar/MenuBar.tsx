@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Availability from '@/public/images/availabilities.svg';
 import Discover from '@/public/images/discover.svg';
+import Info from '@/public/images/info.svg';
 import Settings from '@/public/images/settings.svg';
 import SignOut from '@/public/images/sign_out.svg';
 import Events from '@/public/images/upcoming-events.svg';
@@ -109,6 +110,15 @@ const MenuBar: React.FC<{ setMenuExpanded?: (expanded: boolean) => void }> = ({
             <Icon src={Settings} alt="Settings icon" />
             <MenuLabel $expanded={expanded} $active={activeItem === 'settings'}>
               Profile & Settings
+            </MenuLabel>
+          </MenuItem>
+          <MenuItem
+            $expanded={expanded}
+            onClick={() => handleClick('guide', '/user_guide')}
+          >
+            <Icon src={Info} alt="Guide icon" />
+            <MenuLabel $expanded={expanded} $active={activeItem === 'guide'}>
+              User Guide
             </MenuLabel>
           </MenuItem>
           <SignOutItem $expanded={expanded} onClick={() => handleSignOut()}>

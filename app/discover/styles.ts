@@ -197,8 +197,10 @@ export const ResetButton = styled.button`
   display: flex;
   width: 79px;
   height: 23px;
+  cursor: pointer;
   padding: 8px 12px;
   margin-right: 0.25rem;
+  background-color: ${COLORS.bread2};
   justify-content: center;
   align-items: center;
   font-family: ${Sans.style.fontFamily};
