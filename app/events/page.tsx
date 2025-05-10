@@ -125,7 +125,7 @@ export default function EventPage() {
   );
 
   if (loading || !userRole) {
-    return <p>Loading...</p>;
+    return <div></div>;
   }
 
   return (

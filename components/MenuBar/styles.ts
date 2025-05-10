@@ -84,6 +84,8 @@ export const MenuIconWrapper = styled.div<{ $expanded: boolean }>`
 export const Icon = styled(Image)`
   width: 20px;
   height: 20px;
+  filter: brightness(0) saturate(100%) invert(95%) sepia(0%) saturate(0%)
+    hue-rotate(203deg) brightness(88%) contrast(89%);
   margin-right: 0.625rem;
 `;
 
