@@ -85,6 +85,11 @@ export const Label = styled(P)`
   font-weight: 500;
 `;
 
+export const SubLabel = styled(SMALL)`
+  color: ${COLORS.gray11};
+  font-weight: 400;
+`;
+
 export const SubHeader = styled.main`
   display: flex;
   flex-direction: column;
@@ -109,6 +114,7 @@ export const SettingDetail = styled.main`
 `;
 
 export const SettingListedItems = styled.ul`
+  margin-top: 0.375rem;
   list-style-type: disc;
   list-style-position: outside;
 `;
@@ -128,7 +134,7 @@ export const EditButton = styled.button`
   cursor: pointer;
 `;
 
-export const TruncatedText = styled(SMALL)`
+export const TruncatedText = styled(P)`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;

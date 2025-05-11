@@ -36,6 +36,8 @@ const locationOptions = new Set([
 
 const audienceOptions = new Set(['Youth', 'Adults', 'Senior ']);
 
+const roleOptions = new Set(['Performer', 'Host']);
+
 export default function SettingCardShowPreferences({
   facility_preferences,
   locations,
@@ -61,6 +63,13 @@ export default function SettingCardShowPreferences({
     setEditPrefs(prev => ({
       ...prev,
       facility_type: value,
+    }));
+  };
+
+  const updateRole = (value: string[]) => {
+    setEditPrefs(prev => ({
+      ...prev,
+      role: value.map(item => item.toLowerCase()),
     }));
   };
 
@@ -106,6 +115,45 @@ export default function SettingCardShowPreferences({
       <styles.Content>
         <div>
           <styles.SubHeader>
+            <styles.SettingDetail>
+              <P $fontWeight="500" $color={COLORS.gray12} $align="left">
+                Role Preferences
+              </P>
+              <styles.SettingListedItems>
+                {isEditable ? (
+                  <InputDropdown
+                    label=""
+                    placeholder="Select roles"
+                    multi
+                    options={roleOptions}
+                    value={
+                      new Set(
+                        editPrefs.role.map(
+                          word => word.charAt(0).toUpperCase() + word.slice(1),
+                        ),
+                      )
+                    }
+                    onChange={selected => updateRole(Array.from(selected))}
+                  />
+                ) : (
+                  <styles.NonEditableDisplay>
+                    {userPrefs.role.map(role => {
+                      return (
+                        <li key={role}>
+                          <styles.TruncatedText
+                            $fontWeight="400"
+                            $color={COLORS.gray11}
+                            $align="left"
+                          >
+                            {role.charAt(0).toUpperCase() + role.slice(1)}
+                          </styles.TruncatedText>
+                        </li>
+                      );
+                    })}
+                  </styles.NonEditableDisplay>
+                )}
+              </styles.SettingListedItems>
+            </styles.SettingDetail>
             <styles.SettingDetail>
               <P $fontWeight="500" $color={COLORS.gray12} $align="left">
                 Facility Types
