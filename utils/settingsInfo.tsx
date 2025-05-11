@@ -5,6 +5,14 @@ export interface UserInfo {
   phone_number: string;
 }
 
+export interface UserPreferencesInfo {
+  performer_has_own_sound_equipment: string;
+  performer_needs_piano: string;
+  performer_can_host_self: string;
+  host_availability: string;
+  host_willing_to_pick_up_sound_equipment: string;
+  host_willing_to_use_sound_equip: string;
+}
 export interface UserPreferences {
   facility_type: string[];
   audience_type: string[];
@@ -13,6 +21,8 @@ export interface UserPreferences {
   performance_type: string[];
   locations: string[];
   additional_info: string;
+  role: string[];
+  info: UserPreferencesInfo;
 }
 
 export interface FacilityInfo {

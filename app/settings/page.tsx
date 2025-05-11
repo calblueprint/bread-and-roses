@@ -20,6 +20,7 @@ import SettingsCardHostInfo from '@/components/SettingsCard/SettingsCardHostInfo
 import SettingsCardPerformanceInterest from '@/components/SettingsCard/SettingsCardPerformanceInterest';
 import SettingsCardPersonalDetails from '@/components/SettingsCard/SettingsCardPersonalDetails';
 import SettingsCardShowPreferences from '@/components/SettingsCard/SettingsCardShowPreferences';
+import SettingsCardVolunteerRoleSpecific from '@/components/SettingsCard/SettingsCardVolunteerRoleSpecific';
 import SignOut from '@/public/images/signout.svg';
 import { useSession } from '@/utils/AuthProvider';
 import { FacilityInfo, UserInfo, UserPreferences } from '@/utils/settingsInfo';
@@ -40,9 +41,18 @@ export default function SettingsPage() {
     audience_type: [],
     performer_type: [],
     genre: [],
+    role: [],
     performance_type: [],
     locations: [],
     additional_info: '',
+    info: {
+      performer_has_own_sound_equipment: '',
+      performer_needs_piano: '',
+      performer_can_host_self: '',
+      host_availability: '',
+      host_willing_to_pick_up_sound_equipment: '',
+      host_willing_to_use_sound_equip: '',
+    },
   });
   const [facilityContactInfo, setFacilityContactInfo] = useState<UserInfo>({
     first_name: '',
@@ -165,6 +175,13 @@ export default function SettingsPage() {
                   performance_types={userPreferences.performance_type}
                   genres={userPreferences.genre}
                   group_size={userPreferences.performer_type}
+                  userPrefs={userPreferences}
+                  editPrefs={editedUserPrefs}
+                  setEditPrefs={setEditedUserPrefs}
+                  setUserPrefs={setUserPreferences}
+                  userId={session.user.id}
+                />
+                <SettingsCardVolunteerRoleSpecific
                   userPrefs={userPreferences}
                   editPrefs={editedUserPrefs}
                   setEditPrefs={setEditedUserPrefs}

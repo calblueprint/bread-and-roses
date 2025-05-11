@@ -1,5 +1,9 @@
 import { UUID } from 'crypto';
-import { UserInfo, UserPreferences } from '@/utils/settingsInfo';
+import {
+  UserInfo,
+  UserPreferences,
+  UserPreferencesInfo,
+} from '@/utils/settingsInfo';
 import supabase from '../createClient';
 
 export async function fetchVolunteerInfo(user_id: string) {
@@ -20,7 +24,7 @@ export async function fetchVolunteerPreferences(user_id: string) {
   const { data, error } = await supabase
     .from('volunteer_preferences')
     .select(
-      'facility_type, audience_type, genre, performance_type, locations, additional_info, performer_type ',
+      'role, facility_type, audience_type, genre, performance_type, locations, additional_info, performer_type, info',
     )
     .eq('user_id', user_id)
     .single();
@@ -74,6 +78,10 @@ export async function updateVolunteerPreferences(
     updatedKeys['additional_info'] = edited_prefs.additional_info;
   }
 
+  if (user_prefs.role != edited_prefs.role) {
+    updatedKeys['role'] = edited_prefs.role;
+  }
+
   if (user_prefs.genre != edited_prefs.genre) {
     updatedKeys['genre'] = edited_prefs.genre;
   }
@@ -102,6 +110,24 @@ export async function updateVolunteerPreferences(
     const { data, error } = await supabase
       .from('volunteer_preferences')
       .update(updatedKeys)
+      .eq('user_id', id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  }
+}
+
+export async function updateVolunteerAdditionalInfo(
+  id: string,
+  user_info: UserPreferencesInfo,
+  edit_info: UserPreferencesInfo,
+) {
+  if (user_info != edit_info) {
+    const { data, error } = await supabase
+      .from('volunteer_preferences')
+      .update({ info: edit_info })
       .eq('user_id', id);
 
     if (error) {
