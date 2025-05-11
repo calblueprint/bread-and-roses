@@ -5,7 +5,6 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Back from '@/public/images/back.svg';
-import { formatPhoneNumber } from '@/utils/formatPhoneNumber';
 import { OnboardingContext } from '@/utils/onboardingContext';
 import {
   BackButton,
@@ -19,7 +18,6 @@ import {
   InlineContainer,
   Input,
   InputContainer,
-  InputNote,
   Label,
   Title,
 } from '../../styles';
@@ -51,7 +49,7 @@ export default function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    const formattedPhoneNumber = formatPhoneNumber(generalInfo.phoneNumber);
+    const formattedPhoneNumber = generalInfo.phoneNumber;
     if (
       !generalInfo.firstName ||
       !generalInfo.lastName ||
@@ -106,7 +104,6 @@ export default function Onboarding() {
               <Label>
                 Phone Number <RedAsterisk>*</RedAsterisk>
               </Label>
-              <InputNote>Please enter a valid 10 digit phone number.</InputNote>
             </div>
             <Input
               name="phoneNumber"
@@ -135,7 +132,7 @@ export default function Onboarding() {
             disabled={
               !generalInfo.firstName ||
               !generalInfo.lastName ||
-              !/^\d{10}$/.test(generalInfo.phoneNumber.replace(/\D/g, '')) //user not allowed to continue unless a full phone number is input
+              !generalInfo.phoneNumber
             }
           >
             <ContinueText>Continue</ContinueText>
