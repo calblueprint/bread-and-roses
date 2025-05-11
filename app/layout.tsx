@@ -3,6 +3,7 @@ import StyledComponentsRegistry from '@/lib/registry';
 import COLORS from '@/styles/colors';
 import { Sans } from '../styles/fonts';
 import '../styles/global.css';
+import { Suspense } from 'react';
 import { AuthContextProvider } from '@/utils/AuthProvider';
 
 // site metadata - what shows up on embeds
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={Sans.className} style={{ background: COLORS.bread2 }}>
         <StyledComponentsRegistry>
-          <AuthContextProvider>{children}</AuthContextProvider>
+          <Suspense>
+            <AuthContextProvider>{children}</AuthContextProvider>
+          </Suspense>
         </StyledComponentsRegistry>
       </body>
     </html>
