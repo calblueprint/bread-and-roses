@@ -68,9 +68,7 @@ export default function SettingCardVolunteerRoleSpecific({
                   <styles.SettingListedItems>
                     <InputDropdown
                       label=""
-                      placeholder={
-                        editPrefs.info.performer_has_own_sound_equipment
-                      }
+                      placeholder={'No'}
                       multi={false}
                       options={yesNoOption}
                       value={editPrefs.info.performer_has_own_sound_equipment}
@@ -91,7 +89,8 @@ export default function SettingCardVolunteerRoleSpecific({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {userPrefs.info.performer_has_own_sound_equipment}
+                    {userPrefs.info.performer_has_own_sound_equipment ||
+                      '(blank)'}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -103,7 +102,7 @@ export default function SettingCardVolunteerRoleSpecific({
                   <styles.SettingListedItems>
                     <InputDropdown
                       label=""
-                      placeholder={editPrefs.info.performer_can_host_self}
+                      placeholder={'No'}
                       multi={false}
                       options={yesNoOption}
                       value={editPrefs.info.performer_can_host_self}
@@ -124,7 +123,7 @@ export default function SettingCardVolunteerRoleSpecific({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {userPrefs.info.performer_can_host_self}
+                    {userPrefs.info.performer_can_host_self || '(blank)'}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -136,7 +135,7 @@ export default function SettingCardVolunteerRoleSpecific({
                   <styles.SettingListedItems>
                     <InputDropdown
                       label=""
-                      placeholder={editPrefs.info.performer_needs_piano}
+                      placeholder={'No'}
                       multi={false}
                       options={yesNoOption}
                       value={editPrefs.info.performer_needs_piano}
@@ -154,7 +153,7 @@ export default function SettingCardVolunteerRoleSpecific({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {userPrefs.info.performer_needs_piano}
+                    {userPrefs.info.performer_needs_piano || '(blank)'}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -189,7 +188,7 @@ export default function SettingCardVolunteerRoleSpecific({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {userPrefs.info.host_availability}
+                    {userPrefs.info.host_availability || '(blank)'}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -202,9 +201,7 @@ export default function SettingCardVolunteerRoleSpecific({
                   <styles.SettingListedItems>
                     <InputDropdown
                       label=""
-                      placeholder={
-                        editPrefs.info.host_willing_to_use_sound_equip
-                      }
+                      placeholder={'No'}
                       multi={false}
                       options={yesNoOption}
                       value={editPrefs.info.host_willing_to_use_sound_equip}
@@ -226,7 +223,8 @@ export default function SettingCardVolunteerRoleSpecific({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {userPrefs.info.host_willing_to_use_sound_equip}
+                    {userPrefs.info.host_willing_to_use_sound_equip ||
+                      '(blank)'}
                   </styles.TruncatedText>
                 </div>
               )}
@@ -241,9 +239,7 @@ export default function SettingCardVolunteerRoleSpecific({
                   <styles.SettingListedItems>
                     <InputDropdown
                       label=""
-                      placeholder={
-                        editPrefs.info.host_willing_to_pick_up_sound_equipment
-                      }
+                      placeholder={'No'}
                       multi={false}
                       options={yesNoOption}
                       value={
@@ -269,7 +265,8 @@ export default function SettingCardVolunteerRoleSpecific({
                     $color={COLORS.gray11}
                     $align="left"
                   >
-                    {userPrefs.info.host_willing_to_pick_up_sound_equipment}
+                    {userPrefs.info.host_willing_to_pick_up_sound_equipment ||
+                      '(blank)'}
                   </styles.TruncatedText>
                 </div>
               )}
