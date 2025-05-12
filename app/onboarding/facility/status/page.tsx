@@ -57,6 +57,7 @@ export default function Status() {
 
       setIsApproved(facility.is_approved);
       setAddress(facility.street_address_1);
+      setAddress2(facility.street_address_2);
       setCity(facility.city);
       setZip(facility.zip);
       setEmail(session.user.email ?? null);
