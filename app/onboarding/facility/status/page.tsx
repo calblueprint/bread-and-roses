@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/api/supabase/createClient';
 import { fetchCurrentUserFacility } from '@/api/supabase/queries/onboarding';
 import bnrLogo from '@/public/images/b&r-logo.png';
 import COLORS from '@/styles/colors';
@@ -31,49 +30,40 @@ export default function Status() {
   const [email, setEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-  const { signOut } = useSession();
   const router = useRouter();
 
   const handleSignOut = () => {
-    signOut();
     router.push('/');
+    setTimeout(() => {
+      signOut();
+    }, 500);
   };
 
   const handleForward = () => {
     router.push('/onboarding/facility/about');
   };
 
+  const { signOut, sessionChecked, session } = useSession();
   useEffect(() => {
-    async function setFacilityDetails() {
-      const { data: sessionData, error: sessionError } =
-        await supabase.auth.getSession();
-
-      if (sessionError || !sessionData?.session?.user?.id) {
-        console.error('Failed to retrieve user session.');
-        setError(true);
-        return null;
-      }
-
-      const facility = await fetchCurrentUserFacility(
-        sessionData.session.user.id,
-      );
-
+    console.log('USEEFFECT');
+    if (!sessionChecked || !session || !session.user?.id) return;
+    const setFacilityDetails = async () => {
+      const facility = await fetchCurrentUserFacility(session.user.id);
       if (!facility) {
         console.error('Failed to retrieve facility details');
         setError(true);
-        return null;
+        return;
       }
 
-      setIsApproved(facility?.is_approved);
-      setAddress(facility?.street_address_1);
-      setAddress2(facility?.street_address_2);
-      setCity(facility?.city);
-      setZip(facility?.zip);
-      setEmail(sessionData.session.user.email ?? null);
+      setIsApproved(facility.is_approved);
+      setAddress(facility.street_address_1);
+      setCity(facility.city);
+      setZip(facility.zip);
+      setEmail(session.user.email ?? null);
       setLoading(false);
-    }
+    };
     setFacilityDetails();
-  }, []);
+  }, [sessionChecked, session]);
 
   interface Step {
     label: string;
