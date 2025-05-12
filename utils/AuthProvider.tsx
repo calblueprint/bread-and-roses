@@ -10,6 +10,7 @@ import React, {
 import { usePathname, useRouter } from 'next/navigation';
 import { AuthResponse, Session } from '@supabase/supabase-js';
 import supabase from '@/api/supabase/createClient';
+import { encryptEmail } from '@/utils/emailTokenUtils';
 
 export interface AuthState {
   session: Session | null;
@@ -18,6 +19,8 @@ export interface AuthState {
   signInWithEmail: (email: string, password: string) => Promise<AuthResponse>;
   signOut: () => void;
   userRole: 'volunteer' | 'facility' | null;
+  hydrated: boolean;
+  sessionChecked: boolean;
 }
 
 const AuthContext = createContext({} as AuthState);
@@ -35,20 +38,28 @@ export function AuthContextProvider({
   const pathname = usePathname();
 
   const [session, setSession] = useState<Session | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+  const [sessionChecked, setSessionChecked] = useState(false);
   const [userRole, setUserRole] = useState<'volunteer' | 'facility' | null>(
     null,
   );
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   // Initialize session on mount
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: newSession } }) => {
       setSession(newSession);
+      setSessionChecked(true);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, newSession) => {
       setSession(newSession);
+      setSessionChecked(true);
 
       if (event === 'PASSWORD_RECOVERY') {
         localStorage.setItem('passwordRecoveryMode', 'true');
@@ -66,9 +77,18 @@ export function AuthContextProvider({
         (event === 'SIGNED_IN' || event === 'USER_UPDATED') &&
         pathname === '/verification'
       ) {
+        const isInRecovery =
+          localStorage.getItem('passwordRecoveryMode') === 'true';
+        if (isInRecovery && pathname === '/verification') {
+          return;
+        }
+
         const confirmed = newSession?.user?.email_confirmed_at;
         if (confirmed && window.location.pathname === '/verification') {
           router.push('/success');
+        } else if (!confirmed && newSession?.user?.email) {
+          const token = await encryptEmail(newSession.user.email);
+          router.push(`/verification?token=${encodeURIComponent(token)}`);
         }
       }
 
@@ -83,6 +103,7 @@ export function AuthContextProvider({
           data: { session: updatedSession },
         } = await supabase.auth.getSession();
         setSession(updatedSession || null);
+        setSessionChecked(true);
 
         if (!updatedSession && pathname !== '/signin') {
           router.push('/signin');
@@ -100,6 +121,11 @@ export function AuthContextProvider({
 
   // Fetch user role
   useEffect(() => {
+    if (!hydrated || !session?.user?.email) {
+      setUserRole(null);
+      return;
+    }
+
     async function fetchUserRole(
       email: string,
     ): Promise<'volunteer' | 'facility' | null> {
@@ -107,7 +133,6 @@ export function AuthContextProvider({
         .from('volunteers')
         .select('user_id')
         .eq('email', email)
-        .neq('is_temporary', true)
         .maybeSingle();
       if (volunteerData) return 'volunteer';
 
@@ -121,15 +146,11 @@ export function AuthContextProvider({
       return null;
     }
 
-    if (session?.user?.email) {
-      fetchUserRole(session.user.email).then(role => {
-        setUserRole(role);
-        console.log('User role set to:', role);
-      });
-    } else {
-      setUserRole(null);
-    }
-  }, [session]);
+    fetchUserRole(session.user.email).then(role => {
+      setUserRole(role);
+      console.log('User role set to:', role);
+    });
+  }, [session, hydrated]);
 
   const signIn = (newSession: Session | null) => {
     localStorage.removeItem('supabase.auth.token-signal');
@@ -138,11 +159,7 @@ export function AuthContextProvider({
 
   const signInWithEmail = async (email: string, password: string) => {
     localStorage.removeItem('supabase.auth.token-signal');
-    const response = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return response;
+    return await supabase.auth.signInWithPassword({ email, password });
   };
 
   const signUp = async (email: string, password: string) => {
@@ -151,13 +168,16 @@ export function AuthContextProvider({
       email,
       password,
       options: {
-        emailRedirectTo: 'http://localhost:3000/verification',
+        emailRedirectTo: `${window.location.origin}/verification`,
       },
     });
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    router.push('/');
+    setTimeout(() => {
+      supabase.auth.signOut();
+    }, 300);
     localStorage.setItem('supabase.auth.token-signal', `${Date.now()}`);
     localStorage.removeItem('passwordRecoveryMode');
     setSession(null);
@@ -172,8 +192,10 @@ export function AuthContextProvider({
       signInWithEmail,
       signOut,
       userRole,
+      hydrated,
+      sessionChecked,
     }),
-    [session, userRole],
+    [session, userRole, hydrated, sessionChecked],
   );
 
   return (

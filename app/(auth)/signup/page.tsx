@@ -10,6 +10,7 @@ import {
   Button,
   Card,
   Container,
+  FieldError,
   Fields,
   Footer,
   Form,
@@ -26,44 +27,53 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [fallbackError, setFallbackError] = useState('');
 
   const handleSignUp = async () => {
-    setMessage('');
-    setIsError(false);
+    setEmailError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+    setFallbackError('');
 
     if (password !== confirmedPassword) {
-      setMessage('Sign-up failed: Passwords do not match');
-      setIsError(true);
+      setConfirmPasswordError('Passwords do not match');
       return;
     }
 
     const token = await encryptEmail(email);
     const { success, message } = await signUpUser(email, password);
 
-    setIsError(!success);
-    setMessage(message);
-
-    if (success) {
-      setTimeout(() => {
-        router.push(`/verification?token=${encodeURIComponent(token)}`);
-      }, 1000);
+    if (!success) {
+      if (
+        message.includes('Unable to validate email address') ||
+        message.includes('An account with this email already exists')
+      ) {
+        setEmailError(message);
+      } else if (message.includes('Password should be at least')) {
+        setPasswordError('Password should be at least 6 characters');
+      } else if (message.includes('Passwords do not match')) {
+        setConfirmPasswordError('Passwords do not match');
+      } else {
+        setFallbackError(message);
+      }
+      return;
     }
+    router.push(`/verification?token=${encodeURIComponent(token)}`);
   };
 
   // Front-end interface
   return (
     <Container>
-      <Logo src={BRLogo} alt="An example image" />
+      <Logo src={BRLogo} alt="Bread & Roses logo" />
       <Card>
         <Form>
           <H5>Sign Up</H5>
           <TitleUnderline width="5.625rem" />
-          {message && (
-            <StyledErrorMessage $isError={isError}>
-              {message}
-            </StyledErrorMessage>
+          {fallbackError && (
+            <StyledErrorMessage $isError>{fallbackError}</StyledErrorMessage>
           )}
 
           <Fields>
@@ -77,6 +87,7 @@ export default function SignUp() {
                 onChange={e => setEmail(e.target.value)}
                 value={email}
               />
+              {emailError && <FieldError>{emailError}</FieldError>}
             </div>
             <div>
               <Label>
@@ -89,6 +100,7 @@ export default function SignUp() {
                 onChange={e => setPassword(e.target.value)}
                 value={password}
               />
+              {passwordError && <FieldError>{passwordError}</FieldError>}
             </div>
             <div>
               <Label>
@@ -101,6 +113,9 @@ export default function SignUp() {
                 onChange={e => setConfirmedPassword(e.target.value)}
                 value={confirmedPassword}
               />
+              {confirmPasswordError && (
+                <FieldError>{confirmPasswordError}</FieldError>
+              )}
             </div>
           </Fields>
           <Button

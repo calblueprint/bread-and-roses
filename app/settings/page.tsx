@@ -11,6 +11,7 @@ import {
   fetchVolunteerPreferences,
 } from '@/api/supabase/queries/volunteers';
 import MenuBar from '@/components/MenuBar/MenuBar';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import SettingsCardAccomodations from '@/components/SettingsCard/SettingsCardAccomodations';
 import SettingsCardFacilityContactDetails from '@/components/SettingsCard/SettingsCardFacilityContactDetails';
 import SettingsCardFacilityLocation from '@/components/SettingsCard/SettingsCardFacilityLocation';
@@ -89,13 +90,13 @@ export default function SettingsPage() {
     useState<FacilityInfo>(facilityInfo);
 
   const handleSignOut = () => {
-    signOut();
     router.push('/');
+    setTimeout(() => {
+      signOut();
+    }, 500);
   };
 
   useEffect(() => {
-    console.log('userRole:' + userRole);
-    console.log('session' + session);
     const getUserData = async () => {
       if (session && userRole == 'volunteer') {
         const fetchedUserInfo = await fetchVolunteerInfo(session.user.id);
@@ -136,138 +137,140 @@ export default function SettingsPage() {
 
   return (
     session && (
-      <styles.All>
-        {userRole == 'volunteer' && (
-          <div>
-            <MenuBar setMenuExpanded={setMenuExpanded} />
-            <styles.Page $menuExpanded={menuExpanded}>
-              <styles.SettingDiv>
-                <styles.ProfileName>
-                  {' '}
-                  {userInfo.first_name} {userInfo.last_name}{' '}
-                </styles.ProfileName>
-                <styles.Email> {userInfo.email} </styles.Email>
-                <styles.SignOutButton onClick={() => handleSignOut()}>
-                  <styles.SignOut src={SignOut} alt="SignOut" />
-                  <styles.ButtonText> Sign Out </styles.ButtonText>
-                </styles.SignOutButton>
-                <SettingsCardPersonalDetails
-                  first_name={userInfo.first_name}
-                  last_name={userInfo.last_name}
-                  phone={userInfo.phone_number}
-                  userInfo={userInfo}
-                  editInfo={editedUserInfo}
-                  setEditInfo={setEditedUserInfo}
-                  setUserInfo={setUserInfo}
-                  userId={session.user.id}
-                />
-                <SettingsCardShowPreferences
-                  facility_preferences={userPreferences.facility_type}
-                  locations={userPreferences.locations}
-                  audience_preferences={userPreferences.audience_type}
-                  userPrefs={userPreferences}
-                  editPrefs={editedUserPrefs}
-                  setEditPrefs={setEditedUserPrefs}
-                  setUserPrefs={setUserPreferences}
-                  userId={session.user.id}
-                />
-                <SettingsCardPerformanceInterest
-                  performance_types={userPreferences.performance_type}
-                  genres={userPreferences.genre}
-                  group_size={userPreferences.performer_type}
-                  userPrefs={userPreferences}
-                  editPrefs={editedUserPrefs}
-                  setEditPrefs={setEditedUserPrefs}
-                  setUserPrefs={setUserPreferences}
-                  userId={session.user.id}
-                />
-                <SettingsCardVolunteerRoleSpecific
-                  userPrefs={userPreferences}
-                  editPrefs={editedUserPrefs}
-                  setEditPrefs={setEditedUserPrefs}
-                  setUserPrefs={setUserPreferences}
-                  userId={session.user.id}
-                />
-                <SettingsCardAccomodations
-                  accomodations={userPreferences.additional_info}
-                  userPrefs={userPreferences}
-                  editPrefs={editedUserPrefs}
-                  setEditPrefs={setEditedUserPrefs}
-                  setUserPrefs={setUserPreferences}
-                  userId={session.user.id}
-                />
-              </styles.SettingDiv>
-            </styles.Page>
-          </div>
-        )}
-        {userRole == 'facility' && (
-          <div>
-            <MenuBar setMenuExpanded={setMenuExpanded} />
-            <styles.Page $menuExpanded={menuExpanded}>
-              <styles.SettingDiv>
-                <styles.ProfileName>
-                  {facilityContactInfo.first_name}{' '}
-                  {facilityContactInfo.last_name}
-                </styles.ProfileName>
-                <styles.Email> {facilityContactInfo.email} </styles.Email>
-                <styles.SignOutButton onClick={() => handleSignOut()}>
-                  <styles.SignOut src={SignOut} alt="SignOut" />
-                  <styles.ButtonText> Sign Out </styles.ButtonText>
-                </styles.SignOutButton>
-                <SettingsCardFacilityContactDetails
-                  first_name={facilityContactInfo.first_name}
-                  last_name={facilityContactInfo.last_name}
-                  phone={facilityContactInfo.phone_number}
-                  userInfo={facilityContactInfo}
-                  editInfo={editedFacilityContactInfo}
-                  setEditInfo={setEditedFacilityContactInfo}
-                  setFacilityContactInfo={setFacilityContactInfo}
-                  userId={session.user.id}
-                />
-                <SettingsCardFacilityLocation
-                  name={facilityInfo.name}
-                  city={facilityInfo.city}
-                  county={facilityInfo.county}
-                  street_address_1={facilityInfo.street_address_1}
-                  street_address_2={facilityInfo.street_address_2}
-                  facilityInfo={facilityInfo}
-                  editInfo={editedFacilityInfo}
-                  setEditInfo={setEditedFacilityInfo}
-                  setFacilityInfo={setFacilityInfo}
-                  userId={session.user.id}
-                />
-                <SettingsCardFacilityPreferences
-                  type={facilityInfo.type}
-                  audience_preferences={facilityInfo.audience}
-                  facilityInfo={facilityInfo}
-                  editInfo={editedFacilityInfo}
-                  setEditInfo={setEditedFacilityInfo}
-                  setFacilityInfo={setFacilityInfo}
-                  userId={session.user.id}
-                />
-                <SettingsCardFacilityLogistics
-                  info={facilityInfo.info}
-                  facilityInfo={facilityInfo}
-                  editInfo={editedFacilityInfo}
-                  setEditInfo={setEditedFacilityInfo}
-                  setFacilityInfo={setFacilityInfo}
-                  userId={session.user.id}
-                />
-                <SettingsCardHostInfo
-                  hostName={facilityInfo.host_name}
-                  hostEmail={facilityInfo.host_email}
-                  hostPhone={facilityInfo.host_phone_number}
-                  facilityInfo={facilityInfo}
-                  editInfo={editedFacilityInfo}
-                  setEditInfo={setEditedFacilityInfo}
-                  setFacilityInfo={setFacilityInfo}
-                  userId={session.user.id}
-                />
-              </styles.SettingDiv>
-            </styles.Page>
-          </div>
-        )}
-      </styles.All>
+      <ProtectedRoute allowAnyRole>
+        <styles.All>
+          {userRole == 'volunteer' && (
+            <div>
+              <MenuBar setMenuExpanded={setMenuExpanded} />
+              <styles.Page $menuExpanded={menuExpanded}>
+                <styles.SettingDiv>
+                  <styles.ProfileName>
+                    {' '}
+                    {userInfo.first_name} {userInfo.last_name}{' '}
+                  </styles.ProfileName>
+                  <styles.Email> {userInfo.email} </styles.Email>
+                  <styles.SignOutButton onClick={() => handleSignOut()}>
+                    <styles.SignOut src={SignOut} alt="SignOut" />
+                    <styles.ButtonText> Sign Out </styles.ButtonText>
+                  </styles.SignOutButton>
+                  <SettingsCardPersonalDetails
+                    first_name={userInfo.first_name}
+                    last_name={userInfo.last_name}
+                    phone={userInfo.phone_number}
+                    userInfo={userInfo}
+                    editInfo={editedUserInfo}
+                    setEditInfo={setEditedUserInfo}
+                    setUserInfo={setUserInfo}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardShowPreferences
+                    facility_preferences={userPreferences.facility_type}
+                    locations={userPreferences.locations}
+                    audience_preferences={userPreferences.audience_type}
+                    userPrefs={userPreferences}
+                    editPrefs={editedUserPrefs}
+                    setEditPrefs={setEditedUserPrefs}
+                    setUserPrefs={setUserPreferences}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardPerformanceInterest
+                    performance_types={userPreferences.performance_type}
+                    genres={userPreferences.genre}
+                    group_size={userPreferences.performer_type}
+                    userPrefs={userPreferences}
+                    editPrefs={editedUserPrefs}
+                    setEditPrefs={setEditedUserPrefs}
+                    setUserPrefs={setUserPreferences}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardVolunteerRoleSpecific
+                    userPrefs={userPreferences}
+                    editPrefs={editedUserPrefs}
+                    setEditPrefs={setEditedUserPrefs}
+                    setUserPrefs={setUserPreferences}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardAccomodations
+                    accomodations={userPreferences.additional_info}
+                    userPrefs={userPreferences}
+                    editPrefs={editedUserPrefs}
+                    setEditPrefs={setEditedUserPrefs}
+                    setUserPrefs={setUserPreferences}
+                    userId={session.user.id}
+                  />
+                </styles.SettingDiv>
+              </styles.Page>
+            </div>
+          )}
+          {userRole == 'facility' && (
+            <div>
+              <MenuBar setMenuExpanded={setMenuExpanded} />
+              <styles.Page $menuExpanded={menuExpanded}>
+                <styles.SettingDiv>
+                  <styles.ProfileName>
+                    {facilityContactInfo.first_name}{' '}
+                    {facilityContactInfo.last_name}
+                  </styles.ProfileName>
+                  <styles.Email> {facilityContactInfo.email} </styles.Email>
+                  <styles.SignOutButton onClick={() => handleSignOut()}>
+                    <styles.SignOut src={SignOut} alt="SignOut" />
+                    <styles.ButtonText> Sign Out </styles.ButtonText>
+                  </styles.SignOutButton>
+                  <SettingsCardFacilityContactDetails
+                    first_name={facilityContactInfo.first_name}
+                    last_name={facilityContactInfo.last_name}
+                    phone={facilityContactInfo.phone_number}
+                    userInfo={facilityContactInfo}
+                    editInfo={editedFacilityContactInfo}
+                    setEditInfo={setEditedFacilityContactInfo}
+                    setFacilityContactInfo={setFacilityContactInfo}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardFacilityLocation
+                    name={facilityInfo.name}
+                    city={facilityInfo.city}
+                    county={facilityInfo.county}
+                    street_address_1={facilityInfo.street_address_1}
+                    street_address_2={facilityInfo.street_address_2}
+                    facilityInfo={facilityInfo}
+                    editInfo={editedFacilityInfo}
+                    setEditInfo={setEditedFacilityInfo}
+                    setFacilityInfo={setFacilityInfo}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardFacilityPreferences
+                    type={facilityInfo.type}
+                    audience_preferences={facilityInfo.audience}
+                    facilityInfo={facilityInfo}
+                    editInfo={editedFacilityInfo}
+                    setEditInfo={setEditedFacilityInfo}
+                    setFacilityInfo={setFacilityInfo}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardFacilityLogistics
+                    info={facilityInfo.info}
+                    facilityInfo={facilityInfo}
+                    editInfo={editedFacilityInfo}
+                    setEditInfo={setEditedFacilityInfo}
+                    setFacilityInfo={setFacilityInfo}
+                    userId={session.user.id}
+                  />
+                  <SettingsCardHostInfo
+                    hostName={facilityInfo.host_name}
+                    hostEmail={facilityInfo.host_email}
+                    hostPhone={facilityInfo.host_phone_number}
+                    facilityInfo={facilityInfo}
+                    editInfo={editedFacilityInfo}
+                    setEditInfo={setEditedFacilityInfo}
+                    setFacilityInfo={setFacilityInfo}
+                    userId={session.user.id}
+                  />
+                </styles.SettingDiv>
+              </styles.Page>
+            </div>
+          )}
+        </styles.All>
+      </ProtectedRoute>
     )
   );
 }
