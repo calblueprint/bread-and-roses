@@ -49,6 +49,7 @@ export default function ProtectedRoute({
 
   const [hydrated, setHydrated] = useState<boolean>(false);
   const [ready, setReady] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   const [isApproved, setIsApproved] = useState<boolean | null>(null);
   const [isFinalized, setIsFinalized] = useState<boolean | null>(null);
@@ -60,10 +61,6 @@ export default function ProtectedRoute({
         const finalized = await fetchFacilityFinalizationStatus(
           session.user.id,
         );
-
-        console.log('[ProtectedRoute] Fresh approval status:', approved);
-        console.log('[ProtectedRoute] Fresh finalization status:', finalized);
-
         setIsApproved(approved);
         setIsFinalized(finalized);
         setHydrated(true);
@@ -77,18 +74,6 @@ export default function ProtectedRoute({
     getFacilityStatuses();
   }, [userRole, session, path]);
 
-  // useEffect(() => {
-  //   console.log('--- ProtectedRoute Debug ---');
-  //   console.log('hydrated:', hydrated);
-  //   console.log('sessionChecked:', sessionChecked);
-  //   console.log('session:', session);
-  //   console.log('userRole:', userRole);
-  //   console.log('isApproved:', isApproved);
-  //   console.log('path:', path);
-  //   console.log('-----------------------------');
-  //   setTimeout(() => {}, 100);
-  // }, [hydrated, sessionChecked, session, userRole, isApproved, path]);
-
   useEffect(() => {
     if (!hydrated || !sessionChecked) return;
 
@@ -101,6 +86,7 @@ export default function ProtectedRoute({
     // block protected pages for logged out users
     if (!session) {
       console.log('[ProtectedRoute] No session → /access-error');
+      setRedirecting(true);
       router.replace('/access-error');
       return;
     }
@@ -117,20 +103,6 @@ export default function ProtectedRoute({
       return;
     }
 
-    /*
-    // prevent approved facilities from accessing onboardingExceptions
-    if (
-      userRole === 'facility' &&
-      isApproved &&
-      !onboardingExceptions.some(p => path.startsWith(p))
-    ) {
-      console.log(
-        '[ProtectedRoute] Approved facility tried to access onboarding → /availability/general',
-      );
-      router.replace('/availability/general');
-      return;
-    } */
-
     // block access to onboarding or roles if already has role
     if (
       ((path.startsWith('/onboarding') &&
@@ -139,6 +111,7 @@ export default function ProtectedRoute({
       userRole
     ) {
       console.log('[ProtectedRoute] Already has role → /permissions-error');
+      setRedirecting(true);
       router.replace('/permissions-error');
       return;
     }
@@ -146,6 +119,7 @@ export default function ProtectedRoute({
     // Must select role if none and no override is present
     if (!userRole && !allowWithoutRole && !allowAnyRole && !requiredRole) {
       console.log('[ProtectedRoute] No role → /roles');
+      setRedirecting(true);
       router.replace('/roles');
       return;
     }
@@ -153,6 +127,7 @@ export default function ProtectedRoute({
     // User has role, but wrong one
     if (requiredRole && userRole !== requiredRole) {
       console.log('[ProtectedRoute] Wrong role → /permissions-error');
+      setRedirecting(true);
       router.replace('/permissions-error');
       return;
     }
@@ -160,6 +135,7 @@ export default function ProtectedRoute({
     // Must have some role if allowAnyRole is true
     if (allowAnyRole && !userRole) {
       console.log('[ProtectedRoute] allowAnyRole true but no role → /roles');
+      setRedirecting(true);
       router.replace('/roles');
       return;
     }
@@ -173,6 +149,7 @@ export default function ProtectedRoute({
       console.log(
         '[ProtectedRoute] Facility not approved → /onboarding/facility/status',
       );
+      setRedirecting(true);
       router.replace('/onboarding/facility/status');
       return;
     }
@@ -185,6 +162,7 @@ export default function ProtectedRoute({
       console.log(
         '[ProtectedRoute] Finalized facility tried to access ANY onboarding → /availability/general',
       );
+      setRedirecting(true);
       router.replace('/availability/general');
       return;
     }
@@ -203,7 +181,7 @@ export default function ProtectedRoute({
     isApproved,
   ]);
 
-  if (!hydrated || !sessionChecked || !ready) return null;
+  if (!hydrated || !sessionChecked || (!ready && !redirecting)) return null;
 
   return <>{children}</>;
 }

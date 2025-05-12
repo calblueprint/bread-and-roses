@@ -5,7 +5,7 @@ import { OnboardingProvider } from '@/utils/onboardingContext';
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <ProtectedRoute allowWithoutRole>
-      <OnboardingProvider>{children}</OnboardingProvider>;
+      <OnboardingProvider>{children}</OnboardingProvider>
     </ProtectedRoute>
   );
 }

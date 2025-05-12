@@ -35,7 +35,7 @@ export default function Status() {
     router.push('/');
     setTimeout(() => {
       signOut();
-    }, 300);
+    }, 500);
   };
 
   const handleForward = () => {
@@ -44,7 +44,9 @@ export default function Status() {
 
   const { signOut, sessionChecked, session } = useSession();
 
+  console.log('MOUNTED!');
   useEffect(() => {
+    console.log('USEEFFECT');
     if (!sessionChecked || !session || !session.user?.id) return;
 
     const setFacilityDetails = async () => {
@@ -62,7 +64,6 @@ export default function Status() {
       setEmail(session.user.email ?? null);
       setLoading(false);
     };
-
     setFacilityDetails();
   }, [sessionChecked, session]);
 

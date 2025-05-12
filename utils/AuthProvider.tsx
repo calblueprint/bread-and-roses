@@ -175,7 +175,9 @@ export function AuthContextProvider({
 
   const signOut = async () => {
     router.push('/');
-    await supabase.auth.signOut();
+    setTimeout(() => {
+      supabase.auth.signOut();
+    }, 300);
     localStorage.setItem('supabase.auth.token-signal', `${Date.now()}`);
     localStorage.removeItem('passwordRecoveryMode');
     setSession(null);
